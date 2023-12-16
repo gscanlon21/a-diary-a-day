@@ -1,0 +1,75 @@
+﻿@page "/"
+@inject AppState AppState
+@inject DisplayHelper DH
+@inject NewsletterService NewsletterService
+@inject NavigationManager Navigation
+@using Core.Models.Exercise
+@using Core.Models.Newsletter
+@using Core.Models.Footnote
+@using Core.Models.User
+@using ViewModels.Exercise
+@using Shared.Exercise
+
+@if (Error != null)
+{
+    <div>@Error</div>
+}
+else if (Model == null)
+{
+    <div>Loading workout...</div>
+}
+else
+{
+    var isDebugWorkout = Model.User.Features.HasFlag(Features.Debug);
+    var isMobilityWorkout = Model.UserMood.Frequency == Core.Models.User.Frequency.OffDayStretches;
+    var exerciseNames = string.Join(", ", Model.MainExercises.GroupBy(e => e.Exercise).Select(g => g.Key.Name));
+
+    <Lib.Pages.Shared.Newsletter._Preview Model='@($"Debug - {exerciseNames}")' />
+
+    <div style="margin-bottom:1rem;">
+        <h6 style="margin-block:0;"><a target="_blank" href="@DH.NewsletterLink(Model.User, Model.Today)">@Model.Today.ToLongDateString()</a></h6>
+        <h1 style="margin-block:0;">Daily Workout</h1>
+        <h4 style="margin-block:0;display:inline-block;">Debug</h4>
+        <small> - @exerciseNames</small>
+    </div>
+
+    <Lib.Pages.Shared.Newsletter._UserStatusMessages User="Model.User" />
+
+    <Lib.Pages.Shared.Newsletter.Footnote User="Model.User" Verbosity="Model.Verbosity" Type="Shared.Newsletter.Footnote.FootnoteComponentType.User" Count="Model.User.FootnoteCountTop" />
+    
+    <div style="margin-block:1rem;">
+        <div>
+            <a target="_blank" href="@DH.UserLink(Model.User, "m")">What is your mood?</a>
+        </div>
+    </div>
+
+    <Lib.Pages.Shared.Newsletter.Footnote User="Model.User" Verbosity="Model.Verbosity" Type="Shared.Newsletter.Footnote.FootnoteComponentType.System" Count="Model.User.FootnoteCountBottom" />
+
+    @if (!Model.HideFooter)
+    {
+        <hr style="margin-block:1ex;">
+
+        <Lib.Pages.Shared.Newsletter._Footer User="Model.User" />
+    }
+}
+
+@code {
+    [Parameter]
+    public ViewModels.Newsletter.NewsletterViewModel? Model { get; set; }
+
+    public string? Error { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Model == null)
+        {
+            Model = await NewsletterService.Newsletter(AppState.Email, AppState.Token, AppState.Date);
+
+            if (Model == null)
+            {
+                // TODO Differentiate between server blip and user's login token is no longer valid.
+                Error = "Request failed.";
+            }
+        }
+    }
+}
