@@ -17,16 +17,4 @@ public partial class NewsletterRepo
             Token = token,
         };
     }
-
-    /// <summary>
-    /// Creates a new instance of the newsletter and saves it.
-    /// </summary>
-    internal async Task<UserMood> CreateAndAddNewsletterToContext(WorkoutContext context)
-    {
-        var newsletter = new UserMood(context.User.TodayOffset, context);
-        _context.UserMoods.Add(newsletter); // Sets the newsletter.Id after changes are saved.
-        await _context.SaveChangesAsync();
-
-        return newsletter;
-    }
 }

@@ -73,7 +73,7 @@ public partial class NewsletterRepo(ILogger<NewsletterRepo> logger, CoreContext 
     /// </summary>
     public async Task<NewsletterDto?> Newsletter(string email, string token, DateOnly? date = null)
     {
-        var user = await userRepo.GetUser(email, token, includeExerciseVariations: true, includeMuscles: true, includeFrequencies: true, allowDemoUser: true);
+        var user = await userRepo.GetUser(email, token, allowDemoUser: true);
         if (user == null)
         {
             return null;
@@ -85,23 +85,8 @@ public partial class NewsletterRepo(ILogger<NewsletterRepo> logger, CoreContext 
         date ??= user.TodayOffset;
         if (date.HasValue)
         {
-            var oldNewsletter = await _context.UserMoods.AsNoTracking()
-                .Where(n => n.User.Id == user.Id)
-                // Always send a new workout for today for the demo and test users.
-                .Where(n => !((user.Features.HasFlag(Features.Demo) || user.Features.HasFlag(Features.Test)) && n.Date == user.TodayOffset))
-                .Where(n => n.Date == date)
-                // For the demo/test accounts. Multiple newsletters may be sent in one day, so order by the most recently created.
-                .OrderByDescending(n => n.Id)
-                .FirstOrDefaultAsync();
-
-            // A newsletter was found.
-            if (oldNewsletter != null)
-            {
-                logger.Log(LogLevel.Information, "Returning old newsletter for user {Id}", user.Id);
-                return await NewsletterOld(user, token, date.Value, oldNewsletter);
-            }
             // A newsletter was not found and the date is not one we want to render a new newsletter for.
-            else if (date != user.TodayOffset)
+            if (date != user.TodayOffset)
             {
                 logger.Log(LogLevel.Information, "Returning no newsletter for user {Id}", user.Id);
                 return null;
@@ -113,19 +98,9 @@ public partial class NewsletterRepo(ILogger<NewsletterRepo> logger, CoreContext 
         var context = await BuildWorkoutContext(user, token);
         if (context == null)
         {
-            // See if a previous workout exists, we send that back down so the app doesn't render nothing on rest days.
-            var currentWorkout = await userRepo.GetCurrentWorkout(user);
-            if (currentWorkout == null)
-            {
-                logger.Log(LogLevel.Information, "Returning no newsletter for user {Id}", user.Id);
-                return null;
-            }
-
-            logger.Log(LogLevel.Information, "Returning current newsletter for user {Id}", user.Id);
-            return await NewsletterOld(user, token, currentWorkout.Date, currentWorkout);
+            return null;
         }
 
-        // Current day should be a strengthening workout.
         logger.Log(LogLevel.Information, "Returning on day newsletter for user {Id}", user.Id);
         return await OnDayNewsletter(context);
     }
@@ -135,28 +110,11 @@ public partial class NewsletterRepo(ILogger<NewsletterRepo> logger, CoreContext 
     /// </summary>
     private async Task<NewsletterDto?> OnDayNewsletter(WorkoutContext context)
     {
-        var newsletter = await CreateAndAddNewsletterToContext(context);
-
         var userViewModel = new UserNewsletterDto(context);
-        var viewModel = new NewsletterDto(userViewModel, newsletter)
+        var viewModel = new NewsletterDto(userViewModel)
         {
-
         };
 
         return viewModel;
-    }
-
-    /// <summary>
-    /// Root route for building out the the workout routine newsletter based on a date.
-    /// </summary>
-    private async Task<NewsletterDto?> NewsletterOld(User user, string token, DateOnly date, UserMood newsletter)
-    {
-        var userViewModel = new UserNewsletterDto(user, token);
-        var newsletterViewModel = new NewsletterDto(userViewModel, newsletter)
-        {
-            Today = date,
-        };
-
-        return newsletterViewModel;
     }
 }

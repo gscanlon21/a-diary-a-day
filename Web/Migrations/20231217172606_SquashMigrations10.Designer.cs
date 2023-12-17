@@ -3,6 +3,7 @@ using System;
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Web.Migrations
 {
     [DbContext(typeof(CoreContext))]
-    partial class CoreContextModelSnapshot : ModelSnapshot
+    [Migration("20231217172606_SquashMigrations10")]
+    partial class SquashMigrations10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,7 +45,7 @@ namespace Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("footnote", null, t =>
+                    b.ToTable("footnote", t =>
                         {
                             t.HasComment("Sage advice");
                         });
@@ -76,7 +79,7 @@ namespace Web.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("user_footnote", null, t =>
+                    b.ToTable("user_footnote", t =>
                         {
                             t.HasComment("Sage advice");
                         });
@@ -123,7 +126,37 @@ namespace Web.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("user_email", null, t =>
+                    b.ToTable("user_email", t =>
+                        {
+                            t.HasComment("A day's workout routine");
+                        });
+                });
+
+            modelBuilder.Entity("Data.Entities.Newsletter.UserMood", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<int>("Intensity")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Weight")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("user_mood", t =>
                         {
                             t.HasComment("A day's workout routine");
                         });
@@ -215,7 +248,7 @@ namespace Web.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("user", null, t =>
+                    b.ToTable("user", t =>
                         {
                             t.HasComment("User who signed up for the newsletter");
                         });
@@ -232,17 +265,17 @@ namespace Web.Migrations
                     b.Property<DateOnly>("Date")
                         .HasColumnType("date");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("UserMoodId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Value")
+                    b.Property<int>("Weight")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserMoodId");
 
-                    b.ToTable("user_mood", null, t =>
+                    b.ToTable("user_mood_value", t =>
                         {
                             t.HasComment("User variation weight log");
                         });
@@ -270,7 +303,7 @@ namespace Web.Migrations
 
                     b.HasIndex("UserId", "Token");
 
-                    b.ToTable("user_token", null, t =>
+                    b.ToTable("user_token", t =>
                         {
                             t.HasComment("Auth tokens for a user");
                         });
@@ -298,7 +331,7 @@ namespace Web.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserMoodValue", b =>
+            modelBuilder.Entity("Data.Entities.Newsletter.UserMood", b =>
                 {
                     b.HasOne("Data.Entities.User.User", "User")
                         .WithMany("UserMoods")
@@ -307,6 +340,17 @@ namespace Web.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Data.Entities.User.UserMoodValue", b =>
+                {
+                    b.HasOne("Data.Entities.Newsletter.UserMood", "UserMood")
+                        .WithMany("UserVariationWeights")
+                        .HasForeignKey("UserMoodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserMood");
                 });
 
             modelBuilder.Entity("Data.Entities.User.UserToken", b =>
@@ -318,6 +362,11 @@ namespace Web.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Data.Entities.Newsletter.UserMood", b =>
+                {
+                    b.Navigation("UserVariationWeights");
                 });
 
             modelBuilder.Entity("Data.Entities.User.User", b =>

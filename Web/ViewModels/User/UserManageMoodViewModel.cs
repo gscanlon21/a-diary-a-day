@@ -16,7 +16,7 @@ public class UserManageMoodViewModel
     [Obsolete("Public parameterless constructor for model binding.", error: true)]
     public UserManageMoodViewModel() { }
 
-    public UserManageMoodViewModel(IList<UserMoodValue>? userWeights, int? currentWeight)
+    public UserManageMoodViewModel(IList<UserMood>? userWeights, int? currentWeight)
     {
         if (userWeights != null && currentWeight != null)
         {
@@ -24,7 +24,7 @@ public class UserManageMoodViewModel
             Xys = Enumerable.Range(1, 365).Select(i =>
             {
                 var date = Today.AddDays(-i);
-                return new Xy(date, userWeights.FirstOrDefault(uw => uw.Date == date)?.Weight);
+                return new Xy(date, userWeights.FirstOrDefault(uw => uw.Date == date)?.Value);
             }).Where(xy => xy.Y.HasValue).Reverse().Append(new Xy(Today, currentWeight)).ToList();
         }
     }

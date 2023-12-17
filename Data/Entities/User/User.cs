@@ -230,9 +230,6 @@ public class User
     [JsonIgnore, InverseProperty(nameof(UserToken.User))]
     public virtual ICollection<UserToken> UserTokens { get; private init; } = new List<UserToken>();
 
-    [JsonIgnore, InverseProperty(nameof(UserExercise.User))]
-    public virtual ICollection<UserExercise> UserExercises { get; private init; } = null!;
-
     [JsonIgnore, InverseProperty(nameof(UserMood.User))]
     public virtual ICollection<UserMood> UserMoods { get; private init; } = null!;
 

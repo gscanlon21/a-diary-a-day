@@ -6,7 +6,7 @@ namespace Data.Dtos.Newsletter;
 /// <summary>
 /// Viewmodel for Newsletter.cshtml
 /// </summary>
-public class NewsletterDto(UserNewsletterDto user, Entities.Newsletter.UserMood newsletter)
+public class NewsletterDto(UserNewsletterDto user)
 {
     /// <summary>
     /// The number of footnotes to show in the newsletter
@@ -16,7 +16,6 @@ public class NewsletterDto(UserNewsletterDto user, Entities.Newsletter.UserMood 
     public DateOnly Today { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
 
     public UserNewsletterDto User { get; } = user;
-    public Entities.Newsletter.UserMood UserMood { get; } = newsletter;
 
     /// <summary>
     /// How much detail to show in the newsletter.

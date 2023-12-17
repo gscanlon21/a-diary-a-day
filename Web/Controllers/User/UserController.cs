@@ -39,7 +39,7 @@ public partial class UserController(CoreContext context, IServiceScopeFactory se
     [Route("edit", Order = 3)]
     public async Task<IActionResult> Edit(string email = UserConsts.DemoUser, string token = UserConsts.DemoToken, bool? wasUpdated = null)
     {
-        var user = await userRepo.GetUser(email, token, includeExerciseVariations: true, includeMuscles: true, includeFrequencies: true, allowDemoUser: true);
+        var user = await userRepo.GetUser(email, token, allowDemoUser: true);
         if (user == null)
         {
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
@@ -62,7 +62,7 @@ public partial class UserController(CoreContext context, IServiceScopeFactory se
             return NotFound();
         }
 
-        viewModel.User = await userRepo.GetUser(viewModel.Email, viewModel.Token, includeUserExerciseVariations: true, includeMuscles: true, includeFrequencies: true) ?? throw new ArgumentException(string.Empty, nameof(email));
+        viewModel.User = await userRepo.GetUser(viewModel.Email, viewModel.Token) ?? throw new ArgumentException(string.Empty, nameof(email));
         if (ModelState.IsValid)
         {
             try
@@ -113,7 +113,7 @@ public partial class UserController(CoreContext context, IServiceScopeFactory se
     [Route("edit/advanced", Order = 2)]
     public async Task<IActionResult> EditAdvanced(string email, string token, AdvancedViewModel viewModel)
     {
-        var user = await userRepo.GetUser(email, token, includeUserExerciseVariations: true, includeMuscles: true, includeFrequencies: true) ?? throw new ArgumentException(string.Empty, nameof(email));
+        var user = await userRepo.GetUser(email, token) ?? throw new ArgumentException(string.Empty, nameof(email));
         if (ModelState.IsValid)
         {
             try
@@ -183,28 +183,6 @@ public partial class UserController(CoreContext context, IServiceScopeFactory se
         TempData[TempData_User.SuccessMessage] = userIsConfirmingAccount
             ? "Thank you! Your first workout is on its way."
             : "Thank you! Take a moment to update your Workout Intensity to avoid adaptions.";
-        return RedirectToAction(nameof(UserController.Edit), new { email, token });
-    }
-
-    #endregion
-    #region Workout Split
-
-    [HttpPost]
-    [Route("split/progress")]
-    public async Task<IActionResult> AdvanceSplit(string email, string token)
-    {
-        var user = await userRepo.GetUser(email, token);
-        if (user == null)
-        {
-            return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
-        }
-
-        // Add a dummy newsletter to advance the workout split
-        var newsletter = new Data.Entities.Newsletter.UserMood(Today, user);
-        context.UserMoods.Add(newsletter);
-
-        await context.SaveChangesAsync();
-        TempData[TempData_User.SuccessMessage] = "Your workout split has been advanced!";
         return RedirectToAction(nameof(UserController.Edit), new { email, token });
     }
 

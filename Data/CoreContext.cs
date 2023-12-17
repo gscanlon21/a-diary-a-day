@@ -13,8 +13,6 @@ public class CoreContext : DbContext
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<UserToken> UserTokens { get; set; } = null!;
     public DbSet<UserEmail> UserEmails { get; set; } = null!;
-    public DbSet<UserExercise> UserExercises { get; set; } = null!;
-    public DbSet<UserMoodValue> UserMoodValues { get; set; } = null!;
     public DbSet<UserMood> UserMoods { get; set; } = null!;
     public DbSet<UserFootnote> UserFootnotes { get; set; } = null!;
 
@@ -27,7 +25,6 @@ public class CoreContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         ////////// Keys //////////
-        modelBuilder.Entity<UserExercise>().HasKey(sc => new { sc.UserId, sc.ExerciseId });
         //modelBuilder.Entity<ExerciseVariation>().HasKey(sc => new { sc.ExerciseId, sc.VariationId });
 
         //modelBuilder

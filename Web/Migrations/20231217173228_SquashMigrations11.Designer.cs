@@ -3,6 +3,7 @@ using System;
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Web.Migrations
 {
     [DbContext(typeof(CoreContext))]
-    partial class CoreContextModelSnapshot : ModelSnapshot
+    [Migration("20231217173228_SquashMigrations11")]
+    partial class SquashMigrations11
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,7 +45,7 @@ namespace Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("footnote", null, t =>
+                    b.ToTable("footnote", t =>
                         {
                             t.HasComment("Sage advice");
                         });
@@ -76,7 +79,7 @@ namespace Web.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("user_footnote", null, t =>
+                    b.ToTable("user_footnote", t =>
                         {
                             t.HasComment("Sage advice");
                         });
@@ -123,7 +126,7 @@ namespace Web.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("user_email", null, t =>
+                    b.ToTable("user_email", t =>
                         {
                             t.HasComment("A day's workout routine");
                         });
@@ -215,7 +218,7 @@ namespace Web.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("user", null, t =>
+                    b.ToTable("user", t =>
                         {
                             t.HasComment("User who signed up for the newsletter");
                         });
@@ -242,7 +245,7 @@ namespace Web.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("user_mood", null, t =>
+                    b.ToTable("user_mood_value", t =>
                         {
                             t.HasComment("User variation weight log");
                         });
@@ -270,7 +273,7 @@ namespace Web.Migrations
 
                     b.HasIndex("UserId", "Token");
 
-                    b.ToTable("user_token", null, t =>
+                    b.ToTable("user_token", t =>
                         {
                             t.HasComment("Auth tokens for a user");
                         });

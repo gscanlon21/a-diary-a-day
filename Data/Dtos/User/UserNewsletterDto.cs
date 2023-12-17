@@ -50,9 +50,6 @@ public class UserNewsletterDto(Entities.User.User user, string token)
     [Display(Name = "Weeks Between Accessory Refresh")]
     public int RefreshAccessoryEveryXWeeks { get; set; } = user.RefreshAccessoryEveryXWeeks;
 
-    //[JsonIgnore]
-    public ICollection<UserExercise> UserExercises { get; init; } = user.UserExercises;
-
     public int FootnoteCountTop { get; init; } = user.FootnoteCountTop;
 
     public int FootnoteCountBottom { get; init; } = user.FootnoteCountBottom;

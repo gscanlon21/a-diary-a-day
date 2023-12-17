@@ -29,11 +29,11 @@ public partial class UserController
             .IgnoreQueryFilters()
             .FirstOrDefaultAsync(p => p.UserId == user.Id);
 
-        var userWeights = await context.UserMoodValues
-                .Where(uw => uw.UserMoodId == userMood.Id)
+        var userWeights = await context.UserMoods
+                .Where(uw => uw.UserId == user.Id)
                 .ToListAsync();
 
-        return View(new UserManageMoodViewModel(userWeights, userMood.Weight)
+        return View(new UserManageMoodViewModel(userWeights, userMood.Value)
         {
             User = user,
             Parameters = parameters,
@@ -57,23 +57,23 @@ public partial class UserController
             // Set the new weight on the UserVariation
             var userMood = await context.UserMoods
                 .FirstAsync(p => p.UserId == user.Id);
-            userMood.Weight = weight;
+            userMood.Value = weight;
 
             // Log the weight as a UserWeight
-            var todaysUserWeight = await context.UserMoodValues
-                .Where(uw => uw.UserMoodId == userMood.Id)
+            var todaysUserWeight = await context.UserMoods
+                .Where(uw => uw.UserId == userMood.Id)
                 .FirstOrDefaultAsync(uw => uw.Date == Today);
             if (todaysUserWeight != null)
             {
-                todaysUserWeight.Weight = userMood.Weight;
+                todaysUserWeight.Value = userMood.Value;
             }
             else
             {
-                context.Add(new UserMoodValue()
+                context.Add(new UserMood()
                 {
                     Date = Today,
-                    UserMoodId = userMood.Id,
-                    Weight = userMood.Weight,
+                    UserId = user.Id,
+                    Value = userMood.Value,
                 });
             }
 

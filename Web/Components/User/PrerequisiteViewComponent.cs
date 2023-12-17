@@ -34,10 +34,6 @@ public class PrerequisiteViewComponent(IServiceScopeFactory serviceScopeFactory,
             InvisiblePrerequisites = new List<ExerciseVariationViewModel>()
         };
 
-        var userExercises = await coreContext.UserExercises
-            .Where(ue => ue.UserId == user.Id)
-            .ToListAsync();
-
         return View("Prerequisite", viewModel);
     }
 }

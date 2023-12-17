@@ -13,19 +13,19 @@ namespace Data.Entities.User
     /// TODO Scopes.
     /// TODO Single-use tokens.
     /// </summary>
-    [Table("user_mood_value"), Comment("User variation weight log")]
-    public class UserMoodValue
+    [Table("user_mood"), Comment("User variation weight log")]
+    public class UserMood
     {
-        public UserMoodValue() { }
+        public UserMood() { }
 
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; private init; }
 
         [Required]
-        public int Weight { get; set; }
+        public int Value { get; set; }
 
         [Required]
-        public int UserMoodId { get; set; }
+        public int UserId { get; set; }
 
         /// <summary>
         /// The token should stop working after this date.
@@ -33,8 +33,8 @@ namespace Data.Entities.User
         [Required]
         public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
 
-        [JsonIgnore, InverseProperty(nameof(Newsletter.UserMood.UserVariationWeights))]
-        public virtual UserMood UserMood { get; private init; } = null!;
+        [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserMoods))]
+        public virtual User User { get; private init; } = null!;
     }
 
 }
