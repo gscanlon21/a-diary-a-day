@@ -21,16 +21,14 @@ else if (Model == null)
 else
 {
     var isDebugWorkout = Model.User.Features.HasFlag(Features.Debug);
-    var isMobilityWorkout = Model.UserMood.Frequency == Core.Models.User.Frequency.OffDayStretches;
-    var exerciseNames = string.Join(", ", Model.MainExercises.GroupBy(e => e.Exercise).Select(g => g.Key.Name));
 
     <Lib.Pages.Shared.Newsletter._Preview Model='@($"What is your current mood?")' />
 
     <div style="margin-bottom:1rem;">
         <h6 style="margin-block:0;"><a target="_blank" href="@DH.NewsletterLink(Model.User, Model.Today)">@Model.Today.ToLongDateString()</a></h6>
-        <h1 style="margin-block:0;">Daily Workout</h1>
-        <h4 style="margin-block:0;display:inline-block;">Debug</h4>
-        <small> - @exerciseNames</small>
+        <h1 style="margin-block:0;">Daily Mood</h1>
+        <h4 style="margin-block:0;display:inline-block;">Something</h4>
+        <small> - Nothing</small>
     </div>
 
     <Lib.Pages.Shared.Newsletter._UserStatusMessages User="Model.User" />

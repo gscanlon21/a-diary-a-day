@@ -1,6 +1,4 @@
-﻿using Core.Code.Extensions;
-using Core.Consts;
-using Data.Entities.User;
+﻿using Core.Consts;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Web.ViewModels.User;

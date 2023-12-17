@@ -1,12 +1,7 @@
-﻿using Core.Code.Extensions;
-using Core.Consts;
-using Core.Models.Exercise;
-using Core.Models.Newsletter;
-using Core.Models.User;
+﻿using Core.Models.Exercise;
 using Data.Dtos.Newsletter;
 using Data.Entities.User;
 using Data.Models.Newsletter;
-using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repos;
 

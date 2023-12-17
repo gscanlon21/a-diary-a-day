@@ -2,7 +2,6 @@
 using Core.Models.Newsletter;
 using Data.Entities.User;
 using Data.Models;
-using Data.Query;
 using System.Diagnostics;
 
 namespace Data.Dtos.Newsletter;

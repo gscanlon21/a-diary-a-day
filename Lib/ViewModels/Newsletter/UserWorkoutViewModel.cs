@@ -1,6 +1,4 @@
-﻿using Core.Code.Extensions;
-using Core.Models.Exercise;
-using Core.Models.User;
+﻿using Core.Models.Exercise;
 
 namespace Lib.ViewModels.Newsletter;
 
@@ -15,9 +13,7 @@ public class UserMoodViewModel
 
     public string Description()
     {
-        var first = Frequency == Frequency.OffDayStretches ? Frequency.GetSingleDisplayName() : Rotation.MuscleGroupsDisplayName;
-        var second = Frequency == Frequency.OffDayStretches ? Rotation.MuscleGroupsDisplayName : Rotation.MovementPatterns.GetDisplayName32(EnumExtensions.DisplayNameType.ShortName);
-        return $"{first} - {second}";
+        return $"{Date}";
     }
 
     public int UserId { get; init; }
@@ -35,15 +31,5 @@ public class UserMoodViewModel
     /// <summary>
     /// What was the workout split used when this newsletter was sent?
     /// </summary>
-    public Frequency Frequency { get; init; }
-
-    /// <summary>
-    /// What was the workout split used when this newsletter was sent?
-    /// </summary>
     public Intensity Intensity { get; init; }
-
-    /// <summary>
-    /// Deloads are weeks with a message to lower the intensity of the workout so muscle growth doesn't stagnate
-    /// </summary>
-    public bool IsDeloadWeek { get; init; }
 }

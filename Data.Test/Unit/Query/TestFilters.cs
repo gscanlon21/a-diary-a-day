@@ -1,9 +1,4 @@
-﻿using Core.Code.Extensions;
-using Core.Models.Exercise;
-using Core.Models.User;
-using Data.Query;
-using Data.Test.Code;
-using Microsoft.EntityFrameworkCore;
+﻿using Data.Test.Code;
 
 namespace Data.Test.Unit.Query;
 
@@ -13,7 +8,7 @@ public class TestFilters : RealDatabase
     [TestInitialize]
     public async Task Init()
     {
-      
+
     }
 
     [TestMethod]

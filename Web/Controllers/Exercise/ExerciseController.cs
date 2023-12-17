@@ -1,8 +1,5 @@
 ﻿using Core.Consts;
-using Core.Models.Exercise;
-using Data.Dtos.Newsletter;
 using Microsoft.AspNetCore.Mvc;
-using Web.Code;
 using Web.Code.Attributes;
 using Web.ViewModels.Exercise;
 

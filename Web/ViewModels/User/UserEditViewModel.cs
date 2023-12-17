@@ -27,7 +27,6 @@ public class UserEditViewModel
         Email = user.Email;
         SendDays = user.SendDays;
         Intensity = user.Intensity;
-        Frequency = user.Frequency;
         NewsletterEnabled = user.NewsletterEnabled;
         NewsletterDisabledReason = user.NewsletterDisabledReason;
         Verbosity = user.Verbosity;
@@ -106,10 +105,6 @@ public class UserEditViewModel
     public Intensity Intensity { get; init; }
 
     [Required]
-    [Display(Name = "Workout Split", Description = "")]
-    public Frequency Frequency { get; init; }
-
-    [Required]
     [Display(Name = "Workout Verbosity", Description = "What level of detail do you want to receive in each workout?")]
     public Verbosity Verbosity { get; set; }
 
@@ -122,7 +117,7 @@ public class UserEditViewModel
     public bool ShowStaticImages { get; set; }
 
     [Required]
-    [Display(Name = "Strengthening Days", Description = "What days do you want to receive new strengthening workouts?")]
+    [Display(Name = "Send Days", Description = "What days do you want to receive new emails?")]
     public Days SendDays { get; private set; }
 
     public Verbosity[]? VerbosityBinder

@@ -1,6 +1,4 @@
-﻿using Data.Dtos.Newsletter;
-using Data.Repos;
-using Lib.ViewModels.Newsletter;
+﻿using Data.Repos;
 using Lib.ViewModels.User;
 using Microsoft.AspNetCore.Mvc;
 using Web.Code;

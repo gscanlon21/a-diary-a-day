@@ -35,7 +35,7 @@ public class UserNewsletterViewModel
     [Display(Name = "Is New to Fitness")]
     public bool IsNewToFitness { get; init; }
 
-    [Display(Name = "Strengthening Days")]
+    [Display(Name = "Send Days")]
     public Days SendDays { get; init; }
 
     [Display(Name = "Sports Focus")]
@@ -43,9 +43,6 @@ public class UserNewsletterViewModel
 
     [Display(Name = "Workout Intensity")]
     public Intensity Intensity { get; init; }
-
-    [Display(Name = "Workout Split")]
-    public Frequency Frequency { get; init; }
 
     [Display(Name = "Weeks Between Functional Refresh")]
     public int RefreshFunctionalEveryXWeeks { get; set; }

@@ -1,9 +1,5 @@
-﻿using Core.Code.Extensions;
-using Core.Consts;
-using Core.Models.Exercise;
-using Core.Models.User;
+﻿using Core.Consts;
 using Data;
-using Data.Entities.User;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -81,7 +77,6 @@ public partial class UserController(CoreContext context, IServiceScopeFactory se
                 viewModel.User.SendHour = viewModel.SendHour;
                 viewModel.User.ShowStaticImages = viewModel.ShowStaticImages;
                 viewModel.User.Intensity = viewModel.Intensity;
-                viewModel.User.Frequency = viewModel.Frequency;
                 viewModel.User.IncludeMobilityWorkouts = viewModel.IncludeMobilityWorkouts;
                 viewModel.User.IsNewToFitness = viewModel.IsNewToFitness;
 
@@ -207,8 +202,7 @@ public partial class UserController(CoreContext context, IServiceScopeFactory se
         }
 
         // Add a dummy newsletter to advance the workout split
-        var (needsDeload, _) = await userRepo.CheckNewsletterDeloadStatus(user);
-        var newsletter = new Data.Entities.Newsletter.UserMood(Today, user, user.Frequency, needsDeload);
+        var newsletter = new Data.Entities.Newsletter.UserMood(Today, user);
         context.UserMoods.Add(newsletter);
 
         await context.SaveChangesAsync();

@@ -47,14 +47,6 @@
             {
                 <input type="hidden" asp-for="IsNewToFitness" />
             }
-
-            <div class="form-group mb-3">
-                <label asp-for="Frequency" class="control-label">@Html.DisplayNameFor(_ => Model.Frequency)</label>
-                <select asp-for="Frequency" class="form-control" aria-describedby="frequency-help"
-                        asp-items="@EnumExtensions.GetValuesExcluding32(Frequency.None, Frequency.OffDayStretches, Model.User.IsNewToFitness ? Frequency.Custom : Frequency.None).AsSelectListItems32().OrderBy(f => f.Text)">
-                </select>
-                <span asp-validation-for="Frequency" class="text-danger"></span>
-            </div>
          
             @if (Model.IsNewToFitness)
             {
@@ -285,7 +277,6 @@
         @await Component.InvokeAsync(WorkoutViewComponent.Name, new { Model.User })
         @await Component.InvokeAsync(NextWorkoutViewComponent.Name, new { Model.User })
         @await Component.InvokeAsync(PastWorkoutViewComponent.Name, new { Model.User })
-        @await Component.InvokeAsync(WorkoutsPerWeekViewComponent.Name, new { Model.User })
         @await Component.InvokeAsync(TokenViewComponent.Name, new { Model.User })
         @await Component.InvokeAsync(FootnoteViewComponent.Name, new { Model.User })
         @await Component.InvokeAsync(IgnoredViewComponent.Name, new { Model.User })

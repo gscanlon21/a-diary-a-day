@@ -1,9 +1,7 @@
-﻿using Core.Models.Exercise;
-using Data.Entities.Footnote;
+﻿using Data.Entities.Footnote;
 using Data.Entities.Newsletter;
 using Data.Entities.User;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Text.Json;
 
 namespace Data;

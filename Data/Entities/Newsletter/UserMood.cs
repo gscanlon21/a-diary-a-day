@@ -1,5 +1,4 @@
 ﻿using Core.Models.Exercise;
-using Core.Models.User;
 using Data.Entities.User;
 using Data.Models.Newsletter;
 using Microsoft.EntityFrameworkCore;
@@ -18,15 +17,13 @@ public class UserMood
     [Obsolete("Public parameterless constructor required for EF Core .AsSplitQuery()", error: true)]
     public UserMood() { }
 
-    internal UserMood(DateOnly date, WorkoutContext context) : this(date, context.User, context.Frequency, context.NeedsDeload) { }
+    internal UserMood(DateOnly date, WorkoutContext context) : this(date, context.User) { }
 
-    public UserMood(DateOnly date, User.User user, Frequency frequency, bool isDeloadWeek)
+    public UserMood(DateOnly date, User.User user)
     {
         Date = date;
         User = user;
         Intensity = user.Intensity;
-        Frequency = frequency;
-        IsDeloadWeek = isDeloadWeek;
     }
 
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -51,19 +48,7 @@ public class UserMood
     /// What was the workout split used when this newsletter was sent?
     /// </summary>
     [Required]
-    public Frequency Frequency { get; private init; }
-
-    /// <summary>
-    /// What was the workout split used when this newsletter was sent?
-    /// </summary>
-    [Required]
     public Intensity Intensity { get; private init; }
-
-    /// <summary>
-    /// Deloads are weeks with a message to lower the intensity of the workout so muscle growth doesn't stagnate
-    /// </summary>
-    [Required]
-    public bool IsDeloadWeek { get; private init; }
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserMoods))]
     public virtual User.User User { get; private init; } = null!;

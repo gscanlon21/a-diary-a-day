@@ -1,11 +1,8 @@
-﻿using Core.Consts;
-using Core.Models.Newsletter;
-using Data.Dtos.Newsletter;
+﻿using Core.Models.Newsletter;
 using Data.Entities.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using Web.Code;
 using Web.ViewModels.User;
 
 namespace Web.Controllers.User;
@@ -27,7 +24,7 @@ public partial class UserController
         }
 
         var parameters = new UserManageMoodViewModel.TheParameters(section, email, token, exerciseId, variationId);
-      
+
         var userMood = await context.UserMoods
             .IgnoreQueryFilters()
             .FirstOrDefaultAsync(p => p.UserId == user.Id);

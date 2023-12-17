@@ -1,5 +1,4 @@
-﻿using Core.Models.User;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Lib.ViewModels.Newsletter;
 
@@ -24,12 +23,6 @@ public class NewsletterEntityViewModel
     /// </summary>
     [Required]
     public WorkoutRotationViewModel Rotation { get; set; } = null!;
-
-    /// <summary>
-    /// What was the workout split used when this newsletter was sent?
-    /// </summary>
-    [Required]
-    public Frequency Frequency { get; init; }
 
     /// <summary>
     /// Deloads are weeks with a message to lower the intensity of the workout so muscle growth doesn't stagnate

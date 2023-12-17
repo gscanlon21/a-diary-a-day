@@ -16,11 +16,7 @@ public class UserNewsletterDto(Entities.User.User user, string token)
 {
     internal UserNewsletterDto(WorkoutContext context) : this(context.User, context.Token)
     {
-        TimeUntilDeload = context.TimeUntilDeload;
     }
-
-    [Display(Name = "Days Until Deload")]
-    public TimeSpan TimeUntilDeload { get; set; } = TimeSpan.Zero;
 
     public int Id { get; } = user.Id;
 
@@ -42,7 +38,7 @@ public class UserNewsletterDto(Entities.User.User user, string token)
     [Display(Name = "Is New to Fitness")]
     public bool IsNewToFitness { get; } = user.IsNewToFitness;
 
-    [Display(Name = "Strengthening Days")]
+    [Display(Name = "Send Days")]
     public Days SendDays { get; } = user.SendDays;
 
     [Display(Name = "Sports Focus")]
@@ -53,9 +49,6 @@ public class UserNewsletterDto(Entities.User.User user, string token)
 
     [Display(Name = "Workout Intensity")]
     public Intensity Intensity { get; } = user.Intensity;
-
-    [Display(Name = "Workout Split")]
-    public Frequency Frequency { get; } = user.Frequency;
 
     [Display(Name = "Weeks Between Functional Refresh")]
     public int RefreshFunctionalEveryXWeeks { get; set; } = user.RefreshFunctionalEveryXWeeks;
