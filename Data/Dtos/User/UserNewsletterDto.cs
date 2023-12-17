@@ -28,10 +28,6 @@ public class UserNewsletterDto(Entities.User.User user, string token)
     [Display(Name = "Footnotes")]
     public FootnoteType FootnoteType { get; } = user.FootnoteType;
 
-    public bool ShowStaticImages { get; } = user.ShowStaticImages;
-
-    public bool IncludeMobilityWorkouts { get; } = user.IncludeMobilityWorkouts;
-
     public DateOnly? LastActive { get; } = user.LastActive;
 
     [Display(Name = "Send Days")]
@@ -39,15 +35,6 @@ public class UserNewsletterDto(Entities.User.User user, string token)
 
     [Display(Name = "Workout Verbosity")]
     public Verbosity Verbosity { get; } = user.Verbosity;
-
-    [Display(Name = "Workout Intensity")]
-    public Intensity Intensity { get; } = user.Intensity;
-
-    [Display(Name = "Weeks Between Functional Refresh")]
-    public int RefreshFunctionalEveryXWeeks { get; set; } = user.RefreshFunctionalEveryXWeeks;
-
-    [Display(Name = "Weeks Between Accessory Refresh")]
-    public int RefreshAccessoryEveryXWeeks { get; set; } = user.RefreshAccessoryEveryXWeeks;
 
     public int FootnoteCountTop { get; init; } = user.FootnoteCountTop;
 

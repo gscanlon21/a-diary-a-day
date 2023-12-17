@@ -35,15 +35,6 @@ public class UserNewsletterViewModel
     [Display(Name = "Send Days")]
     public Days SendDays { get; init; }
 
-    [Display(Name = "Workout Intensity")]
-    public Intensity Intensity { get; init; }
-
-    [Display(Name = "Weeks Between Functional Refresh")]
-    public int RefreshFunctionalEveryXWeeks { get; set; }
-
-    [Display(Name = "Weeks Between Accessory Refresh")]
-    public int RefreshAccessoryEveryXWeeks { get; set; }
-
     [JsonInclude]
     public ICollection<UserExerciseViewModel> UserExercises { get; init; } = null!;
 

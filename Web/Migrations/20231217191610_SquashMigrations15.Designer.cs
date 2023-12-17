@@ -3,6 +3,7 @@ using System;
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Web.Migrations
 {
     [DbContext(typeof(CoreContext))]
-    partial class CoreContextModelSnapshot : ModelSnapshot
+    [Migration("20231217191610_SquashMigrations15")]
+    partial class SquashMigrations15
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,6 +143,15 @@ namespace Web.Migrations
                     b.Property<bool>("AcceptedTerms")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("AtLeastXUniqueMusclesPerExercise_Accessory")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("AtLeastXUniqueMusclesPerExercise_Flexibility")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("AtLeastXUniqueMusclesPerExercise_Mobility")
+                        .HasColumnType("integer");
+
                     b.Property<DateOnly>("CreatedDate")
                         .HasColumnType("date");
 
@@ -159,6 +171,9 @@ namespace Web.Migrations
                     b.Property<int>("FootnoteType")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("IgnorePrerequisites")
+                        .HasColumnType("boolean");
+
                     b.Property<DateOnly?>("LastActive")
                         .HasColumnType("date");
 
@@ -173,6 +188,12 @@ namespace Web.Migrations
 
                     b.Property<int>("Verbosity")
                         .HasColumnType("integer");
+
+                    b.Property<double>("WeightIsolationXTimesMore")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("WeightSecondaryMusclesXTimesLess")
+                        .HasColumnType("double precision");
 
                     b.HasKey("Id");
 

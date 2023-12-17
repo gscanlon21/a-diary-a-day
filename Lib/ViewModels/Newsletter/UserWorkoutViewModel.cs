@@ -22,9 +22,4 @@ public class UserMoodViewModel
     /// The date the newsletter was sent out on
     /// </summary>
     public DateOnly Date { get; init; }
-
-    /// <summary>
-    /// What was the workout split used when this newsletter was sent?
-    /// </summary>
-    public Intensity Intensity { get; init; }
 }

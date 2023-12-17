@@ -69,10 +69,6 @@ public class User
         SendHour = UserConsts.SendHourDefault;
         Verbosity = UserConsts.VerbosityDefault;
         FootnoteType = UserConsts.FootnotesDefault;
-        Intensity = UserConsts.IntensityDefault;
-        DeloadAfterEveryXWeeks = UserConsts.DeloadAfterEveryXWeeksDefault;
-        RefreshAccessoryEveryXWeeks = UserConsts.RefreshAccessoryEveryXWeeksDefault;
-        RefreshFunctionalEveryXWeeks = UserConsts.RefreshFunctionalEveryXWeeksDefault;
 
         CreatedDate = DateOnly.FromDateTime(DateTime.UtcNow);
     }
@@ -91,18 +87,6 @@ public class User
     /// </summary>
     [Required]
     public bool AcceptedTerms { get; private init; }
-
-    /// <summary>
-    /// User prefers static instead of dynamic images?
-    /// </summary>
-    [Required]
-    public bool ShowStaticImages { get; set; }
-
-    /// <summary>
-    /// User would like to receive emails on their off days recommending mobility and stretching exercises?
-    /// </summary>
-    [Required]
-    public bool IncludeMobilityWorkouts { get; set; }
 
     /// <summary>
     /// Types of footnotes to show to the user.
@@ -138,30 +122,6 @@ public class User
     /// </summary>
     [Required]
     public DateOnly CreatedDate { get; private init; }
-
-    /// <summary>
-    /// How intense the user wants workouts to be.
-    /// </summary>
-    [Required]
-    public Intensity Intensity { get; set; }
-
-    /// <summary>
-    /// How often should we show a deload week to the user?
-    /// </summary>
-    [Required, Range(UserConsts.DeloadAfterEveryXWeeksMin, UserConsts.DeloadAfterEveryXWeeksMax)]
-    public int DeloadAfterEveryXWeeks { get; set; }
-
-    /// <summary>
-    /// How often to refresh functional movement exercises.
-    /// </summary>
-    [Required, Range(UserConsts.RefreshFunctionalEveryXWeeksMin, UserConsts.RefreshFunctionalEveryXWeeksMax)]
-    public int RefreshFunctionalEveryXWeeks { get; set; }
-
-    /// <summary>
-    /// How often to refresh accessory exercises.
-    /// </summary>
-    [Required, Range(UserConsts.RefreshAccessoryEveryXWeeksMin, UserConsts.RefreshAccessoryEveryXWeeksMax)]
-    public int RefreshAccessoryEveryXWeeks { get; set; }
 
     /// <summary>
     /// What level of detail the user wants in their newsletter?
@@ -212,17 +172,8 @@ public class User
     #endregion
     #region Advanced Preferences
 
-    public bool IgnorePrerequisites { get; set; }
-
-    public int AtLeastXUniqueMusclesPerExercise_Mobility { get; set; } = Consts.AtLeastXUniqueMusclesPerExercise_MobilityDefault;
-    public int AtLeastXUniqueMusclesPerExercise_Flexibility { get; set; } = Consts.AtLeastXUniqueMusclesPerExercise_FlexibilityDefault;
-    public int AtLeastXUniqueMusclesPerExercise_Accessory { get; set; } = Consts.AtLeastXUniqueMusclesPerExercise_AccessoryDefault;
-
     public int FootnoteCountTop { get; set; } = Consts.FootnoteCountTopDefault;
     public int FootnoteCountBottom { get; set; } = Consts.FootnoteCountBottomDefault;
-
-    public double WeightSecondaryMusclesXTimesLess { get; set; } = Consts.WeightSecondaryMusclesXTimesLessDefault;
-    public double WeightIsolationXTimesMore { get; set; } = Consts.WeightIsolationXTimesMoreDefault;
 
     #endregion
     #region Navigation Properties
