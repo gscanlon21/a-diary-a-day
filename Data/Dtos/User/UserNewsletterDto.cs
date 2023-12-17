@@ -35,14 +35,8 @@ public class UserNewsletterDto(Entities.User.User user, string token)
 
     public DateOnly? LastActive { get; } = user.LastActive;
 
-    [Display(Name = "Is New to Fitness")]
-    public bool IsNewToFitness { get; } = user.IsNewToFitness;
-
     [Display(Name = "Send Days")]
     public Days SendDays { get; } = user.SendDays;
-
-    [Display(Name = "Sports Focus")]
-    public SportsFocus SportsFocus { get; init; } = user.SportsFocus;
 
     [Display(Name = "Workout Verbosity")]
     public Verbosity Verbosity { get; } = user.Verbosity;

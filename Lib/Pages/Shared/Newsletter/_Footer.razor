@@ -18,14 +18,7 @@
     }
 
     <div><small><b>Send Days</b> - @User.SendDays.GetSingleDisplayName(EnumExtensions.DisplayNameType.ShortName)</small></div>
-    @if (User.IsNewToFitness)
-    {
-        <div><small><b>Is New to Fitness</b> - @User.IsNewToFitness</small></div>
-    }
-    else
-    {
-        <div><small><b>Workout Intensity</b> - @User.Intensity.GetSingleDisplayName()</small></div>
-    }
+    <div><small><b>Workout Intensity</b> - @User.Intensity.GetSingleDisplayName()</small></div>
 
     @if (User.RefreshFunctionalEveryXWeeks > 0)
     {
@@ -35,8 +28,6 @@
     {
         <div><small><b>Weeks Between Accessory Refresh</b> - @User.RefreshAccessoryEveryXWeeks</small></div>
     }
-
-    <div><small><b>Sports Focus</b> - @User.SportsFocus.GetSingleDisplayName()</small></div>
 
     <div><small><b>Footnotes</b> - @User.FootnoteType.GetDisplayName32()</small></div>
 

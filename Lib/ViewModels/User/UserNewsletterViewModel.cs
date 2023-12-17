@@ -32,14 +32,8 @@ public class UserNewsletterViewModel
 
     public DateOnly? LastActive { get; init; }
 
-    [Display(Name = "Is New to Fitness")]
-    public bool IsNewToFitness { get; init; }
-
     [Display(Name = "Send Days")]
     public Days SendDays { get; init; }
-
-    [Display(Name = "Sports Focus")]
-    public SportsFocus SportsFocus { get; init; }
 
     [Display(Name = "Workout Intensity")]
     public Intensity Intensity { get; init; }

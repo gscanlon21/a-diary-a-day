@@ -32,8 +32,6 @@ public class ExerciseVariationViewModel
     public string? EasierReason { get; init; }
     public string? HarderReason { get; init; }
 
-    public ProficiencyViewModel? Proficiency { get; init; }
-
     [JsonInclude]
     public ICollection<ExercisePrerequisiteViewModel> ExercisePrerequisites { get; init; } = null!;
 

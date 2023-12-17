@@ -36,8 +36,6 @@ public class UserEditViewModel
         DeloadAfterEveryXWeeks = user.DeloadAfterEveryXWeeks;
         RefreshAccessoryEveryXWeeks = user.RefreshAccessoryEveryXWeeks;
         RefreshFunctionalEveryXWeeks = user.RefreshFunctionalEveryXWeeks;
-        IsNewToFitness = user.IsNewToFitness;
-        SportsFocus = user.SportsFocus;
         IncludeMobilityWorkouts = user.IncludeMobilityWorkouts;
         Token = token;
     }
@@ -59,10 +57,6 @@ public class UserEditViewModel
     [Display(Name = "Email", Description = "")]
     public string Email { get; init; } = null!;
 
-    [Required]
-    [Display(Name = "I'm new to fitness", Description = "Simplify your workouts.")]
-    public bool IsNewToFitness { get; init; }
-
     /// <summary>
     /// How often to take a deload week
     /// </summary>
@@ -81,12 +75,6 @@ public class UserEditViewModel
     [Required]
     [Display(Name = "Include Rest-Day Mobility Workouts", Description = "Include workouts on your rest days with core, mobility, flexibility, injury prevention, and rehabilitation exercises.")]
     public bool IncludeMobilityWorkouts { get; init; }
-
-    /// <summary>
-    /// Include a section to boost a specific sports performance
-    /// </summary>
-    [Display(Name = "Sports Focus", Description = "Include additional plyometric and strengthening exercises that focus on the movements involved in a particular sport.")]
-    public SportsFocus SportsFocus { get; init; }
 
     /// <summary>
     /// Types of footnotes to show to the user.

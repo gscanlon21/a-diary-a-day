@@ -55,7 +55,7 @@ public class User
     /// <summary>
     /// Creates a new user.
     /// </summary>
-    public User(string email, bool acceptedTerms, bool isNewToFitness)
+    public User(string email, bool acceptedTerms)
     {
         if (!acceptedTerms)
         {
@@ -64,7 +64,6 @@ public class User
 
         Email = email.Trim();
         AcceptedTerms = acceptedTerms;
-        IsNewToFitness = isNewToFitness;
 
         SendDays = UserConsts.DaysDefault;
         SendHour = UserConsts.SendHourDefault;
@@ -106,40 +105,10 @@ public class User
     public bool IncludeMobilityWorkouts { get; set; }
 
     /// <summary>
-    /// User is new to fitness?
-    /// </summary>
-    [NotMapped]
-    public bool IsNewToFitness
-    {
-        get => SeasonedDate == null;
-        set
-        {
-            if (SeasonedDate == null && !value)
-            {
-                SeasonedDate = DateOnly.FromDateTime(DateTime.UtcNow);
-            }
-        }
-    }
-
-    /// <summary>
-    /// When was the user no longer new to fitness. 
-    /// Or null if the user is still new to fitness.
-    /// 
-    /// Date is UTC.
-    /// </summary>
-    public DateOnly? SeasonedDate { get; set; }
-
-    /// <summary>
     /// Types of footnotes to show to the user.
     /// </summary>
     [Required]
     public FootnoteType FootnoteType { get; set; }
-
-    /// <summary>
-    /// Include a section to boost a specific sports performance.
-    /// </summary>
-    [Required]
-    public SportsFocus SportsFocus { get; set; }
 
     /// <summary>
     /// Days the user want to skip the newsletter.
