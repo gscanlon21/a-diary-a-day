@@ -1,4 +1,4 @@
-﻿using Core.Models.Newsletter;
+﻿using Core.Models.User;
 using Data.Entities.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -28,24 +28,12 @@ public partial class UserController
         var userMood = await context.UserMoods
             .IgnoreQueryFilters()
             .FirstOrDefaultAsync(p => p.UserId == user.Id);
-        if (userMood == null)
-        {
-            userMood = new UserMood()
-            {
-                Date = Today,
-                UserId = user.Id,
-                Value = 0
-            };
-
-            context.Add(userMood);
-            await context.SaveChangesAsync();
-        }
 
         var userWeights = await context.UserMoods
                 .Where(uw => uw.UserId == user.Id)
                 .ToListAsync();
 
-        return View(new UserManageMoodViewModel(userWeights, userMood.Value)
+        return View(new UserManageMoodViewModel(userWeights, (int?)userMood?.Mood)
         {
             User = user,
             Parameters = parameters,
@@ -56,7 +44,7 @@ public partial class UserController
     [HttpPost]
     [Route("m", Order = 1)]
     [Route("mood", Order = 2)]
-    public async Task<IActionResult> ManageMood(string email, string token, [Range(0, 999)] int weight)
+    public async Task<IActionResult> ManageMood(string email, string token, [Range(1, 5)] Mood mood)
     {
         if (ModelState.IsValid)
         {
@@ -67,10 +55,22 @@ public partial class UserController
             }
 
             // Set the new weight on the UserVariation
-            var userMood = await context.UserMoods.FirstAsync(p => p.UserId == user.Id);
-            userMood.Value = weight;
-            await context.SaveChangesAsync();
+            var userMood = await context.UserMoods.FirstOrDefaultAsync(p => p.UserId == user.Id);
+            if (userMood == null)
+            {
+                context.Add(new UserMood()
+                {
+                    Date = Today,
+                    UserId = user.Id,
+                    Mood = mood
+                });
+            }
+            else
+            {
+                userMood.Mood = mood;
+            }
 
+            await context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
         }
 

@@ -39,16 +39,16 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <div class="form-group mb-3 mt-3">
-                    <label class="control-label">@Html.DisplayNameFor(_ => Model.Weight)</label>
-                    <div><span asp-validation-for="Weight" class="text-danger"></span></div>
+                    <label class="control-label">@Html.DisplayNameFor(_ => Model.Mood)</label>
+                    <div><span asp-validation-for="Mood" class="text-danger"></span></div>
                     <div style="display:flex;column-gap:1ex;">
-                        <input type="number" asp-for="Weight" style="width:6ch;height:fit-content;" class="allow-demo"
+                        <input type="number" asp-for="Mood" style="width:6ch;height:fit-content;" class="allow-demo"
                                oninput="poundsInput.value = this.valueAsNumber" />
                         <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                             <input type="range" style="width:100%;" class="allow-demo"
                                    name="poundsInput" list="hashmarks" id="pounds-input"
-                                   min="0" max="5" step="1" value="@Model.Weight"
-                                   oninput="@(Html.NameFor(_ => Model.Weight)).value = this.valueAsNumber" />
+                                   min="0" max="5" step="1" value="@Model.Mood"
+                                   oninput="@(Html.NameFor(_ => Model.Mood)).value = this.valueAsNumber" />
 
                             <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
                                 <option value="1"></option>
@@ -58,11 +58,11 @@
                                 <option value="5"></option>
 
                                 <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
-                                <div onclick="@(Html.NameFor(_ => Model.Weight)).value = document.getElementById('pounds-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(20% - .5ch)">Poor</div>
-                                <div onclick="@(Html.NameFor(_ => Model.Weight)).value = document.getElementById('pounds-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(40% - .5ch)">Okay</div>
-                                <div onclick="@(Html.NameFor(_ => Model.Weight)).value = document.getElementById('pounds-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(60% - .5ch)">Decent</div>
-                                <div onclick="@(Html.NameFor(_ => Model.Weight)).value = document.getElementById('pounds-input').value = this.dataset.value" data-value="4" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(80% - .5ch)">Good</div>
-                                <div onclick="@(Html.NameFor(_ => Model.Weight)).value = document.getElementById('pounds-input').value = this.dataset.value" data-value="5" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">Great</div>
+                                <div onclick="@(Html.NameFor(_ => Model.Mood)).value = document.getElementById('pounds-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(20% - .5ch)">Poor</div>
+                                <div onclick="@(Html.NameFor(_ => Model.Mood)).value = document.getElementById('pounds-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(40% - .5ch)">Okay</div>
+                                <div onclick="@(Html.NameFor(_ => Model.Mood)).value = document.getElementById('pounds-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(60% - .5ch)">Decent</div>
+                                <div onclick="@(Html.NameFor(_ => Model.Mood)).value = document.getElementById('pounds-input').value = this.dataset.value" data-value="4" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(80% - .5ch)">Good</div>
+                                <div onclick="@(Html.NameFor(_ => Model.Mood)).value = document.getElementById('pounds-input').value = this.dataset.value" data-value="5" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">Great</div>
                             </datalist>
                         </div>
                     </div>
@@ -80,6 +80,10 @@
 
         <div class="col-lg-6">
             @await Component.InvokeAsync(JournalViewComponent.Name, new { Model.User })
+        </div>
+
+        <div class="col-lg-6">
+            @await Component.InvokeAsync(DepressionViewComponent.Name, new { Model.User })
         </div>
     </div>
 </div>

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Core.Models.User;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -18,16 +19,13 @@ public class UserMood
     public int Id { get; private init; }
 
     [Required]
-    public int Value { get; set; }
-
-    [Required]
     public int UserId { get; set; }
 
-    /// <summary>
-    /// The token should stop working after this date.
-    /// </summary>
     [Required]
     public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
+
+    [Required]
+    public Mood? Mood { get; set; }
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserMoods))]
     public virtual User User { get; private init; } = null!;

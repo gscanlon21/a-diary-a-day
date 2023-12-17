@@ -1,5 +1,4 @@
-﻿using Core.Models.Newsletter;
-using Data.Entities.User;
+﻿using Data.Entities.User;
 using System.ComponentModel.DataAnnotations;
 
 namespace Web.ViewModels.User;
@@ -18,14 +17,14 @@ public class UserManageMoodViewModel
 
     public UserManageMoodViewModel(IList<UserMood>? userWeights, int? currentWeight)
     {
-        Weight = currentWeight.GetValueOrDefault();
+        Mood = currentWeight.GetValueOrDefault();
         if (userWeights != null && currentWeight.HasValue)
         {
             // Skip today, start at 1, because we append the current weight onto the end regardless.
             Xys = Enumerable.Range(1, 365).Select(i =>
             {
                 var date = Today.AddDays(-i);
-                return new Xy(date, userWeights.FirstOrDefault(uw => uw.Date == date)?.Value);
+                return new Xy(date, (int?)userWeights.FirstOrDefault(uw => uw.Date == date)?.Mood);
             }).Where(xy => xy.Y.HasValue).Reverse().Append(new Xy(Today, currentWeight)).ToList();
         }
     }
@@ -36,9 +35,9 @@ public class UserManageMoodViewModel
 
     public bool? WasUpdated { get; init; }
 
-    [Required, Range(0, 5)]
-    [Display(Name = "What is your current mood?")]
-    public int Weight { get; init; }
+    [Range(1, 5)]
+    [Display(Name = "How was your day?")]
+    public int? Mood { get; init; }
 
     internal IList<Xy> Xys { get; init; } = new List<Xy>();
 

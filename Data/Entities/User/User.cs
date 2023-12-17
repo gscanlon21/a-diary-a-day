@@ -1,5 +1,4 @@
 ﻿using Core.Consts;
-using Core.Models.Exercise;
 using Core.Models.Footnote;
 using Core.Models.Newsletter;
 using Core.Models.User;
@@ -27,26 +26,6 @@ public class User
         public const int FootnoteCountTopDefault = 2;
         public const int FootnoteCountBottomDefault = 2;
         public const int FootnoteCountMax = 4;
-
-        public const int AtLeastXUniqueMusclesPerExercise_FlexibilityMin = 1;
-        public const int AtLeastXUniqueMusclesPerExercise_FlexibilityDefault = 3;
-        public const int AtLeastXUniqueMusclesPerExercise_FlexibilityMax = 4;
-
-        public const int AtLeastXUniqueMusclesPerExercise_MobilityMin = 1;
-        public const int AtLeastXUniqueMusclesPerExercise_MobilityDefault = 3;
-        public const int AtLeastXUniqueMusclesPerExercise_MobilityMax = 4;
-
-        public const int AtLeastXUniqueMusclesPerExercise_AccessoryMin = 1;
-        public const int AtLeastXUniqueMusclesPerExercise_AccessoryDefault = 3;
-        public const int AtLeastXUniqueMusclesPerExercise_AccessoryMax = 4;
-
-        public const double WeightIsolationXTimesMoreMin = 1;
-        public const double WeightIsolationXTimesMoreDefault = 1.5;
-        public const double WeightIsolationXTimesMoreMax = 2;
-
-        public const double WeightSecondaryMusclesXTimesLessMin = 2;
-        public const double WeightSecondaryMusclesXTimesLessDefault = 3;
-        public const double WeightSecondaryMusclesXTimesLessMax = 4;
     }
 
     [Obsolete("Public parameterless constructor for model binding.", error: true)]
@@ -183,6 +162,9 @@ public class User
 
     [JsonIgnore, InverseProperty(nameof(UserMood.User))]
     public virtual ICollection<UserMood> UserMoods { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserDepression.User))]
+    public virtual ICollection<UserDepression> UserDepressions { get; private init; } = null!;
 
     [JsonIgnore, InverseProperty(nameof(UserJournal.User))]
     public virtual ICollection<UserJournal> UserJournals { get; private init; } = null!;

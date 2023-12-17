@@ -1,5 +1,4 @@
 ﻿using Core.Consts;
-using Core.Models.Exercise;
 using Core.Models.Footnote;
 using Core.Models.User;
 using System.ComponentModel.DataAnnotations;
@@ -34,12 +33,6 @@ public class UserNewsletterViewModel
 
     [Display(Name = "Send Days")]
     public Days SendDays { get; init; }
-
-    [JsonInclude]
-    public ICollection<UserExerciseViewModel> UserExercises { get; init; } = null!;
-
-    [JsonInclude]
-    public ICollection<UserVariationViewModel> UserVariations { get; init; } = null!;
 
     public int FootnoteCountTop { get; init; }
 

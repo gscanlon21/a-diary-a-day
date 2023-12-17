@@ -22,7 +22,7 @@ else
 {
     var isDebugWorkout = Model.User.Features.HasFlag(Features.Debug);
 
-    <Lib.Pages.Shared.Newsletter._Preview Model='@($"What is your current mood?")' />
+    <Lib.Pages.Shared.Newsletter._Preview Model='@($"How was your day?")' />
 
     <div style="margin-bottom:1rem;">
         <h6 style="margin-block:0;"><a target="_blank" href="@DH.NewsletterLink(Model.User, Model.Today)">@Model.Today.ToLongDateString()</a></h6>
@@ -37,7 +37,7 @@ else
     
     <div style="margin-block:1rem;">
         <div>
-            <a target="_blank" href="@DH.UserLink(Model.User, "m")">What is your mood?</a>
+            <a target="_blank" href="@DH.UserLink(Model.User, "m")">How was your day?</a>
         </div>
     </div>
 

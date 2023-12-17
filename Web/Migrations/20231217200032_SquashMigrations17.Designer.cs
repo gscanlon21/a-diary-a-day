@@ -3,6 +3,7 @@ using System;
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Web.Migrations
 {
     [DbContext(typeof(CoreContext))]
-    partial class CoreContextModelSnapshot : ModelSnapshot
+    [Migration("20231217200032_SquashMigrations17")]
+    partial class SquashMigrations17
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -197,30 +200,38 @@ namespace Web.Migrations
                         .HasColumnType("date");
 
                     b.Property<int?>("Depressed")
+                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<int?>("Failure")
+                        .IsRequired()
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Forward")
+                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<int?>("Helpless")
+                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<int?>("Hopeless")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("NoFuture")
+                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<int?>("Sad")
+                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<int?>("Unhappy")
+                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.Property<int?>("Worthless")
+                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
