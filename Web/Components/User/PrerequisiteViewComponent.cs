@@ -3,7 +3,6 @@ using Data.Repos;
 using Lib.ViewModels.Newsletter;
 using Lib.ViewModels.User;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Web.Code;
 using Web.ViewModels.User.Components;
 

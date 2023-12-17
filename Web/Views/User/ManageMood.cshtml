@@ -33,7 +33,7 @@
     <div class="row gy-2">
         <div class="col-lg-6">
             <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageMood)" method="post"
-                   asp-route-email="@Model.Parameters.Email" asp-route-token="@Model.Parameters.Token" asp-route-section="@Model.Parameters.Section" asp-route-variationId="@Model.Parameters.VariationId" asp-route-exerciseId="@Model.Parameters.ExerciseId"
+                   asp-route-email="@Model.Parameters.Email" asp-route-token="@Model.Parameters.Token"
                    style="min-height:21ch;">
 
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -76,6 +76,10 @@
             <div style="height:min(70vw, 300px)">
                 <canvas id="myChart"></canvas>
             </div>
+        </div>
+
+        <div class="col-lg-6">
+            @await Component.InvokeAsync(JournalViewComponent.Name, new { Model.User })
         </div>
     </div>
 </div>

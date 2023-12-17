@@ -1,10 +1,7 @@
 ﻿using Core.Models.Footnote;
-using Core.Models.User;
 using Data.Dtos.Newsletter;
 using Data.Dtos.User;
 using Data.Entities.Footnote;
-using Data.Entities.Newsletter;
-using Data.Entities.User;
 using Data.Models.Newsletter;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

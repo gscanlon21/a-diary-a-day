@@ -7,8 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Entities\Equipment\**" />
+    <Compile Remove="Entities\Exercise\**" />
     <Compile Remove="Query\Builders\**" />
+    <EmbeddedResource Remove="Entities\Equipment\**" />
+    <EmbeddedResource Remove="Entities\Exercise\**" />
     <EmbeddedResource Remove="Query\Builders\**" />
+    <None Remove="Entities\Equipment\**" />
+    <None Remove="Entities\Exercise\**" />
     <None Remove="Query\Builders\**" />
   </ItemGroup>
 
@@ -27,11 +33,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Entities\Equipment\" />
-    <Folder Include="Entities\Exercise\" />
   </ItemGroup>
 
 </Project>

@@ -19,12 +19,6 @@ public class NewsletterEntityViewModel
     public DateOnly Date { get; init; }
 
     /// <summary>
-    /// What day of the workout split was used?
-    /// </summary>
-    [Required]
-    public WorkoutRotationViewModel Rotation { get; set; } = null!;
-
-    /// <summary>
     /// Deloads are weeks with a message to lower the intensity of the workout so muscle growth doesn't stagnate
     /// </summary>
     [Required]

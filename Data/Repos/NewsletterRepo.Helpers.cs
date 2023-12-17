@@ -1,5 +1,4 @@
-﻿using Data.Entities.Newsletter;
-using Data.Entities.User;
+﻿using Data.Entities.User;
 using Data.Models.Newsletter;
 
 namespace Data.Repos;

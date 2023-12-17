@@ -15,7 +15,7 @@ public partial class UserController
     [HttpGet]
     [Route("m", Order = 1)]
     [Route("mood", Order = 2)]
-    public async Task<IActionResult> ManageMood(string email, string token, int exerciseId, int variationId, Section section, bool? wasUpdated = null)
+    public async Task<IActionResult> ManageMood(string email, string token, bool? wasUpdated = null)
     {
         var user = await userRepo.GetUser(email, token, allowDemoUser: true);
         if (user == null)
@@ -23,11 +23,23 @@ public partial class UserController
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
         }
 
-        var parameters = new UserManageMoodViewModel.TheParameters(section, email, token, exerciseId, variationId);
+        var parameters = new UserManageMoodViewModel.TheParameters(email, token);
 
         var userMood = await context.UserMoods
             .IgnoreQueryFilters()
             .FirstOrDefaultAsync(p => p.UserId == user.Id);
+        if (userMood == null)
+        {
+            userMood = new UserMood()
+            {
+                Date = Today,
+                UserId = user.Id,
+                Value = 0
+            };
+
+            context.Add(userMood);
+            await context.SaveChangesAsync();
+        }
 
         var userWeights = await context.UserMoods
                 .Where(uw => uw.UserId == user.Id)
@@ -44,7 +56,7 @@ public partial class UserController
     [HttpPost]
     [Route("m", Order = 1)]
     [Route("mood", Order = 2)]
-    public async Task<IActionResult> ManageMood(string email, string token, int exerciseId, int variationId, Section section, [Range(0, 999)] int weight)
+    public async Task<IActionResult> ManageMood(string email, string token, [Range(0, 999)] int weight)
     {
         if (ModelState.IsValid)
         {
@@ -55,33 +67,13 @@ public partial class UserController
             }
 
             // Set the new weight on the UserVariation
-            var userMood = await context.UserMoods
-                .FirstAsync(p => p.UserId == user.Id);
+            var userMood = await context.UserMoods.FirstAsync(p => p.UserId == user.Id);
             userMood.Value = weight;
-
-            // Log the weight as a UserWeight
-            var todaysUserWeight = await context.UserMoods
-                .Where(uw => uw.UserId == userMood.Id)
-                .FirstOrDefaultAsync(uw => uw.Date == Today);
-            if (todaysUserWeight != null)
-            {
-                todaysUserWeight.Value = userMood.Value;
-            }
-            else
-            {
-                context.Add(new UserMood()
-                {
-                    Date = Today,
-                    UserId = user.Id,
-                    Value = userMood.Value,
-                });
-            }
-
             await context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(ManageMood), new { email, token, exerciseId, variationId, section, WasUpdated = true });
+            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
         }
 
-        return RedirectToAction(nameof(ManageMood), new { email, token, exerciseId, variationId, section, WasUpdated = false });
+        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
     }
 }

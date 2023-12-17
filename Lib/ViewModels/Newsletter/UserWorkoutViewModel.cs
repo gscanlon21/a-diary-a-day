@@ -24,11 +24,6 @@ public class UserMoodViewModel
     public DateOnly Date { get; init; }
 
     /// <summary>
-    /// What day of the workout split was used?
-    /// </summary>
-    public WorkoutRotationViewModel Rotation { get; set; } = null!;
-
-    /// <summary>
     /// What was the workout split used when this newsletter was sent?
     /// </summary>
     public Intensity Intensity { get; init; }

@@ -9,7 +9,7 @@ namespace Web.ViewModels.User;
 /// </summary>
 public class UserManageMoodViewModel
 {
-    public record TheParameters(Section Section, string Email, string Token, int ExerciseId, int VariationId);
+    public record TheParameters(string Email, string Token);
 
     private static DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
 

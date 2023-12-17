@@ -9,16 +9,16 @@ namespace Data.Entities.User;
 /// <summary>
 /// User's progression level of an exercise.
 /// </summary>
-[Table("user_mood"), Comment("User variation weight log")]
-public class UserMood
+[Table("user_journal"), Comment("User variation weight log")]
+public class UserJournal
 {
-    public UserMood() { }
+    public UserJournal() { }
 
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private init; }
 
     [Required]
-    public int Value { get; set; }
+    public string? Value { get; set; }
 
     [Required]
     public int UserId { get; set; }
@@ -29,6 +29,6 @@ public class UserMood
     [Required]
     public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
 
-    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserMoods))]
-    public virtual User User { get; private init; } = null!;
+    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserJournals))]
+    public virtual User User { get; set; } = null!;
 }
