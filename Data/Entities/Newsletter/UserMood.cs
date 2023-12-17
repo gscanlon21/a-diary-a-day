@@ -44,7 +44,7 @@ public class UserMood
     /// <summary>
     /// How much weight the user is able to lift.
     /// </summary>
-    [Required, Range(0, 999)]
+    [Required, Range(0, 5)]
     public int Weight { get; set; } = 0;
 
     /// <summary>

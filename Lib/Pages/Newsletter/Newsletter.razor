@@ -24,7 +24,7 @@ else
     var isMobilityWorkout = Model.UserMood.Frequency == Core.Models.User.Frequency.OffDayStretches;
     var exerciseNames = string.Join(", ", Model.MainExercises.GroupBy(e => e.Exercise).Select(g => g.Key.Name));
 
-    <Lib.Pages.Shared.Newsletter._Preview Model='@($"Debug - {exerciseNames}")' />
+    <Lib.Pages.Shared.Newsletter._Preview Model='@($"What is your current mood?")' />
 
     <div style="margin-bottom:1rem;">
         <h6 style="margin-block:0;"><a target="_blank" href="@DH.NewsletterLink(Model.User, Model.Today)">@Model.Today.ToLongDateString()</a></h6>

@@ -35,8 +35,8 @@ public class UserManageMoodViewModel
 
     public bool? WasUpdated { get; init; }
 
-    [Required, Range(0, 999)]
-    [Display(Name = "How much weight are you able to lift?")]
+    [Required, Range(0, 5)]
+    [Display(Name = "What is your current mood?")]
     public int Weight { get; init; }
 
     internal IList<Xy> Xys { get; init; } = new List<Xy>();
