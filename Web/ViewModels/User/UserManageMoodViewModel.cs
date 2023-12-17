@@ -18,7 +18,8 @@ public class UserManageMoodViewModel
 
     public UserManageMoodViewModel(IList<UserMood>? userWeights, int? currentWeight)
     {
-        if (userWeights != null && currentWeight != null)
+        Weight = currentWeight.GetValueOrDefault();
+        if (userWeights != null && currentWeight.HasValue)
         {
             // Skip today, start at 1, because we append the current weight onto the end regardless.
             Xys = Enumerable.Range(1, 365).Select(i =>

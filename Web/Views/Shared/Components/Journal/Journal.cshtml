@@ -38,20 +38,9 @@
                         <input type="submit" value="-" class="btn btn-outline-secondary" />
                     </div>
                     <span for="FootnoteId" class="text-danger"></span>
-                    @if (!string.IsNullOrWhiteSpace(footnote.Value))
-                    {
-                        var sourceIsLink = Uri.IsWellFormedUriString(footnote.Value, UriKind.Absolute);
-                        <div class="form-text font-size--smaller">
-                            @if (sourceIsLink)
-                            {
-                                <a target="_blank" href="@footnote.Value">@footnote.Value</a>
-                            }
-                            else
-                            {
-                                @footnote.Value
-                            }
-                        </div>
-                    }
+                    <div class="form-text font-size--smaller">
+                        @footnote.Date.ToString("O");
+                    </div>
                 </div>
             </form>
         }
