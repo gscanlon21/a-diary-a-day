@@ -28,25 +28,15 @@ public partial class UserController
 
         var parameters = new UserManageMoodViewModel.TheParameters(section, email, token, exerciseId, variationId);
       
-        var userExercise = await context.UserExercises
+        var userMood = await context.UserMoods
             .IgnoreQueryFilters()
-            .Where(ue => ue.UserId == user.Id)
-            .FirstOrDefaultAsync(ue => ue.ExerciseId == exerciseId);
+            .FirstOrDefaultAsync(p => p.UserId == user.Id);
 
-        if (userExercise == null)
-        {
-            userExercise = new UserExercise()
-            {
-                UserId = user.Id,
-                ExerciseId = exerciseId,
-                Progression = user.IsNewToFitness ? UserConsts.MinUserProgression : UserConsts.MidUserProgression,
-            };
+        var userWeights = await context.UserMoodValues
+                .Where(uw => uw.UserMoodId == userMood.Id)
+                .ToListAsync();
 
-            context.UserExercises.Add(userExercise);
-            await context.SaveChangesAsync();
-        }
-
-        return View(new UserManageMoodViewModel()
+        return View(new UserManageMoodViewModel(userWeights, userMood.Weight)
         {
             User = user,
             Parameters = parameters,
@@ -66,8 +56,32 @@ public partial class UserController
             {
                 return NotFound();
             }
-        
+
+            // Set the new weight on the UserVariation
+            var userMood = await context.UserMoods
+                .FirstAsync(p => p.UserId == user.Id);
+            userMood.Weight = weight;
+
+            // Log the weight as a UserWeight
+            var todaysUserWeight = await context.UserMoodValues
+                .Where(uw => uw.UserMoodId == userMood.Id)
+                .FirstOrDefaultAsync(uw => uw.Date == Today);
+            if (todaysUserWeight != null)
+            {
+                todaysUserWeight.Weight = userMood.Weight;
+            }
+            else
+            {
+                context.Add(new UserMoodValue()
+                {
+                    Date = Today,
+                    UserMoodId = userMood.Id,
+                    Weight = userMood.Weight,
+                });
+            }
+
             await context.SaveChangesAsync();
+
             return RedirectToAction(nameof(ManageMood), new { email, token, exerciseId, variationId, section, WasUpdated = true });
         }
 

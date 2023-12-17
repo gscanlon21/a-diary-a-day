@@ -1,5 +1,6 @@
 ﻿using Core.Models.Exercise;
 using Core.Models.User;
+using Data.Entities.User;
 using Data.Models.Newsletter;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
@@ -41,6 +42,12 @@ public class UserMood
     public DateOnly Date { get; private init; }
 
     /// <summary>
+    /// How much weight the user is able to lift.
+    /// </summary>
+    [Required, Range(0, 999)]
+    public int Weight { get; set; } = 0;
+
+    /// <summary>
     /// What was the workout split used when this newsletter was sent?
     /// </summary>
     [Required]
@@ -60,4 +67,7 @@ public class UserMood
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserMoods))]
     public virtual User.User User { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserMoodValue.UserMood))]
+    public virtual ICollection<UserMoodValue> UserVariationWeights { get; private init; } = new List<UserMoodValue>();
 }

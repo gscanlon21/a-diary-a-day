@@ -16,6 +16,7 @@ public class CoreContext : DbContext
     public DbSet<UserToken> UserTokens { get; set; } = null!;
     public DbSet<UserEmail> UserEmails { get; set; } = null!;
     public DbSet<UserExercise> UserExercises { get; set; } = null!;
+    public DbSet<UserMoodValue> UserMoodValues { get; set; } = null!;
     public DbSet<UserMood> UserMoods { get; set; } = null!;
     public DbSet<UserFootnote> UserFootnotes { get; set; } = null!;
 
