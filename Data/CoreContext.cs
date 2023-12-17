@@ -17,6 +17,17 @@ public class CoreContext : DbContext
     public DbSet<UserDepression> UserDepressions { get; set; } = null!;
     public DbSet<UserJournal> UserJournals { get; set; } = null!;
     public DbSet<UserFootnote> UserFootnotes { get; set; } = null!;
+    public DbSet<UserAcuteStressSeverity> UserAcuteStressSeverities { get; set; } = null!;
+    public DbSet<UserAgoraphobiaSeverity> UserAgoraphobiaSeverities { get; set; } = null!;
+    public DbSet<UserAnger> UserAngers { get; set; } = null!;
+    public DbSet<UserAnxiety> UserAnxieties { get; set; } = null!;
+    public DbSet<UserDepressionSeverity> UserDepressionSeverities { get; set; } = null!;
+    public DbSet<UserDissociativeSeverity> UserDissociativeSeverities { get; set; } = null!;
+    public DbSet<UserGeneralizedAnxietySeverity> UserGeneralizedAnxietySeverities { get; set; } = null!;
+    public DbSet<UserMania> UserManias { get; set; } = null!;
+    public DbSet<UserPanicSeverity> UserPanicSeverities { get; set; } = null!;
+    public DbSet<UserPosttraumaticStressSeverity> UserPosttraumaticStressSeverities { get; set; } = null!;
+    public DbSet<UserSocialAnxietySeverity> UserSocialAnxietySeverities { get; set; } = null!;
 
     public CoreContext() : base() { }
 

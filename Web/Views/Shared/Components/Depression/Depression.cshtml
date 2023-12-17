@@ -3,324 +3,301 @@
 @using Data.Entities.User
 @using Lib.Pages.Shared.Exercise
 
+<h6 class="mb-1">DSM-5-TR Depression</h6>
+<div class="alert alert-light shadow">
+    <h3>In the past SEVEN (7) DAYS:</h3>
 
-<div class="alert alert-secondary">
-    <div class="row gy-2">
-        <div class="col">
-            <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageMood)" method="post"
-                  asp-route-email="@Model.User.Email" asp-route-token="@Model.Token"
-                  style="min-height:21ch;">
+    <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageDepression)" method="post"
+          asp-route-email="@Model.User.Email" asp-route-token="@Model.Token"
+          style="min-height:21ch;">
 
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <div class="form-group mb-3 mt-3">
-                    <label class="control-label">@Html.DisplayNameFor(_ => Model.UserDepression.Depressed)</label>
-                    <div><span asp-validation-for="UserDepression.Depressed" class="text-danger"></span></div>
-                    <div style="display:flex;column-gap:1ex;">
-                        <input type="number" asp-for="UserDepression.Depressed" style="width:6ch;height:fit-content;" class="allow-demo"
-                               oninput="@(Html.NameFor(_ => Model.UserDepression.Depressed))Input.value = this.valueAsNumber" />
-                        <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                            <input type="range" style="width:100%;" class="allow-demo"
-                                   name="@(Html.NameFor(_ => Model.UserDepression.Depressed))Input" list="hashmarks" id="@(Html.NameFor(_ => Model.UserDepression.Depressed))-input"
-                                   min="0" max="5" step="1" value="@Model.UserDepression.Depressed"
-                                   oninput="@(Html.NameFor(_ => Model.UserDepression.Depressed)).value = this.valueAsNumber" />
+        <div class="form-group mb-3 mt-3">
+            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserDepression.Depressed)</label>
+            <div><span asp-validation-for="UserDepression.Depressed" class="text-danger"></span></div>
+            <div style="display:flex;column-gap:1ex;">
+                <input id="@(Html.IdFor(_ => Model.UserDepression.Depressed))" type="number" asp-for="UserDepression.Depressed" style="width:6ch;height:fit-content;" class="allow-demo"
+                       oninput="@(Html.IdFor(_ => Model.UserDepression.Depressed))Input.value = this.valueAsNumber" />
+                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                    <input type="range" style="width:100%;" class="allow-demo"
+                           name="@(Html.IdFor(_ => Model.UserDepression.Depressed))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserDepression.Depressed))-input"
+                           min="0" max="5" step="1" value="@(Model.UserDepression.Depressed ?? 0)"
+                           oninput="@(Html.IdFor(_ => Model.UserDepression.Depressed)).value = this.valueAsNumber" />
 
-                            <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
-                                <option value="1"></option>
-                                <option value="2"></option>
-                                <option value="3"></option>
-                                <option value="4"></option>
-                                <option value="5"></option>
+                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                        <option value=""></option>
+                        <option value="1"></option>
+                        <option value="2"></option>
+                        <option value="3"></option>
+                        <option value="4"></option>
+                        <option value="5"></option>
 
-                                <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Depressed)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Depressed))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(20% - .5ch)">Poor</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Depressed)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Depressed))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(40% - .5ch)">Okay</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Depressed)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Depressed))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(60% - .5ch)">Decent</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Depressed)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Depressed))-input').value = this.dataset.value" data-value="4" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(80% - .5ch)">Good</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Depressed)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Depressed))-input').value = this.dataset.value" data-value="5" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">Great</div>
-                            </datalist>
-                        </div>
-                    </div>
-                    <div id="@(Html.NameFor(_ => Model.UserDepression.Depressed))-help" class="form-text"></div>
+                        <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Depressed))').value = ''; document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Depressed))-input').value = this.dataset.value" data-value="0" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(0% - .5ch)">N.A.</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Depressed))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Depressed))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(20% - .5ch)">Poor</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Depressed))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Depressed))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(40% - .5ch)">Okay</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Depressed))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Depressed))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(60% - .5ch)">Decent</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Depressed))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Depressed))-input').value = this.dataset.value" data-value="4" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(80% - .5ch)">Good</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Depressed))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Depressed))-input').value = this.dataset.value" data-value="5" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">Great</div>
+                    </datalist>
                 </div>
-
-
-
-
-                <div class="form-group mb-3 mt-3">
-                    <label class="control-label">@Html.DisplayNameFor(_ => Model.UserDepression.Depressed)</label>
-                    <div><span asp-validation-for="UserDepression.Depressed" class="text-danger"></span></div>
-                    <div style="display:flex;column-gap:1ex;">
-                        <input type="number" asp-for="UserDepression.Depressed" style="width:6ch;height:fit-content;" class="allow-demo"
-                               oninput="@(Html.NameFor(_ => Model.UserDepression.Depressed))Input.value = this.valueAsNumber" />
-                        <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                            <input type="range" style="width:100%;" class="allow-demo"
-                                   name="@(Html.NameFor(_ => Model.UserDepression.Depressed))Input" list="hashmarks" id="@(Html.NameFor(_ => Model.UserDepression.Depressed))-input"
-                                   min="0" max="5" step="1" value="@Model.UserDepression.Depressed"
-                                   oninput="@(Html.NameFor(_ => Model.UserDepression.Depressed)).value = this.valueAsNumber" />
-
-                            <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
-                                <option value="1"></option>
-                                <option value="2"></option>
-                                <option value="3"></option>
-                                <option value="4"></option>
-                                <option value="5"></option>
-
-                                <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Depressed)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Depressed))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(20% - .5ch)">Poor</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Depressed)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Depressed))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(40% - .5ch)">Okay</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Depressed)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Depressed))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(60% - .5ch)">Decent</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Depressed)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Depressed))-input').value = this.dataset.value" data-value="4" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(80% - .5ch)">Good</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Depressed)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Depressed))-input').value = this.dataset.value" data-value="5" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">Great</div>
-                            </datalist>
-                        </div>
-                    </div>
-                    <div id="@(Html.NameFor(_ => Model.UserDepression.Depressed))-help" class="form-text"></div>
-                </div>
-
-
-
-                <div class="form-group mb-3 mt-3">
-                    <label class="control-label">@Html.DisplayNameFor(_ => Model.UserDepression.Failure)</label>
-                    <div><span asp-validation-for="UserDepression.Failure" class="text-danger"></span></div>
-                    <div style="display:flex;column-gap:1ex;">
-                        <input type="number" asp-for="UserDepression.Failure" style="width:6ch;height:fit-content;" class="allow-demo"
-                               oninput="@(Html.NameFor(_ => Model.UserDepression.Failure))Input.value = this.valueAsNumber" />
-                        <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                            <input type="range" style="width:100%;" class="allow-demo"
-                                   name="@(Html.NameFor(_ => Model.UserDepression.Failure))Input" list="hashmarks" id="@(Html.NameFor(_ => Model.UserDepression.Failure))-input"
-                                   min="0" max="5" step="1" value="@Model.UserDepression.Failure"
-                                   oninput="@(Html.NameFor(_ => Model.UserDepression.Failure)).value = this.valueAsNumber" />
-
-                            <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
-                                <option value="1"></option>
-                                <option value="2"></option>
-                                <option value="3"></option>
-                                <option value="4"></option>
-                                <option value="5"></option>
-
-                                <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Failure)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Failure))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(20% - .5ch)">Poor</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Failure)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Failure))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(40% - .5ch)">Okay</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Failure)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Failure))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(60% - .5ch)">Decent</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Failure)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Failure))-input').value = this.dataset.value" data-value="4" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(80% - .5ch)">Good</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Failure)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Failure))-input').value = this.dataset.value" data-value="5" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">Great</div>
-                            </datalist>
-                        </div>
-                    </div>
-                    <div id="@(Html.NameFor(_ => Model.UserDepression.Failure))-help" class="form-text"></div>
-                </div>
-
-
-
-                <div class="form-group mb-3 mt-3">
-                    <label class="control-label">@Html.DisplayNameFor(_ => Model.UserDepression.NoFuture)</label>
-                    <div><span asp-validation-for="UserDepression.NoFuture" class="text-danger"></span></div>
-                    <div style="display:flex;column-gap:1ex;">
-                        <input type="number" asp-for="UserDepression.NoFuture" style="width:6ch;height:fit-content;" class="allow-demo"
-                               oninput="@(Html.NameFor(_ => Model.UserDepression.NoFuture))Input.value = this.valueAsNumber" />
-                        <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                            <input type="range" style="width:100%;" class="allow-demo"
-                                   name="@(Html.NameFor(_ => Model.UserDepression.NoFuture))Input" list="hashmarks" id="@(Html.NameFor(_ => Model.UserDepression.NoFuture))-input"
-                                   min="0" max="5" step="1" value="@Model.UserDepression.NoFuture"
-                                   oninput="@(Html.NameFor(_ => Model.UserDepression.NoFuture)).value = this.valueAsNumber" />
-
-                            <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
-                                <option value="1"></option>
-                                <option value="2"></option>
-                                <option value="3"></option>
-                                <option value="4"></option>
-                                <option value="5"></option>
-
-                                <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.NoFuture)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.NoFuture))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(20% - .5ch)">Poor</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.NoFuture)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.NoFuture))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(40% - .5ch)">Okay</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.NoFuture)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.NoFuture))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(60% - .5ch)">Decent</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.NoFuture)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.NoFuture))-input').value = this.dataset.value" data-value="4" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(80% - .5ch)">Good</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.NoFuture)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.NoFuture))-input').value = this.dataset.value" data-value="5" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">Great</div>
-                            </datalist>
-                        </div>
-                    </div>
-                    <div id="@(Html.NameFor(_ => Model.UserDepression.NoFuture))-help" class="form-text"></div>
-                </div>
-
-
-
-                <div class="form-group mb-3 mt-3">
-                    <label class="control-label">@Html.DisplayNameFor(_ => Model.UserDepression.Helpless)</label>
-                    <div><span asp-validation-for="UserDepression.Helpless" class="text-danger"></span></div>
-                    <div style="display:flex;column-gap:1ex;">
-                        <input type="number" asp-for="UserDepression.Helpless" style="width:6ch;height:fit-content;" class="allow-demo"
-                               oninput="@(Html.NameFor(_ => Model.UserDepression.Helpless))Input.value = this.valueAsNumber" />
-                        <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                            <input type="range" style="width:100%;" class="allow-demo"
-                                   name="@(Html.NameFor(_ => Model.UserDepression.Helpless))Input" list="hashmarks" id="@(Html.NameFor(_ => Model.UserDepression.Helpless))-input"
-                                   min="0" max="5" step="1" value="@Model.UserDepression.Helpless"
-                                   oninput="@(Html.NameFor(_ => Model.UserDepression.Helpless)).value = this.valueAsNumber" />
-
-                            <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
-                                <option value="1"></option>
-                                <option value="2"></option>
-                                <option value="3"></option>
-                                <option value="4"></option>
-                                <option value="5"></option>
-
-                                <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Helpless)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Helpless))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(20% - .5ch)">Poor</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Helpless)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Helpless))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(40% - .5ch)">Okay</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Helpless)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Helpless))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(60% - .5ch)">Decent</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Helpless)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Helpless))-input').value = this.dataset.value" data-value="4" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(80% - .5ch)">Good</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Helpless)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Helpless))-input').value = this.dataset.value" data-value="5" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">Great</div>
-                            </datalist>
-                        </div>
-                    </div>
-                    <div id="@(Html.NameFor(_ => Model.UserDepression.Helpless))-help" class="form-text"></div>
-                </div>
-
-
-
-                <div class="form-group mb-3 mt-3">
-                    <label class="control-label">@Html.DisplayNameFor(_ => Model.UserDepression.Hopeless)</label>
-                    <div><span asp-validation-for="UserDepression.Hopeless" class="text-danger"></span></div>
-                    <div style="display:flex;column-gap:1ex;">
-                        <input type="number" asp-for="UserDepression.Hopeless" style="width:6ch;height:fit-content;" class="allow-demo"
-                               oninput="@(Html.NameFor(_ => Model.UserDepression.Hopeless))Input.value = this.valueAsNumber" />
-                        <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                            <input type="range" style="width:100%;" class="allow-demo"
-                                   name="@(Html.NameFor(_ => Model.UserDepression.Hopeless))Input" list="hashmarks" id="@(Html.NameFor(_ => Model.UserDepression.Hopeless))-input"
-                                   min="0" max="5" step="1" value="@Model.UserDepression.Hopeless"
-                                   oninput="@(Html.NameFor(_ => Model.UserDepression.Hopeless)).value = this.valueAsNumber" />
-
-                            <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
-                                <option value="1"></option>
-                                <option value="2"></option>
-                                <option value="3"></option>
-                                <option value="4"></option>
-                                <option value="5"></option>
-
-                                <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Hopeless)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Hopeless))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(20% - .5ch)">Poor</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Hopeless)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Hopeless))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(40% - .5ch)">Okay</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Hopeless)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Hopeless))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(60% - .5ch)">Decent</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Hopeless)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Hopeless))-input').value = this.dataset.value" data-value="4" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(80% - .5ch)">Good</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Hopeless)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Hopeless))-input').value = this.dataset.value" data-value="5" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">Great</div>
-                            </datalist>
-                        </div>
-                    </div>
-                    <div id="@(Html.NameFor(_ => Model.UserDepression.Hopeless))-help" class="form-text"></div>
-                </div>
-
-
-
-                <div class="form-group mb-3 mt-3">
-                    <label class="control-label">@Html.DisplayNameFor(_ => Model.UserDepression.Sad)</label>
-                    <div><span asp-validation-for="UserDepression.Sad" class="text-danger"></span></div>
-                    <div style="display:flex;column-gap:1ex;">
-                        <input type="number" asp-for="UserDepression.Sad" style="width:6ch;height:fit-content;" class="allow-demo"
-                               oninput="@(Html.NameFor(_ => Model.UserDepression.Sad))Input.value = this.valueAsNumber" />
-                        <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                            <input type="range" style="width:100%;" class="allow-demo"
-                                   name="@(Html.NameFor(_ => Model.UserDepression.Sad))Input" list="hashmarks" id="@(Html.NameFor(_ => Model.UserDepression.Sad))-input"
-                                   min="0" max="5" step="1" value="@Model.UserDepression.Sad"
-                                   oninput="@(Html.NameFor(_ => Model.UserDepression.Sad)).value = this.valueAsNumber" />
-
-                            <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
-                                <option value="1"></option>
-                                <option value="2"></option>
-                                <option value="3"></option>
-                                <option value="4"></option>
-                                <option value="5"></option>
-
-                                <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Sad)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Sad))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(20% - .5ch)">Poor</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Sad)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Sad))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(40% - .5ch)">Okay</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Sad)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Sad))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(60% - .5ch)">Decent</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Sad)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Sad))-input').value = this.dataset.value" data-value="4" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(80% - .5ch)">Good</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Sad)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Sad))-input').value = this.dataset.value" data-value="5" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">Great</div>
-                            </datalist>
-                        </div>
-                    </div>
-                    <div id="@(Html.NameFor(_ => Model.UserDepression.Sad))-help" class="form-text"></div>
-                </div>
-
-
-
-                <div class="form-group mb-3 mt-3">
-                    <label class="control-label">@Html.DisplayNameFor(_ => Model.UserDepression.Unhappy)</label>
-                    <div><span asp-validation-for="UserDepression.Unhappy" class="text-danger"></span></div>
-                    <div style="display:flex;column-gap:1ex;">
-                        <input type="number" asp-for="UserDepression.Unhappy" style="width:6ch;height:fit-content;" class="allow-demo"
-                               oninput="@(Html.NameFor(_ => Model.UserDepression.Unhappy))Input.value = this.valueAsNumber" />
-                        <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                            <input type="range" style="width:100%;" class="allow-demo"
-                                   name="@(Html.NameFor(_ => Model.UserDepression.Unhappy))Input" list="hashmarks" id="@(Html.NameFor(_ => Model.UserDepression.Unhappy))-input"
-                                   min="0" max="5" step="1" value="@Model.UserDepression.Unhappy"
-                                   oninput="@(Html.NameFor(_ => Model.UserDepression.Unhappy)).value = this.valueAsNumber" />
-
-                            <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
-                                <option value="1"></option>
-                                <option value="2"></option>
-                                <option value="3"></option>
-                                <option value="4"></option>
-                                <option value="5"></option>
-
-                                <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Unhappy)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Unhappy))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(20% - .5ch)">Poor</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Unhappy)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Unhappy))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(40% - .5ch)">Okay</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Unhappy)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Unhappy))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(60% - .5ch)">Decent</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Unhappy)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Unhappy))-input').value = this.dataset.value" data-value="4" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(80% - .5ch)">Good</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Unhappy)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Unhappy))-input').value = this.dataset.value" data-value="5" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">Great</div>
-                            </datalist>
-                        </div>
-                    </div>
-                    <div id="@(Html.NameFor(_ => Model.UserDepression.Unhappy))-help" class="form-text"></div>
-                </div>
-
-
-                <div class="form-group mb-3 mt-3">
-                    <label class="control-label">@Html.DisplayNameFor(_ => Model.UserDepression.Worthless)</label>
-                    <div><span asp-validation-for="UserDepression.Worthless" class="text-danger"></span></div>
-                    <div style="display:flex;column-gap:1ex;">
-                        <input type="number" asp-for="UserDepression.Worthless" style="width:6ch;height:fit-content;" class="allow-demo"
-                               oninput="@(Html.NameFor(_ => Model.UserDepression.Worthless))Input.value = this.valueAsNumber" />
-                        <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                            <input type="range" style="width:100%;" class="allow-demo"
-                                   name="@(Html.NameFor(_ => Model.UserDepression.Worthless))Input" list="hashmarks" id="@(Html.NameFor(_ => Model.UserDepression.Worthless))-input"
-                                   min="0" max="5" step="1" value="@Model.UserDepression.Worthless"
-                                   oninput="@(Html.NameFor(_ => Model.UserDepression.Worthless)).value = this.valueAsNumber" />
-
-                            <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
-                                <option value="1"></option>
-                                <option value="2"></option>
-                                <option value="3"></option>
-                                <option value="4"></option>
-                                <option value="5"></option>
-
-                                <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Worthless)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Worthless))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(20% - .5ch)">Poor</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Worthless)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Worthless))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(40% - .5ch)">Okay</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Worthless)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Worthless))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(60% - .5ch)">Decent</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Worthless)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Worthless))-input').value = this.dataset.value" data-value="4" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(80% - .5ch)">Good</div>
-                                <div onclick="@(Html.NameFor(_ => Model.UserDepression.Worthless)).value = document.getElementById('@(Html.NameFor(_ => Model.UserDepression.Worthless))-input').value = this.dataset.value" data-value="5" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">Great</div>
-                            </datalist>
-                        </div>
-                    </div>
-                    <div id="@(Html.NameFor(_ => Model.UserDepression.Worthless))-help" class="form-text"></div>
-                </div>
-
-                <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary allow-demo" />
-                </div>
-            </form>
-
-            <div style="height:min(70vw, 300px)">
-                <canvas id="myChart2"></canvas>
             </div>
+            <div id="@(Html.IdFor(_ => Model.UserDepression.Depressed))-help" class="form-text"></div>
         </div>
+
+        <div class="form-group mb-3 mt-3">
+            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserDepression.Failure)</label>
+            <div><span asp-validation-for="UserDepression.Failure" class="text-danger"></span></div>
+            <div style="display:flex;column-gap:1ex;">
+                <input id="@(Html.IdFor(_ => Model.UserDepression.Failure))" type="number" asp-for="UserDepression.Failure" style="width:6ch;height:fit-content;" class="allow-demo"
+                       oninput="@(Html.IdFor(_ => Model.UserDepression.Failure))Input.value = this.valueAsNumber" />
+                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                    <input type="range" style="width:100%;" class="allow-demo"
+                           name="@(Html.IdFor(_ => Model.UserDepression.Failure))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserDepression.Failure))-input"
+                           min="0" max="5" step="1" value="@(Model.UserDepression.Failure ?? 0)"
+                           oninput="@(Html.IdFor(_ => Model.UserDepression.Failure)).value = this.valueAsNumber" />
+
+                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                        <option value=""></option>
+                        <option value="1"></option>
+                        <option value="2"></option>
+                        <option value="3"></option>
+                        <option value="4"></option>
+                        <option value="5"></option>
+
+                        <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Failure))').value = ''; document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Failure))-input').value = this.dataset.value" data-value="0" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(0% - .5ch)">N.A.</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Failure))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Failure))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(20% - .5ch)">Poor</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Failure))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Failure))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(40% - .5ch)">Okay</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Failure))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Failure))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(60% - .5ch)">Decent</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Failure))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Failure))-input').value = this.dataset.value" data-value="4" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(80% - .5ch)">Good</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Failure))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Failure))-input').value = this.dataset.value" data-value="5" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">Great</div>
+                    </datalist>
+                </div>
+            </div>
+            <div id="@(Html.IdFor(_ => Model.UserDepression.Failure))-help" class="form-text"></div>
+        </div>
+
+
+
+        <div class="form-group mb-3 mt-3">
+            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserDepression.NoFuture)</label>
+            <div><span asp-validation-for="UserDepression.NoFuture" class="text-danger"></span></div>
+            <div style="display:flex;column-gap:1ex;">
+                <input id="@(Html.IdFor(_ => Model.UserDepression.NoFuture))" type="number" asp-for="UserDepression.NoFuture" style="width:6ch;height:fit-content;" class="allow-demo"
+                       oninput="@(Html.IdFor(_ => Model.UserDepression.NoFuture))Input.value = this.valueAsNumber" />
+                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                    <input type="range" style="width:100%;" class="allow-demo"
+                           name="@(Html.IdFor(_ => Model.UserDepression.NoFuture))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserDepression.NoFuture))-input"
+                           min="0" max="5" step="1" value="@(Model.UserDepression.NoFuture ?? 0)"
+                           oninput="@(Html.IdFor(_ => Model.UserDepression.NoFuture)).value = this.valueAsNumber" />
+
+                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                        <option value=""></option>
+                        <option value="1"></option>
+                        <option value="2"></option>
+                        <option value="3"></option>
+                        <option value="4"></option>
+                        <option value="5"></option>
+
+                        <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.NoFuture))').value = ''; document.getElementById('@(Html.IdFor(_ => Model.UserDepression.NoFuture))-input').value = this.dataset.value" data-value="0" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(0% - .5ch)">N.A.</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.NoFuture))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.NoFuture))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(20% - .5ch)">Poor</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.NoFuture))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.NoFuture))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(40% - .5ch)">Okay</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.NoFuture))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.NoFuture))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(60% - .5ch)">Decent</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.NoFuture))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.NoFuture))-input').value = this.dataset.value" data-value="4" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(80% - .5ch)">Good</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.NoFuture))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.NoFuture))-input').value = this.dataset.value" data-value="5" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">Great</div>
+                    </datalist>
+                </div>
+            </div>
+            <div id="@(Html.IdFor(_ => Model.UserDepression.NoFuture))-help" class="form-text"></div>
+        </div>
+
+
+
+        <div class="form-group mb-3 mt-3">
+            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserDepression.Helpless)</label>
+            <div><span asp-validation-for="UserDepression.Helpless" class="text-danger"></span></div>
+            <div style="display:flex;column-gap:1ex;">
+                <input id="@(Html.IdFor(_ => Model.UserDepression.Helpless))" type="number" asp-for="UserDepression.Helpless" style="width:6ch;height:fit-content;" class="allow-demo"
+                       oninput="@(Html.IdFor(_ => Model.UserDepression.Helpless))Input.value = this.valueAsNumber" />
+                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                    <input type="range" style="width:100%;" class="allow-demo"
+                           name="@(Html.IdFor(_ => Model.UserDepression.Helpless))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserDepression.Helpless))-input"
+                           min="0" max="5" step="1" value="@(Model.UserDepression.Helpless ?? 0)"
+                           oninput="@(Html.IdFor(_ => Model.UserDepression.Helpless)).value = this.valueAsNumber" />
+
+                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                        <option value=""></option>
+                        <option value="1"></option>
+                        <option value="2"></option>
+                        <option value="3"></option>
+                        <option value="4"></option>
+                        <option value="5"></option>
+
+                        <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Helpless))').value = ''; document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Helpless))-input').value = this.dataset.value" data-value="0" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(0% - .5ch)">N.A.</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Helpless))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Helpless))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(20% - .5ch)">Poor</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Helpless))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Helpless))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(40% - .5ch)">Okay</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Helpless))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Helpless))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(60% - .5ch)">Decent</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Helpless))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Helpless))-input').value = this.dataset.value" data-value="4" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(80% - .5ch)">Good</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Helpless))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Helpless))-input').value = this.dataset.value" data-value="5" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">Great</div>
+                    </datalist>
+                </div>
+            </div>
+            <div id="@(Html.IdFor(_ => Model.UserDepression.Helpless))-help" class="form-text"></div>
+        </div>
+
+
+
+        <div class="form-group mb-3 mt-3">
+            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserDepression.Hopeless)</label>
+            <div><span asp-validation-for="UserDepression.Hopeless" class="text-danger"></span></div>
+            <div style="display:flex;column-gap:1ex;">
+                <input id="@(Html.IdFor(_ => Model.UserDepression.Hopeless))" type="number" asp-for="UserDepression.Hopeless" style="width:6ch;height:fit-content;" class="allow-demo"
+                       oninput="@(Html.IdFor(_ => Model.UserDepression.Hopeless))Input.value = this.valueAsNumber" />
+                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                    <input type="range" style="width:100%;" class="allow-demo"
+                           name="@(Html.IdFor(_ => Model.UserDepression.Hopeless))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserDepression.Hopeless))-input"
+                           min="0" max="5" step="1" value="@(Model.UserDepression.Hopeless ?? 0)"
+                           oninput="@(Html.IdFor(_ => Model.UserDepression.Hopeless)).value = this.valueAsNumber" />
+
+                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                        <option value=""></option>
+                        <option value="1"></option>
+                        <option value="2"></option>
+                        <option value="3"></option>
+                        <option value="4"></option>
+                        <option value="5"></option>
+
+                        <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Hopeless))').value = ''; document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Hopeless))-input').value = this.dataset.value" data-value="0" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(0% - .5ch)">N.A.</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Hopeless))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Hopeless))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(20% - .5ch)">Poor</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Hopeless))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Hopeless))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(40% - .5ch)">Okay</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Hopeless))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Hopeless))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(60% - .5ch)">Decent</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Hopeless))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Hopeless))-input').value = this.dataset.value" data-value="4" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(80% - .5ch)">Good</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Hopeless))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Hopeless))-input').value = this.dataset.value" data-value="5" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">Great</div>
+                    </datalist>
+                </div>
+            </div>
+            <div id="@(Html.IdFor(_ => Model.UserDepression.Hopeless))-help" class="form-text"></div>
+        </div>
+
+
+
+        <div class="form-group mb-3 mt-3">
+            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserDepression.Sad)</label>
+            <div><span asp-validation-for="UserDepression.Sad" class="text-danger"></span></div>
+            <div style="display:flex;column-gap:1ex;">
+                <input id="@(Html.IdFor(_ => Model.UserDepression.Sad))" type="number" asp-for="UserDepression.Sad" style="width:6ch;height:fit-content;" class="allow-demo"
+                       oninput="@(Html.IdFor(_ => Model.UserDepression.Sad))Input.value = this.valueAsNumber" />
+                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                    <input type="range" style="width:100%;" class="allow-demo"
+                           name="@(Html.IdFor(_ => Model.UserDepression.Sad))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserDepression.Sad))-input"
+                           min="0" max="5" step="1" value="@(Model.UserDepression.Sad ?? 0)"
+                           oninput="@(Html.IdFor(_ => Model.UserDepression.Sad)).value = this.valueAsNumber" />
+
+                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                        <option value=""></option>
+                        <option value="1"></option>
+                        <option value="2"></option>
+                        <option value="3"></option>
+                        <option value="4"></option>
+                        <option value="5"></option>
+
+                        <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Sad))').value = ''; document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Sad))-input').value = this.dataset.value" data-value="0" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(0% - .5ch)">N.A.</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Sad))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Sad))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(20% - .5ch)">Poor</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Sad))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Sad))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(40% - .5ch)">Okay</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Sad))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Sad))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(60% - .5ch)">Decent</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Sad))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Sad))-input').value = this.dataset.value" data-value="4" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(80% - .5ch)">Good</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Sad))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Sad))-input').value = this.dataset.value" data-value="5" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">Great</div>
+                    </datalist>
+                </div>
+            </div>
+            <div id="@(Html.IdFor(_ => Model.UserDepression.Sad))-help" class="form-text"></div>
+        </div>
+
+
+
+        <div class="form-group mb-3 mt-3">
+            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserDepression.Unhappy)</label>
+            <div><span asp-validation-for="UserDepression.Unhappy" class="text-danger"></span></div>
+            <div style="display:flex;column-gap:1ex;">
+                <input id="@(Html.IdFor(_ => Model.UserDepression.Unhappy))" type="number" asp-for="UserDepression.Unhappy" style="width:6ch;height:fit-content;" class="allow-demo"
+                       oninput="@(Html.IdFor(_ => Model.UserDepression.Unhappy))Input.value = this.valueAsNumber" />
+                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                    <input type="range" style="width:100%;" class="allow-demo"
+                           name="@(Html.IdFor(_ => Model.UserDepression.Unhappy))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserDepression.Unhappy))-input"
+                           min="0" max="5" step="1" value="@(Model.UserDepression.Unhappy ?? 0)"
+                           oninput="@(Html.IdFor(_ => Model.UserDepression.Unhappy)).value = this.valueAsNumber" />
+
+                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                        <option value=""></option>
+                        <option value="1"></option>
+                        <option value="2"></option>
+                        <option value="3"></option>
+                        <option value="4"></option>
+                        <option value="5"></option>
+
+                        <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Unhappy))').value = ''; document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Unhappy))-input').value = this.dataset.value" data-value="0" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(0% - .5ch)">N.A.</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Unhappy))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Unhappy))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(20% - .5ch)">Poor</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Unhappy))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Unhappy))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(40% - .5ch)">Okay</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Unhappy))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Unhappy))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(60% - .5ch)">Decent</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Unhappy))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Unhappy))-input').value = this.dataset.value" data-value="4" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(80% - .5ch)">Good</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Unhappy))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Unhappy))-input').value = this.dataset.value" data-value="5" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">Great</div>
+                    </datalist>
+                </div>
+            </div>
+            <div id="@(Html.IdFor(_ => Model.UserDepression.Unhappy))-help" class="form-text"></div>
+        </div>
+
+
+        <div class="form-group mb-3 mt-3">
+            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserDepression.Worthless)</label>
+            <div><span asp-validation-for="UserDepression.Worthless" class="text-danger"></span></div>
+            <div style="display:flex;column-gap:1ex;">
+                <input id="@(Html.IdFor(_ => Model.UserDepression.Worthless))" type="number" asp-for="UserDepression.Worthless" style="width:6ch;height:fit-content;" class="allow-demo"
+                       oninput="@(Html.IdFor(_ => Model.UserDepression.Worthless))Input.value = this.valueAsNumber" />
+                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                    <input type="range" style="width:100%;" class="allow-demo"
+                           name="@(Html.IdFor(_ => Model.UserDepression.Worthless))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserDepression.Worthless))-input"
+                           min="0" max="5" step="1" value="@(Model.UserDepression.Worthless ?? 0)"
+                           oninput="@(Html.IdFor(_ => Model.UserDepression.Worthless)).value = this.valueAsNumber" />
+
+                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                        <option value=""></option>
+                        <option value="1"></option>
+                        <option value="2"></option>
+                        <option value="3"></option>
+                        <option value="4"></option>
+                        <option value="5"></option>
+
+                        <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Worthless))').value = ''; document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Worthless))-input').value = this.dataset.value" data-value="0" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(0% - .5ch)">N.A.</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Worthless))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Worthless))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(20% - .5ch)">Poor</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Worthless))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Worthless))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(40% - .5ch)">Okay</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Worthless))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Worthless))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(60% - .5ch)">Decent</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Worthless))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Worthless))-input').value = this.dataset.value" data-value="4" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(80% - .5ch)">Good</div>
+                        <div onclick="document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Worthless))').value = document.getElementById('@(Html.IdFor(_ => Model.UserDepression.Worthless))-input').value = this.dataset.value" data-value="5" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">Great</div>
+                    </datalist>
+                </div>
+            </div>
+            <div id="@(Html.IdFor(_ => Model.UserDepression.Worthless))-help" class="form-text"></div>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary allow-demo" />
+        </div>
+    </form>
+
+    <div style="height:min(70vw, 300px)">
+        <canvas id="myChart2"></canvas>
     </div>
 </div>
 
-@*
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <script>
@@ -414,4 +391,3 @@
         });
     }
 </script>
-*@

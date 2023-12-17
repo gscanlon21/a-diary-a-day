@@ -175,5 +175,39 @@ public class User
     [JsonIgnore, InverseProperty(nameof(Footnote.UserFootnote.User))]
     public virtual ICollection<Footnote.UserFootnote> UserFootnotes { get; private init; } = null!;
 
+
+    [JsonIgnore, InverseProperty(nameof(UserDepression.User))]
+    public virtual ICollection<UserAcuteStressSeverity> UserAcuteStressSeverities { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserDepression.User))]
+    public virtual ICollection<UserAgoraphobiaSeverity> UserAgoraphobiaSeverities { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserDepression.User))]
+    public virtual ICollection<UserAnger> UserAngers { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserDepression.User))]
+    public virtual ICollection<UserAnxiety> UserAnxieties { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserDepression.User))]
+    public virtual ICollection<UserDepressionSeverity> UserDepressionSeverities { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserDepression.User))]
+    public virtual ICollection<UserDissociativeSeverity> UserDissociativeSeverities { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserDepression.User))]
+    public virtual ICollection<UserGeneralizedAnxietySeverity> UserGeneralizedAnxietySeverities { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserDepression.User))]
+    public virtual ICollection<UserMania> UserManias { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserDepression.User))]
+    public virtual ICollection<UserPanicSeverity> UserPanicSeverities { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserDepression.User))]
+    public virtual ICollection<UserPosttraumaticStressSeverity> UserPosttraumaticStressSeverities { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserDepression.User))]
+    public virtual ICollection<UserSocialAnxietySeverity> UserSocialAnxietySeverities { get; private init; } = null!;
+
     #endregion
 }

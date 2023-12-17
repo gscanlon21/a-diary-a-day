@@ -40,12 +40,4 @@ public class UserManageMoodViewModel
     public int? Mood { get; init; }
 
     internal IList<Xy> Xys { get; init; } = new List<Xy>();
-
-    /// <summary>
-    /// For chart.js
-    /// </summary>
-    internal record Xy(string X, int? Y)
-    {
-        internal Xy(DateOnly x, int? y) : this(x.ToString("O"), y) { }
-    }
 }

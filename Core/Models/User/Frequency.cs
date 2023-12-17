@@ -8,3 +8,13 @@ public enum Frequency
     Often = 4,
     Alwasy = 5
 }
+
+
+public enum FrequencySeverity
+{
+    Never = 0,
+    Rarely = 1,
+    Sometimes = 2,
+    Often = 3,
+    Alwasy = 4
+}

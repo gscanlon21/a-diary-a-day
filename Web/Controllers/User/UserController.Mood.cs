@@ -27,7 +27,7 @@ public partial class UserController
 
         var userMood = await context.UserMoods
             .IgnoreQueryFilters()
-            .FirstOrDefaultAsync(p => p.UserId == user.Id);
+            .FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == Today);
 
         var userWeights = await context.UserMoods
                 .Where(uw => uw.UserId == user.Id)
@@ -55,7 +55,7 @@ public partial class UserController
             }
 
             // Set the new weight on the UserVariation
-            var userMood = await context.UserMoods.FirstOrDefaultAsync(p => p.UserId == user.Id);
+            var userMood = await context.UserMoods.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == Today);
             if (userMood == null)
             {
                 context.Add(new UserMood()

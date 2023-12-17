@@ -2,7 +2,6 @@
 using Core.Models.Footnote;
 using Core.Models.User;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace Lib.ViewModels.User;
 

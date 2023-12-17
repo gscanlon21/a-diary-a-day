@@ -1,15 +1,16 @@
-﻿using Data.Entities.User;
+﻿using Core.Models.User;
+using Data.Entities.User;
 
 namespace Web.ViewModels.User.Components;
 
-public class DepressionViewModel
+public class PanicSeverityViewModel
 {
     /// <summary>
     /// Today's date in UTC.
     /// </summary>
     private static DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
 
-    public DepressionViewModel(IList<UserDepression>? userMoods, int? currentMood)
+    public PanicSeverityViewModel(IList<UserPanicSeverity>? userMoods, int? currentMood)
     {
         //Mood = currentWeight.GetValueOrDefault();
         if (userMoods != null && currentMood.HasValue)
@@ -26,7 +27,7 @@ public class DepressionViewModel
     public string Token { get; init; } = null!;
     public Data.Entities.User.User User { get; init; } = null!;
 
-    public UserDepression UserDepression { get; init; } = null!;
+    public UserPanicSeverity UserMood { get; init; } = null!;
 
     internal IList<Xy> Xys { get; init; } = new List<Xy>();
 }

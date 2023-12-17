@@ -3,6 +3,7 @@ using System;
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Web.Migrations
 {
     [DbContext(typeof(CoreContext))]
-    partial class CoreContextModelSnapshot : ModelSnapshot
+    [Migration("20231217223427_SquashMigrations20")]
+    partial class SquashMigrations20
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,9 +214,6 @@ namespace Web.Migrations
                     b.Property<int?>("Irritable")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("Score")
-                        .HasColumnType("integer");
-
                     b.Property<int?>("Startled")
                         .HasColumnType("integer");
 
@@ -271,9 +271,6 @@ namespace Web.Migrations
                     b.Property<int?>("Preparing")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("Score")
-                        .HasColumnType("integer");
-
                     b.Property<int?>("Tense")
                         .HasColumnType("integer");
 
@@ -316,9 +313,6 @@ namespace Web.Migrations
                     b.Property<int?>("Irritated")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("Score")
-                        .HasColumnType("integer");
-
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
@@ -353,9 +347,6 @@ namespace Web.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int?>("Nervous")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("Score")
                         .HasColumnType("integer");
 
                     b.Property<int?>("Tense")
@@ -409,9 +400,6 @@ namespace Web.Migrations
                     b.Property<int?>("Sad")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("Score")
-                        .HasColumnType("integer");
-
                     b.Property<int?>("Unhappy")
                         .HasColumnType("integer");
 
@@ -463,9 +451,6 @@ namespace Web.Migrations
                     b.Property<int?>("NoInterest")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("Score")
-                        .HasColumnType("integer");
-
                     b.Property<int?>("Sleeping")
                         .HasColumnType("integer");
 
@@ -509,9 +494,6 @@ namespace Web.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int?>("Nothing")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("Score")
                         .HasColumnType("integer");
 
                     b.Property<int?>("TalkOutLoud")
@@ -569,9 +551,6 @@ namespace Web.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int?>("Reassurance")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("Score")
                         .HasColumnType("integer");
 
                     b.Property<int?>("Tense")
@@ -645,9 +624,6 @@ namespace Web.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int?>("Question5")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("Score")
                         .HasColumnType("integer");
 
                     b.Property<int>("UserId")
@@ -776,9 +752,6 @@ namespace Web.Migrations
                     b.Property<int?>("NoInterest")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("Score")
-                        .HasColumnType("integer");
-
                     b.Property<int?>("Startled")
                         .HasColumnType("integer");
 
@@ -837,9 +810,6 @@ namespace Web.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int?>("Preparing")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("Score")
                         .HasColumnType("integer");
 
                     b.Property<int?>("Tense")
