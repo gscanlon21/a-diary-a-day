@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Core.Models.User;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -10,7 +11,7 @@ namespace Data.Entities.User;
 /// https://www.psychiatry.org/getmedia/6ab8ea4f-e810-4c0c-b41c-16838293506d/APA-DSM5TR-SeverityMeasureForPanicDisorderAdult.pdf
 /// </summary>
 [Table("user_panic_severity"), Comment("User variation weight log")]
-public class UserPanicSeverity
+public class UserPanicSeverity : IScore
 {
     public UserPanicSeverity() { }
 

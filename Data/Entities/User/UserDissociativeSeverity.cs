@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Core.Models.User;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -10,7 +11,7 @@ namespace Data.Entities.User;
 /// https://www.psychiatry.org/getmedia/40a74f7f-d18c-4088-8464-653073c74452/APA-DSM5TR-SeverityOfDissociativeSymptomsAdult.pdf
 /// </summary>
 [Table("user_dissociative_severity"), Comment("User variation weight log")]
-public class UserDissociativeSeverity
+public class UserDissociativeSeverity : IScore
 {
     public UserDissociativeSeverity() { }
 

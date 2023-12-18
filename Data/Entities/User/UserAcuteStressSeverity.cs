@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Core.Models.User;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -10,7 +11,7 @@ namespace Data.Entities.User;
 /// https://www.psychiatry.org/getmedia/364c20fa-25a5-43cb-b6ad-a4b230ef5b70/APA-DSM5TR-SeverityOfAcuteStressSymptomsAdult.pdf
 /// </summary>
 [Table("user_acute_stress_severity"), Comment("User variation weight log")]
-public class UserAcuteStressSeverity
+public class UserAcuteStressSeverity : IScore
 {
     public UserAcuteStressSeverity() { }
 
@@ -64,7 +65,7 @@ public class UserAcuteStressSeverity
     /// Prorated score.
     /// </summary>
     [Range(0, 99)]
-    public int? ProratedScore => Items.Count * Items.Sum() / Items.Count(d => d.HasValue);
+    public int? ProratedScore => Items.Any(d => d.HasValue) ? Items.Count * Items.Sum() / Items.Count(d => d.HasValue) : null;
 
     /// <summary>
     /// Prorated score.

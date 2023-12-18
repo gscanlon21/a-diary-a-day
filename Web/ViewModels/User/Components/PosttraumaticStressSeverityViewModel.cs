@@ -18,8 +18,8 @@ public class PosttraumaticStressSeverityViewModel
             Xys = Enumerable.Range(1, 365).Select(i =>
             {
                 var date = Today.AddDays(-i);
-                return new Xy(date, (int?)userMoods.FirstOrDefault(uw => uw.Date == date)?.ProratedScore);
-            }).Where(xy => xy.Y.HasValue).Reverse().Append(new Xy(Today, currentMood)).ToList();
+                return new XScore(date, userMoods.FirstOrDefault(uw => uw.Date == date));
+            }).Where(xy => xy.Y != null).Reverse().Append(new XScore(Today, null)).ToList();
         }
     }
 
@@ -29,5 +29,5 @@ public class PosttraumaticStressSeverityViewModel
     public UserPosttraumaticStressSeverity UserMood { get; init; } = null!;
     public UserPosttraumaticStressSeverity? PreviousMood { get; init; }
 
-    internal IList<Xy> Xys { get; init; } = new List<Xy>();
+    internal IList<XScore> Xys { get; init; } = new List<XScore>();
 }

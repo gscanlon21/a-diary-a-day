@@ -59,11 +59,11 @@ public class UserEditViewModel
     [Display(Name = "Disabled Reason")]
     public string? NewsletterDisabledReason { get; init; }
 
-    [Display(Name = "Subscribe to Workout Emails", Description = "Receive your workouts via email.")]
+    [Display(Name = "Subscribe to Emails", Description = "Receive your mood tracking statistics via email.")]
     public bool NewsletterEnabled { get; init; }
 
     [Required]
-    [Display(Name = "Workout Verbosity", Description = "What level of detail do you want to receive in each workout?")]
+    [Display(Name = "Email Verbosity", Description = "What level of detail do you want to receive in each workout?")]
     public Verbosity Verbosity { get; set; }
 
     [Required, Range(UserConsts.SendHourMin, UserConsts.SendHourMax)]

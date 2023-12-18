@@ -26,7 +26,7 @@
             </form>
         </div>
 
-        @foreach (var footnote in Model.Journals)
+        @foreach (var footnote in Model.Journals.OrderByDescending(j => j.Date))
         {
             <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.RemoveJournal)" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>

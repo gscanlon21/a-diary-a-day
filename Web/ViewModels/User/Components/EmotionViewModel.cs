@@ -2,14 +2,14 @@
 
 namespace Web.ViewModels.User.Components;
 
-public class AgoraphobiaSeverityViewModel
+public class EmotionViewModel
 {
     /// <summary>
     /// Today's date in UTC.
     /// </summary>
     private static DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
 
-    public AgoraphobiaSeverityViewModel(IList<UserAgoraphobiaSeverity>? userMoods, int? currentMood)
+    public EmotionViewModel(IList<UserAcuteStressSeverity>? userMoods, int? currentMood)
     {
         //Mood = currentWeight.GetValueOrDefault();
         if (userMoods != null && currentMood.HasValue)
@@ -26,8 +26,8 @@ public class AgoraphobiaSeverityViewModel
     public string Token { get; init; } = null!;
     public Data.Entities.User.User User { get; init; } = null!;
 
-    public UserAgoraphobiaSeverity UserMood { get; init; } = null!;
-    public UserAgoraphobiaSeverity? PreviousMood { get; init; }
+    public UserAcuteStressSeverity UserMood { get; init; } = null!;
+    public UserAcuteStressSeverity? PreviousMood { get; init; }
 
     internal IList<XScore> Xys { get; init; } = new List<XScore>();
 }

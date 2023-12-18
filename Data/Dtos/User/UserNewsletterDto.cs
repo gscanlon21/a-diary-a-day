@@ -32,7 +32,7 @@ public class UserNewsletterDto(Entities.User.User user, string token)
     [Display(Name = "Send Days")]
     public Days SendDays { get; } = user.SendDays;
 
-    [Display(Name = "Workout Verbosity")]
+    [Display(Name = "Email Verbosity")]
     public Verbosity Verbosity { get; } = user.Verbosity;
 
     public int FootnoteCountTop { get; init; } = user.FootnoteCountTop;

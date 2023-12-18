@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Core.Models.User;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -10,7 +11,7 @@ namespace Data.Entities.User;
 /// https://www.psychiatry.org/getmedia/3345c156-1aac-4e29-ac61-1c6541cb39be/APA-DSM5TR-SeverityMeasureForAgoraphobiaAdult.pdf
 /// </summary>
 [Table("user_agoraphobia_severity"), Comment("User variation weight log")]
-public class UserAgoraphobiaSeverity
+public class UserAgoraphobiaSeverity : IScore
 {
     public UserAgoraphobiaSeverity() { }
 
