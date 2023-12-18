@@ -26,7 +26,7 @@ public class GeneralizedAnxietySeverityViewComponent(IServiceScopeFactory servic
         var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserGeneralizedAnxietySeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserGeneralizedAnxietySeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
-        var viewModel = new GeneralizedAnxietySeverityViewModel(userMoods, userMood?.ProratedScore)
+        var viewModel = new GeneralizedAnxietySeverityViewModel(userMoods)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,

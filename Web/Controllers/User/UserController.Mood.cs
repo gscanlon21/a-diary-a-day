@@ -74,4 +74,42 @@ public partial class UserController
 
         return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
     }
+
+    [HttpPost]
+    [Route("s", Order = 1)]
+    [Route("sleep", Order = 2)]
+    public async Task<IActionResult> ManageSleep(string email, string token, UserSleep userMood)
+    {
+        if (true || ModelState.IsValid)
+        {
+            var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Set the new weight on the UserVariation
+            var previousUserMood = await context.UserSleeps.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == Today);
+            if (previousUserMood == null)
+            {
+                context.Add(new UserSleep()
+                {
+                    Date = Today,
+                    UserId = user.Id,
+                    SleepDuration = userMood.SleepDuration,
+                    SleepTime = userMood.SleepTime
+                });
+            }
+            else
+            {
+                previousUserMood.SleepDuration = userMood.SleepDuration;
+                previousUserMood.SleepTime = userMood.SleepTime;
+            }
+
+            await context.SaveChangesAsync();
+            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+        }
+
+        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+    }
 }

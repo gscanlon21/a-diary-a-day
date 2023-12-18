@@ -9,17 +9,17 @@ public class GeneralizedAnxietySeverityViewModel
     /// </summary>
     private static DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
 
-    public GeneralizedAnxietySeverityViewModel(IList<UserGeneralizedAnxietySeverity>? userMoods, int? currentMood)
+    public GeneralizedAnxietySeverityViewModel(IList<UserGeneralizedAnxietySeverity>? userMoods)
     {
         //Mood = currentWeight.GetValueOrDefault();
-        if (userMoods != null && currentMood.HasValue)
+        if (userMoods != null)
         {
             // Skip today, start at 1, because we append the current weight onto the end regardless.
             Xys = Enumerable.Range(1, 365).Select(i =>
             {
                 var date = Today.AddDays(-i);
                 return new XScore(date, userMoods.FirstOrDefault(uw => uw.Date == date));
-            }).Where(xy => xy.Y != null).Reverse().Append(new XScore(Today, null)).ToList();
+            }).Where(xy => xy.Y != null).Reverse().Append(new XScore(Today, userMoods.FirstOrDefault(um => um.Date == Today))).ToList();
         }
     }
 

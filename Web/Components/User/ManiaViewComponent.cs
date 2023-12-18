@@ -26,7 +26,7 @@ public class ManiaViewComponent(IServiceScopeFactory serviceScopeFactory, CoreCo
         var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserManias.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserManias.Where(ud => ud.UserId == user.Id).ToListAsync();
-        var viewModel = new ManiaViewModel(userMoods, null)
+        var viewModel = new ManiaViewModel(userMoods)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,

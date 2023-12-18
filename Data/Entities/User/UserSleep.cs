@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace Data.Entities.User;
 
@@ -25,17 +26,20 @@ public class UserSleep : IScore
     public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
 
     [Required]
-    public Mood? Mood { get; set; }
+    public SleepDuration SleepDuration { get; set; } = SleepDuration.JustRight;
+
+    [Required]
+    public SleepTime SleepTime { get; set; } = SleepTime.InBedOnTime;
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserSleeps))]
     public virtual User User { get; init; } = null!;
 
     public List<int?> Items => new()
     {
-        (int?)Mood
+        (int?)SleepDuration, (int?)SleepTime
     };
 
-    public int? ProratedScore => (int?)Mood;
+    public int? ProratedScore => Items.Sum();
 
-    public int? AverageScore => null;
+    public int? AverageScore => Items.Sum() / Items.Count;
 }

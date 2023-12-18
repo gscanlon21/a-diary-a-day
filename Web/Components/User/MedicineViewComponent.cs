@@ -27,7 +27,7 @@ public class MedicineViewComponent(IServiceScopeFactory serviceScopeFactory, Cor
         var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserMedicines.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserMedicines.Where(ud => ud.UserId == user.Id).ToListAsync();
-        var viewModel = new MedicineViewModel(userMoods, userMood?.ProratedScore)
+        var viewModel = new MedicineViewModel(userMoods)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,

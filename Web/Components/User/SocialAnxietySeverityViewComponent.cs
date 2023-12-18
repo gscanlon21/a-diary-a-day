@@ -26,7 +26,7 @@ public class SocialAnxietySeverityViewComponent(IServiceScopeFactory serviceScop
         var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserSocialAnxietySeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserSocialAnxietySeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
-        var viewModel = new SocialAnxietySeverityViewModel(userMoods, userMood?.ProratedScore)
+        var viewModel = new SocialAnxietySeverityViewModel(userMoods)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,

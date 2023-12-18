@@ -26,7 +26,7 @@ public class PosttraumaticStressSeverityViewComponent(IServiceScopeFactory servi
         var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserPosttraumaticStressSeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserPosttraumaticStressSeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
-        var viewModel = new PosttraumaticStressSeverityViewModel(userMoods, userMood?.ProratedScore)
+        var viewModel = new PosttraumaticStressSeverityViewModel(userMoods)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,

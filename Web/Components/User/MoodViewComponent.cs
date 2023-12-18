@@ -25,14 +25,13 @@ public class MoodViewComponent(IServiceScopeFactory serviceScopeFactory, CoreCon
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var token = await userRepo.AddUserToken(user, durationDays: 1);
-        var userMood = await context.UserMoods.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
+        var userMood = await context.UserMoods.FirstOrDefaultAsync(ud => ud.UserId == user.Id && ud.Date == Today);
         var userMoods = await context.UserMoods.Where(ud => ud.UserId == user.Id).ToListAsync();
-        var viewModel = new MoodViewModel(userMoods, userMood?.ProratedScore)
+        var viewModel = new MoodViewModel(userMoods)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
-            PreviousMood = userMood,
-            UserMood = new Data.Entities.User.UserMood()
+            UserMood = userMood ?? new Data.Entities.User.UserMood()
             {
                 UserId = user.Id,
                 User = user

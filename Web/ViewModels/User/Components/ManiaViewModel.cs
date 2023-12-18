@@ -9,17 +9,17 @@ public class ManiaViewModel
     /// </summary>
     private static DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
 
-    public ManiaViewModel(IList<UserMania>? userMoods, int? currentMood)
+    public ManiaViewModel(IList<UserMania>? userMoods)
     {
         //Mood = currentWeight.GetValueOrDefault();
-        if (userMoods != null && currentMood.HasValue)
+        if (userMoods != null)
         {
             // Skip today, start at 1, because we append the current weight onto the end regardless.
             Xys = Enumerable.Range(1, 365).Select(i =>
             {
                 var date = Today.AddDays(-i);
                 return new Xy(date, null);
-            }).Where(xy => xy.Y.HasValue).Reverse().Append(new Xy(Today, currentMood)).ToList();
+            }).Where(xy => xy.Y.HasValue).Reverse().Append(new Xy(Today, null)).ToList();
         }
     }
 

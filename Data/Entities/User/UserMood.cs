@@ -25,7 +25,7 @@ public class UserMood : IScore
     public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
 
     [Required]
-    public Mood? Mood { get; set; }
+    public Mood Mood { get; set; } = Mood.Decent;
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserMoods))]
     public virtual User User { get; init; } = null!;
@@ -35,7 +35,7 @@ public class UserMood : IScore
         (int?)Mood
     };
 
-    public int? ProratedScore => (int?)Mood;
+    public int? ProratedScore => Items.Sum();
 
-    public int? AverageScore => null;
+    public int? AverageScore => Items.Sum() / Items.Count;
 }

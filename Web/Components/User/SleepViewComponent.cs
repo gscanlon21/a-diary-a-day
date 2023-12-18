@@ -25,14 +25,13 @@ public class SleepViewComponent(IServiceScopeFactory serviceScopeFactory, CoreCo
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var token = await userRepo.AddUserToken(user, durationDays: 1);
-        var userMood = await context.UserSleeps.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
+        var userMood = await context.UserSleeps.FirstOrDefaultAsync(ud => ud.UserId == user.Id && ud.Date == Today);
         var userMoods = await context.UserSleeps.Where(ud => ud.UserId == user.Id).ToListAsync();
-        var viewModel = new SleepViewModel(userMoods, userMood?.ProratedScore)
+        var viewModel = new SleepViewModel(userMoods)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
-            PreviousMood = userMood,
-            UserMood = new Data.Entities.User.UserSleep()
+            UserMood = userMood ?? new Data.Entities.User.UserSleep()
             {
                 UserId = user.Id,
                 User = user

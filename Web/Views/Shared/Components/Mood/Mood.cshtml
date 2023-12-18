@@ -19,7 +19,7 @@
                 <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                     <input type="range" style="width:100%;" class="allow-demo"
                            name="@(Html.IdFor(_ => Model.UserMood.Mood))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.Mood))-input"
-                           min="1" max="5" step="1" value="@(Model.UserMood.Mood ?? Mood.Decent)"
+                           min="1" max="5" step="1" value="@((int)Model.UserMood.Mood)"
                            oninput="@(Html.IdFor(_ => Model.UserMood.Mood)).value = this.valueAsNumber" />
 
                     <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
@@ -60,14 +60,14 @@
             type: 'line',
             data: {
                 datasets: [{
-                    label: 'Prorated Score',
+                    label: 'Mood',
                     data: @Json.Serialize(Model.Xys),
                     fill: false,
                     spanGaps: true,
                     showLine: true,
-                    stepped: 'before',
+                    stepped: 'middle',
                     parsing: {
-                        yAxisKey: 'y.proratedScore'
+                        yAxisKey: 'y'
                     },
                 }],
             },

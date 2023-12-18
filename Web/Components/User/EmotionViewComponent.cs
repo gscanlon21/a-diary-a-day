@@ -27,7 +27,7 @@ public class EmotionViewComponent(IServiceScopeFactory serviceScopeFactory, Core
         var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserEmotions.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserEmotions.Where(ud => ud.UserId == user.Id).ToListAsync();
-        var viewModel = new EmotionViewModel(userMoods, userMood?.ProratedScore)
+        var viewModel = new EmotionViewModel(userMoods)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
