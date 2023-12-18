@@ -2,14 +2,14 @@
 
 namespace Web.ViewModels.User.Components;
 
-public class EmotionViewModel
+public class SleepViewModel
 {
     /// <summary>
     /// Today's date in UTC.
     /// </summary>
     private static DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
 
-    public EmotionViewModel(IList<UserEmotion>? userMoods, int? currentMood)
+    public SleepViewModel(IList<UserSleep>? userMoods, int? currentMood)
     {
         //Mood = currentWeight.GetValueOrDefault();
         if (userMoods != null && currentMood.HasValue)
@@ -26,8 +26,8 @@ public class EmotionViewModel
     public string Token { get; init; } = null!;
     public Data.Entities.User.User User { get; init; } = null!;
 
-    public UserEmotion UserMood { get; init; } = null!;
-    public UserEmotion? PreviousMood { get; init; }
+    public UserSleep UserMood { get; init; } = null!;
+    public UserSleep? PreviousMood { get; init; }
 
     internal IList<XScore> Xys { get; init; } = new List<XScore>();
 }

@@ -14,10 +14,16 @@ public class CoreContext : DbContext
     public DbSet<UserToken> UserTokens { get; set; } = null!;
     public DbSet<UserEmail> UserEmails { get; set; } = null!;
     public DbSet<UserMood> UserMoods { get; set; } = null!;
+    public DbSet<UserEmotion> UserEmotions { get; set; } = null!;
     public DbSet<UserDepression> UserDepressions { get; set; } = null!;
     public DbSet<UserJournal> UserJournals { get; set; } = null!;
     public DbSet<UserFootnote> UserFootnotes { get; set; } = null!;
     public DbSet<UserAcuteStressSeverity> UserAcuteStressSeverities { get; set; } = null!;
+    public DbSet<UserSymptom> UserSymptoms { get; set; } = null!;
+    public DbSet<UserFactor> UserFactors { get; set; } = null!;
+    public DbSet<UserMedicine> UserMedicines { get; set; } = null!;
+    public DbSet<UserSleep> UserSleeps { get; set; } = null!;
+    public DbSet<UserActivity> UserActivities { get; set; } = null!;
     public DbSet<UserAgoraphobiaSeverity> UserAgoraphobiaSeverities { get; set; } = null!;
     public DbSet<UserAnger> UserAngers { get; set; } = null!;
     public DbSet<UserAnxiety> UserAnxieties { get; set; } = null!;

@@ -1,8 +1,6 @@
-﻿using Core.Models.User;
-using Data.Entities.User;
+﻿using Data.Entities.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 using Web.ViewModels.User;
 
 namespace Web.Controllers.User;
@@ -44,9 +42,9 @@ public partial class UserController
     [HttpPost]
     [Route("m", Order = 1)]
     [Route("mood", Order = 2)]
-    public async Task<IActionResult> ManageMood(string email, string token, [Range(1, 5)] Mood mood)
+    public async Task<IActionResult> ManageMood(string email, string token, UserMood userMood)
     {
-        if (ModelState.IsValid)
+        if (true || ModelState.IsValid)
         {
             var user = await userRepo.GetUser(email, token, allowDemoUser: true);
             if (user == null)
@@ -55,19 +53,19 @@ public partial class UserController
             }
 
             // Set the new weight on the UserVariation
-            var userMood = await context.UserMoods.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == Today);
-            if (userMood == null)
+            var previousUserMood = await context.UserMoods.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == Today);
+            if (previousUserMood == null)
             {
                 context.Add(new UserMood()
                 {
                     Date = Today,
                     UserId = user.Id,
-                    Mood = mood
+                    Mood = userMood.Mood
                 });
             }
             else
             {
-                userMood.Mood = mood;
+                previousUserMood.Mood = userMood.Mood;
             }
 
             await context.SaveChangesAsync();

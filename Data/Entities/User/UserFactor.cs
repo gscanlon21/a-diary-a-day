@@ -10,10 +10,10 @@ namespace Data.Entities.User;
 /// <summary>
 /// User's progression level of an exercise.
 /// </summary>
-[Table("user_mood"), Comment("User variation weight log")]
-public class UserMood : IScore
+[Table("user_factor"), Comment("User variation weight log")]
+public class UserFactor : IScore
 {
-    public UserMood() { }
+    public UserFactor() { }
 
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private init; }
@@ -27,7 +27,7 @@ public class UserMood : IScore
     [Required]
     public Mood? Mood { get; set; }
 
-    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserMoods))]
+    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserFactors))]
     public virtual User User { get; init; } = null!;
 
     public List<int?> Items => new()

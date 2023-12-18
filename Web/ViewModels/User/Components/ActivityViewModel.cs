@@ -9,7 +9,7 @@ public class ActivityViewModel
     /// </summary>
     private static DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
 
-    public ActivityViewModel(IList<UserAcuteStressSeverity>? userMoods, int? currentMood)
+    public ActivityViewModel(IList<UserActivity>? userMoods, int? currentMood)
     {
         //Mood = currentWeight.GetValueOrDefault();
         if (userMoods != null && currentMood.HasValue)
@@ -26,8 +26,8 @@ public class ActivityViewModel
     public string Token { get; init; } = null!;
     public Data.Entities.User.User User { get; init; } = null!;
 
-    public UserAcuteStressSeverity UserMood { get; init; } = null!;
-    public UserAcuteStressSeverity? PreviousMood { get; init; }
+    public UserActivity UserMood { get; init; } = null!;
+    public UserActivity? PreviousMood { get; init; }
 
     internal IList<XScore> Xys { get; init; } = new List<XScore>();
 }

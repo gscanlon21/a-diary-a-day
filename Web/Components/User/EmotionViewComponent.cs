@@ -25,14 +25,14 @@ public class EmotionViewComponent(IServiceScopeFactory serviceScopeFactory, Core
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var token = await userRepo.AddUserToken(user, durationDays: 1);
-        var userMood = await context.UserAcuteStressSeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
-        var userMoods = await context.UserAcuteStressSeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
+        var userMood = await context.UserEmotions.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
+        var userMoods = await context.UserEmotions.Where(ud => ud.UserId == user.Id).ToListAsync();
         var viewModel = new EmotionViewModel(userMoods, userMood?.ProratedScore)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
             PreviousMood = userMood,
-            UserMood = new Data.Entities.User.UserAcuteStressSeverity()
+            UserMood = new Data.Entities.User.UserEmotion()
             {
                 UserId = user.Id,
                 User = user

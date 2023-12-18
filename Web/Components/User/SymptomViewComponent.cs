@@ -9,12 +9,12 @@ namespace Web.Components.User;
 /// <summary>
 /// Renders an alert box summary of when the user's next deload week will occur.
 /// </summary>
-public class ActivityViewComponent(IServiceScopeFactory serviceScopeFactory, CoreContext context, UserRepo userRepo) : ViewComponent
+public class SymptomViewComponent(IServiceScopeFactory serviceScopeFactory, CoreContext context, UserRepo userRepo) : ViewComponent
 {
     /// <summary>
     /// For routing
     /// </summary>
-    public const string Name = "Activity";
+    public const string Name = "Symptom";
 
     /// <summary>
     /// Today's date in UTC.
@@ -25,20 +25,20 @@ public class ActivityViewComponent(IServiceScopeFactory serviceScopeFactory, Cor
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var token = await userRepo.AddUserToken(user, durationDays: 1);
-        var userMood = await context.UserActivities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
-        var userMoods = await context.UserActivities.Where(ud => ud.UserId == user.Id).ToListAsync();
-        var viewModel = new ActivityViewModel(userMoods, userMood?.ProratedScore)
+        var userMood = await context.UserSymptoms.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
+        var userMoods = await context.UserSymptoms.Where(ud => ud.UserId == user.Id).ToListAsync();
+        var viewModel = new SymptomViewModel(userMoods, userMood?.ProratedScore)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
             PreviousMood = userMood,
-            UserMood = new Data.Entities.User.UserActivity()
+            UserMood = new Data.Entities.User.UserSymptom()
             {
                 UserId = user.Id,
                 User = user
             },
         };
 
-        return View("Activity", viewModel);
+        return View("Symptom", viewModel);
     }
 }

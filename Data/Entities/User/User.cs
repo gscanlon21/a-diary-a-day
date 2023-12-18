@@ -209,5 +209,24 @@ public class User
     [JsonIgnore, InverseProperty(nameof(UserDepression.User))]
     public virtual ICollection<UserSocialAnxietySeverity> UserSocialAnxietySeverities { get; private init; } = null!;
 
+
+    [JsonIgnore, InverseProperty(nameof(UserSymptom.User))]
+    public virtual ICollection<UserSymptom> UserSymptoms { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserActivity.User))]
+    public virtual ICollection<UserActivity> UserActivities { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserFactor.User))]
+    public virtual ICollection<UserFactor> UserFactors { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserMedicine.User))]
+    public virtual ICollection<UserMedicine> UserMedicines { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserSleep.User))]
+    public virtual ICollection<UserSleep> UserSleeps { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserEmotion.User))]
+    public virtual ICollection<UserEmotion> UserEmotions { get; private init; } = null!;
+
     #endregion
 }

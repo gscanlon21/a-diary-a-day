@@ -20,6 +20,10 @@
                     spanGaps: true,
                     showLine: true,
                     stepped: 'before',
+                    parsing: {
+                        //xAxisKey: 'x',
+                        yAxisKey: 'y'
+                    }
                 }, {
                     label: 'Average Score',
                     data: @Json.Serialize(Model.AverageScores),
@@ -27,6 +31,10 @@
                     spanGaps: true,
                     showLine: true,
                     stepped: 'before',
+                    parsing: {
+                        //xAxisKey: 'x',
+                        yAxisKey: 'y'
+                    }
                 }],
             },
             options: {
@@ -42,7 +50,7 @@
                 },
                 parsing: {
                     xAxisKey: 'x',
-                    yAxisKey: 'y'
+                    //yAxisKey: 'y'
                 },
                 scales: {
                     y: {
@@ -59,6 +67,11 @@
                             color: 'skyblue',
                             // No decimal places
                             precision: 0,
+                            // Customize the y-axis tick name
+                            //callback: function (value, index, ticks) {
+                            //    var enumMap = @(Json.Serialize(Enum.GetNames<Mood>()));
+                            //    return enumMap[index];
+                            //}
                         },
                     },
                     // https://www.chartjs.org/docs/next/axes/cartesian/time.html
