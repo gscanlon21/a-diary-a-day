@@ -26,50 +26,44 @@ public class UserGeneralizedAnxietySeverity
     [Required]
     public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
 
-    /// <summary>
-    /// Prorated score.
-    /// </summary>
-    [Range(0, 99)]
-    public int? Score { get; set; }
-
     [Range(0, 4)]
-    [Display(Name = "felt moments of sudden terror, fear, or \r\nfright")]
+    [Display(Name = "felt moments of sudden terror, fear, or fright.")]
     public int? Fright { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "felt anxious, worried, or nervous")]
+    [Display(Name = "felt anxious, worried, or nervous.")]
     public int? Nervous { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "had thoughts of bad things happening, such \r\nas family tragedy, ill health, loss of a job, or \r\naccident.")]
+    [Display(Name = "had thoughts of bad things happening, such as family tragedy, ill health, loss of a job, or accident.")]
     public int? Accidents { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "felt a racing heart, sweaty, trouble \r\nbreathing, faint, or shaky.")]
+    [Display(Name = "felt a racing heart, sweaty, trouble breathing, faint, or shaky.")]
     public int? Heart { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "felt tense muscles, felt on edge or restless, \r\nor had trouble relaxing or trouble sleeping")]
+    [Display(Name = "felt tense muscles, felt on edge or restless, or had trouble relaxing or trouble sleeping.")]
     public int? Tense { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "avoided, or did not approach or enter, \r\nsituations about which I worry")]
+    [Display(Name = "avoided, or did not approach or enter, situations about which I worry.")]
     public int? Avoided { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "left situations early or participated only \r\nminimally due to worrie")]
+    [Display(Name = "left situations early or participated only minimally due to worries.")]
     public int? LeftEarly { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "spent lots of time making decisions, putting \r\noff making decisions, or preparing for \r\nsituations, due to worries")]
+    [Display(Name = "spent lots of time making decisions, putting off making decisions, or preparing for situations, due to worries.")]
     public int? Time { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "sought reassurance from others due to \r\nworries ")]
+    [Display(Name = "sought reassurance from others due to worries.")]
     public int? Reassurance { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "needed help to cope with anxiety (e.g., \r\nalcohol or medication, superstitious \r\nobjects, or other people)")]
+    [Display(Name = "needed help to cope with anxiety (e.g., alcohol or medication, superstitious objects, or other people).")]
     public int? Cope { get; set; }
 
     [NotMapped]
@@ -77,6 +71,18 @@ public class UserGeneralizedAnxietySeverity
     {
         Fright, Nervous, Accidents, Heart, Tense, Avoided, LeftEarly, Time, Reassurance, Cope
     };
+
+    /// <summary>
+    /// Prorated score.
+    /// </summary>
+    [Range(0, 99)]
+    public int? ProratedScore => Items.Count * Items.Sum() / Items.Count(d => d.HasValue);
+
+    /// <summary>
+    /// Prorated score.
+    /// </summary>
+    [Range(0, 99)]
+    public int? AverageScore => Items.Count(d => d.HasValue) == Items.Count ? Items.Sum() / Items.Count : null;
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserGeneralizedAnxietySeverities))]
     public virtual User User { get; set; } = null!;

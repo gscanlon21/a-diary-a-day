@@ -26,12 +26,6 @@ public class UserAcuteStressSeverity
     [Required]
     public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
 
-    /// <summary>
-    /// Prorated score.
-    /// </summary>
-    [Range(0, 99)]
-    public int? Score { get; set; }
-
     [Range(0, 4)]
     [Display(Name = "Having 'flashbacks', that is, you suddenly acted or felt as if a stressful experience from the past was happening all over again (for example, you reexperienced parts of a stressful experience by seeing, hearing, smelling, or physically feeling parts of the experience)?")]
     public int? Flashbacks { get; set; }
@@ -65,6 +59,18 @@ public class UserAcuteStressSeverity
     {
         Flashbacks, Upset, Distant, Avoid, Alert, Startled, Irritable
     };
+
+    /// <summary>
+    /// Prorated score.
+    /// </summary>
+    [Range(0, 99)]
+    public int? ProratedScore => Items.Count * Items.Sum() / Items.Count(d => d.HasValue);
+
+    /// <summary>
+    /// Prorated score.
+    /// </summary>
+    [Range(0, 99)]
+    public int? AverageScore => Items.Count(d => d.HasValue) == Items.Count ? Items.Sum() / Items.Count : null;
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserAcuteStressSeverities))]
     public virtual User User { get; set; } = null!;

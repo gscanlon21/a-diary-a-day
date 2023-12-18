@@ -116,12 +116,6 @@ public class UserMania
     [Required]
     public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
 
-    /// <summary>
-    /// Prorated score.
-    /// </summary>
-    [Range(0, 99)]
-    public int? Score { get; set; }
-
     [Range(1, 5)]
     [Display(Name = "Question1")]
     public ManiaQ1? Question1 { get; set; }

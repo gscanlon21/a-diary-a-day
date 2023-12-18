@@ -25,12 +25,6 @@ public class UserDepression
     [Required]
     public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
 
-    /// <summary>
-    /// Prorated score.
-    /// </summary>
-    [Range(0, 99)]
-    public int? Score { get; set; }
-
     [Range(1, 5)]
     [Display(Name = "I felt worthless.")]
     public int? Worthless { get; set; }

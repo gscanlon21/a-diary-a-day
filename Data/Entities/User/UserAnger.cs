@@ -21,12 +21,6 @@ public class UserAnger
     public int UserId { get; set; }
 
     /// <summary>
-    /// Prorated score.
-    /// </summary>
-    [Range(0, 99)]
-    public int? Score { get; set; }
-
-    /// <summary>
     /// The token should stop working after this date.
     /// </summary>
     [Required]

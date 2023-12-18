@@ -26,12 +26,6 @@ public class UserDissociativeSeverity
     [Required]
     public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
 
-    /// <summary>
-    /// Prorated score.
-    /// </summary>
-    [Range(0, 99)]
-    public int? Score { get; set; }
-
     [Range(0, 4)]
     [Display(Name = "I find myself staring into space and thinking of nothing.")]
     public int? Nothing { get; set; }
@@ -69,6 +63,18 @@ public class UserDissociativeSeverity
     {
         Nothing, Unreal, NoMemory, TalkOutLoud, Unclear, IgnorePain, DifferentPeople, EasyWhenHard
     };
+
+    /// <summary>
+    /// Prorated score.
+    /// </summary>
+    [Range(0, 99)]
+    public int? ProratedScore => Items.Count * Items.Sum() / Items.Count(d => d.HasValue);
+
+    /// <summary>
+    /// Prorated score.
+    /// </summary>
+    [Range(0, 99)]
+    public int? AverageScore => Items.Count(d => d.HasValue) == Items.Count ? Items.Sum() / Items.Count : null;
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserDissociativeSeverities))]
     public virtual User User { get; set; } = null!;

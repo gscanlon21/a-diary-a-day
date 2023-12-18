@@ -61,7 +61,6 @@ public partial class UserController
             if (todaysMood == null)
             {
                 userMood.User = user;
-                userMood.Score = userMood.Items.Sum(i => i.GetValueOrDefault()) / userMood.Items.Count(i => i.HasValue);
                 context.Add(userMood);
             }
             else
@@ -76,7 +75,6 @@ public partial class UserController
                 todaysMood.Preparing = userMood.Preparing;
                 todaysMood.SuddenTerror = userMood.SuddenTerror;
                 todaysMood.Tense = userMood.Tense;
-                todaysMood.Score = todaysMood.Items.Sum(i => i.GetValueOrDefault()) / todaysMood.Items.Count(i => i.HasValue);
             }
 
             await context.SaveChangesAsync();
@@ -103,7 +101,6 @@ public partial class UserController
             if (todaysMood == null)
             {
                 userMood.User = user;
-                userMood.Score = userMood.Items.Sum(i => i.GetValueOrDefault()) / userMood.Items.Count(i => i.HasValue);
                 context.Add(userMood);
             }
             else
@@ -117,7 +114,6 @@ public partial class UserController
                 todaysMood.Irritable = userMood.Irritable;
                 todaysMood.NegativeEmotions = userMood.NegativeEmotions;
                 todaysMood.NoInterest = userMood.NoInterest;
-                todaysMood.Score = todaysMood.Items.Sum(i => i.GetValueOrDefault()) / todaysMood.Items.Count(i => i.HasValue);
             }
 
             await context.SaveChangesAsync();
@@ -144,7 +140,6 @@ public partial class UserController
             if (todaysMood == null)
             {
                 userMood.User = user;
-                userMood.Score = userMood.Items.Sum(i => i.GetValueOrDefault()) / userMood.Items.Count(i => i.HasValue);
                 context.Add(userMood);
             }
             else
@@ -160,7 +155,6 @@ public partial class UserController
                 todaysMood.Time = userMood.Time;
                 todaysMood.Reassurance = userMood.Reassurance;
                 todaysMood.Tense = userMood.Tense;
-                todaysMood.Score = todaysMood.Items.Sum(i => i.GetValueOrDefault()) / todaysMood.Items.Count(i => i.HasValue);
             }
 
             await context.SaveChangesAsync();
@@ -187,7 +181,6 @@ public partial class UserController
             if (todaysMood == null)
             {
                 userMood.User = user;
-                userMood.Score = userMood.Items.Sum(i => i.GetValueOrDefault()) / userMood.Items.Count(i => i.HasValue);
                 context.Add(userMood);
             }
             else
@@ -200,7 +193,6 @@ public partial class UserController
                 todaysMood.IgnorePain = userMood.IgnorePain;
                 todaysMood.DifferentPeople = userMood.DifferentPeople;
                 todaysMood.EasyWhenHard = userMood.EasyWhenHard;
-                todaysMood.Score = todaysMood.Items.Sum(i => i.GetValueOrDefault()) / todaysMood.Items.Count(i => i.HasValue);
             }
 
             await context.SaveChangesAsync();
@@ -227,7 +219,6 @@ public partial class UserController
             if (todaysMood == null)
             {
                 userMood.User = user;
-                userMood.Score = userMood.Items.Sum(i => i.GetValueOrDefault()) / userMood.Items.Count(i => i.HasValue);
                 context.Add(userMood);
             }
             else
@@ -241,7 +232,6 @@ public partial class UserController
                 todaysMood.NoConcentration = userMood.NoConcentration;
                 todaysMood.Slowly = userMood.Slowly;
                 todaysMood.BetterOffDead = userMood.BetterOffDead;
-                todaysMood.Score = todaysMood.Items.Sum(i => i.GetValueOrDefault()) / todaysMood.Items.Count(i => i.HasValue);
             }
 
             await context.SaveChangesAsync();
@@ -268,7 +258,6 @@ public partial class UserController
             if (todaysMood == null)
             {
                 userMood.User = user;
-                userMood.Score = userMood.Items.Sum(i => i.GetValueOrDefault()) / userMood.Items.Count(i => i.HasValue);
                 context.Add(userMood);
             }
             else
@@ -283,7 +272,6 @@ public partial class UserController
                 todaysMood.Preparing = userMood.Preparing;
                 todaysMood.Distracted = userMood.Distracted;
                 todaysMood.Tense = userMood.Tense;
-                todaysMood.Score = todaysMood.Items.Sum(i => i.GetValueOrDefault()) / todaysMood.Items.Count(i => i.HasValue);
             }
 
             await context.SaveChangesAsync();
@@ -310,7 +298,6 @@ public partial class UserController
             if (todaysMood == null)
             {
                 userMood.User = user;
-                userMood.Score = userMood.Items.Sum(i => i.GetValueOrDefault()) / userMood.Items.Count(i => i.HasValue);
                 context.Add(userMood);
             }
             else
@@ -322,7 +309,6 @@ public partial class UserController
                 todaysMood.Alert = userMood.Alert;
                 todaysMood.Startled = userMood.Startled;
                 todaysMood.Irritable = userMood.Irritable;
-                todaysMood.Score = todaysMood.Items.Sum(i => i.GetValueOrDefault()) / todaysMood.Items.Count(i => i.HasValue);
             }
 
             await context.SaveChangesAsync();
@@ -349,7 +335,6 @@ public partial class UserController
             if (todaysMood == null)
             {
                 userMood.User = user;
-                userMood.Score = userMood.Items.Sum(i => i.GetValueOrDefault()) / userMood.Items.Count(i => i.HasValue);
                 context.Add(userMood);
             }
             else
@@ -364,7 +349,6 @@ public partial class UserController
                 todaysMood.Preparing = userMood.Preparing;
                 todaysMood.Fright = userMood.Fright;
                 todaysMood.Tense = userMood.Tense;
-                todaysMood.Score = todaysMood.Items.Sum(i => i.GetValueOrDefault()) / todaysMood.Items.Count(i => i.HasValue);
             }
 
             await context.SaveChangesAsync();

@@ -26,46 +26,40 @@ public class UserPosttraumaticStressSeverity
     [Required]
     public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
 
-    /// <summary>
-    /// Prorated score.
-    /// </summary>
-    [Range(0, 99)]
-    public int? Score { get; set; }
-
     [Range(0, 4)]
-    [Display(Name = "Having “flashbacks,” that is, you suddenly acted or \r\nfelt as if a stressful experience from the past was \r\nhappening all over again (for example, you \r\nreexperienced parts of a stressful experience by \r\nseeing, hearing, smelling, or physically feeling parts \r\nof the experience)?")]
+    [Display(Name = "Having “flashbacks,” that is, you suddenly acted or felt as if a stressful experience from the past was happening all over again (for example, you reexperienced parts of a stressful experience by seeing, hearing, smelling, or physically feeling parts of the experience)?")]
     public int? Flashbacks { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "Feeling very emotionally upset when something \r\nreminded you of a stressful experience")]
+    [Display(Name = "Feeling very emotionally upset when something reminded you of a stressful experience")]
     public int? Upset { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "Trying to avoid thoughts, feelings, or physical \r\nsensations that reminded you of a stressful \r\nexperience")]
+    [Display(Name = "Trying to avoid thoughts, feelings, or physical sensations that reminded you of a stressful experience")]
     public int? Avoid { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "Thinking that a stressful event happened because you \r\nor someone else (who didn’t directly harm you) did \r\nsomething wrong or didn’t do everything possible to \r\nprevent it, or because of something about you?\r\n")]
+    [Display(Name = "Thinking that a stressful event happened because you or someone else (who didn’t directly harm you) did something wrong or didn’t do everything possible to prevent it, or because of something about you?")]
     public int? StressfulEvent { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "Having a very negative emotional state (for example, \r\nyou were experiencing lots of fear, anger, guilt, \r\nshame, or horror) after a stressful experience?")]
+    [Display(Name = "Having a very negative emotional state (for example, you were experiencing lots of fear, anger, guilt, shame, or horror) after a stressful experience?")]
     public int? NegativeEmotions { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "Losing interest in activities you used to enjoy before \r\nhaving a stressful experience?")]
+    [Display(Name = "Losing interest in activities you used to enjoy before having a stressful experience?")]
     public int? NoInterest { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "Being “super alert,” on guard, or constantly on the \r\nlookout for danger?")]
+    [Display(Name = "Being “super alert,” on guard, or constantly on the lookout for danger?")]
     public int? Alert { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "Feeling jumpy or easily startled when you hear an \r\nunexpected noise")]
+    [Display(Name = "Feeling jumpy or easily startled when you hear an unexpected noise")]
     public int? Startled { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "Being extremely irritable or angry to the point where \r\nyou yelled at other people, got into fights, or \r\ndestroyed things?\r\n")]
+    [Display(Name = "Being extremely irritable or angry to the point where you yelled at other people, got into fights, or destroyed things?")]
     public int? Irritable { get; set; }
 
     [NotMapped]
@@ -73,6 +67,18 @@ public class UserPosttraumaticStressSeverity
     {
         Flashbacks, Upset, StressfulEvent, Avoid, Alert, Startled, Irritable, NegativeEmotions, NoInterest
     };
+
+    /// <summary>
+    /// Prorated score.
+    /// </summary>
+    [Range(0, 99)]
+    public int? ProratedScore => Items.Count * Items.Sum() / Items.Count(d => d.HasValue);
+
+    /// <summary>
+    /// Prorated score.
+    /// </summary>
+    [Range(0, 99)]
+    public int? AverageScore => Items.Count(d => d.HasValue) == Items.Count ? Items.Sum() / Items.Count : null;
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserPosttraumaticStressSeverities))]
     public virtual User User { get; set; } = null!;

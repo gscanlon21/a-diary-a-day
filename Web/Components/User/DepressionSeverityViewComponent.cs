@@ -27,7 +27,7 @@ public class DepressionSeverityViewComponent(IServiceScopeFactory serviceScopeFa
         var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserDepressionSeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserDepressionSeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
-        var viewModel = new DepressionSeverityViewModel(userMoods, userMood?.Score)
+        var viewModel = new DepressionSeverityViewModel(userMoods, userMood?.ProratedScore)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,

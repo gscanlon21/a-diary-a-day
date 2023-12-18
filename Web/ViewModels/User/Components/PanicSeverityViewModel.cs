@@ -18,7 +18,7 @@ public class PanicSeverityViewModel
             Xys = Enumerable.Range(1, 365).Select(i =>
             {
                 var date = Today.AddDays(-i);
-                return new Xy(date, (int?)userMoods.FirstOrDefault(uw => uw.Date == date)?.Score);
+                return new Xy(date, (int?)userMoods.FirstOrDefault(uw => uw.Date == date)?.ProratedScore);
             }).Where(xy => xy.Y.HasValue).Reverse().Append(new Xy(Today, currentMood)).ToList();
         }
     }

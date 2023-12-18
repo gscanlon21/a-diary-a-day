@@ -40,7 +40,7 @@
 
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                    <div class="form-group mb-3 mt-3">
+                    <div class="form-group mb-3 mt-3" style="padding-bottom:10ch;">
                         <label class="control-label">@Html.DisplayNameFor(_ => Model.Mood)</label>
                         <div><span asp-validation-for="Mood" class="text-danger"></span></div>
                         <div style="display:flex;column-gap:1ex;">
@@ -128,7 +128,7 @@
             type: 'line',
             data: {
                 datasets: [{
-                    label: 'Weight',
+                    label: 'Prorated Score',
                     data: @Json.Serialize(Model.Xys),
                     fill: false,
                     spanGaps: true,
@@ -156,7 +156,7 @@
                         title: {
                             // Display a label for the y-axis
                             display: false,
-                            text: 'Weight',
+                            text: 'Score',
                         },
                         ticks: {
                             color: 'skyblue',

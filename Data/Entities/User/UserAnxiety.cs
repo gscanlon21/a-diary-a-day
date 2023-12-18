@@ -21,12 +21,6 @@ public class UserAnxiety
     public int UserId { get; set; }
 
     /// <summary>
-    /// Prorated score.
-    /// </summary>
-    [Range(0, 99)]
-    public int? Score { get; set; }
-
-    /// <summary>
     /// The token should stop working after this date.
     /// </summary>
     [Required]
@@ -45,7 +39,7 @@ public class UserAnxiety
     public int? Worried { get; set; }
 
     [Range(1, 5)]
-    [Display(Name = "I found it hard to focus on anything \r\nother than my anxiety. ")]
+    [Display(Name = "I found it hard to focus on anything other than my anxiety. ")]
     public int? Focus { get; set; }
 
     [Range(1, 5)]

@@ -26,50 +26,44 @@ public class UserAgoraphobiaSeverity
     [Required]
     public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
 
-    /// <summary>
-    /// Prorated score.
-    /// </summary>
-    [Range(0, 99)]
-    public int? Score { get; set; }
-
     [Range(0, 4)]
-    [Display(Name = "felt moments of sudden terror, fear, or \r\nfright in these situations ")]
+    [Display(Name = "felt moments of sudden terror, fear, or fright in these situations ")]
     public int? Fright { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "felt anxious, worried, or nervous about \r\nthese situations")]
+    [Display(Name = "felt anxious, worried, or nervous about these situations")]
     public int? Nervous { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "had thoughts about panic attacks, \r\nuncomfortable physical sensations, getting \r\nlost, or being overcome with fear in these \r\nsituations\r\n")]
+    [Display(Name = "had thoughts about panic attacks, uncomfortable physical sensations, getting lost, or being overcome with fear in these situations")]
     public int? Panic { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "felt a racing heart, sweaty, trouble \r\nbreathing, faint, or shaky in these \r\nsituations")]
+    [Display(Name = "felt a racing heart, sweaty, trouble breathing, faint, or shaky in these situations")]
     public int? Heart { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "felt tense muscles, felt on edge or restless, \r\nor had trouble relaxing in these situations")]
+    [Display(Name = "felt tense muscles, felt on edge or restless, or had trouble relaxing in these situations")]
     public int? Tense { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "avoided, or did not approach or enter,\r\nthese situations")]
+    [Display(Name = "avoided, or did not approach or enter,these situations")]
     public int? Avoided { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "moved away from these situations, left \r\nthem early, or remained close to the exit")]
+    [Display(Name = "moved away from these situations, left them early, or remained close to the exit")]
     public int? LeftEarly { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "spent a lot of time preparing for, or \r\nprocrastinating about (putting off), these \r\nsituations")]
+    [Display(Name = "spent a lot of time preparing for, or procrastinating about (putting off), these situations")]
     public int? Preparing { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "distracted myself to avoid thinking about \r\nthese situationss")]
+    [Display(Name = "distracted myself to avoid thinking about these situations.")]
     public int? Distracted { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "needed help to cope with these situations \r\n(e.g., alcohol or medication, superstitious \r\nobjects, other people)\r\n")]
+    [Display(Name = "needed help to cope with these situations (e.g., alcohol or medication, superstitious objects, other people)")]
     public int? Cope { get; set; }
 
     [NotMapped]
@@ -77,6 +71,18 @@ public class UserAgoraphobiaSeverity
     {
         Fright, Nervous, Panic, Heart, Tense, Avoided, LeftEarly, Preparing, Distracted, Cope
     };
+
+    /// <summary>
+    /// Prorated score.
+    /// </summary>
+    [Range(0, 99)]
+    public int? ProratedScore => Items.Count * Items.Sum() / Items.Count(d => d.HasValue);
+
+    /// <summary>
+    /// Prorated score.
+    /// </summary>
+    [Range(0, 99)]
+    public int? AverageScore => Items.Count(d => d.HasValue) == Items.Count ? Items.Sum() / Items.Count : null;
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserAgoraphobiaSeverities))]
     public virtual User User { get; set; } = null!;

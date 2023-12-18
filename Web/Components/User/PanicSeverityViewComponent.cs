@@ -27,7 +27,7 @@ public class PanicSeverityViewComponent(IServiceScopeFactory serviceScopeFactory
         var userMood = await context.UserPanicSeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserPanicSeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
 
-        var viewModel = new PanicSeverityViewModel(userMoods, userMood?.Score)
+        var viewModel = new PanicSeverityViewModel(userMoods, userMood?.ProratedScore)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,

@@ -27,46 +27,52 @@ public class UserPanicSeverity
     /// Prorated score.
     /// </summary>
     [Range(0, 99)]
-    public int? Score { get; set; }
+    public int? ProratedScore => Items.Count * Items.Sum() / Items.Count(d => d.HasValue);
+
+    /// <summary>
+    /// Prorated score.
+    /// </summary>
+    [Range(0, 99)]
+    public int? AverageScore => Items.Count(d => d.HasValue) == Items.Count ? Items.Sum() / Items.Count : null;
 
     [Range(0, 4)]
-    [Display(Name = "felt moments of sudden terror, fear or \r\nfright, sometimes out of the blue (i.e., a \r\npanic attack")]
+    [Display(Name = "felt moments of sudden terror, fear or fright, sometimes out of the blue (i.e., a panic attack")]
     public int? SuddenTerror { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "felt anxious, worried, or nervous about \r\nhaving more panic attacks")]
+    [Display(Name = "felt anxious, worried, or nervous about having more panic attacks")]
     public int? Nervous { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "had thoughts of losing control, dying, going \r\ncrazy, or other bad things happening \r\nbecause of panic attack")]
+    [Display(Name = "had thoughts of losing control, dying, going crazy, or other bad things happening because of panic attack")]
     public int? LosingControl { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "felt a racing heart, sweaty, trouble \r\nbreathing, faint, or shaky")]
+    [Display(Name = "felt a racing heart, sweaty, trouble breathing, faint, or shaky")]
     public int? Heart { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "felt tense muscles, felt on edge or restless, \r\nor had trouble relaxing or trouble sleeping")]
+    [Display(Name = "felt tense muscles, felt on edge or restless, or had trouble relaxing or trouble sleeping")]
     public int? Tense { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "avoided, or did not approach or enter, \r\nsituations in which panic attacks might \r\noccu")]
+    [Display(Name = "avoided, or did not approach or enter, situations in which panic attacks might occu")]
     public int? Avoided { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "left situations early, or participated only \r\nminimally, because of panic attacks")]
+    [Display(Name = "left situations early, or participated only minimally, because of panic attacks")]
     public int? LeftEarly { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "spent a lot of time preparing for, or \r\nprocrastinating about (putting off), \r\nsituations in which panic attacks might \r\noccur")]
+    [Display(Name = "spent a lot of time preparing for, or procrastinating about (putting off), situations in which panic attacks might occur")]
     public int? Preparing { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "distracted myself to avoid thinking about \r\npanic attack")]
+    [Display(Name = "distracted myself to avoid thinking about panic attack")]
     public int? DistractedMyself { get; set; }
 
     [Range(0, 4)]
-    [Display(Name = "needed help to cope with panic attacks \r\n(e.g., alcohol or medication, superstitious \r\nobjects, other people)")]
+    [Display(Name = "needed help to cope with panic attacks (e.g., alcohol or medication, superstitious objects, other people)")]
     public int? Cope { get; set; }
 
     [NotMapped]
