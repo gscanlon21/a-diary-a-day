@@ -1,5 +1,4 @@
-﻿using Core.Models.User;
-using Data.Entities.User;
+﻿using Data.Entities.User;
 
 namespace Web.ViewModels.User.Components;
 
@@ -28,6 +27,7 @@ public class DissociativeSeverityViewModel
     public Data.Entities.User.User User { get; init; } = null!;
 
     public UserDissociativeSeverity UserMood { get; init; } = null!;
+    public UserDissociativeSeverity? PreviousMood { get; init; }
 
     internal IList<Xy> Xys { get; init; } = new List<Xy>();
 }

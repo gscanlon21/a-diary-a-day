@@ -64,6 +64,12 @@ public class UserDissociativeSeverity
     [Display(Name = "I can do things very easily that would usually be hard for me.")]
     public int? EasyWhenHard { get; set; }
 
+    [NotMapped]
+    public List<int?> Items => new()
+    {
+        Nothing, Unreal, NoMemory, TalkOutLoud, Unclear, IgnorePain, DifferentPeople, EasyWhenHard
+    };
+
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserDissociativeSeverities))]
-    public virtual User User { get; init; } = null!;
+    public virtual User User { get; set; } = null!;
 }

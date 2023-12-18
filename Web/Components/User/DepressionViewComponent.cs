@@ -1,9 +1,7 @@
 ﻿using Data;
-using Data.Entities.User;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Web.ViewModels;
 using Web.ViewModels.User.Components;
 
 namespace Web.Components.User;
@@ -26,14 +24,14 @@ public class DepressionViewComponent(IServiceScopeFactory serviceScopeFactory, C
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var token = await userRepo.AddUserToken(user, durationDays: 1);
-        var userDepression = await context.UserDepressions.FirstOrDefaultAsync(ud => ud.UserId == user.Id && ud.Date == Today);
-        var userDepressions = await context.UserDepressions.Where(ud => ud.UserId == user.Id).ToListAsync();
-
-        var viewModel = new DepressionViewModel(userDepressions, userDepression?.Score)
+        var userMood = await context.UserDepressions.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
+        var userMoods = await context.UserDepressions.Where(ud => ud.UserId == user.Id).ToListAsync();
+        var viewModel = new DepressionViewModel(userMoods, userMood?.Score)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
-            UserDepression = userDepression ?? new Data.Entities.User.UserDepression()
+            //PreviousMood = userMood,
+            UserDepression = new Data.Entities.User.UserDepression()
             {
                 UserId = user.Id,
                 User = user

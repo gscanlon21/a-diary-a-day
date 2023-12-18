@@ -24,14 +24,14 @@ public class DissociativeSeverityViewComponent(IServiceScopeFactory serviceScope
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var token = await userRepo.AddUserToken(user, durationDays: 1);
-        var userDepression = await context.UserDissociativeSeverities.FirstOrDefaultAsync(ud => ud.UserId == user.Id && ud.Date == Today);
-        var userDepressions = await context.UserDissociativeSeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
-
-        var viewModel = new DissociativeSeverityViewModel(userDepressions, userDepression?.Score)
+        var userMood = await context.UserDissociativeSeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
+        var userMoods = await context.UserDissociativeSeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
+        var viewModel = new DissociativeSeverityViewModel(userMoods, userMood?.Score)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
-            UserMood = userDepression ?? new Data.Entities.User.UserDissociativeSeverity()
+            PreviousMood = userMood,
+            UserMood = new Data.Entities.User.UserDissociativeSeverity()
             {
                 UserId = user.Id,
                 User = user

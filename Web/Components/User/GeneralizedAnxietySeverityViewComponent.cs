@@ -24,14 +24,14 @@ public class GeneralizedAnxietySeverityViewComponent(IServiceScopeFactory servic
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var token = await userRepo.AddUserToken(user, durationDays: 1);
-        var userDepression = await context.UserGeneralizedAnxietySeverities.FirstOrDefaultAsync(ud => ud.UserId == user.Id && ud.Date == Today);
-        var userDepressions = await context.UserGeneralizedAnxietySeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
-
-        var viewModel = new GeneralizedAnxietySeverityViewModel(userDepressions, userDepression?.Score)
+        var userMood = await context.UserGeneralizedAnxietySeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
+        var userMoods = await context.UserGeneralizedAnxietySeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
+        var viewModel = new GeneralizedAnxietySeverityViewModel(userMoods, userMood?.Score)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
-            UserMood = userDepression ?? new Data.Entities.User.UserGeneralizedAnxietySeverity()
+            PreviousMood = userMood,
+            UserMood = new Data.Entities.User.UserGeneralizedAnxietySeverity()
             {
                 UserId = user.Id,
                 User = user

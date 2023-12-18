@@ -60,6 +60,12 @@ public class UserAcuteStressSeverity
     [Display(Name = "Being extremely irritable or angry to the point where you yelled at other people, got into fights, or destroyed things?")]
     public int? Irritable { get; set; }
 
+    [NotMapped]
+    public List<int?> Items => new()
+    {
+        Flashbacks, Upset, Distant, Avoid, Alert, Startled, Irritable
+    };
+
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserAcuteStressSeverities))]
-    public virtual User User { get; init; } = null!;
+    public virtual User User { get; set; } = null!;
 }

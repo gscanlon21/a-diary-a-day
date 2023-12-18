@@ -3,12 +3,15 @@
 @using Data.Entities.User
 @using Lib.Pages.Shared.Exercise
 
-<h6 class="mb-1">DSM-5-TR Panic Severity</h6>
+<h6 class="mb-1">DSM-5-TR PTSD Severity</h6>
 <div class="alert alert-light shadow">
-    <h3>In the past SEVEN (7) DAYS:</h3>
+    @if (Model.PreviousMood == null || Model.PreviousMood.Date < Core.Dates.Today.AddDays(-7))
+    {
 
-    <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManagePanicSeverity)" method="post"
-          asp-route-email="@Model.User.Email" asp-route-token="@Model.Token"
+        <h3>In the past SEVEN (7) DAYS:</h3>
+
+        <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManagePtsdSeverity)" method="post"
+        asp-route-email="@Model.User.Email" asp-route-token="@Model.Token"
           style="min-height:21ch;">
 
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -326,6 +329,7 @@
             <input type="submit" value="Save" class="btn btn-primary allow-demo" />
         </div>
     </form>
+    }
 
     <div style="height:min(70vw, 300px)">
         <canvas id="myChart3"></canvas>

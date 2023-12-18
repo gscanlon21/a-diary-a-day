@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace Data.Entities.User;
 
@@ -29,7 +28,7 @@ public class UserDepression
     /// <summary>
     /// Prorated score.
     /// </summary>
-    [Range(0,99)]
+    [Range(0, 99)]
     public int? Score { get; set; }
 
     [Range(1, 5)]

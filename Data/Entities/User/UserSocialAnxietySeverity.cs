@@ -72,6 +72,12 @@ public class UserSocialAnxietySeverity
     [Display(Name = "needed help to cope with social situations \r\n(e.g., alcohol or medications, superstitious \r\nobjects)")]
     public int? Cope { get; set; }
 
+    [NotMapped]
+    public List<int?> Items => new()
+    {
+        Cope, DistractedMyself, Preparing, LeftEarly, Avoided, Tense, Heart, Fright, Humiliated, Nervous
+    };
+
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserSocialAnxietySeverities))]
-    public virtual User User { get; init; } = null!;
+    public virtual User User { get; set; } = null!;
 }

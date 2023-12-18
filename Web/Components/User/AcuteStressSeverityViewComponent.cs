@@ -25,14 +25,14 @@ public class AcuteStressSeverityViewComponent(IServiceScopeFactory serviceScopeF
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var token = await userRepo.AddUserToken(user, durationDays: 1);
-        var userDepression = await context.UserAcuteStressSeverities.FirstOrDefaultAsync(ud => ud.UserId == user.Id && ud.Date == Today);
-        var userDepressions = await context.UserAcuteStressSeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
-
-        var viewModel = new AcuteStressSeverityViewModel(userDepressions, userDepression?.Score)
+        var userMood = await context.UserAcuteStressSeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
+        var userMoods = await context.UserAcuteStressSeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
+        var viewModel = new AcuteStressSeverityViewModel(userMoods, userMood?.Score)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
-            UserMood = userDepression ?? new Data.Entities.User.UserAcuteStressSeverity()
+            PreviousMood = userMood,
+            UserMood = new Data.Entities.User.UserAcuteStressSeverity()
             {
                 UserId = user.Id,
                 User = user

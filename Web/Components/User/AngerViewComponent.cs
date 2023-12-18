@@ -24,14 +24,14 @@ public class AngerViewComponent(IServiceScopeFactory serviceScopeFactory, CoreCo
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var token = await userRepo.AddUserToken(user, durationDays: 1);
-        var userDepression = await context.UserAngers.FirstOrDefaultAsync(ud => ud.UserId == user.Id && ud.Date == Today);
-        var userDepressions = await context.UserAngers.Where(ud => ud.UserId == user.Id).ToListAsync();
-
-        var viewModel = new AngerViewModel(userDepressions, userDepression?.Score)
+        var userMood = await context.UserAngers.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
+        var userMoods = await context.UserAngers.Where(ud => ud.UserId == user.Id).ToListAsync();
+        var viewModel = new AngerViewModel(userMoods, userMood?.Score)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
-            UserMood = userDepression ?? new Data.Entities.User.UserAnger()
+            PreviousMood = userMood,
+            UserMood = new Data.Entities.User.UserAnger()
             {
                 UserId = user.Id,
                 User = user

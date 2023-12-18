@@ -24,14 +24,15 @@ public class PanicSeverityViewComponent(IServiceScopeFactory serviceScopeFactory
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var token = await userRepo.AddUserToken(user, durationDays: 1);
-        var userMood = await context.UserPanicSeverities.FirstOrDefaultAsync(ud => ud.UserId == user.Id && ud.Date == Today);
+        var userMood = await context.UserPanicSeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserPanicSeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
 
         var viewModel = new PanicSeverityViewModel(userMoods, userMood?.Score)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
-            UserMood = userMood ?? new Data.Entities.User.UserPanicSeverity()
+            PreviousMood = userMood,
+            UserMood = new Data.Entities.User.UserPanicSeverity()
             {
                 UserId = user.Id,
                 User = user

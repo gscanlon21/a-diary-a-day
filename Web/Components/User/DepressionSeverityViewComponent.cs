@@ -1,9 +1,7 @@
 ﻿using Data;
-using Data.Entities.User;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Web.ViewModels;
 using Web.ViewModels.User.Components;
 
 namespace Web.Components.User;
@@ -27,14 +25,14 @@ public class DepressionSeverityViewComponent(IServiceScopeFactory serviceScopeFa
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var token = await userRepo.AddUserToken(user, durationDays: 1);
-        var userDepression = await context.UserDepressionSeverities.FirstOrDefaultAsync(ud => ud.UserId == user.Id && ud.Date == Today);
-        var userDepressions = await context.UserDepressionSeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
-
-        var viewModel = new DepressionSeverityViewModel(userDepressions, userDepression?.Score)
+        var userMood = await context.UserDepressionSeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
+        var userMoods = await context.UserDepressionSeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
+        var viewModel = new DepressionSeverityViewModel(userMoods, userMood?.Score)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
-            UserMood = userDepression ?? new Data.Entities.User.UserDepressionSeverity()
+            PreviousMood = userMood,
+            UserMood = new Data.Entities.User.UserDepressionSeverity()
             {
                 UserId = user.Id,
                 User = user

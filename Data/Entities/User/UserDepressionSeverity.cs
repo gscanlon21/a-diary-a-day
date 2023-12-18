@@ -76,5 +76,5 @@ public class UserDepressionSeverity
     };
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserDepressionSeverities))]
-    public virtual User User { get; init; } = null!;
+    public virtual User User { get; set; } = null!;
 }
