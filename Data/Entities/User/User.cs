@@ -2,6 +2,7 @@
 using Core.Models.Footnote;
 using Core.Models.Newsletter;
 using Core.Models.User;
+using Data.Entities.Footnote;
 using Data.Entities.Newsletter;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
@@ -175,6 +176,8 @@ public class User
     [JsonIgnore, InverseProperty(nameof(Footnote.UserFootnote.User))]
     public virtual ICollection<Footnote.UserFootnote> UserFootnotes { get; private init; } = null!;
 
+    [JsonIgnore, InverseProperty(nameof(UserCustom.User))]
+    public virtual ICollection<Footnote.UserCustom> UserCustoms { get; private init; } = null!;
 
     [JsonIgnore, InverseProperty(nameof(UserDepression.User))]
     public virtual ICollection<UserAcuteStressSeverity> UserAcuteStressSeverities { get; private init; } = null!;
@@ -216,8 +219,8 @@ public class User
     [JsonIgnore, InverseProperty(nameof(UserActivity.User))]
     public virtual ICollection<UserActivity> UserActivities { get; private init; } = null!;
 
-    [JsonIgnore, InverseProperty(nameof(UserFactor.User))]
-    public virtual ICollection<UserFactor> UserFactors { get; private init; } = null!;
+    [JsonIgnore, InverseProperty(nameof(UserPeople.User))]
+    public virtual ICollection<UserPeople> UserPeoples { get; private init; } = null!;
 
     [JsonIgnore, InverseProperty(nameof(UserMedicine.User))]
     public virtual ICollection<UserMedicine> UserMedicines { get; private init; } = null!;

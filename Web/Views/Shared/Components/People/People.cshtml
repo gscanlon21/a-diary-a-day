@@ -1,4 +1,4 @@
-﻿@model SymptomViewModel
+﻿@model PeopleViewModel
 @using Core.Models.Exercise
 @using Data.Entities.User
 @using Lib.Pages.Shared.Exercise
@@ -7,7 +7,7 @@
     bool show = Model.PreviousMood == null || Model.PreviousMood.Date < Core.Dates.Today.AddDays(-7);
 }
 
-<h6 class="mb-1">Symptoms</h6>
+<h6 class="mb-1">People</h6>
 <div class="alert alert-light shadow">
     <details>
         <summary>
@@ -19,7 +19,7 @@
             }
         </summary>
 
-        <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageSymptom)" method="post"
+        <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManagePeople)" method="post"
                 asp-route-email="@Model.User.Email" asp-route-token="@Model.Token"
                 style="min-height:21ch;">
 

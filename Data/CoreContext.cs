@@ -19,8 +19,9 @@ public class CoreContext : DbContext
     public DbSet<UserJournal> UserJournals { get; set; } = null!;
     public DbSet<UserFootnote> UserFootnotes { get; set; } = null!;
     public DbSet<UserAcuteStressSeverity> UserAcuteStressSeverities { get; set; } = null!;
+    public DbSet<UserCustom> UserCustoms { get; set; } = null!;
     public DbSet<UserSymptom> UserSymptoms { get; set; } = null!;
-    public DbSet<UserFactor> UserFactors { get; set; } = null!;
+    public DbSet<UserPeople> UserPeoples { get; set; } = null!;
     public DbSet<UserMedicine> UserMedicines { get; set; } = null!;
     public DbSet<UserSleep> UserSleeps { get; set; } = null!;
     public DbSet<UserActivity> UserActivities { get; set; } = null!;

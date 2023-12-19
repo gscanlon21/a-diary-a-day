@@ -1,4 +1,7 @@
-﻿using Data.Entities.User;
+﻿using Data.Entities.Footnote;
+using Data.Entities.User;
+using static Web.ViewModels.User.Components.ActivityViewModel;
+using System.Linq;
 
 namespace Web.ViewModels.User.Components;
 
@@ -9,17 +12,26 @@ public class EmotionViewModel
     /// </summary>
     private static DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
 
-    public EmotionViewModel(IList<UserEmotion>? userMoods)
+    public EmotionViewModel(IList<UserEmotion>? userMoods, List<UserCustom> customs)
     {
+        Customs = customs;
         //Mood = currentWeight.GetValueOrDefault();
         if (userMoods != null)
         {
-            // Skip today, start at 1, because we append the current weight onto the end regardless.
-            Xys = Enumerable.Range(1, 365).Select(i =>
+            var flatMap = userMoods.SelectMany(m =>
             {
-                var date = Today.AddDays(-i);
-                return new XScore(date, userMoods.FirstOrDefault(uw => uw.Date == date));
-            }).Where(xy => xy.Y != null).Reverse().Append(new XScore(Today, userMoods.FirstOrDefault(um => um.Date == Today))).ToList();
+                return m.UserCustoms.Select(c => new UserCustomGroup(m.Date, c.Type, c.Id, c.Name));
+            });
+
+            foreach (var custom in Customs)
+            {
+                // Skip today, start at 1, because we append the current weight onto the end regardless.
+                Xys.AddRange(Enumerable.Range(1, 365).Select(i =>
+                {
+                    var date = Today.AddDays(-i);
+                    return new XCustom(date, flatMap.FirstOrDefault(uw => uw.Date == date && uw.Id == custom.Id), custom.Id);
+                }).Where(xy => xy.Y != null).Reverse().Append(new XCustom(Today, flatMap.FirstOrDefault(um => um.Date == Today && um.Id == custom.Id), custom.Id)).ToList());
+            }
         }
     }
 
@@ -29,5 +41,8 @@ public class EmotionViewModel
     public UserEmotion UserMood { get; init; } = null!;
     public UserEmotion? PreviousMood { get; init; }
 
-    internal IList<XScore> Xys { get; init; } = new List<XScore>();
+    internal List<XCustom> Xys { get; init; } = [];
+    internal List<IGrouping<int, XCustom>> XysGrouped => Xys.GroupBy(xy => xy.Id).ToList();
+
+    public List<UserCustom> Customs { get; set; } = [];
 }

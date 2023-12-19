@@ -1,0 +1,47 @@
+﻿@model Web.ViewModels.User.Components.CustomViewModel
+@using Core.Models.Exercise
+
+
+<details class="mb-25">
+    <summary class="mb-1 h5">
+        @Html.DisplayNameFor(_ => Model.Customs)
+        <span class="float-end">@Model.Customs.Count</span>
+    </summary>
+
+    <div class="alert alert-secondary" role="alert">
+        <div class="mb-4">
+            <h6 class="mb-1">New tag</h6>
+            <form asp-controller="@UserController.Name" class="alert alert-light shadow" asp-action="@nameof(UserController.AddCustom)" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" method="post">
+                <div class="form-group mb-3">
+                    <label for="Name" class="control-label">Name</label>
+                    <input type="text" name="Name" class="form-control" required="required" />
+                </div>
+                <div class="form-group mb-3">
+                    <label for="Type" class="control-label">Type</label>
+                    <input type="text" name="Type" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Add" class="btn btn-secondary" />
+                    <div class="form-text">Tags are not encrypted. Avoid entering in any sensitive information.</div>
+                </div>
+            </form>
+        </div>
+
+        @foreach (var custom in Model.Customs)
+        {
+            <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.RemoveCustom)" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" name="CustomId" asp-for="@custom.Id" />
+
+                <div class="form-group mt-3">
+                    <div class="input-group">
+                        <textarea class="form-control" disabled="disabled" aria-describedby="exercise-help" rows="2">@custom.Name</textarea>
+                        <input type="submit" value="-" class="btn btn-outline-secondary" />
+                    </div>
+                    <span for="CustomId" class="text-danger"></span>
+                    <div class="form-text font-size--smaller">@custom.Type.GetSingleDisplayName()</div>
+                </div>
+            </form>
+        }
+    </div>
+</details>

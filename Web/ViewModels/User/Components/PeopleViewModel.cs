@@ -5,14 +5,14 @@ using System.Linq;
 
 namespace Web.ViewModels.User.Components;
 
-public class MedicineViewModel
+public class PeopleViewModel
 {
     /// <summary>
     /// Today's date in UTC.
     /// </summary>
     private static DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
 
-    public MedicineViewModel(IList<UserMedicine>? userMoods, List<UserCustom> customs)
+    public PeopleViewModel(IList<UserPeople>? userMoods, List<UserCustom> customs)
     {
         Customs = customs;
         //Mood = currentWeight.GetValueOrDefault();
@@ -38,8 +38,8 @@ public class MedicineViewModel
     public string Token { get; init; } = null!;
     public Data.Entities.User.User User { get; init; } = null!;
 
-    public UserMedicine UserMood { get; init; } = null!;
-    public UserMedicine? PreviousMood { get; init; }
+    public UserPeople UserMood { get; init; } = null!;
+    public UserPeople? PreviousMood { get; init; }
 
     internal List<XCustom> Xys { get; init; } = [];
     internal List<IGrouping<int, XCustom>> XysGrouped => Xys.GroupBy(xy => xy.Id).ToList();

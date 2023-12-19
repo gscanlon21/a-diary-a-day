@@ -40,15 +40,31 @@
         </div>
 
         <div class="col-lg-6">
-            @await Component.InvokeAsync(AgoraphobiaSeverityViewComponent.Name, new { Model.User })
+            @await Component.InvokeAsync(PeopleViewComponent.Name, new { Model.User })
         </div>
 
         <div class="col-lg-6">
-            @await Component.InvokeAsync(PanicSeverityViewComponent.Name, new { Model.User })
+            @await Component.InvokeAsync(SymptomViewComponent.Name, new { Model.User })
+        </div>
+
+        <div class="col-lg-6">
+            @await Component.InvokeAsync(EmotionViewComponent.Name, new { Model.User })
+        </div>
+
+        <div class="col-lg-6">
+            @await Component.InvokeAsync(ActivityViewComponent.Name, new { Model.User })
+        </div>
+
+        <div class="col-lg-6">
+            @await Component.InvokeAsync(MedicineViewComponent.Name, new { Model.User })
         </div>
 
         <div class="col-lg-6">
             @await Component.InvokeAsync(AcuteStressSeverityViewComponent.Name, new { Model.User })
+        </div>
+
+        <div class="col-lg-6">
+            @await Component.InvokeAsync(AgoraphobiaSeverityViewComponent.Name, new { Model.User })
         </div>
 
         <div class="col-lg-6">
@@ -61,6 +77,10 @@
 
         <div class="col-lg-6">
             @await Component.InvokeAsync(GeneralizedAnxietySeverityViewComponent.Name, new { Model.User })
+        </div>
+
+        <div class="col-lg-6">
+            @await Component.InvokeAsync(PanicSeverityViewComponent.Name, new { Model.User })
         </div>
 
         <div class="col-lg-6">

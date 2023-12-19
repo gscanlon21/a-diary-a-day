@@ -26,8 +26,15 @@ public class ActivityViewComponent(IServiceScopeFactory serviceScopeFactory, Cor
     {
         var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserActivities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
-        var userMoods = await context.UserActivities.Where(ud => ud.UserId == user.Id).ToListAsync();
-        var viewModel = new ActivityViewModel(userMoods)
+        var userMoods = (await context.UserActivities
+            .Include(ud => ud.UserCustoms)
+            .Where(ud => ud.UserId == user.Id)
+            .ToListAsync());
+        var userCustoms = await context.UserCustoms
+            .Where(c => c.Type == Core.Models.Footnote.CustomType.Activity)
+            .Where(c => c.UserId == null || c.UserId == user.Id)
+            .ToListAsync();
+        var viewModel = new ActivityViewModel(userMoods, userCustoms)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,

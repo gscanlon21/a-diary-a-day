@@ -3,6 +3,7 @@ using System;
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Web.Migrations
 {
     [DbContext(typeof(CoreContext))]
-    partial class CoreContextModelSnapshot : ModelSnapshot
+    [Migration("20231219185654_SquashMigrations35")]
+    partial class SquashMigrations35
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -594,6 +597,30 @@ namespace Web.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Data.Entities.User.UserFactor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("user_factor", t =>
+                        {
+                            t.HasComment("User variation weight log");
+                        });
+                });
+
             modelBuilder.Entity("Data.Entities.User.UserGeneralizedAnxietySeverity", b =>
                 {
                     b.Property<int>("Id")
@@ -820,30 +847,6 @@ namespace Web.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserPeople", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateOnly>("Date")
-                        .HasColumnType("date");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("user_people", t =>
-                        {
-                            t.HasComment("User variation weight log");
-                        });
-                });
-
             modelBuilder.Entity("Data.Entities.User.UserPosttraumaticStressSeverity", b =>
                 {
                     b.Property<int>("Id")
@@ -1061,6 +1064,21 @@ namespace Web.Migrations
                     b.ToTable("UserCustomUserEmotion");
                 });
 
+            modelBuilder.Entity("UserCustomUserFactor", b =>
+                {
+                    b.Property<int>("UserCustomsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserFactorsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("UserCustomsId", "UserFactorsId");
+
+                    b.HasIndex("UserFactorsId");
+
+                    b.ToTable("UserCustomUserFactor");
+                });
+
             modelBuilder.Entity("UserCustomUserMedicine", b =>
                 {
                     b.Property<int>("UserCustomsId")
@@ -1074,21 +1092,6 @@ namespace Web.Migrations
                     b.HasIndex("UserMedicinesId");
 
                     b.ToTable("UserCustomUserMedicine");
-                });
-
-            modelBuilder.Entity("UserCustomUserPeople", b =>
-                {
-                    b.Property<int>("UserCustomsId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UserPeoplesId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("UserCustomsId", "UserPeoplesId");
-
-                    b.HasIndex("UserPeoplesId");
-
-                    b.ToTable("UserCustomUserPeople");
                 });
 
             modelBuilder.Entity("UserCustomUserSleep", b =>
@@ -1251,6 +1254,17 @@ namespace Web.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Data.Entities.User.UserFactor", b =>
+                {
+                    b.HasOne("Data.Entities.User.User", "User")
+                        .WithMany("UserFactors")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Data.Entities.User.UserGeneralizedAnxietySeverity", b =>
                 {
                     b.HasOne("Data.Entities.User.User", "User")
@@ -1310,17 +1324,6 @@ namespace Web.Migrations
                 {
                     b.HasOne("Data.Entities.User.User", "User")
                         .WithMany("UserPanicSeverities")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Data.Entities.User.UserPeople", b =>
-                {
-                    b.HasOne("Data.Entities.User.User", "User")
-                        .WithMany("UserPeoples")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1413,6 +1416,21 @@ namespace Web.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("UserCustomUserFactor", b =>
+                {
+                    b.HasOne("Data.Entities.Footnote.UserCustom", null)
+                        .WithMany()
+                        .HasForeignKey("UserCustomsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Entities.User.UserFactor", null)
+                        .WithMany()
+                        .HasForeignKey("UserFactorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("UserCustomUserMedicine", b =>
                 {
                     b.HasOne("Data.Entities.Footnote.UserCustom", null)
@@ -1424,21 +1442,6 @@ namespace Web.Migrations
                     b.HasOne("Data.Entities.User.UserMedicine", null)
                         .WithMany()
                         .HasForeignKey("UserMedicinesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("UserCustomUserPeople", b =>
-                {
-                    b.HasOne("Data.Entities.Footnote.UserCustom", null)
-                        .WithMany()
-                        .HasForeignKey("UserCustomsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Data.Entities.User.UserPeople", null)
-                        .WithMany()
-                        .HasForeignKey("UserPeoplesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1497,6 +1500,8 @@ namespace Web.Migrations
 
                     b.Navigation("UserEmotions");
 
+                    b.Navigation("UserFactors");
+
                     b.Navigation("UserFootnotes");
 
                     b.Navigation("UserGeneralizedAnxietySeverities");
@@ -1510,8 +1515,6 @@ namespace Web.Migrations
                     b.Navigation("UserMoods");
 
                     b.Navigation("UserPanicSeverities");
-
-                    b.Navigation("UserPeoples");
 
                     b.Navigation("UserPosttraumaticStressSeverities");
 

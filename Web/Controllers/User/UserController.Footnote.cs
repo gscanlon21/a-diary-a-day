@@ -55,4 +55,50 @@ public partial class UserController
         TempData[TempData_User.SuccessMessage] = "Your footnotes have been updated!";
         return RedirectToAction(nameof(UserController.Edit), new { email, token });
     }
+
+    [HttpPost]
+    [Route("custom/add")]
+    public async Task<IActionResult> AddCustom(string email, string token, [FromForm] string name, [FromForm] string? icon)
+    {
+        var user = await userRepo.GetUser(email, token);
+        if (user == null)
+        {
+            return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
+        }
+
+        context.Add(new UserCustom()
+        {
+            User = user,
+            Name = name,
+            Icon = icon,
+            Type = CustomType.Medicine
+        });
+
+        await context.SaveChangesAsync();
+
+        TempData[TempData_User.SuccessMessage] = "Your footnotes have been updated!";
+        return RedirectToAction(nameof(UserController.Edit), new { email, token });
+    }
+
+    [HttpPost]
+    [Route("custom/remove")]
+    public async Task<IActionResult> RemoveCustom(string email, string token, [FromForm] int customId)
+    {
+        var user = await userRepo.GetUser(email, token);
+        if (user == null)
+        {
+            return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
+        }
+
+        await context.UserCustoms
+            // The user has control of this footnote and is not a built-in footnote.
+            .Where(f => f.UserId == user.Id)
+            .Where(f => f.Id == customId)
+            .ExecuteDeleteAsync();
+
+        await context.SaveChangesAsync();
+
+        TempData[TempData_User.SuccessMessage] = "Your footnotes have been updated!";
+        return RedirectToAction(nameof(UserController.Edit), new { email, token });
+    }
 }

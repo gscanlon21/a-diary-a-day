@@ -1,4 +1,5 @@
 ﻿using Core.Models.User;
+using Data.Entities.Footnote;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -25,14 +26,17 @@ public class UserSleep : IScore
     [Required]
     public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
 
-    [Required]
+    [Required, Display(Name = "Sleep Duration")]
     public SleepDuration SleepDuration { get; set; } = SleepDuration.JustRight;
 
-    [Required]
+    [Required, Display(Name = "Sleep Time")]
     public SleepTime SleepTime { get; set; } = SleepTime.InBedOnTime;
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserSleeps))]
     public virtual User User { get; init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(Entities.Footnote.UserCustom.UserSleeps))]
+    public virtual List<UserCustom> UserCustoms { get; init; } = null!;
 
     public List<int?> Items => new()
     {

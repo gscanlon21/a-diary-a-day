@@ -1,0 +1,134 @@
+﻿@model Web.ViewModels.Shared.TagChartViewModel
+
+<div style="height:min(70vw, 300px)">
+    <canvas id="@Model.Id"></canvas>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script>
+    if (document.getElementById('@Model.Id')) {
+        var ctx = document.getElementById('@Model.Id').getContext('2d');
+
+        // https://www.chartjs.org/docs/latest/samples/advanced/linear-gradient.html
+        var gradient1 = ctx.createLinearGradient(0, 0, 0, 300);
+        gradient1.addColorStop(0, 'currentColor');
+        gradient1.addColorStop(.5, 'skyblue');
+        gradient1.addColorStop(1, 'currentColor');
+
+        var gradient2 = ctx.createLinearGradient(0, 0, 0, 300);
+        gradient2.addColorStop(0, 'currentColor');
+        gradient2.addColorStop(.5, 'red');
+        gradient2.addColorStop(1, 'currentColor');
+
+        Chart.defaults.font.size = 16;
+        new Chart(document.getElementById('@Model.Id'), {
+            type: 'bar',
+            data: {
+                datasets: [
+                    @for (var i = 0; i < Model.XysGrouped.Count; i++)
+                    {
+                        var group = Model.XysGrouped[i];
+                        <text>
+                            {
+                                label: '@(group.FirstOrDefault()?.Y?.Name)',
+                                data: @Json.Serialize(group),
+                                fill: false,
+                                yAxisID: 'y',
+                                spanGaps: true,
+                                showLine: true,
+                                stepped: 'middle',
+                                borderColor: gradient1,
+                                backgroundColor: '@Model.Colors[i]',
+                                parsing: {
+                                    yAxisKey: 'y.one'
+                                },
+                            },
+                        </text>
+                    }
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                elements: {
+                    line: {
+
+                    },
+                    point: {
+                        // Increase the radius around the point when the tooltip shows
+                        hitRadius: 5,
+                        // Increase the size of the point when the user is withing the bounds of the hitRadius
+                        hoverRadius: 5,
+                    },
+                },
+                parsing: {
+                    xAxisKey: 'x'
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        position: 'left',
+                        beginAtZero: false,
+                        // How much blank space to add in above and below y-axis data?
+                        grace: '5%',
+                        title: {
+                            // Display a label for the y-axis
+                            display: false,
+                        },
+                        ticks: {
+                            display: true,
+                            color: 'skyblue',
+                            // No decimal places
+                            precision: 0,
+                        },
+                    },
+                    // https://www.chartjs.org/docs/next/axes/cartesian/time.html
+                    x: {
+                        type: 'time',
+                        time: {
+                            minUnit: 'day',
+                        },
+                        ticks: {
+                            color: 'skyblue',
+                            major: {
+                                // Allow displaying June 1st as just June
+                                enabled: true,
+                            },
+                            font: (context) => {
+                                // Bold major data points (June is bolded, June 11th is not)
+                                return { weight: (context.tick && context.tick.major) ? 'bold' : '' };
+                            }
+                        },
+                    },
+                },
+                plugins: {
+                    legend: {
+                        // Don't show the graph legend
+                        display: true,
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: (context) => {
+                                // Pretty-print the x-axis date in the hover tooltip
+                                return context.map(c => new Date(c.parsed.x).toDateString());
+                            },
+                        },
+                    },
+                    /*
+                    decimation: {
+                        enabled: true,
+                        algorithm: 'lttb',
+                        samples: 12,
+                    },
+                    decimation: {
+                        enabled: true,
+                        algorithm: 'min-max',
+                    },
+                    */
+                },
+            }
+        });
+    }
+</script>

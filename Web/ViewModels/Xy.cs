@@ -1,4 +1,5 @@
 ﻿using Core.Models.User;
+using static Web.ViewModels.User.Components.ActivityViewModel;
 
 namespace Web.ViewModels;
 
@@ -8,6 +9,14 @@ namespace Web.ViewModels;
 public record Xy(string X, int? Y)
 {
     public Xy(DateOnly x, int? y) : this(x.ToString("O"), y) { }
+}
+
+/// <summary>
+/// For chart.js
+/// </summary>
+public record XCustom(string X, UserCustomGroup? Y, int Id)
+{
+    public XCustom(DateOnly x, UserCustomGroup? score, int id) : this(x.ToString("O"), score, id) { }
 }
 
 /// <summary>

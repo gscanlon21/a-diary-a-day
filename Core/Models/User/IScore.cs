@@ -7,3 +7,13 @@ public interface IScore
     public int? ProratedScore { get; }
     public int? AverageScore { get; }
 }
+
+public interface ITag
+{
+    public List<ICustom> Items { get; }
+}
+
+public interface ICustom
+{
+    public string Name { get; init; }
+}

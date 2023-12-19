@@ -1,4 +1,5 @@
 ﻿using Core.Models.User;
+using Data.Entities.Footnote;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,10 +11,10 @@ namespace Data.Entities.User;
 /// <summary>
 /// User's progression level of an exercise.
 /// </summary>
-[Table("user_factor"), Comment("User variation weight log")]
-public class UserFactor : IScore
+[Table("user_people"), Comment("User variation weight log")]
+public class UserPeople
 {
-    public UserFactor() { }
+    public UserPeople() { }
 
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private init; }
@@ -24,18 +25,9 @@ public class UserFactor : IScore
     [Required]
     public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
 
-    [Required]
-    public Mood? Mood { get; set; }
+    [JsonIgnore, InverseProperty(nameof(Entities.Footnote.UserCustom.UserPeoples))]
+    public virtual List<UserCustom> UserCustoms { get; init; } = null!;
 
-    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserFactors))]
+    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserPeoples))]
     public virtual User User { get; init; } = null!;
-
-    public List<int?> Items => new()
-    {
-        (int?)Mood
-    };
-
-    public int? ProratedScore => (int?)Mood;
-
-    public int? AverageScore => null;
 }
