@@ -16,12 +16,6 @@ public class CustomViewComponent(CoreContext context, UserRepo userRepo) : ViewC
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
-        // Custom footnotes must be enabled in the user edit form to show in the newsletter.
-        if (!user.FootnoteType.HasFlag(FootnoteType.Custom))
-        {
-            return Content("");
-        }
-
         var userFootnotes = await context.UserCustoms
             .Where(f => f.UserId == user.Id)
             .OrderBy(f => f.Name)

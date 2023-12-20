@@ -14,8 +14,9 @@
             <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.SleepDuration)</label>
             <div><span asp-validation-for="UserMood.SleepDuration" class="text-danger"></span></div>
             <div style="display:flex;column-gap:1ex;">
-                <input type="hidden" asp-for="UserMood.SleepDuration" style="width:6ch;height:fit-content;" class="allow-demo"
-                       oninput="@(Html.IdFor(_ => Model.UserMood.SleepDuration))Input.value = this.valueAsNumber" id="@(Html.IdFor(_ => Model.UserMood.SleepDuration))" />
+                <input type="hidden" asp-for="UserMood.SleepDuration" value="@((int)Model.UserMood.SleepDuration)"
+                       id="@(Html.IdFor(_ => Model.UserMood.SleepDuration))" style="width:6ch;height:fit-content;" class="allow-demo"
+                       oninput="@(Html.IdFor(_ => Model.UserMood.SleepDuration))Input.value = this.valueAsNumber" />
                 <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                     <input type="range" style="width:100%;" class="allow-demo"
                            name="@(Html.IdFor(_ => Model.UserMood.SleepDuration))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.SleepDuration))-input"
@@ -41,8 +42,9 @@
             <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.SleepTime)</label>
             <div><span asp-validation-for="UserMood.SleepTime" class="text-danger"></span></div>
             <div style="display:flex;column-gap:1ex;">
-                <input type="hidden" asp-for="UserMood.SleepTime" style="width:6ch;height:fit-content;" class="allow-demo"
-                       oninput="@(Html.IdFor(_ => Model.UserMood.SleepTime))Input.value = this.valueAsNumber" id="@(Html.IdFor(_ => Model.UserMood.SleepTime))" />
+                <input type="hidden" asp-for="UserMood.SleepTime" value="@((int)Model.UserMood.SleepTime)"
+                       id="@(Html.IdFor(_ => Model.UserMood.SleepTime))" style="width:6ch;height:fit-content;" class="allow-demo"
+                       oninput="@(Html.IdFor(_ => Model.UserMood.SleepTime))Input.value = this.valueAsNumber" />
                 <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                     <input type="range" style="width:100%;" class="allow-demo"
                            name="@(Html.IdFor(_ => Model.UserMood.SleepTime))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.SleepTime))-input"
@@ -63,6 +65,21 @@
             </div>
             <div id="pounds-help" class="form-text"></div>
         </div>
+
+        <div class="form-group mb-3 mt-3" style="padding-bottom:10ch;">
+            @for (var i = 0; i < Model.Customs.Count; i++)
+            {
+                <div class="form-check">
+                    <input class="allow-demo" type="hidden" asp-for="@Model.Customs[i].Id" />
+                    <input class="allow-demo" type="hidden" asp-for="@Model.Customs[i].Name" />
+                    <input asp-for="@Model.Customs[i].Selected" class="form-check-input allow-demo" type="checkbox">
+                    <label class="form-check-label" for="@(Html.IdFor(_ => Model.Customs[i].Selected))">
+                        @Model.Customs[i].Name
+                    </label>
+                </div>
+            }
+        </div>
+
         <div class="form-group mb-3">
             <input type="submit" value="Save" class="btn btn-primary allow-demo" />
         </div>
@@ -96,33 +113,57 @@
         new Chart(document.getElementById('myChart1'), {
             type: 'line',
             data: {
-                datasets: [{
-                    label: 'Sleep Duration',
-                    data: @Json.Serialize(Model.SleepDurations),
-                    fill: false,
-                    yAxisID: 'y',
-                    spanGaps: true,
-                    showLine: true,
-                    stepped: 'middle',
-                    borderColor: gradient1,
-                    backgroundColor: 'skyblue',
-                    parsing: {
-                        yAxisKey: 'y'
+                datasets: [
+                    {
+                        type: 'line',
+                        label: 'Sleep Duration',
+                        data: @Json.Serialize(Model.SleepDurations),
+                        fill: false,
+                        yAxisID: 'y',
+                        spanGaps: true,
+                        showLine: true,
+                        stepped: 'middle',
+                        borderColor: gradient1,
+                        backgroundColor: 'skyblue',
+                        parsing: {
+                            yAxisKey: 'y'
+                        },
+                    }, {
+                        type: 'line',
+                        label: 'Sleep Time',
+                        yAxisID: 'z',
+                        data: @Json.Serialize(Model.SleepTimes),
+                        fill: false,
+                        spanGaps: true,
+                        showLine: true,
+                        stepped: 'middle',
+                        borderColor: gradient2,
+                        backgroundColor: 'red',
+                        parsing: {
+                            yAxisKey: 'y'
+                        },
                     },
-                }, {
-                    label: 'Sleep Time',
-                    yAxisID: 'z',
-                    data: @Json.Serialize(Model.SleepTimes),
-                    fill: false,
-                    spanGaps: true,
-                    showLine: true,
-                    stepped: 'middle',
-                    borderColor: gradient2,
-                    backgroundColor: 'red',
-                    parsing: {
-                        yAxisKey: 'y'
-                    },
-                }],
+                    @for (var i = 0; i < Model.XysGrouped.Count; i++)
+                    {
+                        var group = Model.XysGrouped[i];
+                        <text>
+                            {
+                            type: 'bar',
+                                label: '@(group.FirstOrDefault()?.Y?.Name)',
+                                data: @Json.Serialize(group),
+                                fill: false,
+                                yAxisID: 'y',
+                                spanGaps: true,
+                                showLine: true,
+                                stepped: 'middle',
+                                borderColor: gradient1,
+                                backgroundColor: 'skyblue',
+                                parsing: {
+                                    yAxisKey: 'y.one'
+                                },
+                            },
+                        </text>
+                    }],
             },
             options: {
                 responsive: true,
@@ -143,6 +184,7 @@
                 },
                 scales: {
                     z: {
+                        min: 0,
                         type: 'linear',
                         position: 'right',
                         beginAtZero: false,
@@ -166,6 +208,7 @@
                         },
                     },
                     y: {
+                        min: 0,
                         type: 'linear',
                         beginAtZero: false,
                         // How much blank space to add in above and below y-axis data?
@@ -209,7 +252,7 @@
                 plugins: {
                     legend: {
                         // Don't show the graph legend
-                        display: false,
+                        display: true,
                     },
                     tooltip: {
                         callbacks: {

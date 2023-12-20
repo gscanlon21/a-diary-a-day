@@ -124,6 +124,11 @@ public class User
     /// <summary>
     /// What features should the user have access to?
     /// </summary>
+    public Components Components { get; set; } = Components.All;
+
+    /// <summary>
+    /// What features should the user have access to?
+    /// </summary>
     public Features Features { get; set; } = Features.None;
 
 

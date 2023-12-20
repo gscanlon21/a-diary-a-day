@@ -26,8 +26,15 @@ public class SleepViewComponent(IServiceScopeFactory serviceScopeFactory, CoreCo
     {
         var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserSleeps.FirstOrDefaultAsync(ud => ud.UserId == user.Id && ud.Date == Today);
-        var userMoods = await context.UserSleeps.Where(ud => ud.UserId == user.Id).ToListAsync();
-        var viewModel = new SleepViewModel(userMoods)
+        var userMoods = (await context.UserSleeps
+            .Include(ud => ud.UserCustoms)
+            .Where(ud => ud.UserId == user.Id)
+            .ToListAsync());
+        var userCustoms = await context.UserCustoms
+            .Where(c => c.Type == Core.Models.Footnote.CustomType.Sleep)
+            .Where(c => c.UserId == null || c.UserId == user.Id)
+            .ToListAsync();
+        var viewModel = new SleepViewModel(userMoods, userCustoms)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,

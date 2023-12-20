@@ -79,7 +79,7 @@ public partial class UserController
     [HttpPost]
     [Route("s", Order = 1)]
     [Route("sleep", Order = 2)]
-    public async Task<IActionResult> ManageSleep(string email, string token, UserSleep userMood)
+    public async Task<IActionResult> ManageSleep(string email, string token, UserSleep userMood, List<UserCustom> customs)
     {
         if (true || ModelState.IsValid)
         {
@@ -89,22 +89,27 @@ public partial class UserController
                 return NotFound();
             }
 
-            // Set the new weight on the UserVariation
-            var previousUserMood = await context.UserSleeps.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == Today);
-            if (previousUserMood == null)
+            var customIds = customs.Where(f => f.Selected).Select(ic => ic.Id).ToList();
+            var userCustoms = await context.UserCustoms.Where(c => customIds.Contains(c.Id)).ToListAsync();
+
+            var previousUserMood = await context.UserSleeps.Include(us => us.UserCustoms).FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == Today);
+            if (previousUserMood  != null)
+            {
+                previousUserMood.UserCustoms.Clear();
+                previousUserMood.UserCustoms.AddRange(userCustoms);
+                previousUserMood.SleepDuration = userMood.SleepDuration;
+                previousUserMood.SleepTime = userMood.SleepTime;
+            }
+            else
             {
                 context.Add(new UserSleep()
                 {
                     Date = Today,
                     UserId = user.Id,
                     SleepDuration = userMood.SleepDuration,
-                    SleepTime = userMood.SleepTime
+                    SleepTime = userMood.SleepTime,
+                    UserCustoms = userCustoms
                 });
-            }
-            else
-            {
-                previousUserMood.SleepDuration = userMood.SleepDuration;
-                previousUserMood.SleepTime = userMood.SleepTime;
             }
 
             await context.SaveChangesAsync();

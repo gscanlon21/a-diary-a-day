@@ -30,6 +30,7 @@ public class UserEditViewModel
         Verbosity = user.Verbosity;
         FootnoteType = user.FootnoteType;
         SendHour = user.SendHour;
+        Components = user.Components;
         Token = token;
     }
 
@@ -66,6 +67,12 @@ public class UserEditViewModel
     [Display(Name = "Email Verbosity", Description = "What level of detail do you want to receive in each workout?")]
     public Verbosity Verbosity { get; set; }
 
+    /// <summary>
+    /// What features should the user have access to?
+    /// </summary>
+    [Required]
+    public Core.Models.User.Components Components { get; set; }
+
     [Required, Range(UserConsts.SendHourMin, UserConsts.SendHourMax)]
     [Display(Name = "Send Time (UTC)", Description = "What hour of the day (UTC) do you want to receive new workouts?")]
     public int SendHour { get; init; }
@@ -73,6 +80,12 @@ public class UserEditViewModel
     [Required]
     [Display(Name = "Send Days", Description = "What days do you want to receive new emails?")]
     public Days SendDays { get; private set; }
+
+    public Core.Models.User.Components[]? ComponentsBinder
+    {
+        get => Enum.GetValues<Core.Models.User.Components>().Where(e => Components.HasFlag(e)).ToArray();
+        set => Components = value?.Aggregate(Core.Models.User.Components.None, (a, e) => a | e) ?? Core.Models.User.Components.None;
+    }
 
     public Verbosity[]? VerbosityBinder
     {

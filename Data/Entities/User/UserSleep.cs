@@ -35,8 +35,8 @@ public class UserSleep : IScore
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserSleeps))]
     public virtual User User { get; init; } = null!;
 
-    [JsonIgnore, InverseProperty(nameof(Entities.Footnote.UserCustom.UserSleeps))]
-    public virtual List<UserCustom> UserCustoms { get; init; } = null!;
+    [JsonIgnore, InverseProperty(nameof(UserCustom.UserSleeps))]
+    public virtual List<UserCustom> UserCustoms { get; init; } = [];
 
     public List<int?> Items => new()
     {
