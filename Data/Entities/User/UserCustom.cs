@@ -27,6 +27,8 @@ public class UserCustom : ICustom
     [Required]
     public string Name { get; init; } = null!;
 
+    public int? Order { get; init; }
+
     /// <summary>
     /// Either a link or a name that was the reference of the note.
     /// </summary>
