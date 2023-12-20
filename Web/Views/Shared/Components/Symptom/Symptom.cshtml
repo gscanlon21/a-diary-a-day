@@ -12,7 +12,7 @@
     <details>
         <summary>
             @{
-                await Html.RenderPartialAsync("_TagChart", new Web.ViewModels.Shared.TagChartViewModel()
+                await Html.RenderPartialAsync("_RadarChart", new Web.ViewModels.Shared.RadarChartViewModel()
             {
                 XysGrouped = Model.XysGrouped
             });
@@ -31,8 +31,8 @@
                     <div class="form-check">
                         <input class="allow-demo" type="hidden" asp-for="@Model.Customs[i].Id" />
                         <input class="allow-demo" type="hidden" asp-for="@Model.Customs[i].Name" />
-                        <input asp-for="@Model.Customs[i].Selected" class="form-check-input allow-demo" type="checkbox">
-                        <label class="form-check-label" for="@(Html.IdFor(_ => Model.Customs[i].Selected))">
+                        <input id="@Html.IdFor(_ => Model.Customs[i].Selected)-symptom" asp-for="@Model.Customs[i].Selected" class="form-check-input allow-demo" type="checkbox">
+                        <label for="@Html.IdFor(_ => Model.Customs[i].Selected)-symptom" class="form-check-label">
                             @Model.Customs[i].Name
                         </label>
                     </div>
