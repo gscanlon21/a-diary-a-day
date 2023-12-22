@@ -14,7 +14,7 @@ namespace Data.Entities.Footnote;
 /// </summary>
 [Table("user_custom"), Comment("Sage advice")]
 [DebuggerDisplay("{Note} - {Source}")]
-public class UserCustom : ICustom
+public class UserCustom : ICustom, IComparable<UserCustom>
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; init; }
@@ -27,7 +27,7 @@ public class UserCustom : ICustom
     [Required]
     public string Name { get; init; } = null!;
 
-    public int? Order { get; init; }
+    public int Order { get; init; }
 
     /// <summary>
     /// Either a link or a name that was the reference of the note.
@@ -63,4 +63,13 @@ public class UserCustom : ICustom
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.UserSleep.UserCustoms))]
     public IList<UserSleep>? UserSleeps { get; init; }
+
+    public int CompareTo(UserCustom? other)
+    {
+        return Order.CompareTo(other?.Order);
+    }
+
+    public override bool Equals(object? obj) => obj is UserCustom custom && Id == custom.Id;
+
+    public override int GetHashCode() => HashCode.Combine(Id);
 }

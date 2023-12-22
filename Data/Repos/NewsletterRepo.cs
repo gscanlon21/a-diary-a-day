@@ -6,10 +6,14 @@ using Data.Models.Newsletter;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Core.Code.Extensions;
+using Core.Models.User;
+using Microsoft.Extensions.Options;
+using Core.Models.Options;
 
 namespace Data.Repos;
 
-public partial class NewsletterRepo(ILogger<NewsletterRepo> logger, CoreContext context, UserRepo userRepo, IServiceScopeFactory serviceScopeFactory)
+public partial class NewsletterRepo(ILogger<NewsletterRepo> logger, CoreContext context, UserRepo userRepo, IOptions<SiteSettings> siteSettings, IServiceScopeFactory serviceScopeFactory)
 {
     /// <summary>
     /// Today's date in UTC.
@@ -108,8 +112,23 @@ public partial class NewsletterRepo(ILogger<NewsletterRepo> logger, CoreContext 
     private async Task<NewsletterDto?> OnDayNewsletter(WorkoutContext context)
     {
         var userViewModel = new UserNewsletterDto(context);
+
+        var images = new List<ComponentImage>();
+        var prefix = $"moods/{context.User.Uid}";
+        var components = EnumExtensions.GetSingleValuesExcludingAny32(Components.Journal).Where(c => context.User.Components.HasFlag(c)).ToList();
+        foreach (var component in components)
+        {
+            var key = $"{prefix}-{component}";
+            images.Add(new ComponentImage() 
+            { 
+                Type = component,
+                Image = $"{siteSettings.Value.CdnLink}/{key}"
+            });
+        }
+
         var viewModel = new NewsletterDto(userViewModel)
         {
+            Images = images,
         };
 
         return viewModel;

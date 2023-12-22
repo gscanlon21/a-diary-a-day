@@ -5,55 +5,75 @@
 
 <h6 class="mb-1">Mood</h6>
 <div class="alert alert-light shadow">
-    <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageMood)" method="post"
-          asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
 
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-        <div class="form-group mb-5">
-            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Mood)</label>
-            <div><span asp-validation-for="UserMood.Mood" class="text-danger"></span></div>
-            <div style="display:flex;column-gap:1ex;">
-                <input type="hidden" asp-for="UserMood.Mood" style="width:6ch;height:fit-content;" class="allow-demo"
-                       oninput="@(Html.IdFor(_ => Model.UserMood.Mood))Input.value = this.valueAsNumber" id="@(Html.IdFor(_ => Model.UserMood.Mood))" />
-                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                    <input type="range" style="width:100%;" class="allow-demo"
-                           name="@(Html.IdFor(_ => Model.UserMood.Mood))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.Mood))-input"
-                           min="1" max="5" step="1" value="@((int)Model.UserMood.Mood)"
-                           oninput="@(Html.IdFor(_ => Model.UserMood.Mood)).value = this.valueAsNumber" />
-
-                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
-                        <option value="1"></option>
-                        <option value="2"></option>
-                        <option value="3"></option>
-                        <option value="4"></option>
-                        <option value="5"></option>
-
-                        <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
-                        <div onclick="@(Html.IdFor(_ => Model.UserMood.Mood)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.Mood))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(0% - .5ch)">Poor</div>
-                        <div onclick="@(Html.IdFor(_ => Model.UserMood.Mood)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.Mood))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(25% - .5ch)">Okay</div>
-                        <div onclick="@(Html.IdFor(_ => Model.UserMood.Mood)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.Mood))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(50% - .5ch)">Decent</div>
-                        <div onclick="@(Html.IdFor(_ => Model.UserMood.Mood)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.Mood))-input').value = this.dataset.value" data-value="4" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(75% - .5ch)">Good</div>
-                        <div onclick="@(Html.IdFor(_ => Model.UserMood.Mood)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.Mood))-input').value = this.dataset.value" data-value="5" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">Great</div>
-                    </datalist>
-                </div>
+    <details>
+        <summary>
+            <div style="height:min(70vw, 300px)">
+                <canvas id="myChart"></canvas>
             </div>
-            <div id="pounds-help" class="form-text"></div>
-        </div>
-        <div class="form-group mb-3">
-            <input type="submit" value="Save" class="btn btn-primary allow-demo" />
-        </div>
-    </form>
+        </summary>
 
-    <div style="height:min(70vw, 300px)">
-        <canvas id="myChart"></canvas>
-    </div>
+        <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageMood)" method="post"
+              asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mb-5">
+                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Mood)</label>
+                <div><span asp-validation-for="UserMood.Mood" class="text-danger"></span></div>
+                <div style="display:flex;column-gap:1ex;">
+                    <input type="hidden" asp-for="UserMood.Mood" style="width:6ch;height:fit-content;" class="allow-demo"
+                           oninput="@(Html.IdFor(_ => Model.UserMood.Mood))Input.value = this.valueAsNumber" id="@(Html.IdFor(_ => Model.UserMood.Mood))" />
+                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                        <input type="range" style="width:100%;" class="allow-demo"
+                               name="@(Html.IdFor(_ => Model.UserMood.Mood))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.Mood))-input"
+                               min="1" max="5" step="1" value="@((int)Model.UserMood.Mood)"
+                               oninput="@(Html.IdFor(_ => Model.UserMood.Mood)).value = this.valueAsNumber" />
+
+                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                            <option value="1"></option>
+                            <option value="2"></option>
+                            <option value="3"></option>
+                            <option value="4"></option>
+                            <option value="5"></option>
+
+                            <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
+                            <div onclick="@(Html.IdFor(_ => Model.UserMood.Mood)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.Mood))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(0% - .5ch)">Poor</div>
+                            <div onclick="@(Html.IdFor(_ => Model.UserMood.Mood)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.Mood))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(25% - .5ch)">Okay</div>
+                            <div onclick="@(Html.IdFor(_ => Model.UserMood.Mood)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.Mood))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(50% - .5ch)">Decent</div>
+                            <div onclick="@(Html.IdFor(_ => Model.UserMood.Mood)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.Mood))-input').value = this.dataset.value" data-value="4" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(75% - .5ch)">Good</div>
+                            <div onclick="@(Html.IdFor(_ => Model.UserMood.Mood)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.Mood))-input').value = this.dataset.value" data-value="5" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">Great</div>
+                        </datalist>
+                    </div>
+                </div>
+                <div id="pounds-help" class="form-text"></div>
+            </div>
+            <div class="form-group mb-3">
+                <input type="submit" value="Save" class="btn btn-primary allow-demo" />
+            </div>
+        </form>
+    </details>
 </div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <script>
+    setTimeout(() => {
+        document.getElementById('myChart').toBlob(
+            (blob) => {
+                let form = new FormData();
+                let request = new XMLHttpRequest();
+                form.append("image", blob);
+                form.append("type", '@Components.Mood');
+                form.append("email", '@Model.User.Email');
+                form.append("token", '@Model.Token');
+                request.open("POST", "/api/User/UploadImage", true);
+                request.send(form);
+            },
+        );
+    }, 3000);
+
     if (document.getElementById('myChart')) {
         Chart.defaults.font.size = 16;
         new Chart(document.getElementById('myChart'), {

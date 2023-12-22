@@ -14,7 +14,10 @@
     {
         await Html.RenderPartialAsync("_ScoreChart", new Web.ViewModels.Shared.ScoreChartViewModel()
         {
-            Scores = Model.Xys
+            Scores = Model.Xys,
+            User = Model.User,
+            Token = Model.Token,
+            Type = Components.DissociativeSeverity
         });
     }
     else
@@ -24,7 +27,10 @@
                 @{
                     await Html.RenderPartialAsync("_ScoreChart", new Web.ViewModels.Shared.ScoreChartViewModel()
                     {
-                        Scores = Model.Xys
+                        Scores = Model.Xys,
+                        User = Model.User,
+                        Token = Model.Token,
+                        Type = Components.DissociativeSeverity
                     });
                 }
             </summary>

@@ -1,4 +1,5 @@
 ﻿using Core.Models.User;
+using Data.Entities.Footnote;
 using static Web.ViewModels.User.Components.ActivityViewModel;
 
 namespace Web.ViewModels;
@@ -14,9 +15,9 @@ public record Xy(string X, int? Y)
 /// <summary>
 /// For chart.js
 /// </summary>
-public record XCustom(string X, UserCustomGroup? Y, int Id)
+public record XCustom(string X, UserCustomGroup? Y, UserCustom Label)
 {
-    public XCustom(DateOnly x, UserCustomGroup? score, int id) : this(x.ToString("O"), score, id) { }
+    public XCustom(DateOnly x, UserCustomGroup? score, UserCustom label) : this(x.ToString("O"), score, label) { }
 }
 
 /// <summary>

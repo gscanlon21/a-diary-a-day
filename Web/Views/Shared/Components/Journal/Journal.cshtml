@@ -13,7 +13,7 @@
 
     <div class="alert alert-secondary" role="alert">
         <div class="mb-4">
-            <h6 class="mb-1">New footnote</h6>
+            <h6 class="mb-1">New entry</h6>
             <form asp-controller="@UserController.Name" class="alert alert-light shadow" asp-action="@nameof(UserController.AddJournal)" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" method="post">
                 <div class="form-group mb-3">
                     <label for="Note" class="control-label">Note</label>

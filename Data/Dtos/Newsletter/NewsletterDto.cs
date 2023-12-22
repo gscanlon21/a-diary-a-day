@@ -1,4 +1,5 @@
 ﻿using Core.Models.Newsletter;
+using Core.Models.User;
 using Data.Dtos.User;
 
 namespace Data.Dtos.Newsletter;
@@ -16,6 +17,8 @@ public class NewsletterDto(UserNewsletterDto user)
     public DateOnly Today { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
 
     public UserNewsletterDto User { get; } = user;
+
+    public IList<ComponentImage> Images { get; init; }
 
     /// <summary>
     /// How much detail to show in the newsletter.

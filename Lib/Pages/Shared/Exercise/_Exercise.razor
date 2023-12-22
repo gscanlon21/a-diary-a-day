@@ -9,19 +9,61 @@
 @using Core.Models.User
 @using Core.Models.Newsletter
 
+@{
+    var borderColor = ExerciseTheme.Main switch
+    {
+        ExerciseTheme.Warmup => "palevioletred",
+        ExerciseTheme.Main => "mediumpurple",
+        ExerciseTheme.Cooldown => "lightskyblue",
+        ExerciseTheme.Extra => "lightgreen",
+        ExerciseTheme.Other => "lightsalmon",
+        _ => "currentColor"
+    };
+
+    var backgroundColor = ExerciseTheme.Main switch
+    {
+        ExerciseTheme.Warmup => "rgba(250,200,200,.1)",
+        ExerciseTheme.Main => "rgba(250,200,250,.1)",
+        ExerciseTheme.Cooldown => "rgba(200,200,250,.1)",
+        ExerciseTheme.Extra => "rgba(200,250,200,.1)",
+        ExerciseTheme.Other => "rgba(250,200,150,.1)",
+        _ => "transparent"
+    };
+}
+
 @*
     Use `em` for spacing and font sizes--it's more consistent across fonts/mediums.
 *@
-<div style="flex:1 0 @(Verbosity.HasFlag(Verbosity.Debug) ? "250px" : "200px");padding:10px;position:relative;display:flex;flex-direction:column;justify-content:space-between;
-            border-bottom:4px @(Verbosity.HasFlag(Verbosity.ProgressionBar) ? "solid" : "none");border-image-slice:1;outline:1px solid currentColor;background-color:currentColor;
-            border-image-source:linear-gradient(90deg, transparent 0%, currentColor 0% 100%, transparent 100%);">
+<div style="flex:1 0 @(Verbosity.HasFlag(Verbosity.Debug) ? "400px" : "300px");padding:10px;position:relative;display:flex;flex-direction:column;justify-content:space-between;
+            border-bottom:4px solid @borderColor;border-image-slice:1;outline:1px solid @borderColor;background-color:@backgroundColor;">
     
-    
+    @* div for margin-collapse between text content and image. *@
+    <div>
+        @* min-height so the Manage link doesn't overlap the image. *@
+        <div style="min-height:5ch;">
+            @* padding-inline-end so title and instruction text doesn't overlap with the Manage link. *@
+            <div style="padding-inline-end:1.1ch">
+                <h3 style="margin-block-start:0;margin-block-end:.4em;font-size:1.2em;">
+                    <span style="text-decoration:underline;">@(Model.Type.GetSingleDisplayName())</span>
+                </h3>
+            </div>
+        </div>
+
+        @if (Verbosity.HasFlag(Verbosity.Images))
+        {
+            // If we want to reduce layout shift with aspect-ratio, that really needs to be included on the table with the image because our images don't have consistent aspect ratios.
+            // Setting min-height (200 / (25/14)) gets us close though. 25/14 is, for the most part, our widest aspect-ratio.
+            <img style="display:block;margin-top:1ex;height:auto;min-height:112px;max-height:300px;max-width:100%;object-fit:contain;object-position:left top;" loading="lazy" src="@Model.Image" />
+        }
+    </div>
 </div>
 
 @code {
     [CascadingParameter]
     public ViewModels.User.UserNewsletterViewModel? User { get; set; }
+
+    [Parameter, EditorRequired]
+    public ComponentImage Model { get; set; } = null!;
 
     [Parameter, EditorRequired]
     public Verbosity Verbosity { get; set; }

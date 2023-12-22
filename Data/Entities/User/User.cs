@@ -56,6 +56,8 @@ public class User
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private init; }
 
+    public Guid Uid { get; init; } = Guid.NewGuid();
+
     /// <summary>
     /// The user's email address.
     /// </summary>
@@ -165,6 +167,9 @@ public class User
 
     [JsonIgnore, InverseProperty(nameof(UserToken.User))]
     public virtual ICollection<UserToken> UserTokens { get; private init; } = new List<UserToken>();
+
+    [JsonIgnore, InverseProperty(nameof(UserComponent.User))]
+    public virtual ICollection<UserComponent> UserComponents { get; private init; } = new List<UserComponent>();
 
     [JsonIgnore, InverseProperty(nameof(UserMood.User))]
     public virtual ICollection<UserMood> UserMoods { get; private init; } = null!;

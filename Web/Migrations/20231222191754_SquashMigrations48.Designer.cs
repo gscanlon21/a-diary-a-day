@@ -3,6 +3,7 @@ using System;
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Web.Migrations
 {
     [DbContext(typeof(CoreContext))]
-    partial class CoreContextModelSnapshot : ModelSnapshot
+    [Migration("20231222191754_SquashMigrations48")]
+    partial class SquashMigrations48
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -429,33 +432,6 @@ namespace Web.Migrations
                     b.ToTable("user_anxiety", t =>
                         {
                             t.HasComment("User variation weight log");
-                        });
-                });
-
-            modelBuilder.Entity("Data.Entities.User.UserComponent", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Component")
-                        .HasColumnType("integer");
-
-                    b.Property<DateOnly>("LastUpload")
-                        .HasColumnType("date");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("user_component", t =>
-                        {
-                            t.HasComment("Auth tokens for a user");
                         });
                 });
 
@@ -1243,17 +1219,6 @@ namespace Web.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserComponent", b =>
-                {
-                    b.HasOne("Data.Entities.User.User", "User")
-                        .WithMany("UserComponents")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Data.Entities.User.UserDepression", b =>
                 {
                     b.HasOne("Data.Entities.User.User", "User")
@@ -1531,8 +1496,6 @@ namespace Web.Migrations
                     b.Navigation("UserAngers");
 
                     b.Navigation("UserAnxieties");
-
-                    b.Navigation("UserComponents");
 
                     b.Navigation("UserCustoms");
 

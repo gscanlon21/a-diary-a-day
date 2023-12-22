@@ -14,7 +14,10 @@
             @{
                 await Html.RenderPartialAsync("_RadarChart", new Web.ViewModels.Shared.RadarChartViewModel()
             {
-                XysGrouped = Model.XysGrouped
+                XysGrouped = Model.XysGrouped,
+                User = Model.User,
+                Token = Model.Token,
+                Type = Components.People
             });
             }
         </summary>

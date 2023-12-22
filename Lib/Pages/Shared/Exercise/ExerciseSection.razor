@@ -2,7 +2,7 @@
 @using Core.Models.Newsletter;
 @using Core.Models.User;
 
-@if (true)
+@if (Images != null)
 {
     var titleColor = Theme switch
     {
@@ -16,26 +16,9 @@
 
     if (Title == null)
     {
-        @*
-        foreach (var exerciseGroup in Exercises.GroupBy(e => e, new ExerciseSectionComparer()).OrderBy(e => e.Key.Exercise.Name))
+        foreach (var exerciseGroup in Images.GroupBy(e => e, new ExerciseSectionComparer()))
         {
-            <h2 style="margin-bottom:0;margin-top:1em;color:@titleColor;font-size:revert;">@exerciseGroup.Key.Exercise.Name</h2>
-
-            @if (Verbosity.HasFlag(Verbosity.Debug))
-            {
-                <p style="margin-block:0;"><b>Groups</b> - @exerciseGroup.Key.Exercise.Groups.GetDisplayName32()</p>
-                <div style="margin-block:.1ex;font-size:x-small;color:mediumvioletred"><b>Unused</b>: @ExerciseGroup.All.UnsetFlag32(exerciseGroup.Key.Exercise.Groups).GetDisplayName32(EnumExtensions.DisplayNameType.ShortName)</div>
-
-                @if (exerciseGroup.Key.ExercisePrerequisites?.Any() == true)
-                {
-                    <p style="margin-block:0;"><b>Prerequisites</b> - @String.Join(", ", exerciseGroup.Key.ExercisePrerequisites.Select(e => $"{e.Name}: {e.Proficiency}"))</p>
-                }
-
-                @if (!string.IsNullOrWhiteSpace(exerciseGroup.Key.Exercise.Notes))
-                {
-                    <p style="margin-block:0;"><b>Notes</b> - @exerciseGroup.Key.Exercise.Notes</p>
-                }
-            }
+            <h2 style="margin-bottom:0;margin-top:1em;color:@titleColor;font-size:revert;">@exerciseGroup.Key.Type.GetSingleDisplayName()</h2>
 
             <div style="margin-top:.2rem;display:flex;flex-flow:row wrap;gap:1ch;line-height:normal;">
                 @foreach (var item in exerciseGroup)
@@ -46,26 +29,23 @@
                 }
             </div>
         }
-        *@
     }
     else
     {
         <h2 style="margin-bottom:0;margin-top:1em;color:@titleColor;font-size:revert;">@Title.Header</h2>
-        @if (Verbosity.HasFlag(Verbosity.Instructions) && Title.Description.HasValue)
+        @if (Title.Description.HasValue)
         {
             <h6 style="margin-block:0;font-size:revert;">@Title.Description.Value</h6>
         }
         <div style="margin-top:.2rem;display:flex;flex-flow:row wrap;gap:1ch;line-height:normal;">
-            @*
-            @foreach (var item in Exercises)
+            @foreach (var item in Images)
             {
                 <CascadingValue Value="User">
                     <_Exercise Model="item" Verbosity="Verbosity" />
                 </CascadingValue>
             }
-    *@
         </div>
-        @if (Verbosity.HasFlag(Verbosity.Instructions) && Title.Footer.HasValue)
+        @if (Title.Footer.HasValue)
         {
             <h6 style="margin-bottom:0;margin-top:.25em;font-weight:normal;font-size:revert;">@Title.Footer.Value</h6>
         }
@@ -83,6 +63,9 @@
     public ExerciseTheme Theme { get; init; }
 
     [Parameter, EditorRequired]
+    public IList<ComponentImage> Images { get; init; }
+
+    [Parameter, EditorRequired]
     public Verbosity Verbosity { get; init; }
 
     public record Titles(MarkupString Header, MarkupString? Description, MarkupString? Footer)
@@ -91,4 +74,12 @@
         public Titles(string header, string description) : this(new MarkupString(header), new MarkupString(description), null) { }
         public Titles(string header, string description, string footer) : this(new MarkupString(header), new MarkupString(description), new MarkupString(footer)) { }
     };
+
+    private class ExerciseSectionComparer : IEqualityComparer<ComponentImage>
+    {
+        public bool Equals(ComponentImage? a, ComponentImage? b)
+            => EqualityComparer<ComponentImage>.Default.Equals(a, b);
+
+        public int GetHashCode(ComponentImage e) => e.GetHashCode();
+    }
 }

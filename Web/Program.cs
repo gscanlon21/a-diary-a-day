@@ -67,6 +67,10 @@ builder.Services.Configure<SiteSettings>(
     builder.Configuration.GetSection("SiteSettings")
 );
 
+builder.Services.Configure<DigitalOceanSettings>(
+    builder.Configuration.GetSection("DigitalOceanSettings")
+);
+
 builder.Services.Configure<CaptchaSettings>(
     builder.Configuration.GetSection("CaptchaSettings")
 );

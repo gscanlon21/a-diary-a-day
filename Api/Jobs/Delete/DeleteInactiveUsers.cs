@@ -1,6 +1,9 @@
-﻿using Core.Consts;
+﻿using Amazon.S3;
+using Amazon.S3.Model;
+using Core.Consts;
 using Core.Models.Options;
 using Data;
+using Data.Entities.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Quartz;
@@ -10,7 +13,7 @@ namespace Api.Jobs.Delete;
 /// <summary>
 /// Deletes inactive accounts.
 /// </summary>
-public class DeleteInactiveUsers(ILogger<DeleteInactiveUsers> logger, CoreContext coreContext, IOptions<SiteSettings> siteSettings) : IJob, IScheduled
+public class DeleteInactiveUsers(ILogger<DeleteInactiveUsers> logger, CoreContext coreContext, IOptions<SiteSettings> siteSettings, IOptions<DigitalOceanSettings> digitalOceanOptions) : IJob, IScheduled
 {
     private static DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
 
@@ -22,6 +25,18 @@ public class DeleteInactiveUsers(ILogger<DeleteInactiveUsers> logger, CoreContex
     {
         try
         {
+            //var prefix = $"moods/{user.Uid}";
+            //var key = $"{prefix}-{type}";
+            //var client = new AmazonS3Client(digitalOceanOptions.Value.AWSS3AccessKey, digitalOceanOptions.Value.AWSS3SecretKey, new AmazonS3Config()
+            //{
+            //    ServiceURL = digitalOceanOptions.Value.CDNLink
+            //});
+            //var objects = await client.ListObjectsV2Async(new ListObjectsV2Request()
+            //{
+            //    BucketName = digitalOceanOptions.Value.CDNBucket,
+            //    Prefix = prefix
+            //});
+
             await _coreContext.Users.IgnoreQueryFilters()
                 .Where(u => !u.Email.EndsWith(_siteSettings.Value.Domain))
                 // User has not been active in the past X months

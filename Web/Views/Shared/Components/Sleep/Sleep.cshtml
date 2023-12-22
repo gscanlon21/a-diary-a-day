@@ -5,96 +5,114 @@
 
 <h6 class="mb-1">Sleep</h6>
 <div class="alert alert-light shadow">
-    <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageSleep)" method="post"
-          asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
-
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-        <div class="form-group mb-5 pb-1">
-            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.SleepDuration)</label>
-            <div><span asp-validation-for="UserMood.SleepDuration" class="text-danger"></span></div>
-            <div style="display:flex;column-gap:1ex;">
-                <input type="hidden" asp-for="UserMood.SleepDuration" value="@((int)Model.UserMood.SleepDuration)"
-                       id="@(Html.IdFor(_ => Model.UserMood.SleepDuration))" style="width:6ch;height:fit-content;" class="allow-demo"
-                       oninput="@(Html.IdFor(_ => Model.UserMood.SleepDuration))Input.value = this.valueAsNumber" />
-                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                    <input type="range" style="width:100%;" class="allow-demo"
-                           name="@(Html.IdFor(_ => Model.UserMood.SleepDuration))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.SleepDuration))-input"
-                           min="1" max="3" step="1" value="@((int)Model.UserMood.SleepDuration)"
-                           oninput="@(Html.IdFor(_ => Model.UserMood.SleepDuration)).value = this.valueAsNumber" />
-
-                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
-                        <option value="1"></option>
-                        <option value="2"></option>
-                        <option value="3"></option>
-
-                        <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
-                        <div onclick="@(Html.IdFor(_ => Model.UserMood.SleepDuration)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.SleepDuration))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(0% - .5ch)">@SleepDuration.TooLittle.GetSingleDisplayName()</div>
-                        <div onclick="@(Html.IdFor(_ => Model.UserMood.SleepDuration)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.SleepDuration))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(50% - .5ch)">@SleepDuration.JustRight.GetSingleDisplayName()</div>
-                        <div onclick="@(Html.IdFor(_ => Model.UserMood.SleepDuration)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.SleepDuration))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">@SleepDuration.TooMuch.GetSingleDisplayName()</div>
-                    </datalist>
-                </div>
+    <details>
+        <summary>
+            <div style="height:min(70vw, 300px)">
+                <canvas id="myChart1"></canvas>
             </div>
-            <div id="pounds-help" class="form-text"></div>
-        </div>
+        </summary>
 
-        <div class="form-group mb-5 pb-4">
-            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.SleepTime)</label>
-            <div><span asp-validation-for="UserMood.SleepTime" class="text-danger"></span></div>
-            <div style="display:flex;column-gap:1ex;">
-                <input type="hidden" asp-for="UserMood.SleepTime" value="@((int)Model.UserMood.SleepTime)"
-                       id="@(Html.IdFor(_ => Model.UserMood.SleepTime))" style="width:6ch;height:fit-content;" class="allow-demo"
-                       oninput="@(Html.IdFor(_ => Model.UserMood.SleepTime))Input.value = this.valueAsNumber" />
-                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                    <input type="range" style="width:100%;" class="allow-demo"
-                           name="@(Html.IdFor(_ => Model.UserMood.SleepTime))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.SleepTime))-input"
-                           min="1" max="3" step="1" value="@((int)Model.UserMood.SleepTime)"
-                           oninput="@(Html.IdFor(_ => Model.UserMood.SleepTime)).value = this.valueAsNumber" />
+        <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageSleep)" method="post"
+              asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
 
-                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
-                        <option value="1"></option>
-                        <option value="2"></option>
-                        <option value="3"></option>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                        <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
-                        <div onclick="@(Html.IdFor(_ => Model.UserMood.SleepTime)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.SleepTime))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(0% - .5ch)">@SleepTime.EarlyToBed.GetSingleDisplayName()</div>
-                        <div onclick="@(Html.IdFor(_ => Model.UserMood.SleepTime)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.SleepTime))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(50% - .5ch)">@SleepTime.InBedOnTime.GetSingleDisplayName()</div>
-                        <div onclick="@(Html.IdFor(_ => Model.UserMood.SleepTime)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.SleepTime))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">@SleepTime.LateToBed.GetSingleDisplayName()</div>
-                    </datalist>
+            <div class="form-group mb-5 pb-1">
+                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.SleepDuration)</label>
+                <div><span asp-validation-for="UserMood.SleepDuration" class="text-danger"></span></div>
+                <div style="display:flex;column-gap:1ex;">
+                    <input type="hidden" asp-for="UserMood.SleepDuration" value="@((int)Model.UserMood.SleepDuration)"
+                           id="@(Html.IdFor(_ => Model.UserMood.SleepDuration))" style="width:6ch;height:fit-content;" class="allow-demo"
+                           oninput="@(Html.IdFor(_ => Model.UserMood.SleepDuration))Input.value = this.valueAsNumber" />
+                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                        <input type="range" style="width:100%;" class="allow-demo"
+                               name="@(Html.IdFor(_ => Model.UserMood.SleepDuration))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.SleepDuration))-input"
+                               min="1" max="3" step="1" value="@((int)Model.UserMood.SleepDuration)"
+                               oninput="@(Html.IdFor(_ => Model.UserMood.SleepDuration)).value = this.valueAsNumber" />
+
+                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                            <option value="1"></option>
+                            <option value="2"></option>
+                            <option value="3"></option>
+
+                            <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
+                            <div onclick="@(Html.IdFor(_ => Model.UserMood.SleepDuration)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.SleepDuration))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(0% - .5ch)">@SleepDuration.TooLittle.GetSingleDisplayName()</div>
+                            <div onclick="@(Html.IdFor(_ => Model.UserMood.SleepDuration)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.SleepDuration))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(50% - .5ch)">@SleepDuration.JustRight.GetSingleDisplayName()</div>
+                            <div onclick="@(Html.IdFor(_ => Model.UserMood.SleepDuration)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.SleepDuration))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">@SleepDuration.TooMuch.GetSingleDisplayName()</div>
+                        </datalist>
+                    </div>
                 </div>
+                <div id="pounds-help" class="form-text"></div>
             </div>
-            <div id="pounds-help" class="form-text"></div>
-        </div>
 
-        <div class="form-group mb-3 mt-3">
-            @for (var i = 0; i < Model.Customs.Count; i++)
-            {
-                <div class="form-check">
-                    <input class="allow-demo" type="hidden" asp-for="@Model.Customs[i].Id" />
-                    <input class="allow-demo" type="hidden" asp-for="@Model.Customs[i].Name" />
-                    <input id="@Html.IdFor(_ => Model.Customs[i].Selected)-sleep" asp-for="@Model.Customs[i].Selected" class="form-check-input allow-demo" type="checkbox">
-                    <label for="@Html.IdFor(_ => Model.Customs[i].Selected)-sleep" class="form-check-label">
-                        @Model.Customs[i].Name
-                    </label>
+            <div class="form-group mb-5 pb-4">
+                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.SleepTime)</label>
+                <div><span asp-validation-for="UserMood.SleepTime" class="text-danger"></span></div>
+                <div style="display:flex;column-gap:1ex;">
+                    <input type="hidden" asp-for="UserMood.SleepTime" value="@((int)Model.UserMood.SleepTime)"
+                           id="@(Html.IdFor(_ => Model.UserMood.SleepTime))" style="width:6ch;height:fit-content;" class="allow-demo"
+                           oninput="@(Html.IdFor(_ => Model.UserMood.SleepTime))Input.value = this.valueAsNumber" />
+                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                        <input type="range" style="width:100%;" class="allow-demo"
+                               name="@(Html.IdFor(_ => Model.UserMood.SleepTime))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.SleepTime))-input"
+                               min="1" max="3" step="1" value="@((int)Model.UserMood.SleepTime)"
+                               oninput="@(Html.IdFor(_ => Model.UserMood.SleepTime)).value = this.valueAsNumber" />
+
+                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                            <option value="1"></option>
+                            <option value="2"></option>
+                            <option value="3"></option>
+
+                            <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
+                            <div onclick="@(Html.IdFor(_ => Model.UserMood.SleepTime)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.SleepTime))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(0% - .5ch)">@SleepTime.EarlyToBed.GetSingleDisplayName()</div>
+                            <div onclick="@(Html.IdFor(_ => Model.UserMood.SleepTime)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.SleepTime))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(50% - .5ch)">@SleepTime.InBedOnTime.GetSingleDisplayName()</div>
+                            <div onclick="@(Html.IdFor(_ => Model.UserMood.SleepTime)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.SleepTime))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">@SleepTime.LateToBed.GetSingleDisplayName()</div>
+                        </datalist>
+                    </div>
                 </div>
-            }
-        </div>
+                <div id="pounds-help" class="form-text"></div>
+            </div>
 
-        <div class="form-group mb-3">
-            <input type="submit" value="Save" class="btn btn-primary allow-demo" />
-        </div>
-    </form>
+            <div class="form-group mb-3 mt-3">
+                @for (var i = 0; i < Model.Customs.Count; i++)
+                {
+                    <div class="form-check">
+                        <input class="allow-demo" type="hidden" asp-for="@Model.Customs[i].Id" />
+                        <input class="allow-demo" type="hidden" asp-for="@Model.Customs[i].Name" />
+                        <input id="@Html.IdFor(_ => Model.Customs[i].Selected)-sleep" asp-for="@Model.Customs[i].Selected" class="form-check-input allow-demo" type="checkbox">
+                        <label for="@Html.IdFor(_ => Model.Customs[i].Selected)-sleep" class="form-check-label">
+                            @Model.Customs[i].Name
+                        </label>
+                    </div>
+                }
+            </div>
 
-
-    <div style="height:min(70vw, 300px)">
-        <canvas id="myChart1"></canvas>
-    </div>
+            <div class="form-group mb-3">
+                <input type="submit" value="Save" class="btn btn-primary allow-demo" />
+            </div>
+        </form>
+    </details>
 </div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <script>
+    setTimeout(() => {
+        document.getElementById('myChart1').toBlob(
+            (blob) => {
+                let form = new FormData();
+                let request = new XMLHttpRequest();
+                form.append("image", blob);
+                form.append("type", '@Components.Sleep');
+                form.append("email", '@Model.User.Email');
+                form.append("token", '@Model.Token');
+                request.open("POST", "/api/User/UploadImage", true);
+                request.send(form);
+            },
+        );
+    }, 4000);
+
     if (document.getElementById('myChart1')) {
         var ctx = document.getElementById('myChart1').getContext('2d');
 

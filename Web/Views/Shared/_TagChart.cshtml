@@ -8,6 +8,21 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <script>
+    setTimeout(() => {
+        document.getElementById('@Model.Id').toBlob(
+            (blob) => {
+                let form = new FormData();
+                let request = new XMLHttpRequest();
+                form.append("image", blob);
+                form.append("type", '@Model.Type');
+                form.append("email", '@Model.User.Email');
+                form.append("token", '@Model.Token');
+                request.open("POST", "/api/User/UploadImage", true);
+                request.send(form);
+            },
+        );
+    }, 7000);
+
     if (document.getElementById('@Model.Id')) {
         var ctx = document.getElementById('@Model.Id').getContext('2d');
 

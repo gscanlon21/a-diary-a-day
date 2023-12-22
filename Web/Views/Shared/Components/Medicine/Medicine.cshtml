@@ -13,9 +13,12 @@
         <summary>
             @{
                 await Html.RenderPartialAsync("_TagChart", new Web.ViewModels.Shared.TagChartViewModel()
-            {
-                XysGrouped = Model.XysGrouped
-            });
+                {
+                    XysGrouped = Model.XysGrouped,
+                    User = Model.User,
+                    Token = Model.Token,
+                    Type = Components.Medicine
+                });
             }
         </summary>
 
