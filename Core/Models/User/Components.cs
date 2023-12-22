@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
 
 namespace Core.Models.User;
 
@@ -95,8 +94,8 @@ public enum Components
     [Display(Name = "Journal")]
     Journal = 1 << 15, // 32768
 
-    All = Mood | Sleep | People | Symptom | Emotion | Activity | Medicine 
-        | AcuteStressSeverity | AgoraphobiaSeverity | DepressionSeverity | DissociativeSeverity 
+    All = Mood | Sleep | People | Symptom | Emotion | Activity | Medicine
+        | AcuteStressSeverity | AgoraphobiaSeverity | DepressionSeverity | DissociativeSeverity
         | GeneralizedAnxietySeverity | PanicSeverity | PTSDSeverity | SocialAnxietySeverity
         | Journal,
 }

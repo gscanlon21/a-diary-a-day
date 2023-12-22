@@ -93,7 +93,7 @@ public partial class UserController
             var userCustoms = await context.UserCustoms.Where(c => customIds.Contains(c.Id)).ToListAsync();
 
             var previousUserMood = await context.UserSleeps.Include(us => us.UserCustoms).FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == Today);
-            if (previousUserMood  != null)
+            if (previousUserMood != null)
             {
                 previousUserMood.UserCustoms.Clear();
                 previousUserMood.UserCustoms.AddRange(userCustoms);

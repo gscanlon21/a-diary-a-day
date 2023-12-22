@@ -1,7 +1,5 @@
-﻿using Core.Models.User;
-using Data.Entities.Footnote;
+﻿using Data.Entities.Footnote;
 using Data.Entities.User;
-using System.Linq;
 using static Web.ViewModels.User.Components.ActivityViewModel;
 
 namespace Web.ViewModels.User.Components;

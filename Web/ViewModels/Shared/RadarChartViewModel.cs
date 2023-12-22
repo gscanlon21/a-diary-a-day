@@ -2,6 +2,8 @@
 
 public class RadarChartViewModel
 {
+    public const int Height = 350;
+
     public string Id { get; } = $"S{Guid.NewGuid():N}";
 
     internal List<IGrouping<int, XCustom>> XysGrouped { get; set; } = null!;

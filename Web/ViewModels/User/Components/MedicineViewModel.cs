@@ -1,7 +1,6 @@
 ﻿using Data.Entities.Footnote;
 using Data.Entities.User;
 using static Web.ViewModels.User.Components.ActivityViewModel;
-using System.Linq;
 
 namespace Web.ViewModels.User.Components;
 

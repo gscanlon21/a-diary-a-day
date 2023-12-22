@@ -1,6 +1,7 @@
-﻿@model Web.ViewModels.Shared.RadarChartViewModel
+﻿@model RadarChartViewModel
+@using Web.ViewModels.Shared
 
-<div style="height:min(70vw, 300px)">
+<div style="height:min(70vw, @(RadarChartViewModel.Height)px)">
     <canvas id="@Model.Id"></canvas>
 </div>
 
@@ -12,12 +13,12 @@
         var ctx = document.getElementById('@Model.Id').getContext('2d');
 
         // https://www.chartjs.org/docs/latest/samples/advanced/linear-gradient.html
-        var gradient1 = ctx.createLinearGradient(0, 0, 0, 300);
+        var gradient1 = ctx.createLinearGradient(0, 0, 0, @RadarChartViewModel.Height);
         gradient1.addColorStop(0, 'currentColor');
         gradient1.addColorStop(.5, 'skyblue');
         gradient1.addColorStop(1, 'currentColor');
 
-        var gradient2 = ctx.createLinearGradient(0, 0, 0, 300);
+        var gradient2 = ctx.createLinearGradient(0, 0, 0, @RadarChartViewModel.Height);
         gradient2.addColorStop(0, 'currentColor');
         gradient2.addColorStop(.5, 'red');
         gradient2.addColorStop(1, 'currentColor');
