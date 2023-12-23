@@ -58,7 +58,7 @@ public partial class UserController
 
     [HttpPost]
     [Route("custom/add")]
-    public async Task<IActionResult> AddCustom(string email, string token, [FromForm] string name, [FromForm] string? icon, [FromForm] int order)
+    public async Task<IActionResult> AddCustom(string email, string token, [FromForm] string name, [FromForm] CustomType type, [FromForm] int order)
     {
         var user = await userRepo.GetUser(email, token);
         if (user == null)
@@ -71,8 +71,8 @@ public partial class UserController
             User = user,
             Name = name,
             Order = order,
-            Icon = icon,
-            Type = CustomType.Medicine
+            Type = type,
+            Icon = null,
         });
 
         await context.SaveChangesAsync();

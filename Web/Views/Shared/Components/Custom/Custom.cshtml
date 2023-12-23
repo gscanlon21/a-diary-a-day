@@ -1,6 +1,6 @@
 ﻿@model Web.ViewModels.User.Components.CustomViewModel
 @using Core.Models.Exercise
-
+@using Web.Code.Extensions
 
 <details class="mb-25">
     <summary class="mb-1 h5">
@@ -18,11 +18,11 @@
                 </div>
                 <div class="form-group mb-3">
                     <label for="Type" class="control-label">Type</label>
-                    <input type="text" name="Type" class="form-control" />
+                    <select required="required" name="Type" class="form-control" asp-items="@(EnumExtensions.GetNotNoneValues32<CustomType>().AsSelectListItems32().Prepend(new SelectListItem()))"></select>
                 </div>
                 <div class="form-group mb-3">
                     <label for="Order" class="control-label">Order</label>
-                    <input type="number" name="Order" class="form-control" />
+                    <input value="0" type="number" name="Order" class="form-control" />
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Add" class="btn btn-secondary" />
