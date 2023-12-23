@@ -66,25 +66,12 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-<script>
-    setTimeout(() => {
-        document.getElementById('myChart').toBlob(
-            (blob) => {
-                let form = new FormData();
-                let request = new XMLHttpRequest();
-                form.append("image", blob);
-                form.append("type", '@Components.Mood');
-                form.append("email", '@Model.User.Email');
-                form.append("token", '@Model.Token');
-                request.open("POST", "/api/User/UploadImage", true);
-                request.send(form);
-            },
-        );
-    }, 3000);
-
-    if (document.getElementById('myChart')) {
+<script type="module">
+    const canvas = document.getElementById('myChart');
+    if (canvas) {
         Chart.defaults.font.size = 16;
-        new Chart(document.getElementById('myChart'), {
+        const offscreen = new OffscreenCanvas(400, 300);
+        const chart = new Chart([canvas, offscreen.getContext("2d")], {
             type: 'line',
             data: {
                 datasets: [{
@@ -181,5 +168,17 @@
                 },
             }
         });
+
+        setTimeout(async () => {
+            const blob = await offscreen.convertToBlob();
+            let form = new FormData();
+            let request = new XMLHttpRequest();
+            form.append("image", blob);
+            form.append("type", '@Components.Mood');
+            form.append("email", '@Model.User.Email');
+            form.append("token", '@Model.Token');
+            request.open("POST", "/api/User/UploadImage", true);
+            request.send(form);
+        }, 1000);
     }
 </script>

@@ -8,23 +8,11 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <script type="module">
-    let canvas = document.getElementById('@Model.Id');
+    const canvas = document.getElementById('@Model.Id');
     if (canvas) {
-        var ctx = canvas.getContext('2d');
-
-        // https://www.chartjs.org/docs/latest/samples/advanced/linear-gradient.html
-        var gradient1 = ctx.createLinearGradient(0, 0, 0, 300);
-        gradient1.addColorStop(0, 'currentColor');
-        gradient1.addColorStop(.5, 'skyblue');
-        gradient1.addColorStop(1, 'currentColor');
-
-        var gradient2 = ctx.createLinearGradient(0, 0, 0, 300);
-        gradient2.addColorStop(0, 'currentColor');
-        gradient2.addColorStop(.5, 'red');
-        gradient2.addColorStop(1, 'currentColor');
-
         Chart.defaults.font.size = 16;
-        let chart = new Chart(canvas, {
+        const offscreen = new OffscreenCanvas(400, 300);
+        const chart = new Chart([canvas, offscreen.getContext("2d")], {
             type: 'bar',
             data: {
                 datasets: [
@@ -40,7 +28,6 @@
                                 spanGaps: true,
                                 showLine: true,
                                 stepped: 'middle',
-                                borderColor: gradient1,
                                 backgroundColor: '@Model.Colors[i]',
                                 parsing: {
                                     yAxisKey: 'y.one'
@@ -51,8 +38,7 @@
                 ],
             },
             options: {
-                animation: false,
-                responsive: false,
+                responsive: true,
                 maintainAspectRatio: false,
                 elements: {
                     line: {
@@ -133,24 +119,16 @@
             }
         });
 
-        chart.resize(400, 300);
-        setTimeout(() => {
-            canvas.toBlob(
-                (blob) => {
-                    let form = new FormData();
-                    let request = new XMLHttpRequest();
-                    form.append("image", blob);
-                    form.append("type", '@Model.Type');
-                    form.append("email", '@Model.User.Email');
-                    form.append("token", '@Model.Token');
-                    request.open("POST", "/api/User/UploadImage", true);
-                    request.send(form);
-                    chart.resize();
-                    window.addEventListener('resize', () => {
-                        chart.resize();
-                    });
-                },
-            );
-        }, 250);
+        setTimeout(async () => {
+            const blob = await offscreen.convertToBlob();
+            let form = new FormData();
+            let request = new XMLHttpRequest();
+            form.append("image", blob);
+            form.append("type", '@Model.Type');
+            form.append("email", '@Model.User.Email');
+            form.append("token", '@Model.Token');
+            request.open("POST", "/api/User/UploadImage", true);
+            request.send(form);
+        }, 1000);
     }
 </script>
