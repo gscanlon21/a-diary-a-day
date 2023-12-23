@@ -3,8 +3,16 @@
 @using Data.Entities.User
 @using Lib.Pages.Shared.Exercise
 
-<h6 class="mb-1">Sleep</h6>
+<h5 class="mb-1">Sleep</h5>
 <div class="alert alert-light shadow">
+    @if (Model.UserMood.Date == Core.Dates.Today && Model.UserMood.Id != default)
+    {
+        <div style="height:min(70vw, 300px)">
+            <canvas id="myChart1"></canvas>
+        </div>
+    }
+    else
+    {
     <details>
         <summary>
             <div style="height:min(70vw, 300px)">
@@ -92,6 +100,7 @@
             </div>
         </form>
     </details>
+    }
 </div>
 
 

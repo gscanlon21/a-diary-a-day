@@ -20,6 +20,6 @@ public enum Verbosity
     /// This is not user-facing. 
     /// It should not have a Display attribute. 
     /// </summary>
-    Debug = Images 
+    Debug = Images
         | 1 << 30 // 1073741824
 }

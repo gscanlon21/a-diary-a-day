@@ -1,4 +1,7 @@
-﻿using Core.Models.Footnote;
+﻿using Core.Code.Extensions;
+using Core.Models.Footnote;
+using Core.Models.Options;
+using Core.Models.User;
 using Data.Dtos.Newsletter;
 using Data.Dtos.User;
 using Data.Entities.Footnote;
@@ -6,10 +9,7 @@ using Data.Models.Newsletter;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Core.Code.Extensions;
-using Core.Models.User;
 using Microsoft.Extensions.Options;
-using Core.Models.Options;
 
 namespace Data.Repos;
 
@@ -119,8 +119,8 @@ public partial class NewsletterRepo(ILogger<NewsletterRepo> logger, CoreContext 
         foreach (var component in components)
         {
             var key = $"{prefix}-{component}";
-            images.Add(new ComponentImage() 
-            { 
+            images.Add(new ComponentImage()
+            {
                 Type = component,
                 Image = $"{siteSettings.Value.CdnLink}/{key}"
             });

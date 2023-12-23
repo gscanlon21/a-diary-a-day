@@ -1,20 +1,15 @@
-﻿using Core.Consts;
+﻿using Amazon.S3;
+using Amazon.S3.Model;
+using Core.Consts;
+using Core.Models.Options;
+using Core.Models.User;
 using Data;
 using Data.Entities.Newsletter;
 using Data.Entities.User;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
-using System.Net;
-using System.Net.Http.Headers;
-using Amazon.Runtime;
-using Amazon.S3;
-using Microsoft.Extensions.Options;
-using Core.Models.Options;
-using Amazon;
-using Amazon.S3.Model;
-using Core.Models.User;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Api.Controllers;
 
@@ -38,22 +33,22 @@ public class UserController(UserRepo userRepo, CoreContext context, IOptions<Dig
     /// Get the user's past workouts.
     /// </summary>
     [HttpPost("UploadImage")]
-    public async Task<OkResult?> UploadImage([FromForm] Components type = Components.None, [FromForm] string email = UserConsts.DemoUser, [FromForm] string token = UserConsts.DemoToken, [FromForm] IFormFile? image = null)
+    public async Task<IActionResult> UploadImage([FromForm] Components type = Components.None, [FromForm] string email = UserConsts.DemoUser, [FromForm] string token = UserConsts.DemoToken, [FromForm] IFormFile? image = null)
     {
         if (type == Components.None)
         {
-            throw new BadHttpRequestException("Invalid Type");
+            return BadRequest("Invalid Type");
         }
 
         if (image == null || image.Length == 0)
         {
-            throw new BadHttpRequestException("Invalid Image");
+            return BadRequest("Invalid Image");
         }
 
         var user = await userRepo.GetUser(email, token, allowDemoUser: true);
         if (user == null)
         {
-            return null;
+            return BadRequest("Invalid User");
         }
 
         var userComponent = await context.UserComponents.FirstOrDefaultAsync(c => c.UserId == user.Id && c.Component == type);
@@ -66,14 +61,16 @@ public class UserController(UserRepo userRepo, CoreContext context, IOptions<Dig
                 ServiceURL = digitalOceanOptions.Value.CDNLink
             });
 
-            await client.PutObjectAsync(new PutObjectRequest()
+            var request = new PutObjectRequest()
             {
                 BucketName = digitalOceanOptions.Value.CDNBucket,
                 Key = key,
                 CannedACL = S3CannedACL.PublicRead,
                 InputStream = image.OpenReadStream(),
-            });
-          
+            };
+            request.Metadata.Add("Cache-Control", "public, max-age=86400");
+            await client.PutObjectAsync(request);
+
             userComponent.LastUpload = Core.Dates.Today;
         }
         else if (userComponent == null)

@@ -8,24 +8,10 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-<script>
-    setTimeout(() => {
-        document.getElementById('@Model.Id').toBlob(
-            (blob) => {
-                let form = new FormData();
-                let request = new XMLHttpRequest();
-                form.append("image", blob);
-                form.append("type", '@Model.Type');
-                form.append("email", '@Model.User.Email');
-                form.append("token", '@Model.Token');
-                request.open("POST", "/api/User/UploadImage", true);
-                request.send(form);
-            },
-        );
-    }, 5000);
-
-    if (document.getElementById('@Model.Id')) {
-        var ctx = document.getElementById('@Model.Id').getContext('2d');
+<script type="module">
+    const canvas = document.getElementById('@Model.Id');
+    if (canvas) {
+        var ctx = canvas.getContext('2d');
 
         // https://www.chartjs.org/docs/latest/samples/advanced/linear-gradient.html
         var gradient1 = ctx.createLinearGradient(0, 0, 0, @RadarChartViewModel.Height);
@@ -39,7 +25,7 @@
         gradient2.addColorStop(1, 'currentColor');
 
         Chart.defaults.font.size = 16;
-        new Chart(document.getElementById('@Model.Id'), {
+        const chart = new Chart(canvas, {
             type: 'radar',
             data: {
                 labels: @Json.Serialize(Model.Labels),
@@ -65,7 +51,8 @@
                 ],
             },
             options: {
-                responsive: true,
+                animation: false,
+                responsive: false,
                 maintainAspectRatio: false,
                 elements: {
                     line: {
@@ -103,8 +90,8 @@
                     tooltip: {
                         callbacks: {
                             //title: (context) => {
-                                // Pretty-print the x-axis date in the hover tooltip
-                                //return context.map(c => new Date(c.parsed.x).toDateString());
+                            // Pretty-print the x-axis date in the hover tooltip
+                            //return context.map(c => new Date(c.parsed.x).toDateString());
                             //},
                         },
                     },
@@ -122,5 +109,25 @@
                 },
             }
         });
+
+        chart.resize(300, 300);
+        setTimeout(() => {
+            canvas.toBlob(
+                (blob) => {
+                    let form = new FormData();
+                    let request = new XMLHttpRequest();
+                    form.append("image", blob);
+                    form.append("type", '@Model.Type');
+                    form.append("email", '@Model.User.Email');
+                    form.append("token", '@Model.Token');
+                    request.open("POST", "/api/User/UploadImage", true);
+                    request.send(form);
+                    chart.resize();
+                    window.addEventListener('resize', () => {
+                        chart.resize();
+                    });
+                },
+            );
+        }, 250);
     }
 </script>

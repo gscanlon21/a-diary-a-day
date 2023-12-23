@@ -3,12 +3,21 @@
 @using Data.Entities.User
 @using Lib.Pages.Shared.Exercise
 
-@{
-    bool show = Model.PreviousMood == null || Model.PreviousMood.Date < Core.Dates.Today.AddDays(-7);
-}
 
-<h6 class="mb-1">Symptoms</h6>
+<h5 class="mb-1">Symptoms</h5>
 <div class="alert alert-light shadow">
+    @if (Model.PreviousMood?.Date == Core.Dates.Today)
+    {
+        await Html.RenderPartialAsync("_RadarChart", new Web.ViewModels.Shared.RadarChartViewModel()
+        {
+            XysGrouped = Model.XysGrouped,
+            User = Model.User,
+            Token = Model.Token,
+            Type = Components.Symptom
+        });
+    }
+    else
+    {
     <details>
         <summary>
             @{
@@ -47,5 +56,6 @@
             </div>
         </form>
     </details>
+    }
 </div>
 

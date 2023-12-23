@@ -1,11 +1,9 @@
 ﻿using Api.Jobs.Create;
-using Core.Models.Options;
 using Data;
 using Data.Repos;
 using Data.Test.Code;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Moq;
 
 namespace Api.Test.Unit.Jobs.Create;
