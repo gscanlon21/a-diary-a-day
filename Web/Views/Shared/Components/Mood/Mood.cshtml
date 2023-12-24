@@ -70,8 +70,7 @@
     const canvas = document.getElementById('myChart');
     if (canvas) {
         Chart.defaults.font.size = 16;
-        const offscreen = new OffscreenCanvas(400, 300);
-        const chart = new Chart([canvas, offscreen.getContext("2d")], {
+        const chart = new Chart(canvas, {
             type: 'line',
             data: {
                 datasets: [{
@@ -169,16 +168,6 @@
             }
         });
 
-        setTimeout(async () => {
-            const blob = await offscreen.convertToBlob();
-            let form = new FormData();
-            let request = new XMLHttpRequest();
-            form.append("image", blob);
-            form.append("type", '@Components.Mood');
-            form.append("email", '@Model.User.Email');
-            form.append("token", '@Model.Token');
-            request.open("POST", "/api/User/UploadImage", true);
-            request.send(form);
-        }, 1000);
+        window.uploadChart(chart, 350, 350, '@Model.User.Email', '@Model.Token', '@Components.Mood');
     }
 </script>
