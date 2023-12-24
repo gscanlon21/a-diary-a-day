@@ -163,7 +163,7 @@
                         <text>
                             {
                             type: 'bar',
-                                label: '@(group.FirstOrDefault()?.Y?.Name)',
+                                label: '@group.Key.Name',
                                 data: @Json.Serialize(group),
                                 fill: false,
                                 yAxisID: 'y',
