@@ -9,7 +9,7 @@ namespace Web.Components.User;
 /// <summary>
 /// Renders an alert box summary of when the user's next deload week will occur.
 /// </summary>
-public class ManiaViewComponent(IServiceScopeFactory serviceScopeFactory, CoreContext context, UserRepo userRepo) : ViewComponent
+public class ManiaViewComponent(CoreContext context, UserRepo userRepo) : ViewComponent
 {
     /// <summary>
     /// For routing

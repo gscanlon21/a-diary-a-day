@@ -7,13 +7,12 @@ using Data.Dtos.User;
 using Data.Entities.Footnote;
 using Data.Models.Newsletter;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Data.Repos;
 
-public partial class NewsletterRepo(ILogger<NewsletterRepo> logger, CoreContext context, UserRepo userRepo, IOptions<SiteSettings> siteSettings, IServiceScopeFactory serviceScopeFactory)
+public partial class NewsletterRepo(ILogger<NewsletterRepo> logger, CoreContext context, UserRepo userRepo, IOptions<SiteSettings> siteSettings)
 {
     /// <summary>
     /// Today's date in UTC.

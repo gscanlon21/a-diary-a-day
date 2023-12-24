@@ -96,6 +96,6 @@
             }
         });
 
-        window.uploadChart(chart, 350, 350, '@Model.User.Email', '@Model.Token', '@Model.Type');
+        window.uploadChart(chart, 350, 350, '@Html.Raw(Model.User.Email)', '@Html.Raw(Model.Token)', '@Model.Type');
     }
 </script>

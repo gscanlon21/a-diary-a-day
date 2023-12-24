@@ -19,14 +19,16 @@ window.uploadChart = function uploadChart(chart, width, height, email, token, ty
     const chartDuplicate = new Chart(offscreen, chart.config);
     setTimeout(async () => {
         const blob = await offscreen.convertToBlob();
-        const form = new FormData();
+        const data = new FormData();
         const request = new XMLHttpRequest();
-        form.append("image", blob);
-        form.append("type", type);
-        form.append("email", email);
-        form.append("token", token);
-        request.open("POST", "/api/User/UploadImage", true);
-        request.send(form);
+        data.append("image", blob);
+        data.append("type", type);
+        data.append("email", email);
+        data.append("token", token);
+        fetch("/api/User/UploadImage", {
+            method: "POST",
+            body: data,
+        });
         
         //const reader = new FileReader()
         //reader.onload = (e) => {
