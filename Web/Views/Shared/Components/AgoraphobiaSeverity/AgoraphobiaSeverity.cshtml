@@ -42,8 +42,7 @@
             <h3>During the PAST 7 DAYS, I have…</h3>
 
             <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageAgoraphobiaSeverity)" method="post"
-                  asp-route-email="@Model.User.Email" asp-route-token="@Model.Token"
-                  style="min-height:21ch;">
+                  asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
 
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 

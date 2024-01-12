@@ -41,8 +41,7 @@
             </p>
 
             <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageDissociativeSeverity)" method="post"
-                  asp-route-email="@Model.User.Email" asp-route-token="@Model.Token"
-                  style="min-height:21ch;">
+                  asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
 
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
