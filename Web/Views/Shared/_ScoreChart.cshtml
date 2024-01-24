@@ -107,7 +107,7 @@
                             },
                             footer: (context) => {
                                 // Pretty-print the x-axis date in the hover tooltip
-                                return context.map(c => { console.debug(c); return `${c.raw.count}/${c.raw.total} question answered`; });
+                                return context.map(c => `${c.raw.count}/${c.raw.total} questions answered`);
                             },
                         },
                     },

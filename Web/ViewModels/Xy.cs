@@ -7,9 +7,11 @@ namespace Web.ViewModels;
 /// <summary>
 /// For chart.js
 /// </summary>
-public record Xy(string X, int? Y)
+public record Xy(string X, double? Y, object? Extra)
 {
-    public Xy(DateOnly x, int? y) : this(x.ToString("O"), y) { }
+    public Xy(string x, double? y) : this(x, y, null) { }
+    public Xy(DateOnly x, double? y) : this(x.ToString("O"), y) { }
+    public Xy(DateOnly x, double? y, object? extra) : this(x.ToString("O"), y, extra) { }
 }
 
 /// <summary>
@@ -23,7 +25,7 @@ public record XCustom(string X, UserCustomGroup? Y, UserCustom Label)
 /// <summary>
 /// For chart.js
 /// </summary>
-public record XScore(string X, IScore? Y, int? ProratedScore, int? AverageScore)
+public record XScore(string X, IScore? Y, double? ProratedScore, double? AverageScore)
 {
     public XScore(DateOnly x, IScore? score) : this(x.ToString("O"), score, score?.ProratedScore, score?.AverageScore) { }
 }
@@ -31,9 +33,9 @@ public record XScore(string X, IScore? Y, int? ProratedScore, int? AverageScore)
 /// <summary>
 /// For chart.js
 /// </summary>
-public record XYScore(string X, int? Y, IList<int?> Items)
+public record XYScore(string X, double? Y, IList<int?> Items)
 {
-    public XYScore(DateOnly x, int? y, IList<int?> items) : this(x.ToString("O"), y, items) { }
+    public XYScore(DateOnly x, double? y, IList<int?> items) : this(x.ToString("O"), y, items) { }
 
     public int Total => Items.Count;
 

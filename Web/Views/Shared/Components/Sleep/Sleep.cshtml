@@ -272,6 +272,10 @@
                                 // Pretty-print the x-axis date in the hover tooltip
                                 return context.map(c => new Date(c.parsed.x).toDateString());
                             },
+                            label: (context) => {
+                                // Pretty-print the x-axis date in the hover tooltip
+                                return context.raw.extra;
+                            },
                         },
                     },
                     /*

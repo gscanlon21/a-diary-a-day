@@ -69,17 +69,17 @@ public class UserPosttraumaticStressSeverity : IScore
         Flashbacks, Upset, StressfulEvent, Avoid, Alert, Startled, Irritable, NegativeEmotions, NoInterest
     };
 
-    /// <summary>
+    //// <summary>
     /// Prorated score.
     /// </summary>
     [Range(0, 99)]
-    public int? ProratedScore => Items.Count * Items.Sum() / Items.Count(d => d.HasValue);
+    public int? ProratedScore => Items.Any(d => d.HasValue) ? Convert.ToInt32(Items.Count * Items.Sum() / (double)Items.Count(d => d.HasValue)) : null;
 
     /// <summary>
     /// Prorated score.
     /// </summary>
     [Range(0, 99)]
-    public int? AverageScore => Items.Count(d => d.HasValue) == Items.Count ? Items.Sum() / Items.Count : null;
+    public double? AverageScore => Items.All(d => d.HasValue) ? Items.Sum() / (double)Items.Count : null;
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserPosttraumaticStressSeverities))]
     public virtual User User { get; set; } = null!;

@@ -44,5 +44,5 @@ public class UserSleep : IScore
 
     public int? ProratedScore => Items.Sum();
 
-    public int? AverageScore => Items.Sum() / Items.Count;
+    public double? AverageScore => Items.Sum() / (double)Items.Count;
 }

@@ -5,7 +5,7 @@ public interface IScore
 {
     public List<int?> Items { get; }
     public int? ProratedScore { get; }
-    public int? AverageScore { get; }
+    public double? AverageScore { get; }
 }
 
 public interface ITag
