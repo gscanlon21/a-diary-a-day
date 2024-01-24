@@ -15,5 +15,5 @@ public class TagChartViewModel
     public required List<IGrouping<UserCustom, XCustom>> XysGrouped { get; set; } = null!;
 
     public List<string> Ids = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "i", "j", "k", "l", "z", "c", "v", "b", "n", "m"];
-    public List<string> Colors = ["skyblue", "red", "skyblue", "red", "skyblue", "red", "skyblue", "red", "skyblue", "red", "skyblue", "red", "skyblue", "red", "skyblue", "red", "skyblue", "red", "skyblue", "red", "skyblue", "red", "skyblue", "red", "skyblue", "red", "skyblue", "red", "skyblue", "red"];
+    public List<string> Colors = ["skyblue", "red", "orange", "green", "purple", "skyblue", "red", "orange", "green", "purple", "skyblue", "red", "orange", "green", "purple", "skyblue", "red", "orange", "green", "purple", "skyblue", "red", "orange", "green", "purple"];
 }
