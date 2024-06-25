@@ -17,11 +17,6 @@ public class AgoraphobiaSeverityViewComponent(CoreContext context, UserRepo user
     /// </summary>
     public const string Name = "AgoraphobiaSeverity";
 
-    /// <summary>
-    /// Today's date in UTC.
-    /// </summary>
-    private static DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
-
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var token = await userRepo.AddUserToken(user, durationDays: 1);

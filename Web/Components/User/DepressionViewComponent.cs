@@ -16,11 +16,6 @@ public class DepressionViewComponent(CoreContext context, UserRepo userRepo) : V
     /// </summary>
     public const string Name = "Depression";
 
-    /// <summary>
-    /// Today's date in UTC.
-    /// </summary>
-    private static DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
-
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var token = await userRepo.AddUserToken(user, durationDays: 1);

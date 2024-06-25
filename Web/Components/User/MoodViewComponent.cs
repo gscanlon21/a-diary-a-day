@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using Core.Code.Helpers;
+using Data;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,16 +17,10 @@ public class MoodViewComponent(CoreContext context, UserRepo userRepo) : ViewCom
     /// </summary>
     public const string Name = "Mood";
 
-    /// <summary>
-    /// Today's date in UTC.
-    /// </summary>
-    private static DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
-
-
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var token = await userRepo.AddUserToken(user, durationDays: 1);
-        var userMood = await context.UserMoods.FirstOrDefaultAsync(ud => ud.UserId == user.Id && ud.Date == Today);
+        var userMood = await context.UserMoods.FirstOrDefaultAsync(ud => ud.UserId == user.Id && ud.Date == DateHelpers.Today);
         var userMoods = await context.UserMoods.Where(ud => ud.UserId == user.Id).ToListAsync();
         var viewModel = new MoodViewModel(userMoods)
         {

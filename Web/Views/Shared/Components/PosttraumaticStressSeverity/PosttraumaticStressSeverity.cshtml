@@ -4,7 +4,7 @@
 @using Lib.Pages.Shared.Exercise
 
 @{
-    bool show = Model.PreviousMood == null || Model.PreviousMood.Date < Core.Dates.Today.AddDays(-7);
+    bool show = Model.PreviousMood == null || Model.PreviousMood.Date < DateHelpers.Today.AddDays(-7);
 }
 
 <h5>APA DSM-5 TR Severity of Posttraumatic Stress Symptoms—Adult*</h5>

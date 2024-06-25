@@ -1,4 +1,5 @@
-﻿using Data.Entities.Footnote;
+﻿using Core.Code.Helpers;
+using Data.Entities.Footnote;
 using Data.Entities.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +27,7 @@ public partial class UserController
 
         var userMood = await context.UserMoods
             .IgnoreQueryFilters()
-            .FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == Today);
+            .FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
 
         var userWeights = await context.UserMoods
                 .Where(uw => uw.UserId == user.Id)
@@ -54,12 +55,12 @@ public partial class UserController
             }
 
             // Set the new weight on the UserVariation
-            var previousUserMood = await context.UserMoods.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == Today);
+            var previousUserMood = await context.UserMoods.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (previousUserMood == null)
             {
                 context.Add(new UserMood()
                 {
-                    Date = Today,
+                    Date = DateHelpers.Today,
                     UserId = user.Id,
                     Mood = userMood.Mood
                 });
@@ -92,7 +93,7 @@ public partial class UserController
             var customIds = customs.Where(f => f.Selected).Select(ic => ic.Id).ToList();
             var userCustoms = await context.UserCustoms.Where(c => customIds.Contains(c.Id)).ToListAsync();
 
-            var previousUserMood = await context.UserSleeps.Include(us => us.UserCustoms).FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == Today);
+            var previousUserMood = await context.UserSleeps.Include(us => us.UserCustoms).FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (previousUserMood != null)
             {
                 previousUserMood.UserCustoms.Clear();
@@ -104,7 +105,7 @@ public partial class UserController
             {
                 context.Add(new UserSleep()
                 {
-                    Date = Today,
+                    Date = DateHelpers.Today,
                     UserId = user.Id,
                     SleepDuration = userMood.SleepDuration,
                     SleepTime = userMood.SleepTime,
@@ -133,7 +134,7 @@ public partial class UserController
 
             var customIds = customs.Where(f => f.Selected).Select(ic => ic.Id).ToList();
             var userCustoms = await context.UserCustoms.Where(c => customIds.Contains(c.Id)).ToListAsync();
-            context.UserActivities.RemoveRange(context.UserActivities.Where(uf => uf.UserId == user.Id && uf.Date == Today));
+            context.UserActivities.RemoveRange(context.UserActivities.Where(uf => uf.UserId == user.Id && uf.Date == DateHelpers.Today));
             context.UserActivities.Add(new UserActivity()
             {
                 User = user,
@@ -161,7 +162,7 @@ public partial class UserController
 
             var customIds = customs.Where(f => f.Selected).Select(ic => ic.Id).ToList();
             var userCustoms = await context.UserCustoms.Where(c => customIds.Contains(c.Id)).ToListAsync();
-            context.UserEmotions.RemoveRange(context.UserEmotions.Where(uf => uf.UserId == user.Id && uf.Date == Today));
+            context.UserEmotions.RemoveRange(context.UserEmotions.Where(uf => uf.UserId == user.Id && uf.Date == DateHelpers.Today));
             context.UserEmotions.Add(new UserEmotion()
             {
                 User = user,
@@ -189,7 +190,7 @@ public partial class UserController
 
             var customIds = customs.Where(f => f.Selected).Select(ic => ic.Id).ToList();
             var userCustoms = await context.UserCustoms.Where(c => customIds.Contains(c.Id)).ToListAsync();
-            context.UserMedicines.RemoveRange(context.UserMedicines.Where(uf => uf.UserId == user.Id && uf.Date == Today));
+            context.UserMedicines.RemoveRange(context.UserMedicines.Where(uf => uf.UserId == user.Id && uf.Date == DateHelpers.Today));
             context.UserMedicines.Add(new UserMedicine()
             {
                 User = user,
@@ -217,7 +218,7 @@ public partial class UserController
 
             var customIds = customs.Where(f => f.Selected).Select(ic => ic.Id).ToList();
             var userCustoms = await context.UserCustoms.Where(c => customIds.Contains(c.Id)).ToListAsync();
-            context.UserPeoples.RemoveRange(context.UserPeoples.Where(uf => uf.UserId == user.Id && uf.Date == Today));
+            context.UserPeoples.RemoveRange(context.UserPeoples.Where(uf => uf.UserId == user.Id && uf.Date == DateHelpers.Today));
             context.UserPeoples.Add(new UserPeople()
             {
                 User = user,
@@ -245,7 +246,7 @@ public partial class UserController
 
             var customIds = customs.Where(f => f.Selected).Select(ic => ic.Id).ToList();
             var userCustoms = await context.UserCustoms.Where(c => customIds.Contains(c.Id)).ToListAsync();
-            context.UserSymptoms.RemoveRange(context.UserSymptoms.Where(uf => uf.UserId == user.Id && uf.Date == Today));
+            context.UserSymptoms.RemoveRange(context.UserSymptoms.Where(uf => uf.UserId == user.Id && uf.Date == DateHelpers.Today));
             context.UserSymptoms.Add(new UserSymptom()
             {
                 User = user,

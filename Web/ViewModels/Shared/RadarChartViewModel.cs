@@ -1,4 +1,5 @@
-﻿using Data.Entities.Footnote;
+﻿using Core.Code.Helpers;
+using Data.Entities.Footnote;
 
 namespace Web.ViewModels.Shared;
 
@@ -20,11 +21,11 @@ public class RadarChartViewModel
 
     public IList<int> LastMonth => XysGrouped
         .OrderBy(g => g.Key.Order)
-        .Select(g => g.Where(s => s?.Y?.Date.Month == Core.Dates.Today.AddMonths(-1).Month && s?.Y?.Date.Year == Core.Dates.Today.AddMonths(-1).Year).Sum(s => s?.Y?.One) ?? 0)
+        .Select(g => g.Where(s => s?.Y?.Date.Month == DateHelpers.Today.AddMonths(-1).Month && s?.Y?.Date.Year == DateHelpers.Today.AddMonths(-1).Year).Sum(s => s?.Y?.One) ?? 0)
         .ToList();
     public IList<int> ThisMonth => XysGrouped
         .OrderBy(g => g.Key.Order)
-        .Select(g => g.Where(s => s?.Y?.Date.Month == Core.Dates.Today.Month && s?.Y?.Date.Year == Core.Dates.Today.Year).Sum(s => s?.Y?.One) ?? 0)
+        .Select(g => g.Where(s => s?.Y?.Date.Month == DateHelpers.Today.Month && s?.Y?.Date.Year == DateHelpers.Today.Year).Sum(s => s?.Y?.One) ?? 0)
         .ToList();
 
     public List<string> Ids = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "i", "j", "k", "l", "z", "c", "v", "b", "n", "m"];

@@ -1,4 +1,5 @@
-﻿using Core.Models.User;
+﻿using Core.Code.Helpers;
+using Core.Models.User;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -44,7 +45,7 @@ public class UserComponent
     /// The token should stop working after this date.
     /// </summary>
     [Required]
-    public DateOnly LastUpload { get; set; } = Core.Dates.Today;
+    public DateOnly LastUpload { get; set; } = DateHelpers.Today;
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserComponents))]
     public virtual User User { get; init; } = null!;

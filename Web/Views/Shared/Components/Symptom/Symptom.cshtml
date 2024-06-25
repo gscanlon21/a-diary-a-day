@@ -3,10 +3,9 @@
 @using Data.Entities.User
 @using Lib.Pages.Shared.Exercise
 
-
 <h5 class="mb-1">Symptoms</h5>
 <div class="alert alert-light shadow">
-    @if (Model.PreviousMood?.Date == Core.Dates.Today)
+    @if (Model.PreviousMood?.Date == DateHelpers.Today)
     {
         await Html.RenderPartialAsync("_RadarChart", new Web.ViewModels.Shared.RadarChartViewModel()
         {

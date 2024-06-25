@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using Core.Code.Helpers;
+using Data;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,16 +17,10 @@ public class SleepViewComponent(CoreContext context, UserRepo userRepo) : ViewCo
     /// </summary>
     public const string Name = "Sleep";
 
-    /// <summary>
-    /// Today's date in UTC.
-    /// </summary>
-    private static DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
-
-
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var token = await userRepo.AddUserToken(user, durationDays: 1);
-        var userMood = await context.UserSleeps.FirstOrDefaultAsync(ud => ud.UserId == user.Id && ud.Date == Today);
+        var userMood = await context.UserSleeps.FirstOrDefaultAsync(ud => ud.UserId == user.Id && ud.Date == DateHelpers.Today);
         var userMoods = (await context.UserSleeps
             .Include(ud => ud.UserCustoms)
             .Where(ud => ud.UserId == user.Id)

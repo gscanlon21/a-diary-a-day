@@ -1,4 +1,5 @@
-﻿using Data.Entities.Footnote;
+﻿using Core.Code.Helpers;
+using Data.Entities.Footnote;
 using Data.Entities.User;
 using static Web.ViewModels.User.Components.ActivityViewModel;
 
@@ -6,11 +7,6 @@ namespace Web.ViewModels.User.Components;
 
 public class PeopleViewModel
 {
-    /// <summary>
-    /// Today's date in UTC.
-    /// </summary>
-    private static DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
-
     public PeopleViewModel(IList<UserPeople>? userMoods, List<UserCustom> customs)
     {
         Customs = customs;
@@ -27,9 +23,9 @@ public class PeopleViewModel
                 // Skip today, start at 1, because we append the current weight onto the end regardless.
                 Xys.AddRange(Enumerable.Range(1, 365).Select(i =>
                 {
-                    var date = Today.AddDays(-i);
+                    var date = DateHelpers.Today.AddDays(-i);
                     return new XCustom(date, flatMap.FirstOrDefault(uw => uw.Date == date && uw.Id == custom.Id), custom);
-                }).Where(xy => xy.Y != null).Reverse().Append(new XCustom(Today, flatMap.FirstOrDefault(um => um.Date == Today && um.Id == custom.Id), custom)).ToList());
+                }).Where(xy => xy.Y != null).Reverse().Append(new XCustom(DateHelpers.Today, flatMap.FirstOrDefault(um => um.Date == DateHelpers.Today && um.Id == custom.Id), custom)).ToList());
             }
         }
     }

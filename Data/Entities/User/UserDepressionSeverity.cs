@@ -64,10 +64,10 @@ public class UserDepressionSeverity : IScore
     public int? BetterOffDead { get; set; }
 
     [NotMapped]
-    public List<int?> Items => new()
-    {
+    public List<int?> Items =>
+    [
         NoInterest, Hopeless, Sleeping, NoEnergy, Eating, FeelingBad, NoConcentration, Slowly, BetterOffDead
-    };
+    ];
 
     /// <summary>
     /// Prorated score.

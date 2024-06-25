@@ -5,7 +5,7 @@
 
 <h5 class="mb-1">Mood</h5>
 <div class="alert alert-light shadow">
-    @if (Model.UserMood.Date == Core.Dates.Today && Model.UserMood.Id != default)
+    @if (Model.UserMood.Date == DateHelpers.Today && Model.UserMood.Id != default)
     {
         <div style="height:min(70vw, 300px)">
             <canvas id="myChart"></canvas>

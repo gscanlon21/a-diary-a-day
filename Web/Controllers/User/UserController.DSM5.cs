@@ -1,4 +1,5 @@
-﻿using Data.Entities.User;
+﻿using Core.Code.Helpers;
+using Data.Entities.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +20,7 @@ public partial class UserController
             }
 
             // Set the new weight on the UserVariation
-            var todaysDepression = await context.UserDepressions.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == Today);
+            var todaysDepression = await context.UserDepressions.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (todaysDepression == null)
             {
                 userDepression.User = user;
@@ -57,7 +58,7 @@ public partial class UserController
             }
 
             // Set the new weight on the UserVariation
-            var todaysMood = await context.UserPanicSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == Today);
+            var todaysMood = await context.UserPanicSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (todaysMood == null)
             {
                 userMood.User = user;
@@ -97,7 +98,7 @@ public partial class UserController
             }
 
             // Set the new weight on the UserVariation
-            var todaysMood = await context.UserPosttraumaticStressSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == Today);
+            var todaysMood = await context.UserPosttraumaticStressSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (todaysMood == null)
             {
                 userMood.User = user;
@@ -136,7 +137,7 @@ public partial class UserController
             }
 
             // Set the new weight on the UserVariation
-            var todaysMood = await context.UserGeneralizedAnxietySeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == Today);
+            var todaysMood = await context.UserGeneralizedAnxietySeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (todaysMood == null)
             {
                 userMood.User = user;
@@ -177,7 +178,7 @@ public partial class UserController
             }
 
             // Set the new weight on the UserVariation
-            var todaysMood = await context.UserDissociativeSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == Today);
+            var todaysMood = await context.UserDissociativeSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (todaysMood == null)
             {
                 userMood.User = user;
@@ -215,7 +216,7 @@ public partial class UserController
             }
 
             // Set the new weight on the UserVariation
-            var todaysMood = await context.UserDepressionSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == Today);
+            var todaysMood = await context.UserDepressionSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (todaysMood == null)
             {
                 userMood.User = user;
@@ -254,7 +255,7 @@ public partial class UserController
             }
 
             // Set the new weight on the UserVariation
-            var todaysMood = await context.UserAgoraphobiaSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == Today);
+            var todaysMood = await context.UserAgoraphobiaSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (todaysMood == null)
             {
                 userMood.User = user;
@@ -294,7 +295,7 @@ public partial class UserController
             }
 
             // Set the new weight on the UserVariation
-            var todaysMood = await context.UserAcuteStressSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == Today);
+            var todaysMood = await context.UserAcuteStressSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (todaysMood == null)
             {
                 userMood.User = user;
@@ -331,7 +332,7 @@ public partial class UserController
             }
 
             // Set the new weight on the UserVariation
-            var todaysMood = await context.UserSocialAnxietySeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == Today);
+            var todaysMood = await context.UserSocialAnxietySeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (todaysMood == null)
             {
                 userMood.User = user;

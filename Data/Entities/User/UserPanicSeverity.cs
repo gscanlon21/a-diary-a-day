@@ -77,10 +77,10 @@ public class UserPanicSeverity : IScore
     public int? Cope { get; set; }
 
     [NotMapped]
-    public List<int?> Items => new()
-    {
+    public List<int?> Items =>
+    [
         Cope, DistractedMyself, Preparing, LeftEarly, Avoided, Tense, Heart, LosingControl, SuddenTerror, Nervous
-    };
+    ];
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserPanicSeverities))]
     public virtual User User { get; set; } = null!;

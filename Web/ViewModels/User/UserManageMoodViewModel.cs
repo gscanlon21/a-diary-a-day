@@ -1,4 +1,5 @@
-﻿using Data.Entities.User;
+﻿using Core.Code.Helpers;
+using Data.Entities.User;
 using System.ComponentModel.DataAnnotations;
 
 namespace Web.ViewModels.User;
@@ -9,8 +10,6 @@ namespace Web.ViewModels.User;
 public class UserManageMoodViewModel
 {
     public record TheParameters(string Email, string Token);
-
-    private static DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
 
     [Obsolete("Public parameterless constructor for model binding.", error: true)]
     public UserManageMoodViewModel() { }
@@ -23,9 +22,9 @@ public class UserManageMoodViewModel
             // Skip today, start at 1, because we append the current weight onto the end regardless.
             Xys = Enumerable.Range(1, 365).Select(i =>
             {
-                var date = Today.AddDays(-i);
+                var date = DateHelpers.Today.AddDays(-i);
                 return new Xy(date, (int?)userWeights.FirstOrDefault(uw => uw.Date == date)?.Mood);
-            }).Where(xy => xy.Y.HasValue).Reverse().Append(new Xy(Today, currentWeight)).ToList();
+            }).Where(xy => xy.Y.HasValue).Reverse().Append(new Xy(DateHelpers.Today, currentWeight)).ToList();
         }
     }
 
@@ -39,5 +38,5 @@ public class UserManageMoodViewModel
     [Display(Name = "How was your day?")]
     public int? Mood { get; init; }
 
-    internal IList<Xy> Xys { get; init; } = new List<Xy>();
+    internal IList<Xy> Xys { get; init; } = [];
 }

@@ -6,7 +6,7 @@
 
 <h5 class="mb-1">Medicine</h5>
 <div class="alert alert-light shadow">
-    @if (Model.PreviousMood?.Date == Core.Dates.Today)
+    @if (Model.PreviousMood?.Date == DateHelpers.Today)
     {
         await Html.RenderPartialAsync("_TagChart", new Web.ViewModels.Shared.TagChartViewModel()
         {

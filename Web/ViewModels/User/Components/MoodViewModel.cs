@@ -1,28 +1,24 @@
 ﻿using Core.Code.Extensions;
+using Core.Code.Helpers;
 using Data.Entities.User;
 
 namespace Web.ViewModels.User.Components;
 
 public class MoodViewModel
 {
-    /// <summary>
-    /// Today's date in UTC.
-    /// </summary>
-    private static DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
-
     public MoodViewModel(IList<UserMood>? userMoods)
     {
         //Mood = currentWeight.GetValueOrDefault();
         if (userMoods != null)
         {
-            var todaysMood = userMoods.FirstOrDefault(um => um.Date == Today);
+            var todaysMood = userMoods.FirstOrDefault(um => um.Date == DateHelpers.Today);
             // Skip today, start at 1, because we append the current weight onto the end regardless.
             Xys = Enumerable.Range(1, 365).Select(i =>
             {
-                var date = Today.AddDays(-i);
+                var date = DateHelpers.Today.AddDays(-i);
                 var userMood = userMoods.FirstOrDefault(uw => uw.Date == date);
                 return new Xy(date, userMood?.AverageScore, userMood?.Mood.GetSingleDisplayName());
-            }).Where(xy => xy.Y != null).Reverse().Append(new Xy(Today, todaysMood?.AverageScore, todaysMood?.Mood.GetSingleDisplayName())).ToList();
+            }).Where(xy => xy.Y != null).Reverse().Append(new Xy(DateHelpers.Today, todaysMood?.AverageScore, todaysMood?.Mood.GetSingleDisplayName())).ToList();
         }
     }
 
@@ -31,5 +27,5 @@ public class MoodViewModel
 
     public UserMood UserMood { get; init; } = null!;
 
-    internal IList<Xy> Xys { get; init; } = new List<Xy>();
+    internal IList<Xy> Xys { get; init; } = [];
 }

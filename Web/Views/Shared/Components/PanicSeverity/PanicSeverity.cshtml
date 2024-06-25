@@ -4,7 +4,7 @@
 @using Lib.Pages.Shared.Exercise
 
 @{
-    bool show = Model.PreviousMood == null || Model.PreviousMood.Date < Core.Dates.Today.AddDays(-7);
+    bool show = Model.PreviousMood == null || Model.PreviousMood.Date < DateHelpers.Today.AddDays(-7);
 }
 
 <h5 class="mb-1">APA DSM-5 TR Severity Measure for Panic Disorder—Adult</h5>

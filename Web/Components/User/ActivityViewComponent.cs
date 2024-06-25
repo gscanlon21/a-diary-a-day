@@ -16,12 +16,6 @@ public class ActivityViewComponent(CoreContext context, UserRepo userRepo) : Vie
     /// </summary>
     public const string Name = "Activity";
 
-    /// <summary>
-    /// Today's date in UTC.
-    /// </summary>
-    private static DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
-
-
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var token = await userRepo.AddUserToken(user, durationDays: 1);

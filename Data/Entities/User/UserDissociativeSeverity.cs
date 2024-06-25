@@ -60,10 +60,10 @@ public class UserDissociativeSeverity : IScore
     public int? EasyWhenHard { get; set; }
 
     [NotMapped]
-    public List<int?> Items => new()
-    {
+    public List<int?> Items =>
+    [
         Nothing, Unreal, NoMemory, TalkOutLoud, Unclear, IgnorePain, DifferentPeople, EasyWhenHard
-    };
+    ];
 
     /// <summary>
     /// Prorated score.

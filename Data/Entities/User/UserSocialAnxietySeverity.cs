@@ -68,10 +68,10 @@ public class UserSocialAnxietySeverity : IScore
     public int? Cope { get; set; }
 
     [NotMapped]
-    public List<int?> Items => new()
-    {
+    public List<int?> Items =>
+    [
         Cope, DistractedMyself, Preparing, LeftEarly, Avoided, Tense, Heart, Fright, Humiliated, Nervous
-    };
+    ];
 
     /// <summary>
     /// Prorated score.

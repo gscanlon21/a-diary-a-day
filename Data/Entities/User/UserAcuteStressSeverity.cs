@@ -56,10 +56,10 @@ public class UserAcuteStressSeverity : IScore
     public int? Irritable { get; set; }
 
     [NotMapped]
-    public List<int?> Items => new()
-    {
+    public List<int?> Items =>
+    [
         Flashbacks, Upset, Distant, Avoid, Alert, Startled, Irritable
-    };
+    ];
 
     /// <summary>
     /// Prorated score.

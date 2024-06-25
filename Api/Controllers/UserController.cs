@@ -1,5 +1,6 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
+using Core.Code.Helpers;
 using Core.Consts;
 using Core.Models.Options;
 using Core.Models.User;
@@ -52,7 +53,7 @@ public class UserController(UserRepo userRepo, CoreContext context, IOptions<Dig
         }
 
         var userComponent = await context.UserComponents.FirstOrDefaultAsync(c => c.UserId == user.Id && c.Component == type);
-        if (userComponent != null && userComponent.LastUpload < Core.Dates.Today)
+        if (userComponent != null && userComponent.LastUpload < DateHelpers.Today)
         {
             var prefix = $"moods/{user.Uid}";
             var key = $"{prefix}-{type}";
@@ -71,7 +72,7 @@ public class UserController(UserRepo userRepo, CoreContext context, IOptions<Dig
             request.Metadata.Add("Cache-Control", "public, max-age=86400");
             await client.PutObjectAsync(request);
 
-            userComponent.LastUpload = Core.Dates.Today;
+            userComponent.LastUpload = DateHelpers.Today;
         }
         else if (userComponent == null)
         {

@@ -1,14 +1,10 @@
-﻿using Data.Entities.User;
+﻿using Core.Code.Helpers;
+using Data.Entities.User;
 
 namespace Web.ViewModels.User.Components;
 
 public class DepressionViewModel
 {
-    /// <summary>
-    /// Today's date in UTC.
-    /// </summary>
-    private static DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
-
     public DepressionViewModel(IList<UserDepression>? userMoods)
     {
         //Mood = currentWeight.GetValueOrDefault();
@@ -17,9 +13,9 @@ public class DepressionViewModel
             // Skip today, start at 1, because we append the current weight onto the end regardless.
             Xys = Enumerable.Range(1, 365).Select(i =>
             {
-                var date = Today.AddDays(-i);
+                var date = DateHelpers.Today.AddDays(-i);
                 return new Xy(date, null);
-            }).Where(xy => xy.Y.HasValue).Reverse().Append(new Xy(Today, null)).ToList();
+            }).Where(xy => xy.Y.HasValue).Reverse().Append(new Xy(DateHelpers.Today, null)).ToList();
         }
     }
 
@@ -28,5 +24,5 @@ public class DepressionViewModel
 
     public UserDepression UserDepression { get; init; } = null!;
 
-    internal IList<Xy> Xys { get; init; } = new List<Xy>();
+    internal IList<Xy> Xys { get; init; } = [];
 }

@@ -1,4 +1,5 @@
 ﻿using Core.Code.Extensions;
+using Core.Code.Helpers;
 using Core.Models.Footnote;
 using Core.Models.Options;
 using Core.Models.User;
@@ -14,16 +15,6 @@ namespace Data.Repos;
 
 public partial class NewsletterRepo(ILogger<NewsletterRepo> logger, CoreContext context, UserRepo userRepo, IOptions<SiteSettings> siteSettings)
 {
-    /// <summary>
-    /// Today's date in UTC.
-    /// </summary>
-    private static DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
-
-    /// <summary>
-    /// This week's Sunday date in UTC.
-    /// </summary>
-    protected static DateOnly StartOfWeek => Today.AddDays(-1 * (int)Today.DayOfWeek);
-
     private readonly CoreContext _context = context;
 
     public async Task<IList<Footnote>> GetFootnotes(string? email, string? token, int count = 1)
@@ -45,14 +36,14 @@ public partial class NewsletterRepo(ILogger<NewsletterRepo> logger, CoreContext 
         ArgumentNullException.ThrowIfNull(user);
         if (!user.FootnoteType.HasFlag(FootnoteType.Custom))
         {
-            return new List<UserFootnote>(0);
+            return [];
         }
 
         var footnotes = await _context.UserFootnotes
             .Where(f => f.Type == FootnoteType.Custom)
             .Where(f => f.UserId == user.Id)
             // Keep the same footnotes over the course of a day.
-            .OrderByDescending(f => f.UserLastSeen == Today)
+            .OrderByDescending(f => f.UserLastSeen == DateHelpers.Today)
             // Then choose the least seen.
             .ThenBy(f => f.UserLastSeen)
             .ThenBy(_ => EF.Functions.Random())
@@ -61,7 +52,7 @@ public partial class NewsletterRepo(ILogger<NewsletterRepo> logger, CoreContext 
 
         foreach (var footnote in footnotes)
         {
-            footnote.UserLastSeen = Today;
+            footnote.UserLastSeen = DateHelpers.Today;
         }
 
         await _context.SaveChangesAsync();

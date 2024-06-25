@@ -16,11 +16,6 @@ public class AngerViewComponent(CoreContext context, UserRepo userRepo) : ViewCo
     /// </summary>
     public const string Name = "Anger";
 
-    /// <summary>
-    /// Today's date in UTC.
-    /// </summary>
-    private static DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
-
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var token = await userRepo.AddUserToken(user, durationDays: 1);
