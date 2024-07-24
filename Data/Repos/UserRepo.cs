@@ -1,4 +1,5 @@
-﻿using Core.Consts;
+﻿using Core.Code.Exceptions;
+using Core.Consts;
 using Data.Entities.Newsletter;
 using Data.Entities.User;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +15,17 @@ public class UserRepo(CoreContext context)
     private readonly CoreContext _context = context;
 
     /// <summary>
-    /// Grab a user from the db with a specific token
+    /// Grab a user from the db with a specific token.
     /// </summary>
-    public async Task<User?> GetUser(string? email, string? token,
-        bool allowDemoUser = false)
+    public async Task<User> GetUserStrict(string? email, string? token, bool allowDemoUser = false)
+    {
+        return await GetUser(email, token, allowDemoUser: allowDemoUser) ?? throw new UserException("User is null.");
+    }
+
+    /// <summary>
+    /// Grab a user from the db with a specific token.
+    /// </summary>
+    public async Task<User?> GetUser(string? email, string? token, bool allowDemoUser = false)
     {
         if (email == null || token == null)
         {
@@ -33,17 +41,14 @@ public class UserRepo(CoreContext context)
 
         if (!allowDemoUser && user?.IsDemoUser == true)
         {
-            throw new ArgumentException("User not authorized.", nameof(email));
+            throw new UserException("User not authorized.");
         }
 
         return user;
     }
 
-    public static string CreateToken(int count = 24)
-    {
-        return Convert.ToBase64String(RandomNumberGenerator.GetBytes(count));
-    }
-
+    private static string CreateToken(int count = 24) => Convert.ToBase64String(RandomNumberGenerator.GetBytes(count));
+    public async Task<string> AddUserToken(User user, int durationDays = 1) => await AddUserToken(user, DateTime.UtcNow.AddDays(durationDays));
     public async Task<string> AddUserToken(User user, DateTime expires)
     {
         if (user.IsDemoUser)
@@ -51,19 +56,14 @@ public class UserRepo(CoreContext context)
             return UserConsts.DemoToken;
         }
 
-        var token = new UserToken(user.Id, CreateToken())
+        var token = CreateToken();
+        _context.UserTokens.Add(new UserToken(user, token)
         {
             Expires = expires
-        };
-        user.UserTokens.Add(token);
+        });
+
         await _context.SaveChangesAsync();
-
-        return token.Token;
-    }
-
-    public async Task<string> AddUserToken(User user, int durationDays = 1)
-    {
-        return await AddUserToken(user, DateTime.UtcNow.AddDays(durationDays));
+        return token;
     }
 
 

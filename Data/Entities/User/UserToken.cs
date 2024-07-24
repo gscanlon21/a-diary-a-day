@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 namespace Data.Entities.User;
 
 /// <summary>
-/// User's progression level of an exercise.
+/// User access tokens.
 /// 
 /// TODO Scopes.
 /// TODO Single-use tokens.
@@ -20,9 +20,10 @@ public class UserToken
     /// <summary>
     /// Creates a new token for the user.
     /// </summary>
-    public UserToken(int userId, string token)
+    public UserToken(User user, string token)
     {
-        UserId = userId;
+        // Don't set User, so that EF Core doesn't add/update User.
+        UserId = user.Id;
         Token = token;
     }
 
