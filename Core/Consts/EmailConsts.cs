@@ -2,9 +2,9 @@
 namespace Core.Consts;
 
 /// <summary>
-/// Shared user consts for Functions and Web.
+/// Shared email consts for Functions and Web.
 /// </summary>
-public class NewsletterConsts
+public class EmailConsts
 {
     public const string SubjectLogin = "Account Access";
 
@@ -12,5 +12,12 @@ public class NewsletterConsts
 
     public const string SubjectWorkout = "Daily Mood";
 
+    public const string SubjectException = "Unhandled Exception";
+
     public const int MaxSendAttempts = 1;
+
+    /// <summary>
+    /// How many months until email logs are deleted.
+    /// </summary>
+    public const int DeleteAfterXMonths = 1;
 }

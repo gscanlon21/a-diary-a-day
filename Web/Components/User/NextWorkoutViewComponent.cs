@@ -31,7 +31,7 @@ public class NextWorkoutViewComponent(CoreContext context, UserRepo userRepo) : 
                 // Checking for variations because we create a dummy newsletter record to advance the workout split.
                 || await context.UserEmails
                     .Where(n => n.UserId == user.Id)
-                    .Where(n => n.Subject == NewsletterConsts.SubjectWorkout)
+                    .Where(n => n.Subject == EmailConsts.SubjectWorkout)
                     .AnyAsync(n => n.Date == nextSendDate.Value)
                 )
             {

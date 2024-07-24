@@ -55,7 +55,7 @@ public class EmailSenderService(ILogger<EmailSenderService> logger, IOptions<Sit
                     nextNewsletter.EmailStatus = EmailStatus.Failed;
 
                     // If the email soft-bounced after the first try, retry.
-                    if (nextNewsletter.SendAttempts <= NewsletterConsts.MaxSendAttempts
+                    if (nextNewsletter.SendAttempts <= EmailConsts.MaxSendAttempts
                         // And the send mail request did not fail with a 5xx status code.
                         && (e is not RequestFailedException requestFailedException || requestFailedException.ErrorCode?.StartsWith('5') != true))
                     {
@@ -96,7 +96,7 @@ public class EmailSenderService(ILogger<EmailSenderService> logger, IOptions<Sit
             .OrderBy(un => un.Id)
             .Where(un => un.Date.AddDays(1) >= DateHelpers.Today)
             .Where(un => un.EmailStatus == EmailStatus.Pending)
-            .Where(un => un.SendAttempts <= NewsletterConsts.MaxSendAttempts)
+            .Where(un => un.SendAttempts <= EmailConsts.MaxSendAttempts)
             .Where(un => DateTime.UtcNow > un.SendAfter)
             .FirstOrDefaultAsync(CancellationToken.None);
     }

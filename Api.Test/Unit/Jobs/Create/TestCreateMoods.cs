@@ -1,4 +1,5 @@
 ﻿using Api.Jobs.Create;
+using Core.Code.Helpers;
 using Core.Models.Options;
 using Data;
 using Data.Repos;
@@ -11,9 +12,9 @@ using Moq;
 namespace Api.Test.Unit.Jobs.Create;
 
 [TestClass]
-public class TestNewsletterJob : FakeDatabase
+public class TestCreateWorkouts : FakeDatabase
 {
-    private NewsletterJob NewsletterJob { get; set; } = null!;
+    private CreateMoods NewsletterJob { get; set; } = null!;
 
     [TestInitialize]
     public void Init()
@@ -29,15 +30,12 @@ public class TestNewsletterJob : FakeDatabase
         var mockHttpClientFactory = new Mock<IHttpClientFactory>();
         mockHttpClientFactory.Setup(m => m.CreateClient(It.IsAny<string>())).Returns(mockHttpClient.Object);
 
-        var mockLoggerNewsletterJob = new Mock<ILogger<NewsletterJob>>();
-        var mockLoggerNewsletterRepo = new Mock<ILogger<NewsletterRepo>>();
+        var mockLoggerNewsletterJob = new Mock<ILogger<CreateMoods>>();
         var userRepo = new UserRepo(Context);
-        var newsletterRepo = new NewsletterRepo(mockLoggerNewsletterRepo.Object, Context, userRepo, Services.GetService<IOptions<SiteSettings>>()!);
 
-        NewsletterJob = new NewsletterJob(
+        NewsletterJob = new CreateMoods(
             mockLoggerNewsletterJob.Object,
             userRepo,
-            newsletterRepo,
             mockHttpClientFactory.Object,
             Services.GetService<IOptions<SiteSettings>>()!,
             Context
@@ -45,16 +43,19 @@ public class TestNewsletterJob : FakeDatabase
     }
 
     [TestMethod]
-    public async Task GetUsers_WhenNewsletterIsDisabled_ReturnsNone()
+    public async Task GetUsers_WhenNewsletterIsDisabled_ReturnsOne()
     {
         Context.Users.Add(new Data.Entities.User.User(string.Empty, true)
         {
-            NewsletterDisabledReason = "testing"
+            LastActive = DateHelpers.Today,
+            NewsletterDisabledReason = "testing",
+            SendDays = Core.Models.User.Days.All,
+            SendHour = int.Parse(DateTime.UtcNow.ToString("HH"))
         });
         await Context.SaveChangesAsync();
 
-        var users = await NewsletterJob.GetUsers();
-        Assert.IsTrue(users.Count == 0);
+        var users = await NewsletterJob.GetUsers().ToListAsync();
+        Assert.IsTrue(users.Count() == 1);
     }
 
     [TestMethod]
@@ -66,8 +67,8 @@ public class TestNewsletterJob : FakeDatabase
         });
         await Context.SaveChangesAsync();
 
-        var users = await NewsletterJob.GetUsers();
-        Assert.IsTrue(users.Count == 0);
+        var users = await NewsletterJob.GetUsers().ToListAsync();
+        Assert.IsTrue(users.Count() == 0);
     }
 
     [TestMethod]
@@ -79,22 +80,37 @@ public class TestNewsletterJob : FakeDatabase
         });
         await Context.SaveChangesAsync();
 
-        var users = await NewsletterJob.GetUsers();
-        Assert.IsTrue(users.Count == 0);
+        var users = await NewsletterJob.GetUsers().ToListAsync();
+        Assert.IsTrue(users.Count() == 0);
     }
 
     [TestMethod]
-    public async Task GetUsers_WhenActive_ReturnsOne()
+    public async Task GetUsers_WhenIncludeMobilityWorkouts_ReturnsNone()
     {
         Context.Users.Add(new Data.Entities.User.User(string.Empty, true)
         {
-            LastActive = Today,
+            LastActive = DateHelpers.Today,
+            SendDays = Core.Models.User.Days.None,
+            SendHour = int.Parse(DateTime.UtcNow.ToString("HH"))
+        });
+        await Context.SaveChangesAsync();
+
+        var users = await NewsletterJob.GetUsers().ToListAsync();
+        Assert.IsTrue(users.Count() == 0);
+    }
+
+    [TestMethod]
+    public async Task GetUsers_WhenActive_ReturnsNone()
+    {
+        Context.Users.Add(new Data.Entities.User.User(string.Empty, true)
+        {
+            LastActive = DateHelpers.Today,
             SendDays = Core.Models.User.Days.All,
             SendHour = int.Parse(DateTime.UtcNow.ToString("HH"))
         });
         await Context.SaveChangesAsync();
 
-        var users = await NewsletterJob.GetUsers();
-        Assert.IsTrue(users.Count == 1);
+        var users = await NewsletterJob.GetUsers().ToListAsync();
+        Assert.IsTrue(users.Count() == 0);
     }
 }

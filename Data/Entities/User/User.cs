@@ -148,14 +148,6 @@ public class User
     [NotMapped]
     public bool NewsletterEnabled => NewsletterDisabledReason == null;
 
-    /// <summary>
-    /// How many days of the week is the user working out?
-    /// 
-    /// Don't use in queries, is not mapped currently.
-    /// </summary>
-    [NotMapped]
-    public int WorkoutsDays => BitOperations.PopCount((ulong)SendDays);
-
     #endregion
     #region Advanced Preferences
 
@@ -166,10 +158,10 @@ public class User
     #region Navigation Properties
 
     [JsonIgnore, InverseProperty(nameof(UserToken.User))]
-    public virtual ICollection<UserToken> UserTokens { get; private init; } = new List<UserToken>();
+    public virtual ICollection<UserToken> UserTokens { get; private init; } = [];
 
     [JsonIgnore, InverseProperty(nameof(UserComponent.User))]
-    public virtual ICollection<UserComponent> UserComponents { get; private init; } = new List<UserComponent>();
+    public virtual ICollection<UserComponent> UserComponents { get; private init; } = [];
 
     [JsonIgnore, InverseProperty(nameof(UserMood.User))]
     public virtual ICollection<UserMood> UserMoods { get; private init; } = null!;

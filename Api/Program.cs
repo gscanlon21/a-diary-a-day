@@ -101,12 +101,13 @@ app.MapControllers();
 var schedulerFactory = app.Services.GetRequiredService<ISchedulerFactory>();
 var scheduler = await schedulerFactory.GetScheduler();
 
-await NewsletterJob.Schedule(scheduler);
+await CreateEmails.Schedule(scheduler);
+await CreateMoods.Schedule(scheduler);
 await DisableInactiveUsers.Schedule(scheduler);
 await DisableErroredUsers.Schedule(scheduler);
-await DeleteOldWorkouts.Schedule(scheduler);
-await DeleteOldNewsletters.Schedule(scheduler);
-await DeleteOldWeights.Schedule(scheduler);
+await DeleteOldMoods.Schedule(scheduler);
+await DeleteOldEmails.Schedule(scheduler);
+await DeleteOldLogs.Schedule(scheduler);
 await DeleteInactiveUsers.Schedule(scheduler);
 await DeleteOldTokens.Schedule(scheduler);
 
