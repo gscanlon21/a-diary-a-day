@@ -1,4 +1,4 @@
-﻿namespace Web.ViewModels.User.Components;
+﻿namespace Web.Views.Shared.Components.Workout;
 
 public class WorkoutViewModel
 {

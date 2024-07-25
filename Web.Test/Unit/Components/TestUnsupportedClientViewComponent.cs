@@ -1,5 +1,5 @@
 ﻿using Web.Components.User;
-using Web.ViewModels.User.Components;
+using Web.Views.Shared.Components.UnsupportedClient;
 
 namespace Web.Test.Unit.Components;
 

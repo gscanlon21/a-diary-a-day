@@ -1,7 +1,8 @@
 ﻿using Core.Code.Helpers;
 using Data.Entities.User;
+using Web.ViewModels;
 
-namespace Web.ViewModels.User.Components;
+namespace Web.Views.Shared.Components.AgoraphobiaSeverity;
 
 public class AgoraphobiaSeverityViewModel
 {

@@ -1,6 +1,6 @@
-﻿using Core.Models.User;
+﻿using Core.Models.Footnote;
+using Core.Models.User;
 using Data.Entities.Footnote;
-using static Web.ViewModels.User.Components.ActivityViewModel;
 
 namespace Web.ViewModels;
 
@@ -41,3 +41,8 @@ public record XYScore(string X, double? Y, IList<int?> Items)
 
     public int Count => Items.Count(i => i.HasValue);
 }
+
+public record UserCustomGroup(DateOnly Date, CustomType Type, int Id, string Name)
+{
+    public int One { get; } = 1;
+};

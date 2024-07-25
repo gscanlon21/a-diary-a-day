@@ -1,7 +1,6 @@
 ﻿using Core.Models.User;
 
-namespace Web.ViewModels.User.Components;
-
+namespace Web.Views.Shared.Components.NextWorkout;
 
 public class NextWorkoutViewModel
 {
@@ -19,3 +18,4 @@ public class NextWorkoutViewModel
 
     public string Token { get; init; } = null!;
 }
+

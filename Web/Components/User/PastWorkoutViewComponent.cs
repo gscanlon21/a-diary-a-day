@@ -1,6 +1,6 @@
 ﻿using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
-using Web.ViewModels.User.Components;
+using Web.Views.Shared.Components.PastWorkout;
 
 namespace Web.Components.User;
 

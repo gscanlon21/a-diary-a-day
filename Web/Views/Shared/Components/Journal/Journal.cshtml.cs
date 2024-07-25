@@ -1,7 +1,7 @@
 ﻿using Data.Entities.User;
 using System.ComponentModel.DataAnnotations;
 
-namespace Web.ViewModels.User.Components;
+namespace Web.Views.Shared.Components.Journal;
 
 public class JournalViewModel
 {

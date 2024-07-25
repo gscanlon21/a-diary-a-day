@@ -1,4 +1,4 @@
-﻿namespace Web.ViewModels.User.Components;
+﻿namespace Web.Views.Shared.Components.Confirmation;
 
 /// <summary>
 /// Viewmodel for Confirmation.cshtml

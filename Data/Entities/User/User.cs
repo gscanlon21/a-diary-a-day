@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
-using System.Numerics;
 using System.Text.Json.Serialization;
 
 namespace Data.Entities.User;

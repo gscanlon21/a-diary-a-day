@@ -1,8 +1,9 @@
 ﻿using Core.Code.Extensions;
 using Core.Code.Helpers;
 using Data.Entities.User;
+using Web.ViewModels;
 
-namespace Web.ViewModels.User.Components;
+namespace Web.Views.Shared.Components.Mood;
 
 public class MoodViewModel
 {

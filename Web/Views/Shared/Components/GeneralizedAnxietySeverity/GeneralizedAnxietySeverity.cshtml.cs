@@ -1,11 +1,13 @@
 ﻿using Core.Code.Helpers;
 using Data.Entities.User;
+using Web.ViewModels;
 
-namespace Web.ViewModels.User.Components;
+namespace Web.Views.Shared.Components.GeneralizedAnxietySeverity;
 
-public class PanicSeverityViewModel
+
+public class GeneralizedAnxietySeverityViewModel
 {
-    public PanicSeverityViewModel(IList<UserPanicSeverity>? userMoods)
+    public GeneralizedAnxietySeverityViewModel(IList<UserGeneralizedAnxietySeverity>? userMoods)
     {
         //Mood = currentWeight.GetValueOrDefault();
         if (userMoods != null)
@@ -22,8 +24,8 @@ public class PanicSeverityViewModel
     public string Token { get; init; } = null!;
     public Data.Entities.User.User User { get; init; } = null!;
 
-    public UserPanicSeverity UserMood { get; init; } = null!;
-    public UserPanicSeverity? PreviousMood { get; init; }
+    public UserGeneralizedAnxietySeverity UserMood { get; init; } = null!;
+    public UserGeneralizedAnxietySeverity? PreviousMood { get; init; }
 
     internal IList<XScore> Xys { get; init; } = [];
 }

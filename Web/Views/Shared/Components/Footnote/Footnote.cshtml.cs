@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Web.ViewModels.User.Components;
+namespace Web.Views.Shared.Components.Footnote;
 
 /// <summary>
 /// Viewmodel for Confirmation.cshtml

@@ -124,7 +124,7 @@
     @if (Model.User.Components.HasFlag(Components.PTSDSeverity))
     {
         <div class="col-lg-6">
-            @await Component.InvokeAsync(PosttraumaticStressSeverityViewComponent.Name, new { Model.User })
+            @await Component.InvokeAsync(PostTraumaticStressSeverityViewComponent.Name, new { Model.User })
         </div>
     }
 

@@ -2,7 +2,7 @@
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Web.ViewModels.User.Components;
+using Web.Views.Shared.Components.PanicSeverity;
 
 namespace Web.Components.User;
 

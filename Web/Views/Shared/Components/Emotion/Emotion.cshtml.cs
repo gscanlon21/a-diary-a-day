@@ -1,9 +1,10 @@
 ﻿using Core.Code.Helpers;
 using Data.Entities.Footnote;
 using Data.Entities.User;
-using static Web.ViewModels.User.Components.ActivityViewModel;
+using Web.ViewModels;
 
-namespace Web.ViewModels.User.Components;
+namespace Web.Views.Shared.Components.Emotion;
+
 
 public class EmotionViewModel
 {

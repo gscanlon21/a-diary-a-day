@@ -1,13 +1,13 @@
 ﻿using Core.Code.Helpers;
 using Data.Entities.Footnote;
 using Data.Entities.User;
-using static Web.ViewModels.User.Components.ActivityViewModel;
+using Web.ViewModels;
 
-namespace Web.ViewModels.User.Components;
+namespace Web.Views.Shared.Components.Activity;
 
-public class SymptomViewModel
+public class ActivityViewModel
 {
-    public SymptomViewModel(IList<UserSymptom>? userMoods, List<UserCustom> customs)
+    public ActivityViewModel(IList<UserActivity>? userMoods, List<UserCustom> customs)
     {
         Customs = customs;
         //Mood = currentWeight.GetValueOrDefault();
@@ -33,8 +33,8 @@ public class SymptomViewModel
     public string Token { get; init; } = null!;
     public Data.Entities.User.User User { get; init; } = null!;
 
-    public UserSymptom UserMood { get; init; } = null!;
-    public UserSymptom? PreviousMood { get; init; }
+    public UserActivity UserMood { get; init; } = null!;
+    public UserActivity? PreviousMood { get; init; }
 
     internal List<XCustom> Xys { get; init; } = [];
     internal List<IGrouping<UserCustom, XCustom>> XysGrouped => Xys.GroupBy(xy => xy.Label).ToList();
