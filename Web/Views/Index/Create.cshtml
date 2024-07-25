@@ -7,15 +7,15 @@
 @using Web.Controllers.Index
 
 @{
-    ViewData[ViewData_Blank.Title] = "Consistent Sanity";
-    ViewData[ViewData_Blank.Description] = "A personalizable mood tracking newsletter.";
+    ViewData[ViewData_Blank.Title] = "Consistent Health";
+    ViewData[ViewData_Blank.Description] = "A personalizable symptom tracking newsletter.";
     ViewData[ViewData_Blank.Canonical] = _siteSettings.Value.WebUri.AbsoluteUri;
 }
 
 <div class="row gy-2 mb-2 mt-1 justify-content-between align-items-end">
     <div class="col-auto mb-3">
-        <h1 class="primary-heading">Consistent sanity starts here</h1>
-        <h2 class="secondary-heading">A personalized mood tracker delivered to your inbox daily</h2>
+        <h1 class="primary-heading">Consistent health starts here</h1>
+        <h2 class="secondary-heading">A personalized symptom tracker delivered to your inbox daily</h2>
     </div>
     <div class="col-lg-6 m-0--empty">@if (TempData[TempData_User.SuccessMessage] != null)
     {
@@ -80,7 +80,7 @@
                     else
                     {
                         // If Model.WasSubscribed == false, just show the validation messages in the form. No need to a 'something went wrong' message.
-                        <h6 class="text-center">Subscribe to our mood tracking newsletter and take the guesswork out of sanity!</h6>
+                        <h6 class="text-center">Subscribe to our symptom tracking newsletter and take the guesswork out of health!</h6>
                     }
                 </div>
 

@@ -60,7 +60,7 @@ public class UserEditViewModel
     [Display(Name = "Disabled Reason")]
     public string? NewsletterDisabledReason { get; init; }
 
-    [Display(Name = "Subscribe to Emails", Description = "Receive your mood tracking statistics via email.")]
+    [Display(Name = "Subscribe to Emails", Description = "Receive your health insights via email.")]
     public bool NewsletterEnabled { get; init; }
 
     [Required]
