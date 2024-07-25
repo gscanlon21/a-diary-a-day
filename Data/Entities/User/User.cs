@@ -132,6 +132,9 @@ public class User
     /// </summary>
     public Features Features { get; set; } = Features.None;
 
+    public string? FeastEmail { get; set; }
+    public string? FeastToken { get; set; }
+
 
     #region NotMapped
 
