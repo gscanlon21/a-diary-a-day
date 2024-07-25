@@ -19,14 +19,14 @@ public class PostTraumaticStressSeverityViewComponent(CoreContext context, UserR
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var token = await userRepo.AddUserToken(user, durationDays: 1);
-        var userMood = await context.UserPosttraumaticStressSeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
-        var userMoods = await context.UserPosttraumaticStressSeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
+        var userMood = await context.UserPostTraumaticStressSeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
+        var userMoods = await context.UserPostTraumaticStressSeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
         var viewModel = new PostTraumaticStressSeverityViewModel(userMoods)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
             PreviousMood = userMood,
-            UserMood = new Data.Entities.User.UserPosttraumaticStressSeverity()
+            UserMood = new Data.Entities.User.UserPostTraumaticStressSeverity()
             {
                 UserId = user.Id,
                 User = user

@@ -87,7 +87,7 @@ public partial class UserController
 
     [HttpPost]
     [Route("ptsd-severity", Order = 1)]
-    public async Task<IActionResult> ManagePtsdSeverity(string email, string token, UserPosttraumaticStressSeverity userMood)
+    public async Task<IActionResult> ManagePtsdSeverity(string email, string token, UserPostTraumaticStressSeverity userMood)
     {
         if (true || ModelState.IsValid)
         {
@@ -98,7 +98,7 @@ public partial class UserController
             }
 
             // Set the new weight on the UserVariation
-            var todaysMood = await context.UserPosttraumaticStressSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
+            var todaysMood = await context.UserPostTraumaticStressSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (todaysMood == null)
             {
                 userMood.User = user;

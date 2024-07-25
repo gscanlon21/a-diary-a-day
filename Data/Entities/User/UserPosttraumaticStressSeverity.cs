@@ -11,9 +11,9 @@ namespace Data.Entities.User;
 /// https://www.psychiatry.org/getmedia/1af5dc37-6370-4e72-94d8-e0224d8495f8/APA-DSM5TR-SeverityOfPosttraumaticStressSymptomsAdult.pdf
 /// </summary>
 [Table("user_posttraumatic_stress_severity"), Comment("User variation weight log")]
-public class UserPosttraumaticStressSeverity : IScore
+public class UserPostTraumaticStressSeverity : IScore
 {
-    public UserPosttraumaticStressSeverity() { }
+    public UserPostTraumaticStressSeverity() { }
 
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private init; }
@@ -81,6 +81,6 @@ public class UserPosttraumaticStressSeverity : IScore
     [Range(0, 99)]
     public double? AverageScore => Items.All(d => d.HasValue) ? Items.Sum() / (double)Items.Count : null;
 
-    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserPosttraumaticStressSeverities))]
+    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserPostTraumaticStressSeverities))]
     public virtual User User { get; set; } = null!;
 }

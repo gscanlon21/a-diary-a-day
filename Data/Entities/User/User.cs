@@ -208,7 +208,7 @@ public class User
     public virtual ICollection<UserPanicSeverity> UserPanicSeverities { get; private init; } = null!;
 
     [JsonIgnore, InverseProperty(nameof(UserDepression.User))]
-    public virtual ICollection<UserPosttraumaticStressSeverity> UserPosttraumaticStressSeverities { get; private init; } = null!;
+    public virtual ICollection<UserPostTraumaticStressSeverity> UserPostTraumaticStressSeverities { get; private init; } = null!;
 
     [JsonIgnore, InverseProperty(nameof(UserDepression.User))]
     public virtual ICollection<UserSocialAnxietySeverity> UserSocialAnxietySeverities { get; private init; } = null!;

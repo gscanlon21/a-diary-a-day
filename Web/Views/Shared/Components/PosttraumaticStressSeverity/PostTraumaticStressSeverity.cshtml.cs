@@ -6,7 +6,7 @@ namespace Web.Views.Shared.Components.PostTraumaticStressSeverity;
 
 public class PostTraumaticStressSeverityViewModel
 {
-    public PostTraumaticStressSeverityViewModel(IList<UserPosttraumaticStressSeverity>? userMoods)
+    public PostTraumaticStressSeverityViewModel(IList<UserPostTraumaticStressSeverity>? userMoods)
     {
         //Mood = currentWeight.GetValueOrDefault();
         if (userMoods != null)
@@ -23,8 +23,8 @@ public class PostTraumaticStressSeverityViewModel
     public string Token { get; init; } = null!;
     public Data.Entities.User.User User { get; init; } = null!;
 
-    public UserPosttraumaticStressSeverity UserMood { get; init; } = null!;
-    public UserPosttraumaticStressSeverity? PreviousMood { get; init; }
+    public UserPostTraumaticStressSeverity UserMood { get; init; } = null!;
+    public UserPostTraumaticStressSeverity? PreviousMood { get; init; }
 
     internal IList<XScore> Xys { get; init; } = [];
 }
