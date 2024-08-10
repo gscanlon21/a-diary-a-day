@@ -8,7 +8,7 @@ namespace Web.Controllers.User;
 public partial class UserController
 {
     [HttpPost, Route("completemetabolicpanel")]
-    public async Task<IActionResult> ManageCompleteMetabolicPanel(string email, string token, UserCompleteMetabolicPanel userCompleteMetabolicPanel)
+    public async Task<IActionResult> ManageCompleteMetabolicPanel(string email, string token, UserCompleteMetabolicPanel userMood)
     {
         if (true || ModelState.IsValid)
         {
@@ -22,27 +22,27 @@ public partial class UserController
             var todaysCompleteMetabolicPanel = await context.UserCompleteMetabolicPanels.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (todaysCompleteMetabolicPanel == null)
             {
-                userCompleteMetabolicPanel.User = user;
-                context.Add(userCompleteMetabolicPanel);
+                userMood.User = user;
+                context.Add(userMood);
             }
             else
             {
-                todaysCompleteMetabolicPanel.Albumin = userCompleteMetabolicPanel.Albumin;
-                todaysCompleteMetabolicPanel.Calcium = userCompleteMetabolicPanel.Calcium;
-                todaysCompleteMetabolicPanel.BilirubinTotal = userCompleteMetabolicPanel.BilirubinTotal;
-                todaysCompleteMetabolicPanel.BUN = userCompleteMetabolicPanel.BUN;
-                todaysCompleteMetabolicPanel.AlkalinePhosphatase = userCompleteMetabolicPanel.AlkalinePhosphatase;
-                todaysCompleteMetabolicPanel.AST = userCompleteMetabolicPanel.AST;
-                todaysCompleteMetabolicPanel.Chloride = userCompleteMetabolicPanel.Chloride;
-                todaysCompleteMetabolicPanel.Glucose = userCompleteMetabolicPanel.Glucose;
-                todaysCompleteMetabolicPanel.AnionGap = userCompleteMetabolicPanel.AnionGap;
-                todaysCompleteMetabolicPanel.CO2 = userCompleteMetabolicPanel.CO2;
-                todaysCompleteMetabolicPanel.EGFRbyCKDEPI = userCompleteMetabolicPanel.EGFRbyCKDEPI;
-                todaysCompleteMetabolicPanel.Creatinine = userCompleteMetabolicPanel.Creatinine;
-                todaysCompleteMetabolicPanel.ALT = userCompleteMetabolicPanel.ALT;
-                todaysCompleteMetabolicPanel.Potassium = userCompleteMetabolicPanel.Potassium;
-                todaysCompleteMetabolicPanel.ProteinTotal = userCompleteMetabolicPanel.ProteinTotal;
-                todaysCompleteMetabolicPanel.Sodium = userCompleteMetabolicPanel.Sodium;
+                todaysCompleteMetabolicPanel.ALT = userMood.ALT;
+                todaysCompleteMetabolicPanel.AST = userMood.AST;
+                todaysCompleteMetabolicPanel.BUN = userMood.BUN;
+                todaysCompleteMetabolicPanel.CO2 = userMood.CO2;
+                todaysCompleteMetabolicPanel.Sodium = userMood.Sodium;
+                todaysCompleteMetabolicPanel.Albumin = userMood.Albumin;
+                todaysCompleteMetabolicPanel.Calcium = userMood.Calcium;
+                todaysCompleteMetabolicPanel.Glucose = userMood.Glucose;
+                todaysCompleteMetabolicPanel.Chloride = userMood.Chloride;
+                todaysCompleteMetabolicPanel.AnionGap = userMood.AnionGap;
+                todaysCompleteMetabolicPanel.Potassium = userMood.Potassium;
+                todaysCompleteMetabolicPanel.Creatinine = userMood.Creatinine;
+                todaysCompleteMetabolicPanel.EGFRbyCKDEPI = userMood.EGFRbyCKDEPI;
+                todaysCompleteMetabolicPanel.ProteinTotal = userMood.ProteinTotal;
+                todaysCompleteMetabolicPanel.BilirubinTotal = userMood.BilirubinTotal;
+                todaysCompleteMetabolicPanel.AlkalinePhosphatase = userMood.AlkalinePhosphatase;
             }
 
             await context.SaveChangesAsync();

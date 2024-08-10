@@ -64,12 +64,7 @@ public class UserCustom : ICustom, IComparable<UserCustom>
     [JsonIgnore, InverseProperty(nameof(Entities.User.UserSleep.UserCustoms))]
     public IList<UserSleep>? UserSleeps { get; init; }
 
-    public int CompareTo(UserCustom? other)
-    {
-        return Order.CompareTo(other?.Order);
-    }
-
+    public int CompareTo(UserCustom? other) => Order.CompareTo(other?.Order);
     public override bool Equals(object? obj) => obj is UserCustom custom && Id == custom.Id;
-
     public override int GetHashCode() => HashCode.Combine(Id);
 }

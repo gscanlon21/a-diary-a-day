@@ -24,7 +24,7 @@ public class UserEmotion
     [Required]
     public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
 
-    [JsonIgnore, InverseProperty(nameof(Entities.Footnote.UserCustom.UserEmotions))]
+    [JsonIgnore, InverseProperty(nameof(UserCustom.UserEmotions))]
     public virtual List<UserCustom> UserCustoms { get; init; } = null!;
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserEmotions))]
