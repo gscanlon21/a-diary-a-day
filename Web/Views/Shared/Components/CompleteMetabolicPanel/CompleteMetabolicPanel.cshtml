@@ -39,7 +39,7 @@
 
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <div class="form-group mb-3 mt-3" style="padding-bottom:10ch;">
+                <div class="form-group mb-3 mt-3" >
                     <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Sodium)</label>
                     <div><span asp-validation-for="UserMood.Sodium" class="text-danger"></span></div>
                     <div style="display:flex;column-gap:1ex;">
@@ -48,14 +48,14 @@
                         <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                             <input type="range" style="width:100%;" class="allow-demo"
                                    name="@(Html.IdFor(_ => Model.UserMood.Sodium))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.Sodium))-input"
-                                   min="-1" max="4" step="1" value="@(Model.UserMood.Sodium ?? -1)"
+                                   min="-1" max="250" step="1" value="@(Model.UserMood.Sodium ?? -1)"
                                    oninput="@(Html.IdFor(_ => Model.UserMood.Sodium)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
                         </div>
                     </div>
                     <div id="@(Html.IdFor(_ => Model.UserMood.Sodium))-help" class="form-text"></div>
                 </div>
 
-                <div class="form-group mb-3 mt-3" style="padding-bottom:10ch;">
+                <div class="form-group mb-3 mt-3" >
                     <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Calcium)</label>
                     <div><span asp-validation-for="UserMood.Calcium" class="text-danger"></span></div>
                     <div style="display:flex;column-gap:1ex;">
@@ -64,7 +64,7 @@
                         <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                             <input type="range" style="width:100%;" class="allow-demo"
                                    name="@(Html.IdFor(_ => Model.UserMood.Calcium))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.Calcium))-input"
-                                   min="-1" max="4" step="1" value="@(Model.UserMood.Calcium ?? -1)"
+                                   min="-1" max="250" step="1" value="@(Model.UserMood.Calcium ?? -1)"
                                    oninput="@(Html.IdFor(_ => Model.UserMood.Calcium)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                 </div>
 
 
-                <div class="form-group mb-3 mt-3" style="padding-bottom:10ch;">
+                <div class="form-group mb-3 mt-3" >
                     <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Potassium)</label>
                     <div><span asp-validation-for="UserMood.Potassium" class="text-danger"></span></div>
                     <div style="display:flex;column-gap:1ex;">
@@ -81,7 +81,7 @@
                         <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                             <input type="range" style="width:100%;" class="allow-demo"
                                    name="@(Html.IdFor(_ => Model.UserMood.Potassium))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.Potassium))-input"
-                                   min="-1" max="4" step="1" value="@(Model.UserMood.Potassium ?? -1)"
+                                   min="-1" max="250" step="1" value="@(Model.UserMood.Potassium ?? -1)"
                                    oninput="@(Html.IdFor(_ => Model.UserMood.Potassium)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
                         </div>
                     </div>
@@ -90,7 +90,7 @@
 
 
 
-                <div class="form-group mb-3 mt-3" style="padding-bottom:10ch;">
+                <div class="form-group mb-3 mt-3" >
                     <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Albumin)</label>
                     <div><span asp-validation-for="UserMood.Albumin" class="text-danger"></span></div>
                     <div style="display:flex;column-gap:1ex;">
@@ -99,7 +99,7 @@
                         <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                             <input type="range" style="width:100%;" class="allow-demo"
                                    name="@(Html.IdFor(_ => Model.UserMood.Albumin))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.Albumin))-input"
-                                   min="-1" max="4" step="1" value="@(Model.UserMood.Albumin ?? -1)"
+                                   min="-1" max="250" step="1" value="@(Model.UserMood.Albumin ?? -1)"
                                    oninput="@(Html.IdFor(_ => Model.UserMood.Albumin)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
                         </div>
                     </div>
@@ -108,7 +108,7 @@
 
 
 
-                <div class="form-group mb-3 mt-3" style="padding-bottom:10ch;">
+                <div class="form-group mb-3 mt-3" >
                     <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.AlkalinePhosphatase)</label>
                     <div><span asp-validation-for="UserMood.AlkalinePhosphatase" class="text-danger"></span></div>
                     <div style="display:flex;column-gap:1ex;">
@@ -117,7 +117,7 @@
                         <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                             <input type="range" style="width:100%;" class="allow-demo"
                                    name="@(Html.IdFor(_ => Model.UserMood.AlkalinePhosphatase))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.AlkalinePhosphatase))-input"
-                                   min="-1" max="4" step="1" value="@(Model.UserMood.AlkalinePhosphatase ?? -1)"
+                                   min="-1" max="250" step="1" value="@(Model.UserMood.AlkalinePhosphatase ?? -1)"
                                    oninput="@(Html.IdFor(_ => Model.UserMood.AlkalinePhosphatase)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
                         </div>
                     </div>
@@ -126,7 +126,7 @@
 
 
 
-                <div class="form-group mb-3 mt-3" style="padding-bottom:10ch;">
+                <div class="form-group mb-3 mt-3" >
                     <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.ALT)</label>
                     <div><span asp-validation-for="UserMood.ALT" class="text-danger"></span></div>
                     <div style="display:flex;column-gap:1ex;">
@@ -135,7 +135,7 @@
                         <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                             <input type="range" style="width:100%;" class="allow-demo"
                                    name="@(Html.IdFor(_ => Model.UserMood.ALT))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.ALT))-input"
-                                   min="-1" max="4" step="1" value="@(Model.UserMood.ALT ?? -1)"
+                                   min="-1" max="250" step="1" value="@(Model.UserMood.ALT ?? -1)"
                                    oninput="@(Html.IdFor(_ => Model.UserMood.ALT)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
                         </div>
                     </div>
@@ -144,7 +144,7 @@
 
 
 
-                <div class="form-group mb-3 mt-3" style="padding-bottom:10ch;">
+                <div class="form-group mb-3 mt-3" >
                     <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.AnionGap)</label>
                     <div><span asp-validation-for="UserMood.AnionGap" class="text-danger"></span></div>
                     <div style="display:flex;column-gap:1ex;">
@@ -153,7 +153,7 @@
                         <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                             <input type="range" style="width:100%;" class="allow-demo"
                                    name="@(Html.IdFor(_ => Model.UserMood.AnionGap))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.AnionGap))-input"
-                                   min="-1" max="4" step="1" value="@(Model.UserMood.AnionGap ?? -1)"
+                                   min="-1" max="250" step="1" value="@(Model.UserMood.AnionGap ?? -1)"
                                    oninput="@(Html.IdFor(_ => Model.UserMood.AnionGap)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
                         </div>
                     </div>
@@ -161,7 +161,7 @@
                 </div>
 
 
-                <div class="form-group mb-3 mt-3" style="padding-bottom:10ch;">
+                <div class="form-group mb-3 mt-3" >
                     <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.AST)</label>
                     <div><span asp-validation-for="UserMood.AST" class="text-danger"></span></div>
                     <div style="display:flex;column-gap:1ex;">
@@ -170,14 +170,14 @@
                         <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                             <input type="range" style="width:100%;" class="allow-demo"
                                    name="@(Html.IdFor(_ => Model.UserMood.AST))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.AST))-input"
-                                   min="-1" max="4" step="1" value="@(Model.UserMood.AST ?? -1)"
+                                   min="-1" max="250" step="1" value="@(Model.UserMood.AST ?? -1)"
                                    oninput="@(Html.IdFor(_ => Model.UserMood.AST)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
                         </div>
                     </div>
                     <div id="@(Html.IdFor(_ => Model.UserMood.AST))-help" class="form-text"></div>
                 </div>
 
-                <div class="form-group mb-3 mt-3" style="padding-bottom:10ch;">
+                <div class="form-group mb-3 mt-3" >
                     <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.BilirubinTotal)</label>
                     <div><span asp-validation-for="UserMood.BilirubinTotal" class="text-danger"></span></div>
                     <div style="display:flex;column-gap:1ex;">
@@ -186,14 +186,14 @@
                         <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                             <input type="range" style="width:100%;" class="allow-demo"
                                    name="@(Html.IdFor(_ => Model.UserMood.BilirubinTotal))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.BilirubinTotal))-input"
-                                   min="-1" max="4" step="1" value="@(Model.UserMood.BilirubinTotal ?? -1)"
+                                   min="-1" max="250" step="1" value="@(Model.UserMood.BilirubinTotal ?? -1)"
                                    oninput="@(Html.IdFor(_ => Model.UserMood.BilirubinTotal)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
                         </div>
                     </div>
                     <div id="@(Html.IdFor(_ => Model.UserMood.BilirubinTotal))-help" class="form-text"></div>
                 </div>
 
-                <div class="form-group mb-3 mt-3" style="padding-bottom:10ch;">
+                <div class="form-group mb-3 mt-3" >
                     <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.BUN)</label>
                     <div><span asp-validation-for="UserMood.BUN" class="text-danger"></span></div>
                     <div style="display:flex;column-gap:1ex;">
@@ -202,7 +202,7 @@
                         <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                             <input type="range" style="width:100%;" class="allow-demo"
                                    name="@(Html.IdFor(_ => Model.UserMood.BUN))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.BUN))-input"
-                                   min="-1" max="4" step="1" value="@(Model.UserMood.BUN ?? -1)"
+                                   min="-1" max="250" step="1" value="@(Model.UserMood.BUN ?? -1)"
                                    oninput="@(Html.IdFor(_ => Model.UserMood.BUN)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
                         </div>
                     </div>
@@ -212,7 +212,7 @@
 
 
 
-                <div class="form-group mb-3 mt-3" style="padding-bottom:10ch;">
+                <div class="form-group mb-3 mt-3" >
                     <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Calcium)</label>
                     <div><span asp-validation-for="UserMood.Calcium" class="text-danger"></span></div>
                     <div style="display:flex;column-gap:1ex;">
@@ -221,14 +221,14 @@
                         <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                             <input type="range" style="width:100%;" class="allow-demo"
                                    name="@(Html.IdFor(_ => Model.UserMood.Calcium))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.Calcium))-input"
-                                   min="-1" max="4" step="1" value="@(Model.UserMood.Calcium ?? -1)"
+                                   min="-1" max="250" step="1" value="@(Model.UserMood.Calcium ?? -1)"
                                    oninput="@(Html.IdFor(_ => Model.UserMood.Calcium)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
                         </div>
                     </div>
                     <div id="@(Html.IdFor(_ => Model.UserMood.Calcium))-help" class="form-text"></div>
                 </div>
 
-                <div class="form-group mb-3 mt-3" style="padding-bottom:10ch;">
+                <div class="form-group mb-3 mt-3" >
                     <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Chloride)</label>
                     <div><span asp-validation-for="UserMood.Chloride" class="text-danger"></span></div>
                     <div style="display:flex;column-gap:1ex;">
@@ -237,14 +237,14 @@
                         <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                             <input type="range" style="width:100%;" class="allow-demo"
                                    name="@(Html.IdFor(_ => Model.UserMood.Chloride))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.Chloride))-input"
-                                   min="-1" max="4" step="1" value="@(Model.UserMood.Chloride ?? -1)"
+                                   min="-1" max="250" step="1" value="@(Model.UserMood.Chloride ?? -1)"
                                    oninput="@(Html.IdFor(_ => Model.UserMood.Chloride)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
                         </div>
                     </div>
                     <div id="@(Html.IdFor(_ => Model.UserMood.Chloride))-help" class="form-text"></div>
                 </div>
 
-                <div class="form-group mb-3 mt-3" style="padding-bottom:10ch;">
+                <div class="form-group mb-3 mt-3" >
                     <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.CO2)</label>
                     <div><span asp-validation-for="UserMood.CO2" class="text-danger"></span></div>
                     <div style="display:flex;column-gap:1ex;">
@@ -253,14 +253,14 @@
                         <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                             <input type="range" style="width:100%;" class="allow-demo"
                                    name="@(Html.IdFor(_ => Model.UserMood.CO2))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.CO2))-input"
-                                   min="-1" max="4" step="1" value="@(Model.UserMood.CO2 ?? -1)"
+                                   min="-1" max="250" step="1" value="@(Model.UserMood.CO2 ?? -1)"
                                    oninput="@(Html.IdFor(_ => Model.UserMood.CO2)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
                         </div>
                     </div>
                     <div id="@(Html.IdFor(_ => Model.UserMood.CO2))-help" class="form-text"></div>
                 </div>
 
-                <div class="form-group mb-3 mt-3" style="padding-bottom:10ch;">
+                <div class="form-group mb-3 mt-3" >
                     <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Creatinine)</label>
                     <div><span asp-validation-for="UserMood.Creatinine" class="text-danger"></span></div>
                     <div style="display:flex;column-gap:1ex;">
@@ -269,14 +269,14 @@
                         <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                             <input type="range" style="width:100%;" class="allow-demo"
                                    name="@(Html.IdFor(_ => Model.UserMood.Creatinine))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.Creatinine))-input"
-                                   min="-1" max="4" step="1" value="@(Model.UserMood.Creatinine ?? -1)"
+                                   min="-1" max="250" step="1" value="@(Model.UserMood.Creatinine ?? -1)"
                                    oninput="@(Html.IdFor(_ => Model.UserMood.Creatinine)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
                         </div>
                     </div>
                     <div id="@(Html.IdFor(_ => Model.UserMood.Creatinine))-help" class="form-text"></div>
                 </div>
 
-                <div class="form-group mb-3 mt-3" style="padding-bottom:10ch;">
+                <div class="form-group mb-3 mt-3" >
                     <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.EGFRbyCKDEPI)</label>
                     <div><span asp-validation-for="UserMood.EGFRbyCKDEPI" class="text-danger"></span></div>
                     <div style="display:flex;column-gap:1ex;">
@@ -285,14 +285,14 @@
                         <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                             <input type="range" style="width:100%;" class="allow-demo"
                                    name="@(Html.IdFor(_ => Model.UserMood.EGFRbyCKDEPI))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.EGFRbyCKDEPI))-input"
-                                   min="-1" max="4" step="1" value="@(Model.UserMood.EGFRbyCKDEPI ?? -1)"
+                                   min="-1" max="250" step="1" value="@(Model.UserMood.EGFRbyCKDEPI ?? -1)"
                                    oninput="@(Html.IdFor(_ => Model.UserMood.EGFRbyCKDEPI)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
                         </div>
                     </div>
                     <div id="@(Html.IdFor(_ => Model.UserMood.EGFRbyCKDEPI))-help" class="form-text"></div>
                 </div>
 
-                <div class="form-group mb-3 mt-3" style="padding-bottom:10ch;">
+                <div class="form-group mb-3 mt-3" >
                     <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Glucose)</label>
                     <div><span asp-validation-for="UserMood.Glucose" class="text-danger"></span></div>
                     <div style="display:flex;column-gap:1ex;">
@@ -301,14 +301,14 @@
                         <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                             <input type="range" style="width:100%;" class="allow-demo"
                                    name="@(Html.IdFor(_ => Model.UserMood.Glucose))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.Glucose))-input"
-                                   min="-1" max="4" step="1" value="@(Model.UserMood.Glucose ?? -1)"
+                                   min="-1" max="250" step="1" value="@(Model.UserMood.Glucose ?? -1)"
                                    oninput="@(Html.IdFor(_ => Model.UserMood.Glucose)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
                         </div>
                     </div>
                     <div id="@(Html.IdFor(_ => Model.UserMood.Glucose))-help" class="form-text"></div>
                 </div>
 
-                <div class="form-group mb-3 mt-3" style="padding-bottom:10ch;">
+                <div class="form-group mb-3 mt-3" >
                     <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Potassium)</label>
                     <div><span asp-validation-for="UserMood.Potassium" class="text-danger"></span></div>
                     <div style="display:flex;column-gap:1ex;">
@@ -317,14 +317,14 @@
                         <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                             <input type="range" style="width:100%;" class="allow-demo"
                                    name="@(Html.IdFor(_ => Model.UserMood.Potassium))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.Potassium))-input"
-                                   min="-1" max="4" step="1" value="@(Model.UserMood.Potassium ?? -1)"
+                                   min="-1" max="250" step="1" value="@(Model.UserMood.Potassium ?? -1)"
                                    oninput="@(Html.IdFor(_ => Model.UserMood.Potassium)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
                         </div>
                     </div>
                     <div id="@(Html.IdFor(_ => Model.UserMood.Potassium))-help" class="form-text"></div>
                 </div>
 
-                <div class="form-group mb-3 mt-3" style="padding-bottom:10ch;">
+                <div class="form-group mb-3 mt-3" >
                     <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.ProteinTotal)</label>
                     <div><span asp-validation-for="UserMood.ProteinTotal" class="text-danger"></span></div>
                     <div style="display:flex;column-gap:1ex;">
@@ -333,14 +333,14 @@
                         <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                             <input type="range" style="width:100%;" class="allow-demo"
                                    name="@(Html.IdFor(_ => Model.UserMood.ProteinTotal))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.ProteinTotal))-input"
-                                   min="-1" max="4" step="1" value="@(Model.UserMood.ProteinTotal ?? -1)"
+                                   min="-1" max="250" step="1" value="@(Model.UserMood.ProteinTotal ?? -1)"
                                    oninput="@(Html.IdFor(_ => Model.UserMood.ProteinTotal)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
                         </div>
                     </div>
                     <div id="@(Html.IdFor(_ => Model.UserMood.ProteinTotal))-help" class="form-text"></div>
                 </div>
 
-                <div class="form-group mb-3 mt-3" style="padding-bottom:10ch;">
+                <div class="form-group mb-3 mt-3" >
                     <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Sodium)</label>
                     <div><span asp-validation-for="UserMood.Sodium" class="text-danger"></span></div>
                     <div style="display:flex;column-gap:1ex;">
@@ -349,7 +349,7 @@
                         <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                             <input type="range" style="width:100%;" class="allow-demo"
                                    name="@(Html.IdFor(_ => Model.UserMood.Sodium))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.Sodium))-input"
-                                   min="-1" max="4" step="1" value="@(Model.UserMood.Sodium ?? -1)"
+                                   min="-1" max="250" step="1" value="@(Model.UserMood.Sodium ?? -1)"
                                    oninput="@(Html.IdFor(_ => Model.UserMood.Sodium)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
                         </div>
                     </div>
