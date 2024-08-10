@@ -27,6 +27,7 @@ public class CoreContext : DbContext
     public DbSet<UserSleep> UserSleeps { get; set; } = null!;
     public DbSet<UserActivity> UserActivities { get; set; } = null!;
     public DbSet<UserAgoraphobiaSeverity> UserAgoraphobiaSeverities { get; set; } = null!;
+    public DbSet<UserCompleteMetabolicPanel> UserCompleteMetabolicPanels { get; set; } = null!;
     public DbSet<UserAnger> UserAngers { get; set; } = null!;
     public DbSet<UserAnxiety> UserAnxieties { get; set; } = null!;
     public DbSet<UserDepressionSeverity> UserDepressionSeverities { get; set; } = null!;

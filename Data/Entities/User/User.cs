@@ -189,6 +189,9 @@ public class User
     [JsonIgnore, InverseProperty(nameof(UserDepression.User))]
     public virtual ICollection<UserAgoraphobiaSeverity> UserAgoraphobiaSeverities { get; private init; } = null!;
 
+    [JsonIgnore, InverseProperty(nameof(UserCompleteMetabolicPanel.User))]
+    public virtual ICollection<UserCompleteMetabolicPanel> UserCompleteMetabolicPanels { get; private init; } = null!;
+
     [JsonIgnore, InverseProperty(nameof(UserDepression.User))]
     public virtual ICollection<UserAnger> UserAngers { get; private init; } = null!;
 
