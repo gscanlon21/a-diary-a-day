@@ -13,7 +13,7 @@ public class DeleteOldMoods(ILogger<DeleteOldMoods> logger, CoreContext coreCont
         try
         {
             await coreContext.UserMoods.IgnoreQueryFilters()
-                .Where(u => u.Date < DateHelpers.Today.AddMonths(-1 * UserConsts.DeleteLogsAfterXMonths))
+                .Where(u => u.Date < DateHelpers.Today.AddMonths(-1 * UserConsts.DeleteMoodsAfterXMonths))
                 .ExecuteDeleteAsync();
         }
         catch (Exception e)
