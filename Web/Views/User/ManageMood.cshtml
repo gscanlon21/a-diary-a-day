@@ -134,6 +134,13 @@
             @await Component.InvokeAsync(SocialAnxietySeverityViewComponent.Name, new { Model.User })
         </div>
     }
+
+    @if (Model.User.Components.HasFlag(Components.CompleteMetabolicPanel))
+    {
+        <div class="col-lg-6">
+            @await Component.InvokeAsync(CompleteMetabolicPanelViewComponent.Name, new { Model.User })
+        </div>
+    }
         
     @if (Model.User.Components.HasFlag(Components.Journal))
     {
