@@ -31,7 +31,7 @@
                      AbsoluteLayout.LayoutFlags="All" >
             <ListView ItemsSource="{Binding Workouts}" SelectionMode="None" HasUnevenRows="True">
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="newsletter:UserMoodDto">
+                    <DataTemplate x:DataType="newsletter:UserDiaryDto">
                         <ViewCell>
                             <StackLayout VerticalOptions="FillAndExpand" Padding="15,10">
                                 <Label Text="{Binding Converter={StaticResource MethodToValueConverter}, ConverterParameter='Title'}" LineBreakMode="WordWrap"

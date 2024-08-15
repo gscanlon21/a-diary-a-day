@@ -1,6 +1,7 @@
 ﻿using Core.Code.Helpers;
 using Core.Dtos.Newsletter;
 using Core.Dtos.User;
+using Core.Interfaces.User;
 using Core.Models.Footnote;
 using Core.Models.Newsletter;
 using Core.Models.Options;
@@ -149,20 +150,8 @@ public partial class NewsletterRepo
     {
         var userViewModel = new UserNewsletterDto(context.User.AsType<UserDto, User>()!, context.Token);
 
-        var images = new List<ComponentImage>();
-        var prefix = $"moods/{context.User.Uid}";
-        var components = EnumExtensions.GetSingleValuesExcludingAny32(Components.Journal).Where(c => context.User.Components.HasFlag(c)).ToList();
-        foreach (var component in components)
-        {
-            var key = $"{prefix}-{component}";
-            images.Add(new ComponentImage()
-            {
-                Type = component,
-                Image = $"{_siteSettings.Value.CdnLink}/{key}"
-            });
-        }
-
         var tasks = await GetUserTasks(context);
+        var images = GetImages(context.User).ToList();
         var newsletter = await CreateAndAddNewsletterToContext(context, tasks);
         await UpdateLastSeenDate(tasks);
         var viewModel = new NewsletterDto(userViewModel)
@@ -179,10 +168,10 @@ public partial class NewsletterRepo
     /// </summary>
     private async Task<NewsletterDto?> NewsletterOld(User user, string token, DateOnly date, UserDiary newsletter)
     {
-        List<QueryResults> recipes = [];
+        List<QueryResults> tasks = [];
         foreach (var section in EnumExtensions.GetSingleOrNoneValues32<Section>())
         {
-            recipes.AddRange((await new QueryBuilder(section)
+            tasks.AddRange((await new QueryBuilder(section)
                 .WithUser(user)
                 .WithTasks(options =>
                 {
@@ -195,14 +184,31 @@ public partial class NewsletterRepo
                 .OrderBy(e => newsletter.UserDiaryTasks.FirstOrDefault(nv => nv.UserTaskId == e.Task.Id)?.Order ?? -1));
         }
 
+        var images = GetImages(user).ToList();
         var userViewModel = new UserNewsletterDto(user.AsType<UserDto, User>()!, token);
         var newsletterViewModel = new NewsletterDto(userViewModel)
         {
             Today = date,
-            Tasks = recipes.Select(r => r.AsType<NewsletterTaskDto, QueryResults>()!).ToList()
+            Images = images,
+            Tasks = tasks.Select(r => r.AsType<NewsletterTaskDto, QueryResults>()!).ToList()
         };
 
         return newsletterViewModel;
+    }
+
+    private IEnumerable<ComponentImage> GetImages(User user)
+    {
+        var prefix = $"moods/{user.Uid}";
+        var components = EnumExtensions.GetSingleValuesExcludingAny32(Components.Journal).Where(c => user.Components.HasFlag(c)).ToList();
+        foreach (var component in components)
+        {
+            var key = $"{prefix}-{component}";
+            yield return new ComponentImage()
+            {
+                Type = component,
+                Image = $"{_siteSettings.Value.CdnLink}/{key}"
+            };
+        }
     }
 
     internal async Task<IList<QueryResults>> GetUserTasks(NewsletterContext newsletterContext, IEnumerable<QueryResults>? exclude = null)
