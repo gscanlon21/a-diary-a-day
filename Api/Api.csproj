@@ -9,12 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.S3" Version="3.7.400.4" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.400.5" />
     <PackageReference Include="Azure.Communication.Email" Version="1.0.1" />
     <PackageReference Include="Azure.Messaging.EventGrid" Version="4.24.1" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.7">
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
