@@ -7,7 +7,7 @@ using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web.Code;
-using Web.Views.Shared.Components.Recipes;
+using Web.Views.Shared.Components.Tasks;
 
 namespace Web.Components.User;
 
@@ -15,12 +15,12 @@ namespace Web.Components.User;
 /// <summary>
 /// Renders an alert box summary of when the user's next deload week will occur.
 /// </summary>
-public class RecipesViewComponent(CoreContext context, UserRepo userRepo, IServiceScopeFactory serviceScopeFactory) : ViewComponent
+public class TasksViewComponent(CoreContext context, UserRepo userRepo, IServiceScopeFactory serviceScopeFactory) : ViewComponent
 {
     /// <summary>
     /// For routing
     /// </summary>
-    public const string Name = "Recipes";
+    public const string Name = "Tasks";
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
@@ -42,7 +42,7 @@ public class RecipesViewComponent(CoreContext context, UserRepo userRepo, IServi
             .Build()
             .Query(serviceScopeFactory);
 
-        return View("Recipes", new RecipesViewModel()
+        return View("Tasks", new TasksViewModel()
         {
             UserNewsletter = userNewsletter,
             Tasks = tasks.Select(r => r.AsType<NewsletterTaskDto, QueryResults>()!).ToList(),

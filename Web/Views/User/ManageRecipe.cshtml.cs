@@ -5,7 +5,7 @@ namespace Web.Views.User;
 /// <summary>
 /// For CRUD actions
 /// </summary>
-public class UserManageRecipeViewModel
+public class UserManageTaskViewModel
 {
     public record Params(string Email, string Token, int RecipeId);
 
@@ -13,7 +13,7 @@ public class UserManageRecipeViewModel
 
     public Data.Entities.User.User User { get; init; } = null!;
 
-    public required UserTask Recipe { get; init; }
+    public required UserTask Task { get; init; }
 
     public bool? WasUpdated { get; init; }
 }

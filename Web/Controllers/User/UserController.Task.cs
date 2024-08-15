@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Web.Code.TempData;
 using Web.ViewModels.User;
 using Web.Views.Shared.Components.ManageRecipe;
-using Web.Views.Shared.Components.UpsertRecipe;
+using Web.Views.Shared.Components.UpsertTask;
 using Web.Views.User;
 
 namespace Web.Controllers.User;
@@ -15,8 +15,8 @@ public partial class UserController
     /// Shows a form to the user where they can update their Pounds lifted.
     /// </summary>
     [HttpGet]
-    [Route("{recipeId}", Order = 1)]
-    public async Task<IActionResult> ManageRecipe(string email, string token, int recipeId, bool? wasUpdated = null)
+    [Route("{taskId}", Order = 1)]
+    public async Task<IActionResult> ManageRecipe(string email, string token, int taskId, bool? wasUpdated = null)
     {
         var user = await userRepo.GetUser(email, token, allowDemoUser: true);
         if (user == null)
@@ -24,21 +24,21 @@ public partial class UserController
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
         }
 
-        var recipe = await context.UserTasks.AsNoTracking()
-            .FirstOrDefaultAsync(r => r.Id == recipeId && r.UserId == user.Id);
+        var task = await context.UserTasks.AsNoTracking()
+            .FirstOrDefaultAsync(r => r.Id == taskId && r.UserId == user.Id);
 
-        if (recipe == null) { return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage)); }
-        return View(new UserManageRecipeViewModel()
+        if (task == null) { return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage)); }
+        return View(new UserManageTaskViewModel()
         {
             User = user,
+            Task = task,
             WasUpdated = wasUpdated,
-            Recipe = recipe,
-            Parameters = new UserManageRecipeViewModel.Params(email, token, recipeId)
+            Parameters = new UserManageTaskViewModel.Params(email, token, taskId)
         });
     }
 
-    [HttpPost, Route("recipe/upsert")]
-    public async Task<IActionResult> UpsertRecipe(string email, string token, UpsertRecipeModel recipe)
+    [HttpPost, Route("task/upsert")]
+    public async Task<IActionResult> UpsertTask(string email, string token, UpsertTaskModel task)
     {
         var user = await userRepo.GetUser(email, token);
         if (user == null)
@@ -46,7 +46,7 @@ public partial class UserController
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
         }
 
-        if (recipe.Id == default)
+        if (task.Id == default)
         {
             if (ModelState.IsValid)
             {
@@ -54,9 +54,9 @@ public partial class UserController
                 context.Add(new Data.Entities.Task.UserTask()
                 {
                     User = user,
-                    Name = recipe.Name,
-                    Notes = recipe.Notes,
-                    Enabled = recipe.Enabled,
+                    Name = task.Name,
+                    Notes = task.Notes,
+                    Enabled = task.Enabled,
                 });
 
                 await context.SaveChangesAsync();
@@ -72,27 +72,27 @@ public partial class UserController
             {
                 // Editing recipe.
                 var existingRecipe = await context.UserTasks
-                    .FirstOrDefaultAsync(r => r.Id == recipe.Id && r.UserId == user.Id);
+                    .FirstOrDefaultAsync(r => r.Id == task.Id && r.UserId == user.Id);
                 if (existingRecipe == null)
                 {
                     return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
                 }
 
-                existingRecipe.Name = recipe.Name;
-                existingRecipe.Notes = recipe.Notes;
-                existingRecipe.Enabled = recipe.Enabled;
+                existingRecipe.Name = task.Name;
+                existingRecipe.Notes = task.Notes;
+                existingRecipe.Enabled = task.Enabled;
 
                 await context.SaveChangesAsync();
                 TempData[TempData_User.SuccessMessage] = "Your tasks have been updated!";
-                return RedirectToAction(nameof(ManageRecipe), new { email, token, recipeId = recipe.Id, wasUpdated = true });
+                return RedirectToAction(nameof(ManageRecipe), new { email, token, taskId = task.Id, wasUpdated = true });
             }
 
-            return await ManageRecipe(email, token, recipe.Id, wasUpdated: false);
+            return await ManageRecipe(email, token, task.Id, wasUpdated: false);
         }
     }
 
     [HttpPost, Route("recipe/remove")]
-    public async Task<IActionResult> RemoveRecipe(string email, string token, [FromForm] int recipeId)
+    public async Task<IActionResult> RemoveRecipe(string email, string token, [FromForm] int taskId)
     {
         var user = await userRepo.GetUser(email, token);
         if (user == null)
@@ -103,7 +103,7 @@ public partial class UserController
         await context.UserTasks
             // The user has control of this footnote and is not a built-in footnote.
             .Where(f => f.UserId == user.Id)
-            .Where(f => f.Id == recipeId)
+            .Where(f => f.Id == taskId)
             .ExecuteDeleteAsync();
 
         await context.SaveChangesAsync();
@@ -114,9 +114,9 @@ public partial class UserController
 
 
     [HttpPost]
-    [Route("{recipeId}/ir", Order = 1)]
-    [Route("{recipeId}/ignore-recipe", Order = 2)]
-    public async Task<IActionResult> IgnoreRecipe(string email, string token, int recipeId)
+    [Route("{taskId}/ir", Order = 1)]
+    [Route("{taskId}/ignore-recipe", Order = 2)]
+    public async Task<IActionResult> IgnoreRecipe(string email, string token, int taskId)
     {
         var user = await userRepo.GetUser(email, token);
         if (user == null)
@@ -126,7 +126,7 @@ public partial class UserController
 
         var userProgression = await context.UserTasks
             .Where(ue => ue.UserId == user.Id)
-            .FirstOrDefaultAsync(ue => ue.Id == recipeId);
+            .FirstOrDefaultAsync(ue => ue.Id == taskId);
 
         // May be null if the exercise was soft/hard deleted
         if (userProgression == null)
@@ -137,13 +137,13 @@ public partial class UserController
         //userProgression.Ignore = !userProgression.Ignore;
         await context.SaveChangesAsync();
 
-        return RedirectToAction(nameof(ManageRecipe), new { email, token, recipeId, WasUpdated = true });
+        return RedirectToAction(nameof(ManageRecipe), new { email, token, taskId, WasUpdated = true });
     }
 
     [HttpPost]
-    [Route("{recipeId}/rr", Order = 1)]
-    [Route("{recipeId}/refresh-recipe", Order = 2)]
-    public async Task<IActionResult> RefreshRecipe(string email, string token, int recipeId)
+    [Route("{taskId}/rr", Order = 1)]
+    [Route("{taskId}/refresh-recipe", Order = 2)]
+    public async Task<IActionResult> RefreshRecipe(string email, string token, int taskId)
     {
         var user = await userRepo.GetUser(email, token, allowDemoUser: true);
         if (user == null)
@@ -153,7 +153,7 @@ public partial class UserController
 
         var userProgression = await context.UserTasks
             .Where(ue => ue.UserId == user.Id)
-            .FirstOrDefaultAsync(ue => ue.Id == recipeId);
+            .FirstOrDefaultAsync(ue => ue.Id == taskId);
 
         // May be null if the exercise was soft/hard deleted
         if (userProgression == null)
@@ -165,13 +165,13 @@ public partial class UserController
         userProgression.LastSeen = userProgression.LastSeen > DateHelpers.Today ? DateHelpers.Today : userProgression.LastSeen;
         await context.SaveChangesAsync();
 
-        return RedirectToAction(nameof(ManageRecipe), new { email, token, recipeId, WasUpdated = true });
+        return RedirectToAction(nameof(ManageRecipe), new { email, token, taskId, WasUpdated = true });
     }
 
     [HttpPost]
-    [Route("{recipeId}/l", Order = 1)]
-    [Route("{recipeId}/log", Order = 2)]
-    public async Task<IActionResult> LogRecipe(string email, string token, int recipeId, ManageRecipeViewModel viewModel)
+    [Route("{taskId}/l", Order = 1)]
+    [Route("{taskId}/log", Order = 2)]
+    public async Task<IActionResult> LogRecipe(string email, string token, int taskId, ManageTaskViewModel viewModel)
     {
         if (ModelState.IsValid)
         {
@@ -182,7 +182,7 @@ public partial class UserController
             }
 
             var userRecipe = await context.UserTasks
-                .FirstAsync(p => p.UserId == user.Id && p.Id == recipeId);
+                .FirstAsync(p => p.UserId == user.Id && p.Id == taskId);
 
             // Apply refresh padding immediately.
             if (viewModel.PadRefreshXDays != userRecipe.PadRefreshXDays)
@@ -196,9 +196,9 @@ public partial class UserController
             userRecipe.Notes = user.IsDemoUser ? null : viewModel.Notes;
 
             await context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageRecipe), new { email, token, recipeId, WasUpdated = true });
+            return RedirectToAction(nameof(ManageRecipe), new { email, token, taskId, WasUpdated = true });
         }
 
-        return RedirectToAction(nameof(ManageRecipe), new { email, token, recipeId, WasUpdated = false });
+        return RedirectToAction(nameof(ManageRecipe), new { email, token, taskId, WasUpdated = false });
     }
 }

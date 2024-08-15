@@ -1,27 +1,28 @@
 ﻿using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
-using Web.Views.Shared.Components.Workout;
+using Web.Views.Shared.Components.PastNewsletter;
 
 namespace Web.Components.User;
 
-public class WorkoutViewComponent(UserRepo userRepo) : ViewComponent
+public class PastNewsletterViewComponent(UserRepo userRepo) : ViewComponent
 {
     /// <summary>
     /// For routing
     /// </summary>
-    public const string Name = "Workout";
+    public const string Name = "PastNewsletter";
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
-        // User has not confirmed their account, they cannot see a workout yet.
-        if (!user.LastActive.HasValue)
+        var pastNewsletters = await userRepo.GetPastDiaries(user);
+        if (!pastNewsletters.Any())
         {
             return Content("");
         }
 
-        return View("Workout", new WorkoutViewModel()
+        return View("PastNewsletter", new PastNewsletterViewModel()
         {
             User = user,
+            PastNewsletters = pastNewsletters,
             Token = await userRepo.AddUserToken(user, durationDays: 1),
         });
     }

@@ -24,17 +24,17 @@ public partial class NewsletterRepo
     /// <summary>
     /// Creates a new instance of the newsletter and saves it.
     /// </summary>
-    internal async Task<UserDiary> CreateAndAddNewsletterToContext(NewsletterContext newsletterContext, IList<QueryResults>? recipes = null)
+    internal async Task<UserDiary> CreateAndAddNewsletterToContext(NewsletterContext newsletterContext, IList<QueryResults>? tasks = null)
     {
         var newsletter = new UserDiary(DateHelpers.Today, newsletterContext);
         _context.UserDiaries.Add(newsletter); // Sets the newsletter.Id after changes are saved.
         await _context.SaveChangesAsync();
 
-        if (recipes != null)
+        if (tasks != null)
         {
-            for (var i = 0; i < recipes.Count; i++)
+            for (var i = 0; i < tasks.Count; i++)
             {
-                var recipe = recipes[i];
+                var recipe = tasks[i];
                 _context.UserDiaryTasks.Add(new UserDiaryTask(newsletter, recipe.Task)
                 {
                     Section = recipe.Section,
@@ -53,28 +53,28 @@ public partial class NewsletterRepo
     /// <param name="refreshAfter">
     ///     When set and the date is > Today, hold off on refreshing the LastSeen date so that we see the same exercises in each workout.
     /// </param>
-    internal async Task UpdateLastSeenDate(IEnumerable<QueryResults> recipes)
+    internal async Task UpdateLastSeenDate(IEnumerable<QueryResults> tasks)
     {
         using var scope = _serviceScopeFactory.CreateScope();
         using var scopedCoreContext = scope.ServiceProvider.GetRequiredService<CoreContext>();
 
-        foreach (var recipe in recipes.DistinctBy(e => e.Task))
+        foreach (var task in tasks.DistinctBy(e => e.Task))
         {
             // >= so that today is the last day seeing the same exercises and tomorrow the exercises will refresh.
-            if (recipe.Task != null && (recipe.Task.RefreshAfter == null || DateHelpers.Today >= recipe.Task.RefreshAfter))
+            if (task.Task != null && (task.Task.RefreshAfter == null || DateHelpers.Today >= task.Task.RefreshAfter))
             {
-                var refreshAfter = recipe.Task.LagRefreshXDays == 0 ? (DateOnly?)null : DateHelpers.Today.AddDays(recipe.Task.LagRefreshXDays);
+                var refreshAfter = task.Task.LagRefreshXDays == 0 ? (DateOnly?)null : DateHelpers.Today.AddDays(task.Task.LagRefreshXDays);
                 // If refresh after is today, we want to see a different exercises tomorrow so update the last seen date.
-                if (recipe.Task.RefreshAfter == null && refreshAfter.HasValue && refreshAfter.Value > DateHelpers.Today)
+                if (task.Task.RefreshAfter == null && refreshAfter.HasValue && refreshAfter.Value > DateHelpers.Today)
                 {
-                    recipe.Task.RefreshAfter = refreshAfter.Value;
+                    task.Task.RefreshAfter = refreshAfter.Value;
                 }
                 else
                 {
-                    recipe.Task.RefreshAfter = null;
-                    recipe.Task.LastSeen = DateHelpers.Today.AddDays(recipe.Task.PadRefreshXDays);
+                    task.Task.RefreshAfter = null;
+                    task.Task.LastSeen = DateHelpers.Today.AddDays(task.Task.PadRefreshXDays);
                 }
-                scopedCoreContext.UserTasks.Update(recipe.Task);
+                scopedCoreContext.UserTasks.Update(task.Task);
             }
         }
 

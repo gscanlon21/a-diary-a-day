@@ -2,17 +2,17 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Web.Views.Shared.Components.UpsertRecipe;
+namespace Web.Views.Shared.Components.UpsertTask;
 
-public class UpsertRecipeViewModel
+public class UpsertTaskViewModel
 {
     public string Token { get; init; } = null!;
     public Data.Entities.User.User User { get; init; } = null!;
 
-    public UpsertRecipeModel Recipe { get; set; } = null!;
+    public UpsertTaskModel Task { get; set; } = null!;
 }
 
-public class UpsertRecipeModel
+public class UpsertTaskModel
 {
     public int Id { get; init; }
 
@@ -37,7 +37,7 @@ public class UpsertRecipeModel
     public string? DisabledReason { get; set; } = null;
 
     public override int GetHashCode() => HashCode.Combine(Id);
-    public override bool Equals(object? obj) => obj is UpsertRecipeModel other
+    public override bool Equals(object? obj) => obj is UpsertTaskModel other
         && other.Id == Id;
 
     [NotMapped]

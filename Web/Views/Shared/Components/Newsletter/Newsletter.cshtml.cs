@@ -1,6 +1,6 @@
-﻿namespace Web.Views.Shared.Components.Workout;
+﻿namespace Web.Views.Shared.Components.Newsletter;
 
-public class WorkoutViewModel
+public class NewsletterViewModel
 {
     public required Data.Entities.User.User User { get; init; } = null!;
 

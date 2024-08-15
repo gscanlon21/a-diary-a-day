@@ -15,13 +15,13 @@ namespace Data.Query;
 /// </summary>
 public class QueryRunner(Section section)
 {
-    [DebuggerDisplay("{Recipe}: {UserRecipe}")]
+    [DebuggerDisplay("{Task}")]
     public class RecipesQueryResults : IRecipeCombo
     {
         public UserTask Task { get; init; } = null!;
     }
 
-    [DebuggerDisplay("{Recipe}: {UserRecipe}")]
+    [DebuggerDisplay("{Task}")]
     private class InProgressQueryResults(RecipesQueryResults queryResult) :
         IRecipeCombo
     {

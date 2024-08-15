@@ -3,9 +3,9 @@ using Core.Dtos.User;
 using Core.Models.Newsletter;
 using System.ComponentModel.DataAnnotations;
 
-namespace Web.Views.Shared.Components.Recipes;
+namespace Web.Views.Shared.Components.Tasks;
 
-public class RecipesViewModel
+public class TasksViewModel
 {
     [Display(Name = "My Tasks")]
     public required IList<NewsletterTaskDto> Tasks { get; init; }

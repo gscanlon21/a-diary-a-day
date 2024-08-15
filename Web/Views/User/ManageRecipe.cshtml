@@ -1,4 +1,4 @@
-﻿@model UserManageRecipeViewModel
+﻿@model UserManageTaskViewModel
 @using System.Numerics
 @using Web.Views.Shared
 @using Core.Consts
@@ -18,15 +18,15 @@
 <div class="alert alert-secondary">
     <div class="row gy-2">
         @* User must have created the recipe to be able to edit it. *@
-        @if (Model.User.Id == Model.Recipe.UserId)
+        @if (Model.User.Id == Model.Task.UserId)
         {
             <div class="col-lg-6">
-                @await Component.InvokeAsync(ManageRecipeViewComponent.Name, new { Model.User, Model.Recipe, Model.Parameters })
+                @await Component.InvokeAsync(ManageTaskViewComponent.Name, new { Model.User, Model.Task, Model.Parameters })
             </div>
 
             <div class="col-lg-6">
                 <h6 class="mb-1">Edit Task</h6>
-                @await Component.InvokeAsync(UpsertRecipeViewComponent.Name, new { Model.User, Model.Recipe })
+                @await Component.InvokeAsync(UpsertTaskViewComponent.Name, new { Model.User, Model.Task })
             </div>
         }
     </div>

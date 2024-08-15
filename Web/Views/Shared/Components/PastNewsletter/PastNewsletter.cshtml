@@ -1,13 +1,13 @@
-﻿@model PastWorkoutViewModel
+﻿@model PastNewsletterViewModel
 @using Core.Models.Exercise
 @using Core.Dtos.Newsletter
 @using Core.Models.User
 
 <details class="mb-25">
-    <summary class="mb-1 h5">Past Workouts</summary>
+    <summary class="mb-1 h5">Past Moods</summary>
 
     <div class="list-group mb-3">
-        @foreach (var pastWorkout in Model.PastWorkouts)
+        @foreach (var pastWorkout in Model.PastNewsletters)
         {
             <a href="@Url.ActionLink(nameof(NewsletterController.Newsletter), NewsletterController.Name, new { Model.User.Email, Model.Token, Date = pastWorkout.Date.ToString("O") })"
                class="list-group-item list-group-item-dark list-group-item-action allow-demo">

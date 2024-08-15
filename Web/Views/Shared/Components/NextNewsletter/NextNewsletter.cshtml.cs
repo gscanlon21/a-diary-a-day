@@ -1,8 +1,8 @@
 ﻿using Core.Models.User;
 
-namespace Web.Views.Shared.Components.NextWorkout;
+namespace Web.Views.Shared.Components.NextNewsletter;
 
-public class NextWorkoutViewModel
+public class NextNewsletterViewModel
 {
     public Days Today { get; init; }
 

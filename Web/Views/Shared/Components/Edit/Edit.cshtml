@@ -111,20 +111,20 @@
         <details class="mb-25">
             <summary class="mb-1 h5">New Task</summary>
 
-            @await Component.InvokeAsync(UpsertRecipeViewComponent.Name, new { Model.User })
+            @await Component.InvokeAsync(UpsertTaskViewComponent.Name, new { Model.User })
         </details>
     </div>
 
     <div id="info" class="col">
         @await Component.InvokeAsync(ConfirmationViewComponent.Name, new { Model.User })
         @await Component.InvokeAsync(UnsupportedClientViewComponent.Name, new { Model.User })
-        @await Component.InvokeAsync(WorkoutViewComponent.Name, new { Model.User })
-        @await Component.InvokeAsync(NextWorkoutViewComponent.Name, new { Model.User })
-        @await Component.InvokeAsync(PastWorkoutViewComponent.Name, new { Model.User })
+        @await Component.InvokeAsync(NewsletterViewComponent.Name, new { Model.User })
+        @await Component.InvokeAsync(NextNewsletterViewComponent.Name, new { Model.User })
+        @await Component.InvokeAsync(PastNewsletterViewComponent.Name, new { Model.User })
         @await Component.InvokeAsync(LinkFeastsViewComponent.Name, new { Model.User })
         @await Component.InvokeAsync(TokenViewComponent.Name, new { Model.User })
         @await Component.InvokeAsync(CustomViewComponent.Name, new { Model.User })
         @await Component.InvokeAsync(FootnoteViewComponent.Name, new { Model.User })
-        @await Component.InvokeAsync(RecipesViewComponent.Name, new { Model.User })
+        @await Component.InvokeAsync(TasksViewComponent.Name, new { Model.User })
     </div>
 </div>

@@ -1,12 +1,12 @@
 ﻿using Data.Entities.Newsletter;
 
-namespace Web.Views.Shared.Components.PastWorkout;
+namespace Web.Views.Shared.Components.PastNewsletter;
 
-public class PastWorkoutViewModel
+public class PastNewsletterViewModel
 {
     public DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
 
-    public IList<UserDiary> PastWorkouts { get; init; } = null!;
+    public IList<UserDiary> PastNewsletters { get; init; } = null!;
 
     public Data.Entities.User.User User { get; init; } = null!;
 

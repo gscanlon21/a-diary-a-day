@@ -4,20 +4,19 @@ using Data;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Web.Views.Shared.Components.NextWorkout;
+using Web.Views.Shared.Components.NextNewsletter;
 
 namespace Web.Components.User;
-
 
 /// <summary>
 /// Renders an alert box summary of when the user's next deload week will occur.
 /// </summary>
-public class NextWorkoutViewComponent(CoreContext context, UserRepo userRepo) : ViewComponent
+public class NextNewsletterViewComponent(CoreContext context, UserRepo userRepo) : ViewComponent
 {
     /// <summary>
     /// For routing
     /// </summary>
-    public const string Name = "NextWorkout";
+    public const string Name = "NextNewsletter";
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
@@ -46,7 +45,7 @@ public class NextWorkoutViewComponent(CoreContext context, UserRepo userRepo) : 
             return Content("");
         }
 
-        return View("NextWorkout", new NextWorkoutViewModel()
+        return View("NextNewsletter", new NextNewsletterViewModel()
         {
             User = user,
             Token = await userRepo.AddUserToken(user, durationDays: 1),
