@@ -1,5 +1,5 @@
 ﻿using Core.Consts;
-using Data.Dtos.Newsletter;
+using Core.Dtos.Newsletter;
 using Data.Entities.Footnote;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;

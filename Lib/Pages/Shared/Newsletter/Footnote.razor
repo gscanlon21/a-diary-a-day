@@ -6,7 +6,7 @@
 @using Core.Models.Newsletter
 
 @functions {
-    RenderFragment? Debug(ViewModels.Footnote.FootnoteViewModel footnote)
+    RenderFragment? Debug(Core.Dtos.Footnote.FootnoteDto footnote)
     {
         return Verbosity.HasFlag(Verbosity.Debug)
             ? @<b>@footnote.Type.GetSingleDisplayName() - </b>
@@ -44,7 +44,7 @@
 
 @code {
     [Parameter]
-    public ViewModels.User.UserNewsletterViewModel? User { get; set; }
+    public Core.Dtos.User.UserNewsletterDto? User { get; set; }
 
     [Parameter, EditorRequired]
     public FootnoteComponentType Type { get; set; } = FootnoteComponentType.System;
@@ -55,7 +55,7 @@
     [Parameter, EditorRequired]
     public Verbosity Verbosity { get; set; }
 
-    private IList<ViewModels.Footnote.FootnoteViewModel>? Footnotes { get; set; }
+    private IList<Core.Dtos.Footnote.FootnoteDto>? Footnotes { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

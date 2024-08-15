@@ -2,13 +2,13 @@
 
 using System.Diagnostics;
 
-namespace Lib.ViewModels.Footnote;
+namespace Core.Dtos.Footnote;
 
 /// <summary>
 /// A collection of sage advice.
 /// </summary>
 [DebuggerDisplay("{Note} - {Source}")]
-public class FootnoteViewModel : IFootnote
+public class FootnoteDto : IFootnote
 {
     public int Id { get; init; }
 

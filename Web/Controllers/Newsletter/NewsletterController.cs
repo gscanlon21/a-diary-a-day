@@ -2,7 +2,6 @@
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
-using Web.Code;
 using Web.ViewModels.User;
 
 namespace Web.Controllers.Newsletter;
@@ -34,7 +33,7 @@ public partial class NewsletterController(NewsletterRepo newsletterService) : Vi
             NoStore = true,
         };
 
-        var newsletter = (await newsletterService.Newsletter(email, token, date))?.AsType<Lib.ViewModels.Newsletter.NewsletterViewModel, Data.Dtos.Newsletter.NewsletterDto>();
+        var newsletter = await newsletterService.Newsletter(email, token, date);
         if (newsletter != null)
         {
             newsletter.HideFooter = hideFooter;

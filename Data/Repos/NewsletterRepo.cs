@@ -1,13 +1,12 @@
-﻿using Core.Code.Extensions;
-using Core.Code.Helpers;
+﻿using Core.Code.Helpers;
 using Core.Dtos.Newsletter;
+using Core.Dtos.User;
 using Core.Models.Footnote;
 using Core.Models.Newsletter;
 using Core.Models.Options;
 using Core.Models.User;
-using Data.Dtos.Newsletter;
-using Data.Dtos.User;
 using Data.Entities.Footnote;
+using Data.Entities.User;
 using Data.Models;
 using Data.Models.Newsletter;
 using Data.Query.Builders;
@@ -120,7 +119,7 @@ public partial class NewsletterRepo
     /// </summary>
     private async Task<NewsletterDto?> OnDayNewsletter(NewsletterContext context)
     {
-        var userViewModel = new UserNewsletterDto(context);
+        var userViewModel = new UserNewsletterDto(context.User.AsType<UserDto, User>()!, context.Token);
 
         var images = new List<ComponentImage>();
         var prefix = $"moods/{context.User.Uid}";

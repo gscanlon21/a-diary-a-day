@@ -1,8 +1,7 @@
 ﻿using Core.Consts;
+using Core.Dtos.Footnote;
+using Core.Dtos.User;
 using Core.Models.Options;
-using Lib.ViewModels.Footnote;
-using Lib.ViewModels.Newsletter;
-using Lib.ViewModels.User;
 using Microsoft.Extensions.Options;
 using System.Net;
 using System.Net.Http.Json;
@@ -24,25 +23,25 @@ public class NewsletterService
         }
     }
 
-    public async Task<IList<FootnoteViewModel>?> GetFootnotes(UserNewsletterViewModel? user = null, int count = 1)
+    public async Task<IList<FootnoteDto>?> GetFootnotes(UserNewsletterDto? user = null, int count = 1)
     {
         if (user == null)
         {
-            return await _httpClient.GetFromJsonAsync<List<FootnoteViewModel>>($"{_siteSettings.Value.ApiUri.AbsolutePath}/newsletter/Footnotes?count={count}");
+            return await _httpClient.GetFromJsonAsync<List<FootnoteDto>>($"{_siteSettings.Value.ApiUri.AbsolutePath}/newsletter/Footnotes?count={count}");
         }
 
-        return await _httpClient.GetFromJsonAsync<List<FootnoteViewModel>>($"{_siteSettings.Value.ApiUri.AbsolutePath}/newsletter/Footnotes?count={count}&email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(user.Token)}");
+        return await _httpClient.GetFromJsonAsync<List<FootnoteDto>>($"{_siteSettings.Value.ApiUri.AbsolutePath}/newsletter/Footnotes?count={count}&email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(user.Token)}");
     }
 
-    public async Task<IList<FootnoteViewModel>?> GetUserFootnotes(UserNewsletterViewModel user, int count = 1)
+    public async Task<IList<FootnoteDto>?> GetUserFootnotes(UserNewsletterDto user, int count = 1)
     {
-        return await _httpClient.GetFromJsonAsync<List<FootnoteViewModel>>($"{_siteSettings.Value.ApiUri.AbsolutePath}/newsletter/Footnotes/Custom?count={count}&email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(user.Token)}");
+        return await _httpClient.GetFromJsonAsync<List<FootnoteDto>>($"{_siteSettings.Value.ApiUri.AbsolutePath}/newsletter/Footnotes/Custom?count={count}&email={Uri.EscapeDataString(user.Email)}&token={Uri.EscapeDataString(user.Token)}");
     }
 
     /// <summary>
     /// Root route for building out the the workout routine newsletter.
     /// </summary>
-    public async Task<NewsletterViewModel?> Newsletter(string email = UserConsts.DemoUser, string token = UserConsts.DemoToken, DateOnly? date = null)
+    public async Task<NewsletterDto?> Newsletter(string email = UserConsts.DemoUser, string token = UserConsts.DemoToken, DateOnly? date = null)
     {
         var response = await _httpClient.GetAsync($"{_siteSettings.Value.ApiUri.AbsolutePath}/newsletter/Newsletter?email={Uri.EscapeDataString(email)}&token={Uri.EscapeDataString(token)}&date={date}");
 
@@ -52,7 +51,7 @@ public class NewsletterService
         }
         else if (response.IsSuccessStatusCode)
         {
-            return await response.Content.ReadFromJsonAsync<NewsletterViewModel>();
+            return await response.Content.ReadFromJsonAsync<NewsletterDto>();
         }
 
         return null;

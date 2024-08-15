@@ -5,16 +5,19 @@
           asp-route-email="@Model.Email" asp-route-token="@Model.Token"
           class="alert alert-secondary">
 
-        <div class="form-group mb-3">
-            <label asp-for="FeastEmail" class="control-label">@Html.DisplayNameFor(_ => Model.FeastEmail)</label>
-            <input asp-for="FeastEmail" type="text" aria-describedby="refresh-functional-help" />
-            <span asp-validation-for="FeastEmail" class="text-danger"></span>
-        </div>
-
-        <div class="form-group mb-3">
-            <label asp-for="FeastToken" class="control-label">@Html.DisplayNameFor(_ => Model.FeastToken)</label>
-            <input asp-for="FeastToken" type="text" aria-describedby="refresh-functional-help2" />
-            <span asp-validation-for="FeastToken" class="text-danger"></span>
+        <div class="form-group mb-3 row">
+            <div class="col-6">
+                <label asp-for="FeastEmail" class="control-label">@Html.DisplayNameFor(_ => Model.FeastEmail)</label>
+                <input asp-for="FeastEmail" class="form-control" type="email" aria-describedby="refresh-functional-help" />
+                <span asp-validation-for="FeastEmail" class="text-danger"></span>
+                <div id="refresh-functional-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.FeastEmail)</div>
+            </div>
+            <div class="col-6">
+                <label asp-for="FeastToken" class="control-label">@Html.DisplayNameFor(_ => Model.FeastToken)</label>
+                <input asp-for="FeastToken" class="form-control" type="password" aria-describedby="refresh-functional-help2" />
+                <span asp-validation-for="FeastToken" class="text-danger"></span>
+                <div id="refresh-functional-help2" class="form-text">@Html.DisplayDescriptionFor(_ => Model.FeastToken)</div>
+            </div>
         </div>
 
         <div class="row form-group">

@@ -1,7 +1,6 @@
 ﻿using Core.Dtos.Newsletter;
-using Core.Models.User;
+using Core.Dtos.User;
 using Data;
-using Data.Dtos.User;
 using Data.Models;
 using Data.Query.Builders;
 using Data.Repos;
@@ -26,27 +25,27 @@ public class RecipesViewComponent(CoreContext context, UserRepo userRepo, IServi
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         // Need a user context so the manage link is clickable and the user can un-ignore an exercise/variation.
-        //var userNewsletter = user.AsType<UserNewsletterDto, Data.Entities.User.User>()!;
-        //userNewsletter.Token = await userRepo.AddUserToken(user, durationDays: 1);
+        var token = await userRepo.AddUserToken(user, durationDays: 1);
+        var userNewsletter = new UserNewsletterDto(user.AsType<UserDto, Data.Entities.User.User>()!, token);
 
         var userRecipes = await context.UserTasks
             .Where(r => r.UserId == user.Id)
             .ToListAsync();
 
-        var recipes = await new QueryBuilder()
+        var tasks = await new QueryBuilder()
             // Include disabled recipes.
             .WithUser(user, ignoreIgnored: true)
-            .WithRecipes(x =>
+            .WithTasks(x =>
             {
-                x.AddRecipes(userRecipes);
+                x.AddTasks(userRecipes);
             })
             .Build()
             .Query(serviceScopeFactory);
 
         return View("Recipes", new RecipesViewModel()
         {
-            //UserNewsletter = userNewsletter,
-            Recipes = recipes.Select(r => r.AsType<NewsletterTaskDto, QueryResults>()!).ToList(),
+            UserNewsletter = userNewsletter,
+            Tasks = tasks.Select(r => r.AsType<NewsletterTaskDto, QueryResults>()!).ToList(),
         });
     }
 }

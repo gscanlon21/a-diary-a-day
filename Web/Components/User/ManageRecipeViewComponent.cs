@@ -30,9 +30,9 @@ public class ManageRecipeViewComponent(CoreContext context, IServiceScopeFactory
         if (userRecipe == null) { return Content(""); }
         var recipeDto = (await new QueryBuilder(Section.None)
             .WithUser(user, ignoreIgnored: true)
-            .WithRecipes(x =>
+            .WithTasks(x =>
             {
-                x.AddRecipes([recipe]);
+                x.AddTasks([recipe]);
             })
             .Build()
             .Query(serviceScopeFactory))
@@ -46,8 +46,8 @@ public class ManageRecipeViewComponent(CoreContext context, IServiceScopeFactory
             UserRecipe = userRecipe,
             Parameters = parameters,
             Notes = userRecipe.Notes,
-            LagRefreshXWeeks = userRecipe.LagRefreshXWeeks,
-            PadRefreshXWeeks = userRecipe.PadRefreshXWeeks,
+            LagRefreshXDays = userRecipe.LagRefreshXDays,
+            PadRefreshXDays = userRecipe.PadRefreshXDays,
             Recipe = recipeDto?.AsType<NewsletterTaskDto, QueryResults>()!,
         });
     }

@@ -1,5 +1,4 @@
-﻿using Data;
-using Data.Entities.Task;
+﻿using Data.Entities.Task;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Web.Code;
@@ -7,7 +6,7 @@ using Web.Views.Shared.Components.UpsertRecipe;
 
 namespace Web.Components.User;
 
-public class UpsertRecipeViewComponent(CoreContext context, UserRepo userRepo) : ViewComponent
+public class UpsertRecipeViewComponent(UserRepo userRepo) : ViewComponent
 {
     /// <summary>
     /// For routing

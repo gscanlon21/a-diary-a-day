@@ -5,7 +5,6 @@ using Core.Consts;
 using Core.Models.Options;
 using Core.Models.User;
 using Data;
-using Data.Entities.Newsletter;
 using Data.Entities.User;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
@@ -87,7 +86,7 @@ public class UserController(UserRepo userRepo, CoreContext context, IOptions<Dig
     /// Get the user's past workouts.
     /// </summary>
     [HttpGet("Workouts")]
-    public async Task<IList<UserEmail>?> GetWorkouts(string email = UserConsts.DemoUser, string token = UserConsts.DemoToken)
+    public async Task<IList<UserMood>?> GetWorkouts(string email = UserConsts.DemoUser, string token = UserConsts.DemoToken)
     {
         var user = await userRepo.GetUser(email, token);
         if (user == null)

@@ -35,7 +35,7 @@ public class QueryRunner(Section section)
 
     public required UserOptions UserOptions { get; init; }
     public required ExclusionOptions ExclusionOptions { get; init; }
-    public required TaskOptions RecipeOptions { get; init; }
+    public required TaskOptions TaskOptions { get; init; }
 
     private IQueryable<RecipesQueryResults> CreateFilteredRecipesQuery(CoreContext context)
     {
@@ -47,15 +47,7 @@ public class QueryRunner(Section section)
             .Select(r => new RecipesQueryResults()
             {
                 Task = r,
-            })
-            // Don't grab recipes that the user wants to ignore.
-            .Where(vm => vm.Task.LastSeen < DateHelpers.Today && vm.Task.RefreshAfter == null);
-        // Don't filter out ignored or allergen provoking ingredients here because we want to try to swap substitutes in first.
-        // ... The user should ignore the recipe if they don't want a recipe with a specific ingredient that has alternatives.
-        //-Don't grab recipes that use ingredients that the user wants to ignore.
-        //-Where(vm => UserOptions.IgnoreIgnored || vm.RecipeIngredients.All(ri => ri.Optional || ri.UserIngredient!.Ignore != true))
-        //-Don't grab recipes that use ingredient recipes that the user wants to ignore.
-        //-Where(vm => UserOptions.IgnoreIgnored || vm.RecipeIngredients.All(ri => ri.Optional || ri.UserIngredientRecipe!.Ignore != true));
+            });
     }
 
     /// <summary>
@@ -69,7 +61,13 @@ public class QueryRunner(Section section)
         var filteredQuery = CreateFilteredRecipesQuery(context);
 
         filteredQuery = Filters.FilterSection(filteredQuery, section);
-        filteredQuery = Filters.FilterRecipes(filteredQuery, RecipeOptions.UserTaskIds?.Select(r => r.Key).ToList());
+        filteredQuery = Filters.FilterRecipes(filteredQuery, TaskOptions.UserTaskIds?.Select(r => r.Key).ToList());
+
+        // If there are specific tasks to select, don't filter down by LastSeen date.
+        if (TaskOptions.UserTaskIds?.Any() != true)
+        {
+            filteredQuery = filteredQuery.Where(vm => vm.Task.LastSeen < DateHelpers.Today && vm.Task.RefreshAfter == null);
+        }
 
         var queryResults = (await filteredQuery.Select(a => new InProgressQueryResults(a)).AsNoTracking().TagWithCallSite().ToListAsync()).ToList();
 
@@ -80,39 +78,24 @@ public class QueryRunner(Section section)
             .OrderByDescending(a => a.Task?.RefreshAfter.HasValue)
             // Show recipes that the user has rarely seen.
             // NOTE: When the two recipe's LastSeen dates are the same:
-            // ... The LagRefreshXWeeks will prevent the LastSeen date from updating
-            // ... and we may see two randomly alternating recipes for the LagRefreshXWeeks duration.
+            // ... The LagRefreshXDays will prevent the LastSeen date from updating
+            // ... and we may see two randomly alternating recipes for the LagRefreshXDays duration.
             .ThenBy(a => a.Task?.LastSeen.DayNumber)
             // Mostly for the demo, show mostly random exercises.
             .ThenBy(_ => RandomNumberGenerator.GetInt32(Int32.MaxValue))
             // Don't re-order the list on each read.
             .ToList())
         {
-            // Scale the recipe.
             orderedResults.Add(new QueryResults(section, recipe.Task));
         }
-
-        var finalResults = new HashSet<QueryResults>();
-        do
-        {
-            foreach (var recipe in orderedResults)
-            {
-                if (!finalResults.Contains(recipe))
-                {
-                    finalResults.Add(recipe);
-                }
-            }
-        }
-        // Slowly allow out-of-preference recipes until we meet our servings/nutritional targets.
-        while (false);
 
         // REFACTORME
         return section switch
         {
             // Not in a workout context, order by name.
-            Section.None => [.. finalResults.Take(take).OrderBy(vm => vm.Task.Name)],
+            Section.None => [.. orderedResults.Take(take).OrderBy(vm => vm.Task.Name)],
             // We are in a workout context, keep the result order.
-            _ => finalResults.Take(take).ToList()
+            _ => orderedResults.Take(take).ToList()
         };
     }
 }

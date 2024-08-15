@@ -1,6 +1,5 @@
 ﻿using Core.Code.Exceptions;
 using Core.Consts;
-using Data.Entities.Newsletter;
 using Data.Entities.User;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
@@ -70,9 +69,9 @@ public class UserRepo(CoreContext context)
     /// <summary>
     /// Get the last 7 days of workouts for the user. Excludes the current workout.
     /// </summary>
-    public async Task<IList<UserEmail>> GetPastWorkouts(User user)
+    public async Task<IList<UserMood>> GetPastWorkouts(User user)
     {
-        return (await _context.UserEmails
+        return (await _context.UserMoods
             .Where(uw => uw.UserId == user.Id)
             .Where(n => n.Date < user.TodayOffset)
             // Only select 1 workout per day, the most recent.
