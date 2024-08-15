@@ -41,6 +41,7 @@ else
         </div>
 
         <Lib.Pages.Shared.Exercise.ExerciseSection User="Model.User" Verbosity="Model.Verbosity" Images="Model.Images" Theme="ExerciseTheme.Main" Title="@(new ExerciseSection.Titles("Moods"))" />
+        <Lib.Pages.Shared.Exercise.TaskSection User="Model.User" Verbosity="Model.Verbosity" Tasks="Model.Tasks" Theme="ExerciseTheme.Main" Title="@(new TaskSection.Titles("Tasks"))" />
     </div>
 
     <Lib.Pages.Shared.Newsletter.Footnote User="Model.User" Verbosity="Model.Verbosity" Type="Shared.Newsletter.Footnote.FootnoteComponentType.System" Count="Model.User.FootnoteCountBottom" />

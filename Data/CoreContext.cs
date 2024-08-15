@@ -1,5 +1,6 @@
 ﻿using Data.Entities.Footnote;
 using Data.Entities.Newsletter;
+using Data.Entities.Task;
 using Data.Entities.User;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
@@ -12,6 +13,9 @@ public class CoreContext : DbContext
 
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<UserToken> UserTokens { get; set; } = null!;
+    public DbSet<UserTask> UserTasks { get; set; } = null!;
+    public DbSet<UserDiary> UserDiaries { get; set; } = null!;
+    public DbSet<UserDiaryTask> UserDiaryTasks { get; set; } = null!;
     public DbSet<UserComponent> UserComponents { get; set; } = null!;
     public DbSet<UserEmail> UserEmails { get; set; } = null!;
     public DbSet<UserMood> UserMoods { get; set; } = null!;

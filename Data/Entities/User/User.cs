@@ -1,9 +1,11 @@
 ﻿using Core.Consts;
+using Core.Interfaces.User;
 using Core.Models.Footnote;
 using Core.Models.Newsletter;
 using Core.Models.User;
 using Data.Entities.Footnote;
 using Data.Entities.Newsletter;
+using Data.Entities.Task;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -18,7 +20,7 @@ namespace Data.Entities.User;
 [Table("user"), Comment("User who signed up for the newsletter")]
 [Index(nameof(Email), IsUnique = true)]
 [DebuggerDisplay("Email = {Email}, LastActive = {LastActive}")]
-public class User
+public class User : IUser
 {
     public class Consts
     {
@@ -53,7 +55,7 @@ public class User
     }
 
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; private init; }
+    public int Id { get; init; }
 
     public Guid Uid { get; init; } = Guid.NewGuid();
 
@@ -173,6 +175,9 @@ public class User
 
     [JsonIgnore, InverseProperty(nameof(UserJournal.User))]
     public virtual ICollection<UserJournal> UserJournals { get; private init; } = null!;
+
+    [JsonInclude, InverseProperty(nameof(UserTask.User))]
+    public virtual ICollection<UserTask> UserTasks { get; private init; } = null!;
 
     [JsonIgnore, InverseProperty(nameof(UserEmail.User))]
     public virtual ICollection<UserEmail> UserEmails { get; private init; } = null!;

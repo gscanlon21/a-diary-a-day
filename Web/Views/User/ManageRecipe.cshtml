@@ -1,0 +1,37 @@
+﻿@model UserManageRecipeViewModel
+@using System.Numerics
+@using Web.Views.Shared
+@using Core.Consts
+@using Web.Components
+
+@{
+    ViewData[ViewData_Blank.Title] = "Manage Task";
+}
+
+<div class="row gy-2 mb-2 mt-1 justify-content-between align-items-end">
+    <div class="col-auto mb-3">
+        <h1 class="primary-heading">Manage Task</h1>
+    </div>
+    <partial name="_ValidationMessagePartial" model='new _ValidationMessagePartialModel() { WasUpdated = Model.WasUpdated }' />
+</div>
+
+<div class="alert alert-secondary">
+    <div class="row gy-2">
+        @* User must have created the recipe to be able to edit it. *@
+        @if (Model.User.Id == Model.Recipe.UserId)
+        {
+            <div class="col-lg-6">
+                @await Component.InvokeAsync(ManageRecipeViewComponent.Name, new { Model.User, Model.Recipe, Model.Parameters })
+            </div>
+
+            <div class="col-lg-6">
+                <h6 class="mb-1">Edit Task</h6>
+                @await Component.InvokeAsync(UpsertRecipeViewComponent.Name, new { Model.User, Model.Recipe })
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" model='new ValidationScriptsPartialViewModel() { IsDemoUser = Model.User.IsDemoUser }' />
+}

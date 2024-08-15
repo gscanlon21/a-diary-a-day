@@ -19,7 +19,8 @@ public class NewsletterViewModel
     public UserNewsletterViewModel User { get; init; } = null!;
     public NewsletterEntityViewModel UserMood { get; init; } = null!;
 
-    public List<ComponentImage> Images { get; init; }
+    public List<ComponentImage> Images { get; init; } = null!;
+    public List<NewsletterTaskDto> Tasks { get; init; } = [];
 
     /// <summary>
     /// How much detail to show in the newsletter.

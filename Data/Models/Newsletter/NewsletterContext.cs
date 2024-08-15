@@ -2,7 +2,7 @@
 
 namespace Data.Models.Newsletter;
 
-public class WorkoutContext
+public class NewsletterContext
 {
     public User User { get; init; } = null!;
     public string Token { get; init; } = null!;

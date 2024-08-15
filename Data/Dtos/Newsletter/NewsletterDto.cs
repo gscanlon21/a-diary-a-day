@@ -1,4 +1,5 @@
-﻿using Core.Models.Newsletter;
+﻿using Core.Dtos.Newsletter;
+using Core.Models.Newsletter;
 using Core.Models.User;
 using Data.Dtos.User;
 
@@ -19,6 +20,8 @@ public class NewsletterDto(UserNewsletterDto user)
     public UserNewsletterDto User { get; } = user;
 
     public IList<ComponentImage> Images { get; init; }
+
+    public IList<NewsletterTaskDto> Tasks { get; set; } = [];
 
     /// <summary>
     /// How much detail to show in the newsletter.

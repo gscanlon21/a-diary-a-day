@@ -108,6 +108,12 @@
         </form>
 
         @await Component.InvokeAsync(AdvancedViewComponent.Name, new { Model.User })
+
+        <details class="mb-25">
+            <summary class="mb-1 h5">New Recipe</summary>
+
+            @await Component.InvokeAsync(UpsertRecipeViewComponent.Name, new { Model.User })
+        </details>
     </div>
 
     <div id="info" class="col">
@@ -120,5 +126,6 @@
         @await Component.InvokeAsync(TokenViewComponent.Name, new { Model.User })
         @await Component.InvokeAsync(CustomViewComponent.Name, new { Model.User })
         @await Component.InvokeAsync(FootnoteViewComponent.Name, new { Model.User })
+        @await Component.InvokeAsync(RecipesViewComponent.Name, new { Model.User })
     </div>
 </div>
