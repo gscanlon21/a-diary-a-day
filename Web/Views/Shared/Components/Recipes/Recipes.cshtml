@@ -1,18 +1,14 @@
 ﻿@model RecipesViewModel
 @using Core.Models.User
 
-@if (Model.Recipes != null && Model.Recipes.Any())
+@if (Model.Tasks != null && Model.Tasks.Any())
 {
     <details class="mt-4 mb-25">
         <summary class="mb-1 h5">
-            @Html.DisplayNameFor(_ => Model.Recipes)
-            <span class="float-end">@Model.Recipes.Count()</span>
+            @Html.DisplayNameFor(_ => Model.Tasks)
+            <span class="float-end">@Model.Tasks.Count()</span>
         </summary>
 
-        @foreach (var recipe in Model.Recipes)
-        {
-            <div>@recipe.Task.Name</div>
-        }
-        @*<component type="typeof(Lib.Pages.Shared.Recipe.RecipeSection)" render-mode="Static" param-User="Model.UserNewsletter" param-Recipes='Model.Recipes' param-Theme='RecipeTheme.None' param-Verbosity="Model.Verbosity" />*@
+        <component type="typeof(Lib.Pages.Shared.Exercise.TaskSection)" render-mode="Static" param-User="Model.UserNewsletter" param-Tasks='Model.Tasks' param-Theme='ExerciseTheme.None' param-Verbosity="Model.Verbosity" />
     </details>
 }

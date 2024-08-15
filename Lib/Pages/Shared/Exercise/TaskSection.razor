@@ -57,13 +57,13 @@
     public Titles? Title { get; init; }
 
     [Parameter, EditorRequired]
-    public ViewModels.User.UserNewsletterViewModel? User { get; init; }
+    public Core.Dtos.User.UserNewsletterDto? User { get; init; }
 
     [Parameter, EditorRequired]
     public ExerciseTheme Theme { get; init; }
 
     [Parameter, EditorRequired]
-    public IList<NewsletterTaskDto> Tasks { get; init; }
+    public IList<NewsletterTaskDto>? Tasks { get; init; }
 
     [Parameter, EditorRequired]
     public Verbosity Verbosity { get; init; }

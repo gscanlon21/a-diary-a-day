@@ -60,7 +60,7 @@ public partial class UserController
                 });
 
                 await context.SaveChangesAsync();
-                TempData[TempData_User.SuccessMessage] = "Your recipes have been updated!";
+                TempData[TempData_User.SuccessMessage] = "Your tasks have been updated!";
                 return RedirectToAction(nameof(Edit), new { email, token });
             }
 
@@ -83,7 +83,7 @@ public partial class UserController
                 existingRecipe.Enabled = recipe.Enabled;
 
                 await context.SaveChangesAsync();
-                TempData[TempData_User.SuccessMessage] = "Your recipes have been updated!";
+                TempData[TempData_User.SuccessMessage] = "Your tasks have been updated!";
                 return RedirectToAction(nameof(ManageRecipe), new { email, token, recipeId = recipe.Id, wasUpdated = true });
             }
 
@@ -108,8 +108,8 @@ public partial class UserController
 
         await context.SaveChangesAsync();
 
-        TempData[TempData_User.SuccessMessage] = "Your recipes have been updated!";
-        return RedirectToAction(nameof(UserController.Edit), new { email, token });
+        TempData[TempData_User.SuccessMessage] = "Your tasks have been updated!";
+        return RedirectToAction(nameof(Edit), new { email, token });
     }
 
 
@@ -185,14 +185,14 @@ public partial class UserController
                 .FirstAsync(p => p.UserId == user.Id && p.Id == recipeId);
 
             // Apply refresh padding immediately.
-            if (viewModel.PadRefreshXWeeks != userRecipe.PadRefreshXWeeks)
+            if (viewModel.PadRefreshXDays != userRecipe.PadRefreshXDays)
             {
-                var difference = viewModel.PadRefreshXWeeks - userRecipe.PadRefreshXWeeks; // 11 new - 1 old = 10 weeks.
-                userRecipe.LastSeen = userRecipe.LastSeen.AddDays(7 * difference); // Add 70 days onto the LastSeen date.
+                var difference = viewModel.PadRefreshXDays - userRecipe.PadRefreshXDays; // 11 new - 1 old = 10 weeks.
+                userRecipe.LastSeen = userRecipe.LastSeen.AddDays(difference); // Add 70 days onto the LastSeen date.
             }
 
-            userRecipe.LagRefreshXWeeks = viewModel.LagRefreshXWeeks;
-            userRecipe.PadRefreshXWeeks = viewModel.PadRefreshXWeeks;
+            userRecipe.LagRefreshXDays = viewModel.LagRefreshXDays;
+            userRecipe.PadRefreshXDays = viewModel.PadRefreshXDays;
             userRecipe.Notes = user.IsDemoUser ? null : viewModel.Notes;
 
             await context.SaveChangesAsync();

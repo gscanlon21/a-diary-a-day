@@ -1,9 +1,8 @@
-﻿using Core.Dtos.Newsletter;
+﻿using Core.Dtos.User;
 using Core.Models.Newsletter;
 using Core.Models.User;
-using Data.Dtos.User;
 
-namespace Data.Dtos.Newsletter;
+namespace Core.Dtos.Newsletter;
 
 /// <summary>
 /// Viewmodel for Newsletter.cshtml
@@ -19,7 +18,7 @@ public class NewsletterDto(UserNewsletterDto user)
 
     public UserNewsletterDto User { get; } = user;
 
-    public IList<ComponentImage> Images { get; init; }
+    public IList<ComponentImage> Images { get; init; } = [];
 
     public IList<NewsletterTaskDto> Tasks { get; set; } = [];
 
@@ -27,4 +26,11 @@ public class NewsletterDto(UserNewsletterDto user)
     /// How much detail to show in the newsletter.
     /// </summary>
     public Verbosity Verbosity { get; } = user.Verbosity;
+
+    public NewsletterEntityDto UserMood { get; init; } = null!;
+
+    /// <summary>
+    /// Hiding the footer in the demo iframe.
+    /// </summary>
+    public bool HideFooter { get; set; } = false;
 }

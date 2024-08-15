@@ -7,7 +7,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Web.Views.Shared.Components.ManageRecipe;
 
-
 public class ManageRecipeViewModel
 {
     [ValidateNever]
@@ -17,23 +16,23 @@ public class ManageRecipeViewModel
     public required Data.Entities.User.User User { get; init; }
 
     [ValidateNever]
-    [Display(Name = "Recipe", Description = "Ignore this recipe.")]
+    [Display(Name = "Task", Description = "Ignore this task.")]
     public required NewsletterTaskDto? Recipe { get; init; }
 
     [ValidateNever]
-    [Display(Name = "Refreshes After", Description = "Refresh this recipe—the next feast will try and select a new recipe if available.")]
+    [Display(Name = "Refreshes After", Description = "Refresh this task and try to select a new task if available.")]
     public required UserTask UserRecipe { get; init; }
 
     [Display(Name = "Notes")]
     public string? Notes { get; init; }
 
-    [Required, Range(UserConsts.LagRefreshXWeeksMin, UserConsts.LagRefreshXWeeksMax)]
-    [Display(Name = "Lag Refresh by X Weeks", Description = "Add a delay before this recipe is recycled from your workouts.")]
-    public int LagRefreshXWeeks { get; init; }
+    [Required, Range(UserConsts.LagRefreshXDaysMin, UserConsts.LagRefreshXDaysMax)]
+    [Display(Name = "Lag Refresh by X Days", Description = "Add a delay before this task is recycled from your task list.")]
+    public int LagRefreshXDays { get; init; }
 
-    [Required, Range(UserConsts.PadRefreshXWeeksMin, UserConsts.PadRefreshXWeeksMax)]
-    [Display(Name = "Pad Refresh by X Weeks", Description = "Add a delay before this recipe is recirculated back into your workouts.")]
-    public int PadRefreshXWeeks { get; init; }
+    [Required, Range(UserConsts.PadRefreshXDaysMin, UserConsts.PadRefreshXDaysMax)]
+    [Display(Name = "Pad Refresh by X Days", Description = "Add a delay before this task is recirculated back into your task list.")]
+    public int PadRefreshXDays { get; init; }
 
     public Verbosity RecipeVerbosity => Verbosity.Images;
 }

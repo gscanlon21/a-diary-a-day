@@ -87,7 +87,7 @@ public class UserController(UserRepo userRepo, CoreContext context, IOptions<Dig
     /// Get the user's past workouts.
     /// </summary>
     [HttpGet("Workouts")]
-    public async Task<IList<UserEmail>?> GetWorkouts(string email = UserConsts.DemoUser, string token = UserConsts.DemoToken)
+    public async Task<IList<UserDiary>?> GetWorkouts(string email = UserConsts.DemoUser, string token = UserConsts.DemoToken)
     {
         var user = await userRepo.GetUser(email, token);
         if (user == null)
@@ -95,6 +95,6 @@ public class UserController(UserRepo userRepo, CoreContext context, IOptions<Dig
             return null;
         }
 
-        return await userRepo.GetPastWorkouts(user);
+        return await userRepo.GetPastDiaries(user);
     }
 }

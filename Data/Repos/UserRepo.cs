@@ -66,13 +66,29 @@ public class UserRepo(CoreContext context)
         return token;
     }
 
+    /// <summary>
+    /// Get the user's current feast.
+    /// </summary>
+    public async Task<UserDiary?> GetCurrentDiary(User user)
+    {
+        return await _context.UserDiaries.AsNoTracking().TagWithCallSite()
+            .Include(uw => uw.UserDiaryTasks)
+            .Where(n => n.UserId == user.Id)
+            .Where(n => n.Date <= user.TodayOffset)
+            // For testing/demo. When two newsletters get sent in the same day, I want a different exercise set.
+            // Dummy records that are created when the user advances their workout split may also have the same date.
+            .OrderByDescending(n => n.Date)
+            .ThenByDescending(n => n.Id)
+            .FirstOrDefaultAsync();
+    }
+
 
     /// <summary>
     /// Get the last 7 days of workouts for the user. Excludes the current workout.
     /// </summary>
-    public async Task<IList<UserEmail>> GetPastWorkouts(User user)
+    public async Task<IList<UserDiary>> GetPastDiaries(User user)
     {
-        return (await _context.UserEmails
+        return (await _context.UserDiaries
             .Where(uw => uw.UserId == user.Id)
             .Where(n => n.Date < user.TodayOffset)
             // Only select 1 workout per day, the most recent.

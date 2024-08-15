@@ -1,6 +1,6 @@
-﻿namespace Lib.ViewModels.Newsletter;
+﻿namespace Core.Dtos.Newsletter;
 
-public class UserMoodViewModel
+public class UserDiaryDto
 {
     public int Id { get; init; }
 

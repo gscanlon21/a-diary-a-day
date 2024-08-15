@@ -1,13 +1,13 @@
-﻿using Core.Code.Extensions;
-using Core.Code.Helpers;
+﻿using Core.Code.Helpers;
 using Core.Dtos.Newsletter;
+using Core.Dtos.User;
 using Core.Models.Footnote;
 using Core.Models.Newsletter;
 using Core.Models.Options;
 using Core.Models.User;
-using Data.Dtos.Newsletter;
-using Data.Dtos.User;
 using Data.Entities.Footnote;
+using Data.Entities.Newsletter;
+using Data.Entities.User;
 using Data.Models;
 using Data.Models.Newsletter;
 using Data.Query.Builders;
@@ -91,28 +91,55 @@ public partial class NewsletterRepo
 
         _logger.Log(LogLevel.Information, "Building newsletter for user {Id}", user.Id);
 
-        // Is the user requesting an old newsletter?
+        // Is the user requesting an old newsletter? Newsletters are weekly so shimmy the date over to the start of the week.
         date ??= user.TodayOffset;
-        if (date.HasValue)
+        var oldNewsletter = await _context.UserDiaries.AsNoTracking()
+            .Include(n => n.UserDiaryTasks)
+            .Where(n => n.UserId == user.Id)
+            .Where(n => n.Date == date)
+            // Always send a new newsletter for the demo and test users.
+            .Where(n => !user.Features.HasFlag(Features.Demo) && !user.Features.HasFlag(Features.Test))
+            .OrderByDescending(n => n.Id)
+            .FirstOrDefaultAsync();
+
+        // A newsletter was found.
+        if (oldNewsletter != null)
         {
-            // A newsletter was not found and the date is not one we want to render a new newsletter for.
-            if (date != user.TodayOffset)
+            _logger.Log(LogLevel.Information, "Returning old newsletter for user {Id}", user.Id);
+            return await NewsletterOld(user, token, date.Value, oldNewsletter);
+        }
+        // A newsletter was not found and the date is not one we want to render a new newsletter for.
+        else if (date != user.TodayOffset)
+        {
+            _logger.Log(LogLevel.Information, "Returning no newsletter for user {Id}", user.Id);
+            return null;
+        }
+
+        // Context may be null on rest days.
+        var newsletterContext = await BuildNewsletterContext(user, token);
+        if (newsletterContext == null)
+        {
+            // See if a previous workout exists, we send that back down so the app doesn't render nothing on rest days.
+            var currentFeast = await _userRepo.GetCurrentDiary(user);
+            if (currentFeast == null)
             {
                 _logger.Log(LogLevel.Information, "Returning no newsletter for user {Id}", user.Id);
                 return null;
             }
-            // Else continue on to render a new newsletter for today.
+
+            _logger.Log(LogLevel.Information, "Returning current newsletter for user {Id}", user.Id);
+            return await NewsletterOld(user, token, currentFeast.Date, currentFeast);
         }
 
-        // Context may be null on rest days.
-        var context = await BuildNewsletterContext(user, token);
-        if (context == null)
+        // User is a debug user. They should see the DebugNewsletter instead.
+        if (user.Features.HasFlag(Features.Debug))
         {
-            return null;
+            _logger.Log(LogLevel.Information, "Returning debug newsletter for user {Id}", user.Id);
+            return null;//await Debug(newsletterContext);
         }
 
         _logger.Log(LogLevel.Information, "Returning on day newsletter for user {Id}", user.Id);
-        return await OnDayNewsletter(context);
+        return await OnDayNewsletter(newsletterContext);
     }
 
     /// <summary>
@@ -120,7 +147,7 @@ public partial class NewsletterRepo
     /// </summary>
     private async Task<NewsletterDto?> OnDayNewsletter(NewsletterContext context)
     {
-        var userViewModel = new UserNewsletterDto(context);
+        var userViewModel = new UserNewsletterDto(context.User.AsType<UserDto, User>()!, context.Token);
 
         var images = new List<ComponentImage>();
         var prefix = $"moods/{context.User.Uid}";
@@ -145,6 +172,37 @@ public partial class NewsletterRepo
         };
 
         return viewModel;
+    }
+
+    /// <summary>
+    /// Root route for building out the the workout routine newsletter based on a date.
+    /// </summary>
+    private async Task<NewsletterDto?> NewsletterOld(User user, string token, DateOnly date, UserDiary newsletter)
+    {
+        List<QueryResults> recipes = [];
+        foreach (var section in EnumExtensions.GetSingleOrNoneValues32<Section>())
+        {
+            recipes.AddRange((await new QueryBuilder(section)
+                .WithUser(user)
+                .WithTasks(options =>
+                {
+                    options.AddTasks(newsletter.UserDiaryTasks);
+                })
+                .Build()
+                .Query(_serviceScopeFactory))
+                // Re-order the recipes to match their original order.
+                // May be null when the user substitutes in a recipe for an ingredient after the first feast was sent.
+                .OrderBy(e => newsletter.UserDiaryTasks.FirstOrDefault(nv => nv.UserTaskId == e.Task.Id)?.Order ?? -1));
+        }
+
+        var userViewModel = new UserNewsletterDto(user.AsType<UserDto, User>()!, token);
+        var newsletterViewModel = new NewsletterDto(userViewModel)
+        {
+            Today = date,
+            Tasks = recipes.Select(r => r.AsType<NewsletterTaskDto, QueryResults>()!).ToList()
+        };
+
+        return newsletterViewModel;
     }
 
     internal async Task<IList<QueryResults>> GetUserTasks(NewsletterContext newsletterContext, IEnumerable<QueryResults>? exclude = null)

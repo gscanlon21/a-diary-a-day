@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Core.Dtos.Newsletter;
 using Lib.Services;
-using Lib.ViewModels.Newsletter;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -33,7 +33,7 @@ public partial class NewslettersPageViewModel : ObservableObject
         _userService = userService;
 
         LoadCommand = new AsyncRelayCommand(LoadWorkoutsAsync);
-        NewsletterCommand = new Command<UserMoodViewModel>(async (UserMoodViewModel arg) =>
+        NewsletterCommand = new Command<UserDiaryDto>(async (UserDiaryDto arg) =>
         {
             await Navigation.PushAsync(new NewsletterPage(arg.Date));
         });
@@ -43,14 +43,14 @@ public partial class NewslettersPageViewModel : ObservableObject
     private bool _loading = true;
 
     [ObservableProperty]
-    public ObservableCollection<UserMoodViewModel>? _workouts = null;
+    public ObservableCollection<UserDiaryDto>? _workouts = null;
 
     private async Task LoadWorkoutsAsync()
     {
         var email = Preferences.Default.Get(nameof(PreferenceKeys.Email), "");
         var token = Preferences.Default.Get(nameof(PreferenceKeys.Token), "");
-        Workouts = new ObservableCollection<UserMoodViewModel>(
-            await _userService.GetWorkouts(email, token) ?? Enumerable.Empty<UserMoodViewModel>()
+        Workouts = new ObservableCollection<UserDiaryDto>(
+            await _userService.GetWorkouts(email, token) ?? Enumerable.Empty<UserDiaryDto>()
         );
 
         Loading = false;

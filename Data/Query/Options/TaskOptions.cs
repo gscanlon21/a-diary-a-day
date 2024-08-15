@@ -1,18 +1,11 @@
-﻿using Core.Models.Newsletter;
+﻿using Data.Entities.Newsletter;
 using Data.Entities.Task;
 
 namespace Data.Query.Options;
 
 public class TaskOptions : IOptions
 {
-    private readonly Section _section;
-
     public TaskOptions() { }
-
-    public TaskOptions(Section section)
-    {
-        _section = section;
-    }
 
     /// <summary>
     /// RecipeId:Scale.
@@ -22,7 +15,7 @@ public class TaskOptions : IOptions
     /// <summary>
     /// Only select these recipes.
     /// </summary>
-    public void AddRecipes(IEnumerable<UserTask>? recipes)
+    public void AddTasks(IEnumerable<UserDiaryTask>? recipes)
     {
         if (recipes != null)
         {
@@ -40,13 +33,13 @@ public class TaskOptions : IOptions
     /// <summary>
     /// Only select these recipes.
     /// </summary>
-    public void AddRecipes(Dictionary<int, int>? recipeIds)
+    public void AddTasks(IEnumerable<UserTask>? recipes)
     {
-        if (recipeIds != null)
+        if (recipes != null)
         {
             if (UserTaskIds == null)
             {
-                UserTaskIds = recipeIds;
+                UserTaskIds = recipes.ToDictionary(nv => nv.Id, nv => 1);
             }
             else
             {

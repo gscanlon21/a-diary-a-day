@@ -12,7 +12,7 @@ public partial class NewsletterRepo
     /// <summary>
     /// Common properties surrounding today's workout.
     /// </summary>
-    internal async Task<NewsletterContext?> BuildNewsletterContext(User user, string token)
+    internal static async Task<NewsletterContext?> BuildNewsletterContext(User user, string token)
     {
         return new NewsletterContext()
         {
@@ -63,7 +63,7 @@ public partial class NewsletterRepo
             // >= so that today is the last day seeing the same exercises and tomorrow the exercises will refresh.
             if (recipe.Task != null && (recipe.Task.RefreshAfter == null || DateHelpers.Today >= recipe.Task.RefreshAfter))
             {
-                var refreshAfter = recipe.Task.LagRefreshXWeeks == 0 ? (DateOnly?)null : DateHelpers.StartOfWeek.AddDays(7 * recipe.Task.LagRefreshXWeeks);
+                var refreshAfter = recipe.Task.LagRefreshXDays == 0 ? (DateOnly?)null : DateHelpers.Today.AddDays(recipe.Task.LagRefreshXDays);
                 // If refresh after is today, we want to see a different exercises tomorrow so update the last seen date.
                 if (recipe.Task.RefreshAfter == null && refreshAfter.HasValue && refreshAfter.Value > DateHelpers.Today)
                 {
@@ -72,7 +72,7 @@ public partial class NewsletterRepo
                 else
                 {
                     recipe.Task.RefreshAfter = null;
-                    recipe.Task.LastSeen = DateHelpers.Today.AddDays(7 * recipe.Task.PadRefreshXWeeks);
+                    recipe.Task.LastSeen = DateHelpers.Today.AddDays(recipe.Task.PadRefreshXDays);
                 }
                 scopedCoreContext.UserTasks.Update(recipe.Task);
             }

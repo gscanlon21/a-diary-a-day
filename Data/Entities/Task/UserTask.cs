@@ -50,14 +50,14 @@ public class UserTask
     /// <summary>
     /// How often to refresh exercises.
     /// </summary>
-    [Required, Range(UserConsts.LagRefreshXWeeksMin, UserConsts.LagRefreshXWeeksMax)]
-    public int LagRefreshXWeeks { get; set; } = UserConsts.LagRefreshXWeeksDefault;
+    [Required, Range(UserConsts.LagRefreshXDaysMin, UserConsts.LagRefreshXDaysMax)]
+    public int LagRefreshXDays { get; set; } = UserConsts.LagRefreshXDaysDefault;
 
     /// <summary>
     /// How often to refresh exercises.
     /// </summary>
-    [Required, Range(UserConsts.PadRefreshXWeeksMin, UserConsts.PadRefreshXWeeksMax)]
-    public int PadRefreshXWeeks { get; set; } = UserConsts.PadRefreshXWeeksDefault;
+    [Required, Range(UserConsts.PadRefreshXDaysMin, UserConsts.PadRefreshXDaysMax)]
+    public int PadRefreshXDays { get; set; } = UserConsts.PadRefreshXDaysDefault;
 
     public string? DisabledReason { get; set; } = null;
 

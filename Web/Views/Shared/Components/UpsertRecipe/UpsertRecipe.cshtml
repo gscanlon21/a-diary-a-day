@@ -53,19 +53,5 @@
                 </form>
             </div>
         }
-        else
-        {
-            <div class="col-auto">
-                @* TODO *@
-                <form id="import-form" asp-controller="@UserController.Name" asp-action="@nameof(UserController.UpsertRecipe)" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <input id="file-input" class="btn btn-outline-secondary" style="width:27ch;" disabled="disabled" type="file" name="Recipe" />
-                        <input type="submit" value="Import" class="btn btn-outline-secondary" form="import-form" disabled="disabled" />
-                    </div>
-                </form>
-            </div>
-        }
     </div>
 </div>

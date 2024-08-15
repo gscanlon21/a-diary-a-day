@@ -1,1 +1,2 @@
-﻿global using Web.ViewModels.Shared;
+﻿global using Core.Code.Extensions;
+global using Web.ViewModels.Shared;

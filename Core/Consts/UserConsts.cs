@@ -22,13 +22,13 @@ public class UserConsts
     public const int UserMuscleFlexibilityMin = 0;
     public const int UserMuscleFlexibilityMax = 3;
 
-    public const int LagRefreshXWeeksMin = 0;
-    public const int LagRefreshXWeeksDefault = 0;
-    public const int LagRefreshXWeeksMax = 12;
+    public const int LagRefreshXDaysMin = 0;
+    public const int LagRefreshXDaysDefault = 0;
+    public const int LagRefreshXDaysMax = 365;
 
-    public const int PadRefreshXWeeksMin = 0;
-    public const int PadRefreshXWeeksDefault = 0;
-    public const int PadRefreshXWeeksMax = 12;
+    public const int PadRefreshXDaysMin = 0;
+    public const int PadRefreshXDaysDefault = 0;
+    public const int PadRefreshXDaysMax = 365;
 
     public const Days DaysDefault = Days.Monday | Days.Tuesday | Days.Thursday | Days.Friday;
 

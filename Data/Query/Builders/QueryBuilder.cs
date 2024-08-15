@@ -15,7 +15,7 @@ public class QueryBuilder
 
     private UserOptions? UserOptions;
     private ExclusionOptions? ExclusionOptions;
-    private TaskOptions? RecipeOptions;
+    private TaskOptions? TaskOptions;
 
     /// <summary>
     /// Looks for similar buckets of exercise variations.
@@ -64,11 +64,11 @@ public class QueryBuilder
         return this;
     }
 
-    public QueryBuilder WithRecipes(Action<TaskOptions>? builder = null)
+    public QueryBuilder WithTasks(Action<TaskOptions>? builder = null)
     {
-        var options = RecipeOptions ?? new TaskOptions(Section);
+        var options = TaskOptions ?? new TaskOptions();
         builder?.Invoke(options);
-        RecipeOptions = options;
+        TaskOptions = options;
         return this;
     }
 
@@ -81,7 +81,7 @@ public class QueryBuilder
         {
             UserOptions = UserOptions ?? new UserOptions(),
             ExclusionOptions = ExclusionOptions ?? new ExclusionOptions(),
-            RecipeOptions = RecipeOptions ?? new TaskOptions(),
+            TaskOptions = TaskOptions ?? new TaskOptions(),
         };
     }
 }
