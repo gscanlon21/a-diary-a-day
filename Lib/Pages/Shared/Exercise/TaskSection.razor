@@ -24,7 +24,7 @@
                 @foreach (var item in exerciseGroup)
                 {
                     <CascadingValue Value="User">
-                        <_Task Model="item" Verbosity="Verbosity" />
+                        <_Task Model="item" Verbosity="Verbosity" Theme="Theme" />
                     </CascadingValue>
                 }
             </div>
@@ -41,7 +41,7 @@
             @foreach (var item in Tasks)
             {
                 <CascadingValue Value="User">
-                    <_Task Model="item" Verbosity="Verbosity" />
+                    <_Task Model="item" Verbosity="Verbosity" Theme="Theme" />
                 </CascadingValue>
             }
         </div>

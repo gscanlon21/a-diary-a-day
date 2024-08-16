@@ -38,12 +38,12 @@ else
     <Lib.Pages.Shared.Newsletter.Footnote User="Model.User" Verbosity="Model.Verbosity" Type="Shared.Newsletter.Footnote.FootnoteComponentType.User" Count="Model.User.FootnoteCountTop" />
     
     <div style="margin-block:1rem;">
-        <div>
-            <a target="_blank" href="@DH.UserLink(Model.User, "m")">How was your day?</a>
-        </div>
+        @foreach (var section in Enum.GetValues<Section>().OrderBy(s => s.GetDisplayName32(DisplayType.Order).Length).ThenBy(s => s.GetDisplayName32(DisplayType.Order)))
+        {
+            <Lib.Pages.Shared.Exercise.TaskSection User="Model.User" Verbosity="Model.Verbosity" Tasks="Model.Tasks.Where(t => t.Section == section).ToList()" Theme="section.AsTheme()" Title="@(new TaskSection.Titles(section.GetSingleDisplayName()))" />
+        }
 
-        <Lib.Pages.Shared.Exercise.ExerciseSection User="Model.User" Verbosity="Model.Verbosity" Images="Model.Images" Theme="ExerciseTheme.Main" Title="@(new ExerciseSection.Titles("Moods"))" />
-        <Lib.Pages.Shared.Exercise.TaskSection User="Model.User" Verbosity="Model.Verbosity" Tasks="Model.Tasks" Theme="ExerciseTheme.Main" Title="@(new TaskSection.Titles("Tasks"))" />
+        <Lib.Pages.Shared.Exercise.ExerciseSection User="Model.User" Verbosity="Model.Verbosity" Images="Model.Images" Theme="ExerciseTheme.None" Title="@(new ExerciseSection.Titles("Moods"))" />
     </div>
 
     <Lib.Pages.Shared.Newsletter.Footnote User="Model.User" Verbosity="Model.Verbosity" Type="Shared.Newsletter.Footnote.FootnoteComponentType.System" Count="Model.User.FootnoteCountBottom" />

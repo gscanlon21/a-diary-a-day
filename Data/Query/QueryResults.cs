@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Data.Models;
 
-[DebuggerDisplay("{Section}: {Recipe}")]
+[DebuggerDisplay("{Section}: {Task}")]
 public class QueryResults(Section section, UserTask recipe) : IRecipeCombo
 {
     public Section Section { get; init; } = section;

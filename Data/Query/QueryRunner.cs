@@ -60,7 +60,7 @@ public class QueryRunner(Section section)
         var filteredQuery = CreateFilteredRecipesQuery(context);
 
         filteredQuery = Filters.FilterSection(filteredQuery, section);
-        filteredQuery = Filters.FilterRecipes(filteredQuery, TaskOptions.UserTaskIds?.Select(r => r.Key).ToList());
+        filteredQuery = Filters.FilterRecipes(filteredQuery, TaskOptions.UserTaskIds);
 
         // If there are specific tasks to select, don't filter down by LastSeen date.
         if (TaskOptions.UserTaskIds?.Any() != true)

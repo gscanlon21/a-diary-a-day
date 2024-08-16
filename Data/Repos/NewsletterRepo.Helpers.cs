@@ -3,7 +3,6 @@ using Data.Entities.User;
 using Data.Models;
 using Data.Models.Newsletter;
 using Microsoft.Extensions.DependencyInjection;
-using System.Threading.Tasks;
 
 namespace Data.Repos;
 

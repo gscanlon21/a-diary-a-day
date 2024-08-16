@@ -15,10 +15,10 @@ public class UserDiaryTask
 {
     public UserDiaryTask() { }
 
-    public UserDiaryTask(UserDiary newsletter, UserTask recipe)
+    public UserDiaryTask(UserDiary newsletter, UserTask task)
     {
         UserDiaryId = newsletter.Id;
-        UserTaskId = recipe.Id;
+        UserTaskId = task.Id;
     }
 
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -10,7 +10,7 @@
 @using Core.Models.Newsletter
 
 @{
-    var borderColor = ExerciseTheme.Main switch
+    var borderColor = Theme switch
     {
         ExerciseTheme.Warmup => "palevioletred",
         ExerciseTheme.Main => "mediumpurple",
@@ -20,7 +20,7 @@
         _ => "currentColor"
     };
 
-    var backgroundColor = ExerciseTheme.Main switch
+    var backgroundColor = Theme switch
     {
         ExerciseTheme.Warmup => "rgba(250,200,200,.1)",
         ExerciseTheme.Main => "rgba(250,200,250,.1)",
@@ -82,4 +82,7 @@
 
     [Parameter, EditorRequired]
     public Verbosity Verbosity { get; set; }
+
+    [Parameter, EditorRequired]
+    public ExerciseTheme Theme { get; init; }
 }

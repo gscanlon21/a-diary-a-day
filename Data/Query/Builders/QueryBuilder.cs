@@ -56,7 +56,7 @@ public class QueryBuilder
         return this;
     }
 
-    public QueryBuilder WithExcludeRecipes(Action<ExclusionOptions>? builder = null)
+    public QueryBuilder WithExcludeTasks(Action<ExclusionOptions>? builder = null)
     {
         var options = ExclusionOptions ?? new ExclusionOptions();
         builder?.Invoke(options);
@@ -66,7 +66,7 @@ public class QueryBuilder
 
     public QueryBuilder WithTasks(Action<TaskOptions>? builder = null)
     {
-        var options = TaskOptions ?? new TaskOptions();
+        var options = TaskOptions ?? new TaskOptions(Section);
         builder?.Invoke(options);
         TaskOptions = options;
         return this;
