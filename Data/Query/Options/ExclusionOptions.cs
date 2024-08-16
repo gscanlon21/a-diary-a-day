@@ -7,16 +7,16 @@ public class ExclusionOptions : IOptions
     /// <summary>
     /// Will not choose any recipes that fall in this list.
     /// </summary>
-    public List<int> RecipeIds = [];
+    public List<int> TaskIds = [];
 
     /// <summary>
     /// Exclude any of these recipes from being chosen.
     /// </summary>
-    internal void AddExcludeRecipes(IEnumerable<UserTask>? recipes)
+    internal void AddExcludeTasks(IEnumerable<UserTask>? tasks)
     {
-        if (recipes != null)
+        if (tasks != null)
         {
-            RecipeIds.AddRange(recipes.Select(e => e.Id));
+            TaskIds.AddRange(tasks.Select(e => e.Id));
         }
     }
 }

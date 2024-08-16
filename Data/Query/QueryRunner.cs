@@ -85,7 +85,11 @@ public class QueryRunner(Section section)
             // Don't re-order the list on each read.
             .ToList())
         {
-            orderedResults.Add(new QueryResults(section, recipe.Task));
+            var queryResult = new QueryResults(section, recipe.Task);
+            if (!orderedResults.Contains(queryResult))
+            {
+                orderedResults.Add(queryResult);
+            }
         }
 
         // REFACTORME

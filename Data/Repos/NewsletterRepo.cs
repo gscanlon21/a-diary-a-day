@@ -215,7 +215,7 @@ public partial class NewsletterRepo
             .WithUser(newsletterContext.User)
             .WithExcludeRecipes(x =>
             {
-                x.AddExcludeRecipes(exclude?.Select(r => r.Task));
+                x.AddExcludeTasks(exclude?.Select(r => r.Task));
             })
             .Build()
             .Query(_serviceScopeFactory);
