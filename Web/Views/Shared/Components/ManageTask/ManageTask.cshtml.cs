@@ -4,6 +4,7 @@ using Core.Models.Newsletter;
 using Data.Entities.Task;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Web.Views.Shared.Components.ManageRecipe;
 
@@ -36,6 +37,15 @@ public class ManageTaskViewModel
     [Required, Range(UserConsts.PadRefreshXDaysMin, UserConsts.PadRefreshXDaysMax)]
     [Display(Name = "Pad Refresh by X Days", Description = "Add a delay before this task is recirculated back into your task list.")]
     public int PadRefreshXDays { get; init; }
+
+    public Section Section { get; set; }
+
+    [NotMapped]
+    public Section[]? SectionBinder
+    {
+        get => Enum.GetValues<Section>().Where(e => Section.HasFlag(e)).ToArray();
+        set => Section = value?.Aggregate(Section.None, (a, e) => a | e) ?? Section.None;
+    }
 
     public Verbosity RecipeVerbosity => Verbosity.Images;
 

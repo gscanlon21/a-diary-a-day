@@ -106,6 +106,7 @@ public partial class UserController
                 User = user,
                 Name = viewModel.Name,
                 Notes = viewModel.Notes,
+                Section = viewModel.Section,
                 Enabled = viewModel.Enabled,
                 PadRefreshXDays = viewModel.PadRefreshXDays,
                 LagRefreshXDays = viewModel.LagRefreshXDays,
@@ -131,6 +132,7 @@ public partial class UserController
             userTask.Notes = user.IsDemoUser ? null : viewModel.Notes;
             userTask.LagRefreshXDays = viewModel.LagRefreshXDays;
             userTask.PadRefreshXDays = viewModel.PadRefreshXDays;
+            userTask.Section = viewModel.Section;
 
             await context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageTask), new { email, token, taskId, WasUpdated = true });

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Core.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Web.Code.Extensions;
 
@@ -8,6 +9,8 @@ public static class EnumViewExtensions
     {
         Value = 0,
         Text = 1,
+        GroupText = 2,
+        Order = 3,
     }
 
     /// <summary>
@@ -26,13 +29,23 @@ public static class EnumViewExtensions
             case EnumOrdering.Text:
                 orderedValues = orderedValues.ThenBy(v => v.GetSingleDisplayName());
                 break;
+            case EnumOrdering.GroupText:
+                orderedValues = orderedValues
+                    .ThenBy(v => v.GetSingleDisplayName(DisplayType.GroupName))
+                    .ThenBy(v => v.GetSingleDisplayName());
+                break;
+            case EnumOrdering.Order:
+                // Careful about nulls
+                orderedValues = orderedValues
+                    .ThenBy(v => v.GetSingleDisplayName(DisplayType.Order).Length)
+                    .ThenBy(v => v.GetSingleDisplayName(DisplayType.Order));
+                break;
         };
 
         return orderedValues.Select(v => new SelectListItem()
         {
             Text = v.GetSingleDisplayName(),
             Value = Convert.ToInt64(v).ToString()
-        })
-        .ToList();
+        }).ToList();
     }
 }

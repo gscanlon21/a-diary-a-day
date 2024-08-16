@@ -19,7 +19,7 @@ public static class Filters
         if (value.HasValue && value != Section.None && value != Section.Debug)
         {
             // Has any flag
-            //query = query.Where(vm => (vm.Task.Section & value.Value) != 0);
+            query = query.Where(vm => (vm.Task.Section & value.Value) != 0);
         }
 
         return query;

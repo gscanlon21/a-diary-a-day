@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Core.Models;
+using System.ComponentModel.DataAnnotations;
 using System.Numerics;
 using System.Reflection;
 
@@ -133,20 +134,9 @@ public static class EnumExtensions
     }
 
     /// <summary>
-    /// Name fields of the DisplayName attribute
-    /// </summary>
-    public enum DisplayNameType
-    {
-        Name,
-        ShortName,
-        GroupName,
-        Description
-    }
-
-    /// <summary>
     /// Returns the values of the [DisplayName] attributes for each flag in the enum.
     /// </summary>
-    public static string GetDisplayName32(this Enum flags, DisplayNameType nameType = DisplayNameType.Name, bool includeAnyMatching = false)
+    public static string GetDisplayName32(this Enum flags, DisplayType nameType = DisplayType.Name, bool includeAnyMatching = false)
     {
         if (flags == null)
         {
@@ -189,7 +179,7 @@ public static class EnumExtensions
     /// <summary>
     /// Returns the value of the [DisplayName] attribute.
     /// </summary>
-    public static string GetSingleDisplayName(this Enum @enum, DisplayNameType nameType = DisplayNameType.Name)
+    public static string GetSingleDisplayName(this Enum @enum, DisplayType nameType = DisplayType.Name)
     {
         var memberInfo = @enum.GetType().GetMember(@enum.ToString());
         if (memberInfo != null && memberInfo.Length > 0)
@@ -200,10 +190,10 @@ public static class EnumExtensions
                 var attribute = (DisplayAttribute)attrs[0];
                 return nameType switch
                 {
-                    DisplayNameType.Name => attribute.GetName(),
-                    DisplayNameType.ShortName => attribute.GetShortName() ?? attribute.GetName(),
-                    DisplayNameType.GroupName => attribute.GetGroupName() ?? attribute.GetShortName() ?? attribute.GetName(),
-                    DisplayNameType.Description => attribute.GetDescription(),
+                    DisplayType.Name => attribute.GetName(),
+                    DisplayType.ShortName => attribute.GetShortName() ?? attribute.GetName(),
+                    DisplayType.GroupName => attribute.GetGroupName() ?? attribute.GetShortName() ?? attribute.GetName(),
+                    DisplayType.Description => attribute.GetDescription(),
                     _ => null
                 } ?? @enum.GetDisplayName32(nameType);
             }
@@ -219,7 +209,7 @@ public static class EnumExtensions
     /// <summary>
     /// Returns the value of the [DisplayName] attribute.
     /// </summary>
-    public static string? GetSingleDisplayNameOrNull(this Enum @enum, DisplayNameType nameType = DisplayNameType.Name)
+    public static string? GetSingleDisplayNameOrNull(this Enum @enum, DisplayType nameType = DisplayType.Name)
     {
         var memberInfo = @enum.GetType().GetMember(@enum.ToString());
         if (memberInfo != null && memberInfo.Length > 0)
@@ -230,10 +220,10 @@ public static class EnumExtensions
                 var attribute = (DisplayAttribute)attrs[0];
                 return nameType switch
                 {
-                    DisplayNameType.Name => attribute.GetName(),
-                    DisplayNameType.ShortName => attribute.GetShortName() ?? attribute.GetName(),
-                    DisplayNameType.GroupName => attribute.GetGroupName() ?? attribute.GetShortName() ?? attribute.GetName(),
-                    DisplayNameType.Description => attribute.GetDescription(),
+                    DisplayType.Name => attribute.GetName(),
+                    DisplayType.ShortName => attribute.GetShortName() ?? attribute.GetName(),
+                    DisplayType.GroupName => attribute.GetGroupName() ?? attribute.GetShortName() ?? attribute.GetName(),
+                    DisplayType.Description => attribute.GetDescription(),
                     _ => null
                 };
             }
@@ -245,7 +235,7 @@ public static class EnumExtensions
     /// <summary>
     /// Returns the value of the [DisplayName] attribute.
     /// </summary>
-    public static string GetDisplayName322<T>(this T @enum, DisplayNameType nameType = DisplayNameType.Name, bool includeAny = false) where T : struct, Enum
+    public static string GetDisplayName322<T>(this T @enum, DisplayType nameType = DisplayType.Name, bool includeAny = false) where T : struct, Enum
     {
         var results = new Dictionary<long, string?>();
         foreach (var value in Enum.GetValues<T>().OrderByDescending(e => BitOperations.PopCount((ulong)Convert.ToInt64(e))))

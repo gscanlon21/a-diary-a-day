@@ -1,4 +1,5 @@
 ﻿using Core.Consts;
+using Core.Models.Newsletter;
 using Data.Entities.Newsletter;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
@@ -34,6 +35,8 @@ public class UserTask
     /// Notes about the recipe (externally shown).
     /// </summary>
     public string? Notes { get; set; } = null;
+
+    public Section Section { get; set; }
 
     /// <summary>
     /// When was this exercise last seen in the user's newsletter.

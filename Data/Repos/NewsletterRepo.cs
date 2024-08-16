@@ -148,14 +148,19 @@ public partial class NewsletterRepo
     {
         var userViewModel = new UserNewsletterDto(context.User.AsType<UserDto, User>()!, context.Token);
 
-        var tasks = await GetUserTasks(context);
+        var morningTasks = await GetUserMorningTasks(context);
+        var middayTasks = await GetUserMiddayTasks(context);
+        var nightTasks = await GetUserNightTasks(context);
+        var anytimeTasks = await GetUserAnytimeTasks(context);
+        var allTasks = morningTasks.Concat(middayTasks).Concat(nightTasks).Concat(anytimeTasks).ToList();
+
         var images = GetImages(context.User).ToList();
-        var newsletter = await CreateAndAddNewsletterToContext(context, tasks);
-        await UpdateLastSeenDate(tasks);
+        var newsletter = await CreateAndAddNewsletterToContext(context, allTasks);
+        await UpdateLastSeenDate(allTasks);
         var viewModel = new NewsletterDto(userViewModel)
         {
             Images = images,
-            Tasks = tasks.Select(t => t.AsType<NewsletterTaskDto, QueryResults>()!).ToList(),
+            Tasks = allTasks.Select(t => t.AsType<NewsletterTaskDto, QueryResults>()!).ToList(),
         };
 
         return viewModel;
@@ -209,7 +214,43 @@ public partial class NewsletterRepo
         }
     }
 
-    internal async Task<IList<QueryResults>> GetUserTasks(NewsletterContext newsletterContext, IEnumerable<QueryResults>? exclude = null)
+    internal async Task<IList<QueryResults>> GetUserMorningTasks(NewsletterContext newsletterContext, IEnumerable<QueryResults>? exclude = null)
+    {
+        return await new QueryBuilder(Section.Morning)
+            .WithUser(newsletterContext.User)
+            .WithExcludeRecipes(x =>
+            {
+                x.AddExcludeTasks(exclude?.Select(r => r.Task));
+            })
+            .Build()
+            .Query(_serviceScopeFactory);
+    }
+
+    internal async Task<IList<QueryResults>> GetUserMiddayTasks(NewsletterContext newsletterContext, IEnumerable<QueryResults>? exclude = null)
+    {
+        return await new QueryBuilder(Section.Midday)
+            .WithUser(newsletterContext.User)
+            .WithExcludeRecipes(x =>
+            {
+                x.AddExcludeTasks(exclude?.Select(r => r.Task));
+            })
+            .Build()
+            .Query(_serviceScopeFactory);
+    }
+
+    internal async Task<IList<QueryResults>> GetUserNightTasks(NewsletterContext newsletterContext, IEnumerable<QueryResults>? exclude = null)
+    {
+        return await new QueryBuilder(Section.Night)
+            .WithUser(newsletterContext.User)
+            .WithExcludeRecipes(x =>
+            {
+                x.AddExcludeTasks(exclude?.Select(r => r.Task));
+            })
+            .Build()
+            .Query(_serviceScopeFactory);
+    }
+
+    internal async Task<IList<QueryResults>> GetUserAnytimeTasks(NewsletterContext newsletterContext, IEnumerable<QueryResults>? exclude = null)
     {
         return await new QueryBuilder(Section.None)
             .WithUser(newsletterContext.User)

@@ -93,6 +93,15 @@
             </details>
         </div>
 
+        <div class="form-group mb-3">
+            <label asp-for="SectionBinder" class="control-label">@Html.DisplayNameFor(_ => Model.Section)</label>
+            <select asp-for="SectionBinder" class="form-control overflow-auto" aria-describedby="verbosity-help" size="5"
+                    asp-items="@(EnumExtensions.GetSingleValues32<Section>().AsSelectListItems32(EnumViewExtensions.EnumOrdering.Text))">
+            </select>
+            <span asp-validation-for="SectionBinder" class="text-danger"></span>
+            <div id="verbosity-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.Section)</div>
+        </div>
+
         <div class="form-group form-check mb-3">
             <label asp-for="UserTask.Enabled" class="control-label">@Html.DisplayNameFor(_ => Model.UserTask.Enabled)</label>
             <input class="form-check-input" asp-for="UserTask.Enabled" aria-describedby="disabled-help" />

@@ -42,7 +42,7 @@ public class QueryRunner(Section section)
             .Where(ev => ev.DisabledReason == null)
             .Where(t => t.UserId == UserOptions.Id)
             // Don't grab recipes that we want to ignore.
-            .Where(vm => !ExclusionOptions.RecipeIds.Contains(vm.Id))
+            .Where(vm => !ExclusionOptions.TaskIds.Contains(vm.Id))
             .Select(r => new RecipesQueryResults()
             {
                 Task = r,

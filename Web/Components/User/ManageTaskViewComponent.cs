@@ -67,6 +67,7 @@ public class ManageTaskViewComponent : ViewComponent
             UserTask = userTask,
             Name = userTask.Name,
             Notes = userTask.Notes,
+            Section = userTask.Section,
             LagRefreshXDays = userTask.LagRefreshXDays,
             PadRefreshXDays = userTask.PadRefreshXDays,
             Task = taskDto?.AsType<NewsletterTaskDto, QueryResults>()!,

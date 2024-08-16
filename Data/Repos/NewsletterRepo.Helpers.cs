@@ -3,6 +3,7 @@ using Data.Entities.User;
 using Data.Models;
 using Data.Models.Newsletter;
 using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
 
 namespace Data.Repos;
 
@@ -33,10 +34,10 @@ public partial class NewsletterRepo
         {
             for (var i = 0; i < tasks.Count; i++)
             {
-                var recipe = tasks[i];
-                _context.UserDiaryTasks.Add(new UserDiaryTask(newsletter, recipe.Task)
+                var task = tasks[i];
+                _context.UserDiaryTasks.Add(new UserDiaryTask(newsletter, task.Task)
                 {
-                    Section = recipe.Section,
+                    Section = task.Section,
                     Order = i,
                 });
             }
