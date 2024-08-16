@@ -11,30 +11,29 @@ public interface IRecipeCombo
 public static class Filters
 {
     /// <summary>
-    /// Make sure the exercise is for the correct workout type
+    /// Make sure the exercise is for the correct task type
     /// </summary>
     public static IQueryable<T> FilterSection<T>(IQueryable<T> query, Section? value) where T : IRecipeCombo
     {
-        // Debug should be able to see all exercises.
-        if (value.HasValue && value != Section.None && value != Section.Debug)
+        if (value.HasValue && value != Section.None)
         {
-            // Has any flag
-            query = query.Where(vm => (vm.Task.Section & value.Value) != 0);
+            query = query.Where(vm => vm.Task.Section.HasFlag(value.Value));
         }
 
         return query;
     }
 
     /// <summary>
-    /// Filter down to these specific exercises
+    /// Filter down to these specific tasks
     /// </summary>
-    public static IQueryable<T> FilterRecipes<T>(IQueryable<T> query, IList<int>? exerciseIds) where T : IRecipeCombo
+    public static bool FilterTasks<T>(ref IQueryable<T> query, IList<int>? taskIds) where T : IRecipeCombo
     {
-        if (exerciseIds != null)
+        if (taskIds != null)
         {
-            query = query.Where(vm => exerciseIds.Contains(vm.Task.Id));
+            query = query.Where(vm => taskIds.Contains(vm.Task.Id));
+            return true;
         }
 
-        return query;
+        return false;
     }
 }

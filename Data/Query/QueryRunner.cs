@@ -59,13 +59,11 @@ public class QueryRunner(Section section)
 
         var filteredQuery = CreateFilteredRecipesQuery(context);
 
-        filteredQuery = Filters.FilterSection(filteredQuery, section);
-        filteredQuery = Filters.FilterRecipes(filteredQuery, TaskOptions.UserTaskIds);
-
-        // If there are specific tasks to select, don't filter down by LastSeen date.
-        if (TaskOptions.UserTaskIds?.Any() != true)
+        if (!Filters.FilterTasks(ref filteredQuery, TaskOptions.UserTaskIds))
         {
-            filteredQuery = filteredQuery.Where(vm => vm.Task.LastSeen <= DateHelpers.Today && vm.Task.RefreshAfter == null);
+            // If there are specific tasks to select, don't filter down by Section or LastSeen date.
+            filteredQuery = Filters.FilterSection(filteredQuery, section);
+            filteredQuery = filteredQuery.Where(vm => vm.Task.LastSeen <= DateHelpers.Today);
         }
 
         var queryResults = (await filteredQuery.Select(a => new InProgressQueryResults(a)).AsNoTracking().TagWithCallSite().ToListAsync()).ToList();

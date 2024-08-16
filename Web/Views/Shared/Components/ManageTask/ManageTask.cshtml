@@ -30,7 +30,7 @@
 
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        <div class="form-group mb-3 mt-3">
+        <div class="form-group mb-3">
             <label for="Name" class="control-label">@Html.DisplayNameFor(_ => Model.Name)</label>
             <input type="text" asp-for="Name" class="form-control" aria-describedby="exercise-notes-help" rows="1" value="@Model.Name" />
             <span asp-validation-for="Name" class="text-danger"></span>
@@ -95,8 +95,8 @@
 
         <div class="form-group mb-3">
             <label asp-for="SectionBinder" class="control-label">@Html.DisplayNameFor(_ => Model.Section)</label>
-            <select asp-for="SectionBinder" class="form-control overflow-auto" aria-describedby="verbosity-help" size="4"
-                    asp-items="@(EnumExtensions.GetValuesExcluding32(Section.None, Section.Debug).AsSelectListItems32(EnumViewExtensions.EnumOrdering.Order))">
+            <select asp-for="SectionBinder" class="form-control overflow-auto" aria-describedby="verbosity-help" size="5"
+                    asp-items="@(EnumExtensions.GetValuesExcluding32(Section.None, Section.All).AsSelectListItems32(EnumViewExtensions.EnumOrdering.Order))">
             </select>
             <span asp-validation-for="SectionBinder" class="text-danger"></span>
             <div id="verbosity-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.Section)</div>

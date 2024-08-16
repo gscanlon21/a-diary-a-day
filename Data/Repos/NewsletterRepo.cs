@@ -148,20 +148,20 @@ public partial class NewsletterRepo
     {
         var userViewModel = new UserNewsletterDto(context.User.AsType<UserDto, User>()!, context.Token);
 
-        var morningTasks = await GetUserTasks(context, Section.Morning);
-        var middayTasks = await GetUserTasks(context, Section.Midday);
-        var afternoonTasks = await GetUserTasks(context, Section.Afternoon);
-        var nightTasks = await GetUserTasks(context, Section.Night);
-        var anytimeTasks = await GetUserTasks(context, Section.None, exclude: morningTasks.Concat(middayTasks).Concat(afternoonTasks).Concat(nightTasks));
-        var allTasks = morningTasks.Concat(middayTasks).Concat(afternoonTasks).Concat(nightTasks).Concat(anytimeTasks).ToList();
+        var tasks = new List<QueryResults>();
+        foreach (var section in EnumExtensions.GetSingleValues32<Section>())
+        {
+            tasks.AddRange(await GetUserTasks(context, section));
+        }
+        tasks.AddRange(await GetUserTasks(context, Section.None, exclude: tasks));
 
         var images = GetImages(context.User).ToList();
-        var newsletter = await CreateAndAddNewsletterToContext(context, allTasks);
-        await UpdateLastSeenDate(allTasks);
+        var newsletter = await CreateAndAddNewsletterToContext(context, tasks);
+        await UpdateLastSeenDate(tasks);
         var viewModel = new NewsletterDto(userViewModel)
         {
             Images = images,
-            Tasks = allTasks.Select(t => t.AsType<NewsletterTaskDto, QueryResults>()!).ToList(),
+            Tasks = tasks.Select(t => t.AsType<NewsletterTaskDto, QueryResults>()!).ToList(),
         };
 
         return viewModel;
@@ -172,8 +172,8 @@ public partial class NewsletterRepo
     /// </summary>
     private async Task<NewsletterDto?> NewsletterOld(User user, string token, DateOnly date, UserDiary newsletter)
     {
-        List<QueryResults> tasks = [];
-        foreach (var section in EnumExtensions.GetSingleOrNoneValues32<Section>())
+        var tasks = new List<QueryResults>();
+        foreach (var section in EnumExtensions.GetValuesExcluding32(Section.All))
         {
             tasks.AddRange((await new QueryBuilder(section)
                 .WithUser(user)
