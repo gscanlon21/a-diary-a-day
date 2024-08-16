@@ -1,15 +1,15 @@
 ﻿using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
-using Web.Views.Shared.Components.PastNewsletter;
+using Web.Views.Shared.Components.PastNewsletters;
 
 namespace Web.Components.User;
 
-public class PastNewsletterViewComponent(UserRepo userRepo) : ViewComponent
+public class PastNewslettersViewComponent(UserRepo userRepo) : ViewComponent
 {
     /// <summary>
-    /// For routing
+    /// For routing.
     /// </summary>
-    public const string Name = "PastNewsletter";
+    public const string Name = "PastNewsletters";
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
@@ -19,7 +19,7 @@ public class PastNewsletterViewComponent(UserRepo userRepo) : ViewComponent
             return Content("");
         }
 
-        return View("PastNewsletter", new PastNewsletterViewModel()
+        return View("PastNewsletters", new PastNewslettersViewModel()
         {
             User = user,
             PastNewsletters = pastNewsletters,

@@ -23,7 +23,7 @@ public class UserSleep : IScore
     public int UserId { get; set; }
 
     [Required]
-    public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
+    public DateOnly Date { get; init; } = DateHelpers.Today;
 
     [Required, Display(Name = "Sleep Duration")]
     public SleepDuration SleepDuration { get; set; } = SleepDuration.JustRight;

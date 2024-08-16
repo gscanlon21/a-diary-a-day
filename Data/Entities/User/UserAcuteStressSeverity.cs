@@ -25,7 +25,7 @@ public class UserAcuteStressSeverity : IScore
     /// The token should stop working after this date.
     /// </summary>
     [Required]
-    public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
+    public DateOnly Date { get; init; } = DateHelpers.Today;
 
     [Range(0, 4)]
     [Display(Name = "Having 'flashbacks', that is, you suddenly acted or felt as if a stressful experience from the past was happening all over again (for example, you reexperienced parts of a stressful experience by seeing, hearing, smelling, or physically feeling parts of the experience)?")]

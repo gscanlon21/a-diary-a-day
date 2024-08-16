@@ -22,7 +22,7 @@ public class UserPeople
     public int UserId { get; set; }
 
     [Required]
-    public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
+    public DateOnly Date { get; init; } = DateHelpers.Today;
 
     [JsonIgnore, InverseProperty(nameof(Entities.Footnote.UserCustom.UserPeoples))]
     public virtual List<UserCustom> UserCustoms { get; init; } = null!;

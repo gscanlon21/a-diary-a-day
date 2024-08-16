@@ -22,7 +22,7 @@ public class UserPanicSeverity : IScore
     public int UserId { get; set; }
 
     [Required]
-    public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
+    public DateOnly Date { get; init; } = DateHelpers.Today;
 
     /// <summary>
     /// Prorated score.

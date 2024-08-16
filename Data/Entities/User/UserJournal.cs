@@ -27,7 +27,7 @@ public class UserJournal
     /// The token should stop working after this date.
     /// </summary>
     [Required]
-    public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
+    public DateOnly Date { get; init; } = DateHelpers.Today;
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserJournals))]
     public virtual User User { get; set; } = null!;

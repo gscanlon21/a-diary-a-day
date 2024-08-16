@@ -21,6 +21,7 @@ public class DeleteInactiveUsers(ILogger<DeleteInactiveUsers> logger, CoreContex
     {
         try
         {
+            // TODO: Delete inactive user images.
             //var prefix = $"moods/{user.Uid}";
             //var key = $"{prefix}-{type}";
             //var client = new AmazonS3Client(digitalOceanOptions.Value.AWSS3AccessKey, digitalOceanOptions.Value.AWSS3SecretKey, new AmazonS3Config()

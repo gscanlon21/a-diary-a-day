@@ -1,7 +1,5 @@
-﻿using Core.Code.Helpers;
-using Core.Dtos.Newsletter;
+﻿using Core.Dtos.Newsletter;
 using Core.Dtos.User;
-using Core.Interfaces.User;
 using Core.Models.Footnote;
 using Core.Models.Newsletter;
 using Core.Models.Options;

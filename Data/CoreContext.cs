@@ -3,7 +3,6 @@ using Data.Entities.Newsletter;
 using Data.Entities.Task;
 using Data.Entities.User;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json;
 
 namespace Data;
 
@@ -46,7 +45,7 @@ public class CoreContext : DbContext
 
     public CoreContext(DbContextOptions<CoreContext> context) : base(context) { }
 
-    private static readonly JsonSerializerOptions JsonSerializerOptions = new();
+    //private static readonly JsonSerializerOptions JsonSerializerOptions = new();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

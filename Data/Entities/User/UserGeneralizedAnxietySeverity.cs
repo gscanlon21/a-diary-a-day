@@ -25,7 +25,7 @@ public class UserGeneralizedAnxietySeverity : IScore
     /// The token should stop working after this date.
     /// </summary>
     [Required]
-    public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
+    public DateOnly Date { get; init; } = DateHelpers.Today;
 
     [Range(0, 4)]
     [Display(Name = "felt moments of sudden terror, fear, or fright.")]

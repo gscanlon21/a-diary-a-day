@@ -23,7 +23,7 @@ public class UserDepression
     /// The token should stop working after this date.
     /// </summary>
     [Required]
-    public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
+    public DateOnly Date { get; init; } = DateHelpers.Today;
 
     [Range(1, 5)]
     [Display(Name = "I felt worthless.")]

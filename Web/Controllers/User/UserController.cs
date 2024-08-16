@@ -156,7 +156,7 @@ public partial class UserController(CoreContext context, UserRepo userRepo) : Vi
         }
 
         var userIsConfirmingAccount = !user.LastActive.HasValue;
-        user.LastActive = DateOnly.FromDateTime(DateTime.UtcNow);
+        user.LastActive = DateHelpers.Today;
         await context.SaveChangesAsync();
 
         if (!string.IsNullOrWhiteSpace(to))

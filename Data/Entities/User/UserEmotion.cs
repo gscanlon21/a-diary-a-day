@@ -22,7 +22,7 @@ public class UserEmotion
     public int UserId { get; set; }
 
     [Required]
-    public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
+    public DateOnly Date { get; init; } = DateHelpers.Today;
 
     [JsonIgnore, InverseProperty(nameof(UserCustom.UserEmotions))]
     public virtual List<UserCustom> UserCustoms { get; init; } = null!;

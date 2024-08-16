@@ -1,5 +1,4 @@
-﻿using Core.Code.Helpers;
-using Core.Models.User;
+﻿using Core.Models.User;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

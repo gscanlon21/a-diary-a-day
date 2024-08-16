@@ -2,51 +2,39 @@
 @using System.Numerics
 @using Core.Consts
 
-<h6 class="mb-1">Recipe</h6>
 <div class="alert alert-light shadow">
-    @*
-    <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.IgnoreRecipe)" method="post"
-          asp-route-email="@Model.Parameters.Email" asp-route-token="@Model.Parameters.Token" asp-route-taskId="@Model.Parameters.RecipeId">
+    @if (Model.UserTask.Id != default)
+    {
+        <form asp-controller="@UserController.Name" class="row mb-3" asp-action="@nameof(UserController.RefreshRecipe)" method="post"
+              asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" asp-route-taskId="@Model.UserTask.Id">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label for="exercise-date" class="control-label">@Html.DisplayNameFor(_ => Model.UserTask)</label>
+                <div class="input-group">
+                    <input type="text" id="exercise-date" class="form-control" disabled="disabled" aria-describedby="exercise-date-help" rows="1" value="@((Model.UserTask.RefreshAfter ?? Model.UserTask.LastSeen).ToString("O"))" />
+                    <input type="submit" value="Refresh" class="btn btn-outline-secondary allow-demo" />
+                </div>
+
+                <span asp-validation-for="UserTask" class="text-danger"></span>
+                <div id="exercise-date-help" class="form-text">
+                    @Html.DisplayDescriptionFor(_ => Model.UserTask)
+                </div>
+            </div>
+        </form>
+    }
+
+    <form id="task-form" asp-controller="@UserController.Name" asp-action="@nameof(UserController.UpsertTask)" method="post" class="mb-3"
+          asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" asp-route-taskId="@Model.UserTask.Id">
 
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        <div class="form-group mb-3">
-            <label for="Recipe-name" class="control-label">@Html.DisplayNameFor(_ => Model.Recipe)</label>
-            <div class="input-group">
-                <textarea id="Recipe-name" class="form-control" disabled="disabled" aria-describedby="Recipe-help" rows="1">@Model.Recipe.Recipe.Name</textarea>
-                <input type="submit" value="@(Model.UserRecipe.Ignore ? "Ignored" : "Ignore")" class="btn btn-outline-secondary" @(Model.User.IsDemoUser ? "disabled='disabled'" : "") />
-            </div>
-            <span asp-validation-for="Recipe" class="text-danger"></span>
-            <div id="Recipe-help" class="form-text">
-                @Html.DisplayDescriptionFor(_ => Model.Recipe)
-            </div>
+        <div class="form-group mb-3 mt-3">
+            <label for="Name" class="control-label">@Html.DisplayNameFor(_ => Model.Name)</label>
+            <input type="text" asp-for="Name" class="form-control" aria-describedby="exercise-notes-help" rows="1" value="@Model.Name" />
+            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
-    </form>
-    *@
-
-    <form asp-controller="@UserController.Name" class="row mb-3" asp-action="@nameof(UserController.RefreshRecipe)" method="post"
-          asp-route-email="@Model.Parameters.Email" asp-route-token="@Model.Parameters.Token" asp-route-taskId="@Model.Parameters.RecipeId">
-
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-        <div class="form-group">
-            <label for="exercise-date" class="control-label">@Html.DisplayNameFor(_ => Model.UserTask)</label>
-            <div class="input-group">
-                <input type="text" id="exercise-date" class="form-control" disabled="disabled" aria-describedby="exercise-date-help" rows="1" value="@((Model.UserTask.RefreshAfter ?? Model.UserTask.LastSeen).ToString("O"))" />
-                <input type="submit" value="Refresh" class="btn btn-outline-secondary allow-demo" />
-            </div>
-
-            <span asp-validation-for="UserTask" class="text-danger"></span>
-            <div id="exercise-date-help" class="form-text">
-                @Html.DisplayDescriptionFor(_ => Model.UserTask)
-            </div>
-        </div>
-    </form>
-
-    <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.LogRecipe)" method="post" class="mb-4"
-          asp-route-email="@Model.Parameters.Email" asp-route-token="@Model.Parameters.Token" asp-route-taskId="@Model.Parameters.RecipeId">
-
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         <div class="form-group mb-3 mt-3">
             <label for="Notes" class="control-label">@Html.DisplayNameFor(_ => Model.Notes)</label>
@@ -57,7 +45,7 @@
         @if (Model.User.IsDemoUser)
         {
             <div class="alert alert-info callout">
-                Customize how long you want to see exercises before they refresh.
+                Customize how long you want to see tasks before they refresh.
             </div>
         }
 
@@ -105,15 +93,41 @@
             </details>
         </div>
 
-
-        <div class="form-group">
-            <input type="submit" value="Save" class="btn btn-primary allow-demo" />
+        <div class="form-group form-check mb-3">
+            <label asp-for="UserTask.Enabled" class="control-label">@Html.DisplayNameFor(_ => Model.UserTask.Enabled)</label>
+            <input class="form-check-input" asp-for="UserTask.Enabled" aria-describedby="disabled-help" />
+            <span asp-validation-for="UserTask.Enabled" class="text-danger"></span>
+            <div id="disabled-help" class="form-text">
+                @Html.DisplayDescriptionFor(_ => Model.UserTask.Enabled)
+                @if (!String.IsNullOrWhiteSpace(Model.UserTask.DisabledReason))
+                {
+                    <div><b>Disabled Reason</b> - @Model.UserTask.DisabledReason</div>
+                }
+            </div>
         </div>
     </form>
 
-    @*
-    <component type="typeof(Microsoft.AspNetCore.Components.CascadingValue<Core.Dtos.User.UserNewsletterDto?>)" render-mode="Static" param-Value="null">
-        <component type="typeof(Lib.Pages.Shared.Exercise._Task)" render-mode="Static" param-Model='Model.Recipe' param-Verbosity="Model.RecipeVerbosity" />
-    </component>
-    *@
+    <div class="row form-group justify-content-end gy-2 mb-4">
+        <div class="col">
+            <input type="submit" value="Save" class="btn btn-primary" form="task-form" />
+        </div>
+        @if (Model.UserTask.Id != default)
+        {
+            <div class="col-auto">
+                <form id="delete-form" asp-controller="@UserController.Name" asp-action="@nameof(UserController.RemoveTask)" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" name="TaskId" asp-for="@Model.UserTask.Id" />
+
+                    <input type="submit" value="Delete" class="btn btn-outline-danger" form="delete-form" />
+                </form>
+            </div>
+        }
+    </div>
+
+    @if (Model.Task != null)
+    {
+        <component type="typeof(Microsoft.AspNetCore.Components.CascadingValue<Core.Dtos.User.UserNewsletterDto?>)" render-mode="Static" param-Value="null">
+            <component type="typeof(Lib.Pages.Shared.Exercise._Task)" render-mode="Static" param-Model='Model.Task' param-Verbosity="Model.RecipeVerbosity" />
+        </component>
+    }
 </div>

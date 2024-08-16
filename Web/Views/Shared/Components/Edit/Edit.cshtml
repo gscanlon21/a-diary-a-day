@@ -111,7 +111,7 @@
         <details class="mb-25">
             <summary class="mb-1 h5">New Task</summary>
 
-            @await Component.InvokeAsync(UpsertTaskViewComponent.Name, new { Model.User })
+            @await Component.InvokeAsync(ManageTaskViewComponent.Name, new { Model.User })
         </details>
     </div>
 
@@ -120,7 +120,7 @@
         @await Component.InvokeAsync(UnsupportedClientViewComponent.Name, new { Model.User })
         @await Component.InvokeAsync(NewsletterViewComponent.Name, new { Model.User })
         @await Component.InvokeAsync(NextNewsletterViewComponent.Name, new { Model.User })
-        @await Component.InvokeAsync(PastNewsletterViewComponent.Name, new { Model.User })
+        @await Component.InvokeAsync(PastNewslettersViewComponent.Name, new { Model.User })
         @await Component.InvokeAsync(LinkFeastsViewComponent.Name, new { Model.User })
         @await Component.InvokeAsync(TokenViewComponent.Name, new { Model.User })
         @await Component.InvokeAsync(CustomViewComponent.Name, new { Model.User })

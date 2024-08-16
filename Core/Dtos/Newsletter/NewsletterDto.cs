@@ -14,7 +14,7 @@ public class NewsletterDto(UserNewsletterDto user)
     /// </summary>
     public readonly int FootnoteCount = 2;
 
-    public DateOnly Today { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
+    public DateOnly Today { get; init; } = DateHelpers.Today;
 
     public UserNewsletterDto User { get; } = user;
 

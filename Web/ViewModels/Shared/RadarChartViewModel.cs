@@ -1,5 +1,4 @@
-﻿using Core.Code.Helpers;
-using Data.Entities.Footnote;
+﻿using Data.Entities.Footnote;
 
 namespace Web.ViewModels.Shared;
 

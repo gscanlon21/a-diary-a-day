@@ -21,12 +21,8 @@
         @if (Model.User.Id == Model.Task.UserId)
         {
             <div class="col-lg-6">
-                @await Component.InvokeAsync(ManageTaskViewComponent.Name, new { Model.User, Model.Task, Model.Parameters })
-            </div>
-
-            <div class="col-lg-6">
-                <h6 class="mb-1">Edit Task</h6>
-                @await Component.InvokeAsync(UpsertTaskViewComponent.Name, new { Model.User, Model.Task })
+                <h6 class="mb-1">Task</h6>
+                @await Component.InvokeAsync(ManageTaskViewComponent.Name, new { Model.User, Model.Task })
             </div>
         }
     </div>

@@ -1,5 +1,4 @@
-﻿using Core.Code.Helpers;
-using Core.Models.Newsletter;
+﻿using Core.Models.Newsletter;
 using Data.Entities.Task;
 using Data.Models;
 using Data.Query.Options;

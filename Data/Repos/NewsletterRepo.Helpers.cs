@@ -1,5 +1,4 @@
-﻿using Core.Code.Helpers;
-using Data.Entities.Newsletter;
+﻿using Data.Entities.Newsletter;
 using Data.Entities.User;
 using Data.Models;
 using Data.Models.Newsletter;

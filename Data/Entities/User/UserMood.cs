@@ -22,7 +22,7 @@ public class UserMood : IScore
     public int UserId { get; set; }
 
     [Required]
-    public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
+    public DateOnly Date { get; init; } = DateHelpers.Today;
 
     [Required]
     public Mood Mood { get; set; } = Mood.Decent;

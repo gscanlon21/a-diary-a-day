@@ -3,7 +3,7 @@ using Quartz;
 
 namespace Api.Jobs.Delete;
 
-public class DeleteOldLogs(ILogger<DeleteOldMoods> logger, CoreContext coreContext) : IJob, IScheduled
+public class DeleteOldLogs(ILogger<DeleteOldLogs> logger, CoreContext coreContext) : IJob, IScheduled
 {
     public async Task Execute(IJobExecutionContext context)
     {

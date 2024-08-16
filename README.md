@@ -16,7 +16,7 @@ The program [Obtainium](https://github.com/ImranR98/Obtainium) can be used for a
 - Ignore unwanted exercises — no more burpees!
 - Progress or regress exercises to switch between easier and harder variations.
 - Track how much weight you are able to lift.
-- Customize how long you want to see exercises before they refresh.
+- Customize how long you want to see tasks before they refresh.
 - Customize how much each muscle is being strengthened. Workouts are automatically adjusted to remove muscle imbalances.
 - Customize how often you want to deload. Built-in deload weeks automatically adjust your workout to prevent overtraining.
 - Optional health and fitness tips.

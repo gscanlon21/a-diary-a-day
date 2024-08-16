@@ -2,7 +2,7 @@
 @using Core.Models.Newsletter;
 @using Core.Models.User;
 
-@if (Images != null)
+@if (Images?.Any() == true)
 {
     var titleColor = Theme switch
     {
