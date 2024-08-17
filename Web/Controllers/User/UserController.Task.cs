@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Core.Models.Newsletter;
+using Data.Entities.Task;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web.Code.TempData;
 using Web.ViewModels.User;
@@ -12,8 +14,8 @@ public partial class UserController
     /// <summary>
     /// Shows a form to the user where they can update their Pounds lifted.
     /// </summary>
-    [HttpGet, Route("{taskId}", Order = 1)]
-    public async Task<IActionResult> ManageTask(string email, string token, int taskId, bool? wasUpdated = null)
+    [HttpGet, Route("{section:section}/{taskId}")]
+    public async Task<IActionResult> ManageTask(string email, string token, Section section, int taskId, bool? wasUpdated = null)
     {
         var user = await userRepo.GetUser(email, token, allowDemoUser: true);
         if (user == null)
@@ -33,31 +35,43 @@ public partial class UserController
         });
     }
 
-    [HttpPost, Route("task/remove")]
-    public async Task<IActionResult> RemoveTask(string email, string token, [FromForm] int taskId)
+    [HttpPost, Route("{section:section}/{taskId}/complete-task")]
+    public async Task<IActionResult> CompleteTask(string email, string token, Section section, int taskId)
     {
-        var user = await userRepo.GetUser(email, token);
+        var user = await userRepo.GetUser(email, token, allowDemoUser: true);
         if (user == null)
         {
-            return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
+            return NotFound();
         }
 
-        await context.UserTasks
-            // The user has control of this footnote and is not a built-in footnote.
-            .Where(f => f.UserId == user.Id)
-            .Where(f => f.Id == taskId)
-            .ExecuteDeleteAsync();
+        // Set the new weight on the UserVariation.
+        var userTask = await context.UserTasks.FirstAsync(p => p.UserId == user.Id && p.Id == taskId);
+        var todaysUserLog = await context.UserTaskLogs
+            .Where(uw => uw.UserTaskId == userTask.Id)
+            .Where(um => um.Section == section)
+            .FirstOrDefaultAsync(uw => uw.Date == DateHelpers.Today);
+
+        if (todaysUserLog != null)
+        {
+            todaysUserLog.Complete += 1;
+        }
+        else
+        {
+            context.Add(new UserTaskLog()
+            {
+                UserTaskId = userTask.Id,
+                Date = DateHelpers.Today,
+                Section = section,
+                Complete = 1,
+            });
+        }
 
         await context.SaveChangesAsync();
-
-        TempData[TempData_User.SuccessMessage] = "Your tasks have been updated!";
-        return RedirectToAction(nameof(Edit), new { email, token });
+        return RedirectToAction(nameof(ManageTask), new { email, token, section, taskId, WasUpdated = true });
     }
 
-    [HttpPost]
-    [Route("{taskId}/rr", Order = 1)]
-    [Route("{taskId}/refresh-recipe", Order = 2)]
-    public async Task<IActionResult> RefreshRecipe(string email, string token, int taskId)
+    [HttpPost, Route("{section:section}/{taskId}/refresh-task")]
+    public async Task<IActionResult> RefreshTask(string email, string token, Section section, int taskId)
     {
         var user = await userRepo.GetUser(email, token, allowDemoUser: true);
         if (user == null)
@@ -79,17 +93,17 @@ public partial class UserController
         userProgression.LastSeen = userProgression.LastSeen > DateHelpers.Today ? DateHelpers.Today : userProgression.LastSeen;
         await context.SaveChangesAsync();
 
-        return RedirectToAction(nameof(ManageTask), new { email, token, taskId, WasUpdated = true });
+        return RedirectToAction(nameof(ManageTask), new { email, token, section, taskId, WasUpdated = true });
     }
 
     [HttpPost]
-    [Route("{taskId}/l", Order = 1)]
-    [Route("{taskId}/log", Order = 2)]
-    public async Task<IActionResult> UpsertTask(string email, string token, int taskId, ManageTaskViewModel viewModel)
+    [Route("{section:section}/{taskId}/upsert-task", Order = 1)]
+    [Route("{taskId}/upsert-task", Order = 2)]
+    public async Task<IActionResult> UpsertTask(string email, string token, int taskId, ManageTaskViewModel viewModel, Section? section = null)
     {
         if (!ModelState.IsValid)
         {
-            return RedirectToAction(nameof(ManageTask), new { email, token, taskId, WasUpdated = false });
+            return RedirectToAction(nameof(ManageTask), new { email, token, section, taskId, WasUpdated = false });
         }
 
         var user = await userRepo.GetUser(email, token, allowDemoUser: taskId != default);
@@ -135,7 +149,25 @@ public partial class UserController
             userTask.Section = viewModel.Section;
 
             await context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageTask), new { email, token, taskId, WasUpdated = true });
+            return RedirectToAction(nameof(ManageTask), new { email, token, section, taskId, WasUpdated = true });
         }
+    }
+
+    [HttpPost, Route("delete-task")]
+    public async Task<IActionResult> RemoveTask(string email, string token, Section section, [FromForm] int taskId)
+    {
+        var user = await userRepo.GetUser(email, token);
+        if (user == null)
+        {
+            return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
+        }
+
+        await context.UserTasks
+            .Where(f => f.UserId == user.Id)
+            .Where(f => f.Id == taskId)
+            .ExecuteDeleteAsync();
+
+        TempData[TempData_User.SuccessMessage] = "Your tasks have been updated!";
+        return RedirectToAction(nameof(Edit), new { email, token });
     }
 }

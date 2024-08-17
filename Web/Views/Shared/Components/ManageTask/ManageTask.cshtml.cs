@@ -38,6 +38,8 @@ public class ManageTaskViewModel
     [Display(Name = "Pad Refresh by X Days", Description = "Add a delay before this task is recirculated back into your task list.")]
     public int PadRefreshXDays { get; init; }
 
+    public Section ManageSection { get; set; }
+
     public Section Section { get; set; }
 
     [NotMapped]

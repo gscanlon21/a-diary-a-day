@@ -20,6 +20,8 @@ public class UserTask
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; init; }
 
+    public Guid Uid { get; init; } = Guid.NewGuid();
+
     [Required]
     public int UserId { get; init; }
 
@@ -69,6 +71,9 @@ public class UserTask
 
     [JsonIgnore, InverseProperty(nameof(UserDiaryTask.UserTask))]
     public virtual ICollection<UserDiaryTask> UserDiaryTasks { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserTaskLog.UserTask))]
+    public virtual ICollection<UserTaskLog> UserTaskLogs { get; private init; } = [];
 
     public override int GetHashCode() => HashCode.Combine(Id);
     public override bool Equals(object? obj) => obj is UserTask other

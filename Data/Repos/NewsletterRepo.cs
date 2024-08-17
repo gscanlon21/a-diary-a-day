@@ -206,7 +206,7 @@ public partial class NewsletterRepo
         var components = EnumExtensions.GetSingleValuesExcludingAny32(Components.Journal).Where(c => user.Components.HasFlag(c)).ToList();
         foreach (var component in components)
         {
-            var key = $"{prefix}-{component}";
+            var key = $"{prefix}/{component}";
             yield return new ComponentImage()
             {
                 Type = component,

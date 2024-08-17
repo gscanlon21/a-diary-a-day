@@ -14,17 +14,23 @@ $("[data-dismiss]").each((i, elem) => elem.addEventListener('click', (e) => {
     grandParent.cleanWhitespace();
 }))
 
-window.uploadChart = function uploadChart(chart, width, height, email, token, type) {
+window.uploadChart = function uploadChart(chart, width, height, email, token, type, name) {
     const offscreen = new OffscreenCanvas(width, height);
     const chartDuplicate = new Chart(offscreen, chart.config);
+
+    // Let the charts finish drawing.
     setTimeout(async () => {
         const blob = await offscreen.convertToBlob();
+
         const data = new FormData();
-        const request = new XMLHttpRequest();
         data.append("image", blob);
         data.append("type", type);
         data.append("email", email);
         data.append("token", token);
+        if (name) {
+            data.append("name", name);
+        }
+
         fetch("/api/User/UploadImage", {
             method: "POST",
             body: data,

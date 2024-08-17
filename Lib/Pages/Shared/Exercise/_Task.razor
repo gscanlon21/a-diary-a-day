@@ -41,7 +41,7 @@
     {
         @* Check min and max progression ranges so they don't ignore an exercise outside of their progression range. *@
         <small style="position:absolute;right:0;top:0;padding-inline:1ch;writing-mode:vertical-lr;">
-            <a class="allow-demo" target="_blank" href="@DH.UserLink(User, $"{Model.Task.Id}")">Manage</a>
+            <a class="allow-demo" target="_blank" href="@DH.UserLink(User, $"{Model.Section}/{Model.Task.Id}")">Manage</a>
         </small>
     }
 
@@ -64,11 +64,11 @@
             }
         </div>
 
-        @if (Verbosity.HasFlag(Verbosity.Images) && !string.IsNullOrWhiteSpace(Model.Task.Image))
+        @if (Verbosity.HasFlag(Verbosity.Images) && User != null)
         {
             // If we want to reduce layout shift with aspect-ratio, that really needs to be included on the table with the image because our images don't have consistent aspect ratios.
             // Setting min-height (200 / (25/14)) gets us close though. 25/14 is, for the most part, our widest aspect-ratio.
-            <img style="display:block;margin-top:1ex;height:auto;min-height:112px;max-height:350px;max-width:100%;object-fit:contain;object-position:left top;" loading="lazy" src="@Model.Task.Image" />
+            <img style="display:block;margin-top:1ex;height:auto;min-height:112px;max-height:350px;max-width:100%;object-fit:contain;object-position:left top;" loading="lazy" src="@($"moods/{User.Uid}/{Components.Tasks}-{Model.Task.Uid}")" />
         }
     </div>
 </div>

@@ -11,6 +11,7 @@ using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System.Linq;
 
 namespace Api.Controllers;
 
@@ -19,22 +20,38 @@ namespace Api.Controllers;
 /// </summary>
 [ApiController]
 [Route("[controller]")]
-public class UserController(UserRepo userRepo, CoreContext context, IOptions<DigitalOceanSettings> digitalOceanOptions) : ControllerBase
+public class UserController : ControllerBase
 {
+    private readonly UserRepo _userRepo;
+    private readonly CoreContext _context;
+    private readonly Lazy<AmazonS3Client> _client;
+    private readonly IOptions<DigitalOceanSettings> _digitalOceanOptions;
+
+    public UserController(CoreContext context, UserRepo userRepo, IOptions<DigitalOceanSettings> digitalOceanOptions)
+    {
+        _context = context;
+        _userRepo = userRepo;
+        _digitalOceanOptions = digitalOceanOptions;
+        _client = new Lazy<AmazonS3Client>(() => new AmazonS3Client(digitalOceanOptions.Value.AWSS3AccessKey, digitalOceanOptions.Value.AWSS3SecretKey, new AmazonS3Config()
+        {
+            ServiceURL = digitalOceanOptions.Value.CDNLink
+        }));
+    }
+
     /// <summary>
     /// Get the user.
     /// </summary>
     [HttpGet("User")]
     public async Task<User?> GetUser(string email = UserConsts.DemoUser, string token = UserConsts.DemoToken)
     {
-        return await userRepo.GetUser(email, token);
+        return await _userRepo.GetUser(email, token);
     }
 
     /// <summary>
     /// Get the user's past workouts.
     /// </summary>
     [HttpPost("UploadImage")]
-    public async Task<IActionResult> UploadImage([FromForm] Components type = Components.None, [FromForm] string email = UserConsts.DemoUser, [FromForm] string token = UserConsts.DemoToken, [FromForm] IFormFile? image = null)
+    public async Task<IActionResult> UploadImage([FromForm] Components type = Components.None, [FromForm] string email = UserConsts.DemoUser, [FromForm] string token = UserConsts.DemoToken, [FromForm] IFormFile? image = null, [FromForm] string? name = null)
     {
         if (type == Components.None)
         {
@@ -46,40 +63,34 @@ public class UserController(UserRepo userRepo, CoreContext context, IOptions<Dig
             return BadRequest("Invalid Image");
         }
 
-        var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+        var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
         if (user == null)
         {
             return BadRequest("Invalid User");
         }
 
-        var userComponent = await context.UserComponents.FirstOrDefaultAsync(c => c.UserId == user.Id && c.Component == type);
+        var userComponent = await _context.UserComponents.FirstOrDefaultAsync(c => c.UserId == user.Id && c.Component == type);
         if (userComponent != null && userComponent.LastUpload < DateHelpers.Today)
         {
-            var prefix = $"moods/{user.Uid}";
-            var key = $"{prefix}-{type}";
-            var client = new AmazonS3Client(digitalOceanOptions.Value.AWSS3AccessKey, digitalOceanOptions.Value.AWSS3SecretKey, new AmazonS3Config()
-            {
-                ServiceURL = digitalOceanOptions.Value.CDNLink
-            });
-
             var request = new PutObjectRequest()
             {
-                BucketName = digitalOceanOptions.Value.CDNBucket,
-                Key = key,
-                CannedACL = S3CannedACL.PublicRead,
+                Key = $"moods/{user.Uid}/{type}{name?.Insert(0, "-")}",
+                BucketName = _digitalOceanOptions.Value.CDNBucket,
                 InputStream = image.OpenReadStream(),
+                CannedACL = S3CannedACL.PublicRead,
             };
+
             request.Metadata.Add("Cache-Control", "public, max-age=86400");
-            await client.PutObjectAsync(request);
+            await _client.Value.PutObjectAsync(request);
 
             userComponent.LastUpload = DateHelpers.Today;
         }
         else if (userComponent == null)
         {
-            context.Add(new UserComponent(user.Id, type));
+            _context.Add(new UserComponent(user.Id, type));
         }
 
-        await context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
         return Ok();
     }
 
@@ -89,12 +100,12 @@ public class UserController(UserRepo userRepo, CoreContext context, IOptions<Dig
     [HttpGet("Workouts")]
     public async Task<IList<UserDiary>?> GetWorkouts(string email = UserConsts.DemoUser, string token = UserConsts.DemoToken)
     {
-        var user = await userRepo.GetUser(email, token);
+        var user = await _userRepo.GetUser(email, token);
         if (user == null)
         {
             return null;
         }
 
-        return await userRepo.GetPastDiaries(user);
+        return await _userRepo.GetPastDiaries(user);
     }
 }

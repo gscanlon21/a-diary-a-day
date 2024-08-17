@@ -61,8 +61,11 @@ public enum Components
     [Display(Name = "Complete Metabolic Panel")]
     CompleteMetabolicPanel = 1 << 16, // 65536
 
+    [Display(Name = "Tasks")]
+    Tasks = 1 << 17, // 131072
+
     All = Mood | Sleep | People | Symptom | Emotion | Activity | Medicine
         | AcuteStressSeverity | AgoraphobiaSeverity | DepressionSeverity | DissociativeSeverity
         | GeneralizedAnxietySeverity | PanicSeverity | PTSDSeverity | SocialAnxietySeverity
-        | Journal | CompleteMetabolicPanel
+        | Journal | CompleteMetabolicPanel | Tasks
 }

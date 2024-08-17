@@ -1,12 +1,31 @@
 ﻿@model Views.Shared.Components.ManageRecipe.ManageTaskViewModel
 @using System.Numerics
 @using Core.Consts
+@using Web.Components.UserTask
 
 <div class="alert alert-light shadow">
     @if (Model.UserTask.Id != default)
     {
-        <form asp-controller="@UserController.Name" class="row mb-3" asp-action="@nameof(UserController.RefreshRecipe)" method="post"
-              asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" asp-route-taskId="@Model.UserTask.Id">
+        <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.CompleteTask)" method="post"
+              asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" asp-route-section="@Model.ManageSection" asp-route-taskId="@Model.UserTask.Id">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mb-3">
+                <label for="Recipe-name" class="control-label">@Html.DisplayNameFor(_ => Model.Name)</label>
+                <div class="input-group">
+                    <textarea id="Recipe-name" class="form-control" disabled="disabled" aria-describedby="Recipe-help" rows="1">@Model.UserTask.Name</textarea>
+                    <input type="submit" value="Complete" class="btn btn-outline-secondary" @(Model.User.IsDemoUser ? "disabled='disabled'" : "") />
+                </div>
+                <span asp-validation-for="Name" class="text-danger"></span>
+                <div id="Recipe-help" class="form-text">
+                    @Html.DisplayDescriptionFor(_ => Model.Name)
+                </div>
+            </div>
+        </form>
+
+        <form asp-controller="@UserController.Name" class="row mb-3" asp-action="@nameof(UserController.RefreshTask)" method="post"
+              asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" asp-route-section="@Model.ManageSection" asp-route-taskId="@Model.UserTask.Id">
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -26,15 +45,22 @@
     }
 
     <form id="task-form" asp-controller="@UserController.Name" asp-action="@nameof(UserController.UpsertTask)" method="post" class="mb-3"
-          asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" asp-route-taskId="@Model.UserTask.Id">
+          asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" asp-route-section="@Model.ManageSection" asp-route-taskId="@Model.UserTask.Id">
 
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        <div class="form-group mb-3">
-            <label for="Name" class="control-label">@Html.DisplayNameFor(_ => Model.Name)</label>
-            <input type="text" asp-for="Name" class="form-control" aria-describedby="exercise-notes-help" rows="1" value="@Model.Name" />
-            <span asp-validation-for="Name" class="text-danger"></span>
-        </div>
+        @if (Model.UserTask.Id == default)
+        {
+            <div class="form-group mb-3">
+                <label for="Name" class="control-label">@Html.DisplayNameFor(_ => Model.Name)</label>
+                <input type="text" asp-for="Name" class="form-control" aria-describedby="exercise-notes-help" rows="1" value="@Model.Name" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        }
+        else
+        {
+            <input type="hidden" name="Name" asp-for="@Model.UserTask.Name" />
+        }
 
         <div class="form-group mb-3 mt-3">
             <label for="Notes" class="control-label">@Html.DisplayNameFor(_ => Model.Notes)</label>
@@ -123,7 +149,8 @@
         @if (Model.UserTask.Id != default)
         {
             <div class="col-auto">
-                <form id="delete-form" asp-controller="@UserController.Name" asp-action="@nameof(UserController.RemoveTask)" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" method="post">
+                <form id="delete-form" asp-controller="@UserController.Name" asp-action="@nameof(UserController.RemoveTask)" method="post"
+                      asp-route-email="@Model.User.Email" asp-route-section="@Model.ManageSection" asp-route-token="@Model.Token">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" name="TaskId" asp-for="@Model.UserTask.Id" />
 
@@ -133,10 +160,8 @@
         }
     </div>
 
-    @if (Model.Task != null)
+    @if (Model.UserTask.Id != default)
     {
-        <component type="typeof(Microsoft.AspNetCore.Components.CascadingValue<Core.Dtos.User.UserNewsletterDto?>)" render-mode="Static" param-Value="null">
-            <component type="typeof(Lib.Pages.Shared.Exercise._Task)" render-mode="Static" param-Model='Model.Task' param-Verbosity="Model.RecipeVerbosity" />
-        </component>
+        @await Component.InvokeAsync(TaskLogViewComponent.Name, new { Model.User, Task = Model.UserTask })
     }
 </div>

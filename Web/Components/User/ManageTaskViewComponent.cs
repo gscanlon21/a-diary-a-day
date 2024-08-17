@@ -1,7 +1,6 @@
 ﻿using Core.Dtos.Newsletter;
 using Core.Models.Newsletter;
 using Data;
-using Data.Entities.Task;
 using Data.Models;
 using Data.Query.Builders;
 using Data.Repos;
@@ -30,7 +29,7 @@ public class ManageTaskViewComponent : ViewComponent
         _serviceScopeFactory = serviceScopeFactory;
     }
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user, UserTask task)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user, Data.Entities.Task.UserTask task, Section section = Section.None)
     {
         var token = await _userRepo.AddUserToken(user, durationDays: 1);
         if (task == null)
@@ -39,7 +38,7 @@ public class ManageTaskViewComponent : ViewComponent
             {
                 User = user,
                 Token = token,
-                UserTask = new UserTask()
+                UserTask = new Data.Entities.Task.UserTask()
                 {
                     UserId = user.Id
                 }
@@ -67,6 +66,7 @@ public class ManageTaskViewComponent : ViewComponent
             UserTask = userTask,
             Name = userTask.Name,
             Notes = userTask.Notes,
+            ManageSection = section,
             Section = userTask.Section,
             LagRefreshXDays = userTask.LagRefreshXDays,
             PadRefreshXDays = userTask.PadRefreshXDays,

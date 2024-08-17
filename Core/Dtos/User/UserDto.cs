@@ -17,7 +17,7 @@ public class UserDto : IUser
 {
     public int Id { get; init; }
 
-    public Guid Uid { get; init; } = Guid.NewGuid();
+    public Guid Uid { get; init; }
 
     /// <summary>
     /// The user's email address.

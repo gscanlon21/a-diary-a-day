@@ -1,4 +1,5 @@
-﻿using Data.Entities.Task;
+﻿using Core.Models.Newsletter;
+using Data.Entities.Task;
 
 namespace Web.Views.User;
 
@@ -12,4 +13,6 @@ public class UserManageTaskViewModel
     public required UserTask Task { get; init; }
 
     public bool? WasUpdated { get; init; }
+
+    public Section Section { get; init; }
 }

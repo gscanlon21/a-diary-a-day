@@ -17,6 +17,7 @@ public class UserNewsletterDto
     public UserNewsletterDto(UserDto user, string token)
     {
         Id = user.Id;
+        Uid = user.Uid;
         Email = user.Email;
         Features = user.Features;
         FootnoteType = user.FootnoteType;
@@ -29,6 +30,8 @@ public class UserNewsletterDto
     }
 
     public int Id { get; init; }
+
+    public Guid Uid { get; init; }
 
     public string Email { get; init; } = null!;
 

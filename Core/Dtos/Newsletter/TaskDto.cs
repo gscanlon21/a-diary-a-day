@@ -11,6 +11,8 @@ public class TaskDto
 {
     public int Id { get; init; }
 
+    public Guid Uid { get; init; }
+
     public int? UserId { get; init; }
 
     /// <summary>
@@ -19,8 +21,6 @@ public class TaskDto
     public string Name { get; set; } = null!;
 
     public Section Section { get; set; }
-
-    public string? Image { get; set; } = null;
 
     /// <summary>
     /// Notes about the recipe (externally shown).
