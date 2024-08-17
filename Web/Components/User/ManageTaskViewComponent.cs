@@ -59,6 +59,11 @@ public class ManageTaskViewComponent : ViewComponent
             // May return more than one recipe if the recipe has ingredient recipes.
             .FirstOrDefault(r => r.Task.Id == task.Id);
 
+        var userTaskLog = await _context.UserTaskLogs
+            .Where(ut => ut.UserTaskId == userTask.Id)
+            .Where(ut => ut.Section == section)
+            .FirstOrDefaultAsync(ut => ut.Date == DateHelpers.Today);
+
         return View("ManageTask", new ManageTaskViewModel()
         {
             User = user,
@@ -70,6 +75,7 @@ public class ManageTaskViewComponent : ViewComponent
             Section = userTask.Section,
             LagRefreshXDays = userTask.LagRefreshXDays,
             PadRefreshXDays = userTask.PadRefreshXDays,
+            CompletedForSection = userTaskLog?.Complete > 0,
             Task = taskDto?.AsType<NewsletterTaskDto, QueryResults>()!,
         });
     }

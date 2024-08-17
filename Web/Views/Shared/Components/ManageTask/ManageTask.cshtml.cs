@@ -10,6 +10,8 @@ namespace Web.Views.Shared.Components.ManageRecipe;
 
 public class ManageTaskViewModel
 {
+    public bool CompletedForSection { get; init; }
+
     public string Token { get; init; } = null!;
 
     [ValidateNever]

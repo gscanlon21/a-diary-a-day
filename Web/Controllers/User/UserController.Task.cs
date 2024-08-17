@@ -46,6 +46,8 @@ public partial class UserController
 
         // Set the new weight on the UserVariation.
         var userTask = await context.UserTasks.FirstAsync(p => p.UserId == user.Id && p.Id == taskId);
+        userTask.LastCompleted = DateHelpers.Today;
+
         var todaysUserLog = await context.UserTaskLogs
             .Where(uw => uw.UserTaskId == userTask.Id)
             .Where(um => um.Section == section)

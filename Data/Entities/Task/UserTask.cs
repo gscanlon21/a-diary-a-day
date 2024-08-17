@@ -45,6 +45,15 @@ public class UserTask
     public DateOnly LastSeen { get; set; }
 
     /// <summary>
+    /// When was this exercise last seen in the user's newsletter.
+    /// </summary>
+    [Required]
+    public DateOnly LastCompleted { get; set; }
+
+    [NotMapped]
+    public bool LastCompletedToday => LastCompleted == DateHelpers.Today;
+
+    /// <summary>
     /// If this is set, will not update the LastSeen date until this date is reached.
     /// This is so we can reduce the variation of feasts and show the same groups of recipes for a month+ straight.
     /// </summary>

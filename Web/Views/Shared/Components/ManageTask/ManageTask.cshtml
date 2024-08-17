@@ -15,7 +15,7 @@
                 <label for="Recipe-name" class="control-label">@Html.DisplayNameFor(_ => Model.Name)</label>
                 <div class="input-group">
                     <textarea id="Recipe-name" class="form-control" disabled="disabled" aria-describedby="Recipe-help" rows="1">@Model.UserTask.Name</textarea>
-                    <input type="submit" value="Complete" class="btn btn-outline-secondary allow-demo" />
+                    <input type="submit" value="@(Model.CompletedForSection ? "Completed" : "Complete")" class="btn btn-outline-secondary allow-demo" />
                 </div>
                 <span asp-validation-for="Name" class="text-danger"></span>
                 <div id="Recipe-help" class="form-text">
