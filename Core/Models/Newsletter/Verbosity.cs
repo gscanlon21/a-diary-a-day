@@ -17,9 +17,28 @@ public enum Verbosity
     Images = 1 << 0, // 1
 
     /// <summary>
-    /// This is not user-facing. 
-    /// It should not have a Display attribute. 
+    /// Show notes to the user.
     /// </summary>
-    Debug = Images
-        | 1 << 30 // 1073741824
+    [Display(Name = "Notes")]
+    Notes = 1 << 1, // 2
+
+    /// <summary>
+    /// Show section to the user.
+    /// </summary>
+    Section = 1 << 2, // 4
+
+    /// <summary>
+    /// Show lag refresh to the user.
+    /// </summary>
+    LagRefresh = 1 << 3, // 8
+
+    /// <summary>
+    /// Show pad refresh to the user.
+    /// </summary>
+    PadRefresh = 1 << 4, // 16
+
+    /// <summary>
+    /// Show enabled to the user.
+    /// </summary>
+    Enabled = 1 << 5, // 32
 }

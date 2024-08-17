@@ -12,5 +12,5 @@ public class TasksViewModel
 
     public required UserNewsletterDto UserNewsletter { get; init; }
 
-    public Verbosity Verbosity => Verbosity.Images;
+    public Verbosity Verbosity => Verbosity.None;
 }

@@ -56,7 +56,7 @@
             </div>
             <div class="form-group mb-3">
                 <label asp-for="VerbosityBinder" class="control-label">@Html.DisplayNameFor(_ => Model.Verbosity)</label>
-                <select asp-for="VerbosityBinder" class="form-control overflow-auto" aria-describedby="verbosity-help" size="5"
+                <select asp-for="VerbosityBinder" class="form-control overflow-auto" aria-describedby="verbosity-help" size="2"
                         asp-items="@(EnumExtensions.GetDisplayValues<Verbosity>().AsSelectListItems32(EnumViewExtensions.EnumOrdering.Text))">
                 </select>
                 <span asp-validation-for="VerbosityBinder" class="text-danger"></span>

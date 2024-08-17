@@ -41,7 +41,7 @@ public class UserConsts
 
     public const Days DaysDefault = Days.Monday | Days.Tuesday | Days.Thursday | Days.Friday;
 
-    public const Verbosity VerbosityDefault = Verbosity.Images;
+    public const Verbosity VerbosityDefault = Verbosity.Images | Verbosity.Notes;
 
     public const FootnoteType FootnotesDefault = FootnoteType.FitnessTips | FootnoteType.FitnessFacts
         | FootnoteType.HealthTips | FootnoteType.HealthFacts | FootnoteType.GoodVibes | FootnoteType.Mindfulness;
