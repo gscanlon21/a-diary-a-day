@@ -14,7 +14,8 @@
             <div class="form-group mb-3">
                 <label for="Recipe-name" class="control-label">@Html.DisplayNameFor(_ => Model.Name)</label>
                 <div class="input-group">
-                    <textarea id="Recipe-name" class="form-control" disabled="disabled" aria-describedby="Recipe-help" rows="1">@Model.UserTask.Name</textarea>
+                    <textarea id="Recipe-name" class="form-control" aria-describedby="Recipe-help" rows="1"
+                              oninput="document.getElementById('@(Html.IdFor(_ => Model.UserTask.Name))').value = this.value">@Model.UserTask.Name</textarea>
                     <input type="submit" value="@(Model.CompletedForSection ? "Completed" : "Complete")" class="btn btn-outline-secondary allow-demo" />
                 </div>
                 <span asp-validation-for="Name" class="text-danger"></span>
