@@ -11,7 +11,6 @@ using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using System.Linq;
 
 namespace Api.Controllers;
 
@@ -69,7 +68,33 @@ public class UserController : ControllerBase
             return BadRequest("Invalid User");
         }
 
-        var userComponent = await _context.UserComponents.FirstOrDefaultAsync(c => c.UserId == user.Id && c.Component == type);
+        if (name != null)
+        {
+            // Named images are only allowed for the tasks component.
+            if (type != Components.Tasks)
+            {
+                return BadRequest("Invalid Name");
+            }
+
+            // Make sure that the user isn't uploading too many images.
+            if (await _context.UserTasks.CountAsync(ut => ut.UserId == user.Id) > UserConsts.MaxTasks)
+            {
+                return BadRequest("Invalid Name");
+            }
+
+            // Make sure the task exists in our system.
+            if (Guid.TryParse(name, out Guid guidName) ? !await _context.UserTasks.AnyAsync(ut => ut.UserId == user.Id && ut.Uid == guidName) : true)
+            {
+                return BadRequest("Invalid Name");
+            }
+        }
+
+        var userComponent = await _context.UserComponents
+            .Where(uc => uc.UserId == user.Id)
+            .Where(uc => uc.Component == type)
+            .Where(uc => uc.Name == name)
+            .FirstOrDefaultAsync();
+
         if (userComponent != null && userComponent.LastUpload < DateHelpers.Today)
         {
             var request = new PutObjectRequest()
@@ -87,7 +112,10 @@ public class UserController : ControllerBase
         }
         else if (userComponent == null)
         {
-            _context.Add(new UserComponent(user.Id, type));
+            _context.Add(new UserComponent(user.Id, type)
+            {
+                Name = name
+            });
         }
 
         await _context.SaveChangesAsync();

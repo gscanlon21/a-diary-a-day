@@ -7,10 +7,7 @@ using System.Text.Json.Serialization;
 namespace Data.Entities.User;
 
 /// <summary>
-/// User's progression level of an exercise.
-/// 
-/// TODO Scopes.
-/// TODO Single-use tokens.
+/// Tracks component image upload dates.
 /// </summary>
 [Table("user_component"), Comment("Auth tokens for a user")]
 public class UserComponent
@@ -28,6 +25,8 @@ public class UserComponent
 
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; init; }
+
+    public string? Name { get; init; }
 
     /// <summary>
     /// Used as a unique user identifier in email links. This valus is switched out every day to expire old links.

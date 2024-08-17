@@ -12,6 +12,11 @@ public class UserConsts
     public const string DemoUser = "demo@amoodaday.com";
     public const string DemoToken = "00000000-0000-0000-0000-000000000000";
 
+    /// <summary>
+    /// Since we upload an image for each task, let's limit it to keep costs low.
+    /// </summary>
+    public const int MaxTasks = 100;
+
     public const int SendHourMin = 0;
     public const int SendHourDefault = 0;
     public const int SendHourMax = 23;

@@ -4,7 +4,6 @@ using Core.Code.Helpers;
 using Core.Consts;
 using Core.Models.Options;
 using Data;
-using Data.Entities.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Quartz;

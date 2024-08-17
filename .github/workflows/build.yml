@@ -39,6 +39,8 @@ jobs:
     name: Android Build
     runs-on: windows-latest
     steps:
+      - run: git config --global pack.window 1
+      - run: git config --global pack.windowsMemory 1024m
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -46,7 +48,7 @@ jobs:
           ssh-key: '${{ secrets.AMOODADAY_SSH_KEY }}'
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
           
@@ -78,7 +80,7 @@ jobs:
           ssh-key: '${{ secrets.AMOODADAY_SSH_KEY }}'
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -110,7 +112,7 @@ jobs:
           ssh-key: '${{ secrets.AMOODADAY_SSH_KEY }}'
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -142,7 +144,7 @@ jobs:
           ssh-key: '${{ secrets.AMOODADAY_SSH_KEY }}'
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -165,7 +167,8 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    if: ${{ always() && startsWith(github.ref, 'refs/tags/') }}
+    # Run if previous jobs were successful or skipped
+    if: ${{ always() && !failure() && !cancelled() && startsWith(github.ref, 'refs/tags/') }}
     needs: [build-android, build-windows, build-ios, build-mac]
     steps:
       - name: Download Artifacts

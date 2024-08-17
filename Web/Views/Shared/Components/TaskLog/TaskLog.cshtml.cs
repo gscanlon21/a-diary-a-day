@@ -1,5 +1,4 @@
-﻿using Core.Models.User;
-using Data.Entities.Task;
+﻿using Data.Entities.Task;
 
 namespace Web.Views.Shared.Components.TaskLog;
 

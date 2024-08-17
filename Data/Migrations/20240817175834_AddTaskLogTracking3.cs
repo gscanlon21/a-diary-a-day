@@ -5,25 +5,24 @@
 namespace Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AddTaskLogTracking2 : Migration
+    public partial class AddTaskLogTracking3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<Guid>(
-                name: "Uid",
-                table: "user_task",
-                type: "uuid",
-                nullable: false,
-                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
+            migrationBuilder.AddColumn<string>(
+                name: "Name",
+                table: "user_component",
+                type: "text",
+                nullable: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Uid",
-                table: "user_task");
+                name: "Name",
+                table: "user_component");
         }
     }
 }

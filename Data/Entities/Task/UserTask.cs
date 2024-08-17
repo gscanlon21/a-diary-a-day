@@ -31,8 +31,6 @@ public class UserTask
     [Required]
     public string Name { get; set; } = null!;
 
-    public string? Image { get; set; } = null;
-
     /// <summary>
     /// Notes about the recipe (externally shown).
     /// </summary>
