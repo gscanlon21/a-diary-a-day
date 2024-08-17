@@ -12,15 +12,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Data.Migrations
 {
     [DbContext(typeof(CoreContext))]
-    [Migration("20240810224728_AddCompleteMetabolicPanel")]
-    partial class AddCompleteMetabolicPanel
+    [Migration("20240817224034_SquashMigrations")]
+    partial class SquashMigrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -119,6 +119,63 @@ namespace Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Data.Entities.Newsletter.UserDiary", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Logs")
+                        .HasColumnType("text");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("user_diary", t =>
+                        {
+                            t.HasComment("A day's workout routine");
+                        });
+                });
+
+            modelBuilder.Entity("Data.Entities.Newsletter.UserDiaryTask", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Order")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Section")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserDiaryId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserTaskId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserDiaryId");
+
+                    b.HasIndex("UserTaskId");
+
+                    b.ToTable("user_diary_task", t =>
+                        {
+                            t.HasComment("A day's workout routine");
+                        });
+                });
+
             modelBuilder.Entity("Data.Entities.Newsletter.UserEmail", b =>
                 {
                     b.Property<int>("Id")
@@ -163,6 +220,88 @@ namespace Data.Migrations
                     b.ToTable("user_email", t =>
                         {
                             t.HasComment("A day's workout routine");
+                        });
+                });
+
+            modelBuilder.Entity("Data.Entities.Task.UserTask", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("DisabledReason")
+                        .HasColumnType("text");
+
+                    b.Property<int>("LagRefreshXDays")
+                        .HasColumnType("integer");
+
+                    b.Property<DateOnly>("LastCompleted")
+                        .HasColumnType("date");
+
+                    b.Property<DateOnly>("LastSeen")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("text");
+
+                    b.Property<int>("PadRefreshXDays")
+                        .HasColumnType("integer");
+
+                    b.Property<DateOnly?>("RefreshAfter")
+                        .HasColumnType("date");
+
+                    b.Property<int>("Section")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("Uid")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("user_task", t =>
+                        {
+                            t.HasComment("Tasks listed on the website");
+                        });
+                });
+
+            modelBuilder.Entity("Data.Entities.Task.UserTaskLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Complete")
+                        .HasColumnType("integer");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<int>("Section")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserTaskId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserTaskId");
+
+                    b.ToTable("user_task_log", t =>
+                        {
+                            t.HasComment("User task log");
                         });
                 });
 
@@ -526,6 +665,9 @@ namespace Data.Migrations
 
                     b.Property<DateOnly>("LastUpload")
                         .HasColumnType("date");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
@@ -1258,6 +1400,25 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Data.Entities.Newsletter.UserDiaryTask", b =>
+                {
+                    b.HasOne("Data.Entities.Newsletter.UserDiary", "UserDiary")
+                        .WithMany("UserDiaryTasks")
+                        .HasForeignKey("UserDiaryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Entities.Task.UserTask", "UserTask")
+                        .WithMany("UserDiaryTasks")
+                        .HasForeignKey("UserTaskId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserDiary");
+
+                    b.Navigation("UserTask");
+                });
+
             modelBuilder.Entity("Data.Entities.Newsletter.UserEmail", b =>
                 {
                     b.HasOne("Data.Entities.User.User", "User")
@@ -1267,6 +1428,28 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Data.Entities.Task.UserTask", b =>
+                {
+                    b.HasOne("Data.Entities.User.User", "User")
+                        .WithMany("UserTasks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Data.Entities.Task.UserTaskLog", b =>
+                {
+                    b.HasOne("Data.Entities.Task.UserTask", "UserTask")
+                        .WithMany("UserTaskLogs")
+                        .HasForeignKey("UserTaskId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserTask");
                 });
 
             modelBuilder.Entity("Data.Entities.User.UserActivity", b =>
@@ -1612,6 +1795,18 @@ namespace Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Data.Entities.Newsletter.UserDiary", b =>
+                {
+                    b.Navigation("UserDiaryTasks");
+                });
+
+            modelBuilder.Entity("Data.Entities.Task.UserTask", b =>
+                {
+                    b.Navigation("UserDiaryTasks");
+
+                    b.Navigation("UserTaskLogs");
+                });
+
             modelBuilder.Entity("Data.Entities.User.User", b =>
                 {
                     b.Navigation("UserActivities");
@@ -1663,6 +1858,8 @@ namespace Data.Migrations
                     b.Navigation("UserSocialAnxietySeverities");
 
                     b.Navigation("UserSymptoms");
+
+                    b.Navigation("UserTasks");
 
                     b.Navigation("UserTokens");
                 });

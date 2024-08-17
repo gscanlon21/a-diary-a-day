@@ -45,6 +45,8 @@ namespace Data.Migrations
                     NewsletterDisabledReason = table.Column<string>(type: "text", nullable: true),
                     Components = table.Column<int>(type: "integer", nullable: false),
                     Features = table.Column<int>(type: "integer", nullable: false),
+                    FeastEmail = table.Column<string>(type: "text", nullable: true),
+                    FeastToken = table.Column<string>(type: "text", nullable: true),
                     FootnoteCountTop = table.Column<int>(type: "integer", nullable: false),
                     FootnoteCountBottom = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -53,6 +55,22 @@ namespace Data.Migrations
                     table.PrimaryKey("PK_user", x => x.Id);
                 },
                 comment: "User who signed up for the newsletter");
+
+            migrationBuilder.CreateTable(
+                name: "user_diary",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Logs = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_diary", x => x.Id);
+                },
+                comment: "A day's workout routine");
 
             migrationBuilder.CreateTable(
                 name: "user_activity",
@@ -189,11 +207,49 @@ namespace Data.Migrations
                 comment: "User variation weight log");
 
             migrationBuilder.CreateTable(
+                name: "user_complete_metabolic_panel",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Glucose = table.Column<int>(type: "integer", nullable: true),
+                    Sodium = table.Column<int>(type: "integer", nullable: true),
+                    Potassium = table.Column<int>(type: "integer", nullable: true),
+                    Chloride = table.Column<int>(type: "integer", nullable: true),
+                    CO2 = table.Column<int>(type: "integer", nullable: true),
+                    Calcium = table.Column<int>(type: "integer", nullable: true),
+                    AnionGap = table.Column<int>(type: "integer", nullable: true),
+                    BUN = table.Column<int>(type: "integer", nullable: true),
+                    Creatinine = table.Column<int>(type: "integer", nullable: true),
+                    AlkalinePhosphatase = table.Column<int>(type: "integer", nullable: true),
+                    ALT = table.Column<int>(type: "integer", nullable: true),
+                    AST = table.Column<int>(type: "integer", nullable: true),
+                    ProteinTotal = table.Column<int>(type: "integer", nullable: true),
+                    Albumin = table.Column<int>(type: "integer", nullable: true),
+                    BilirubinTotal = table.Column<int>(type: "integer", nullable: true),
+                    EGFRbyCKDEPI = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_complete_metabolic_panel", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_complete_metabolic_panel_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                },
+                comment: "User variation weight log");
+
+            migrationBuilder.CreateTable(
                 name: "user_component",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: true),
                     Component = table.Column<int>(type: "integer", nullable: false),
                     UserId = table.Column<int>(type: "integer", nullable: false),
                     LastUpload = table.Column<DateOnly>(type: "date", nullable: false)
@@ -674,6 +730,36 @@ namespace Data.Migrations
                 comment: "User variation weight log");
 
             migrationBuilder.CreateTable(
+                name: "user_task",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Uid = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Notes = table.Column<string>(type: "text", nullable: true),
+                    Section = table.Column<int>(type: "integer", nullable: false),
+                    LastSeen = table.Column<DateOnly>(type: "date", nullable: false),
+                    LastCompleted = table.Column<DateOnly>(type: "date", nullable: false),
+                    RefreshAfter = table.Column<DateOnly>(type: "date", nullable: true),
+                    LagRefreshXDays = table.Column<int>(type: "integer", nullable: false),
+                    PadRefreshXDays = table.Column<int>(type: "integer", nullable: false),
+                    DisabledReason = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_task", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_task_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                },
+                comment: "Tasks listed on the website");
+
+            migrationBuilder.CreateTable(
                 name: "user_token",
                 columns: table => new
                 {
@@ -839,6 +925,58 @@ namespace Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "user_diary_task",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserDiaryId = table.Column<int>(type: "integer", nullable: false),
+                    UserTaskId = table.Column<int>(type: "integer", nullable: false),
+                    Order = table.Column<int>(type: "integer", nullable: false),
+                    Section = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_diary_task", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_diary_task_user_diary_UserDiaryId",
+                        column: x => x.UserDiaryId,
+                        principalTable: "user_diary",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_user_diary_task_user_task_UserTaskId",
+                        column: x => x.UserTaskId,
+                        principalTable: "user_task",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                },
+                comment: "A day's workout routine");
+
+            migrationBuilder.CreateTable(
+                name: "user_task_log",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserTaskId = table.Column<int>(type: "integer", nullable: false),
+                    Section = table.Column<int>(type: "integer", nullable: false),
+                    Complete = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_task_log", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_task_log_user_task_UserTaskId",
+                        column: x => x.UserTaskId,
+                        principalTable: "user_task",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                },
+                comment: "User task log");
+
             migrationBuilder.CreateIndex(
                 name: "IX_user_Email",
                 table: "user",
@@ -871,6 +1009,11 @@ namespace Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_user_complete_metabolic_panel_UserId",
+                table: "user_complete_metabolic_panel",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_user_component_UserId",
                 table: "user_component",
                 column: "UserId");
@@ -889,6 +1032,16 @@ namespace Data.Migrations
                 name: "IX_user_depression_severity_UserId",
                 table: "user_depression_severity",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_diary_task_UserDiaryId",
+                table: "user_diary_task",
+                column: "UserDiaryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_diary_task_UserTaskId",
+                table: "user_diary_task",
+                column: "UserTaskId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_user_dissociative_severity_UserId",
@@ -966,6 +1119,16 @@ namespace Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_user_task_UserId",
+                table: "user_task",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_task_log_UserTaskId",
+                table: "user_task_log",
+                column: "UserTaskId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_user_token_UserId_Token",
                 table: "user_token",
                 columns: new[] { "UserId", "Token" });
@@ -1020,6 +1183,9 @@ namespace Data.Migrations
                 name: "user_anxiety");
 
             migrationBuilder.DropTable(
+                name: "user_complete_metabolic_panel");
+
+            migrationBuilder.DropTable(
                 name: "user_component");
 
             migrationBuilder.DropTable(
@@ -1027,6 +1193,9 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "user_depression_severity");
+
+            migrationBuilder.DropTable(
+                name: "user_diary_task");
 
             migrationBuilder.DropTable(
                 name: "user_dissociative_severity");
@@ -1059,6 +1228,9 @@ namespace Data.Migrations
                 name: "user_social_anxiety_severity");
 
             migrationBuilder.DropTable(
+                name: "user_task_log");
+
+            migrationBuilder.DropTable(
                 name: "user_token");
 
             migrationBuilder.DropTable(
@@ -1078,6 +1250,12 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserCustomUserSymptom");
+
+            migrationBuilder.DropTable(
+                name: "user_diary");
+
+            migrationBuilder.DropTable(
+                name: "user_task");
 
             migrationBuilder.DropTable(
                 name: "user_activity");
