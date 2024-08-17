@@ -95,22 +95,30 @@ public class UserController : ControllerBase
             .Where(uc => uc.Name == name)
             .FirstOrDefaultAsync();
 
-        if (userComponent != null && userComponent.LastUpload < DateHelpers.Today)
+        // Image was already uploaded today.
+        if (userComponent?.LastUpload >= DateHelpers.Today == true)
         {
-            var request = new PutObjectRequest()
-            {
-                Key = $"moods/{user.Uid}/{type}{name?.Insert(0, "-")}",
-                BucketName = _digitalOceanOptions.Value.CDNBucket,
-                InputStream = image.OpenReadStream(),
-                CannedACL = S3CannedACL.PublicRead,
-            };
+            return Ok();
+        }
 
-            request.Metadata.Add("Cache-Control", "public, max-age=86400");
-            await _client.Value.PutObjectAsync(request);
+        // Upload the image.
+        var request = new PutObjectRequest()
+        {
+            Key = $"moods/{user.Uid}/{type}{name?.Insert(0, "-")}",
+            BucketName = _digitalOceanOptions.Value.CDNBucket,
+            InputStream = image.OpenReadStream(),
+            CannedACL = S3CannedACL.PublicRead,
+        };
 
+        request.Metadata.Add("Cache-Control", "public, max-age=86400");
+        await _client.Value.PutObjectAsync(request);
+
+        // Update the LastUpload date.
+        if (userComponent != null)
+        {
             userComponent.LastUpload = DateHelpers.Today;
         }
-        else if (userComponent == null)
+        else
         {
             _context.Add(new UserComponent(user.Id, type)
             {
