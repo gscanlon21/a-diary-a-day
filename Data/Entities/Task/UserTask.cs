@@ -36,6 +36,8 @@ public class UserTask
     /// </summary>
     public string? Notes { get; set; } = null;
 
+    public bool PersistUntilComplete { get; set; }
+
     public Section Section { get; set; }
 
     /// <summary>

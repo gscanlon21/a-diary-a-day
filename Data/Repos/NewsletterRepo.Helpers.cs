@@ -1,4 +1,5 @@
 ﻿using Data.Entities.Newsletter;
+using Data.Entities.Task;
 using Data.Entities.User;
 using Data.Models;
 using Data.Models.Newsletter;
@@ -52,28 +53,28 @@ public partial class NewsletterRepo
     /// <param name="refreshAfter">
     ///     When set and the date is > Today, hold off on refreshing the LastSeen date so that we see the same exercises in each workout.
     /// </param>
-    internal async Task UpdateLastSeenDate(IEnumerable<QueryResults> tasks)
+    public async Task UpdateLastSeenDate(IEnumerable<UserTask> tasks)
     {
         using var scope = _serviceScopeFactory.CreateScope();
         using var scopedCoreContext = scope.ServiceProvider.GetRequiredService<CoreContext>();
 
-        foreach (var task in tasks.DistinctBy(e => e.Task))
+        foreach (var task in tasks.DistinctBy(e => e))
         {
             // >= so that today is the last day seeing the same exercises and tomorrow the exercises will refresh.
-            if (task.Task != null && (task.Task.RefreshAfter == null || DateHelpers.Today >= task.Task.RefreshAfter))
+            if (task != null && (task.RefreshAfter == null || DateHelpers.Today >= task.RefreshAfter))
             {
-                var refreshAfter = task.Task.LagRefreshXDays == 0 ? (DateOnly?)null : DateHelpers.Today.AddDays(task.Task.LagRefreshXDays);
+                var refreshAfter = task.LagRefreshXDays == 0 ? (DateOnly?)null : DateHelpers.Today.AddDays(task.LagRefreshXDays);
                 // If refresh after is today, we want to see a different exercises tomorrow so update the last seen date.
-                if (task.Task.RefreshAfter == null && refreshAfter.HasValue && refreshAfter.Value > DateHelpers.Today)
+                if (task.RefreshAfter == null && refreshAfter.HasValue && refreshAfter.Value > DateHelpers.Today)
                 {
-                    task.Task.RefreshAfter = refreshAfter.Value;
+                    task.RefreshAfter = refreshAfter.Value;
                 }
                 else
                 {
-                    task.Task.RefreshAfter = null;
-                    task.Task.LastSeen = DateHelpers.Today.AddDays(task.Task.PadRefreshXDays);
+                    task.RefreshAfter = null;
+                    task.LastSeen = DateHelpers.Today.AddDays(task.PadRefreshXDays);
                 }
-                scopedCoreContext.UserTasks.Update(task.Task);
+                scopedCoreContext.UserTasks.Update(task);
             }
         }
 

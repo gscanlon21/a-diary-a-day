@@ -16,7 +16,7 @@ public partial class UserController
     [Route("mood", Order = 2)]
     public async Task<IActionResult> ManageMood(string email, string token, bool? wasUpdated = null)
     {
-        var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+        var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
         if (user == null)
         {
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
@@ -24,11 +24,11 @@ public partial class UserController
 
         var parameters = new UserManageMoodViewModel.TheParameters(email, token);
 
-        var userMood = await context.UserMoods
+        var userMood = await _context.UserMoods
             .IgnoreQueryFilters()
             .FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
 
-        var userWeights = await context.UserMoods
+        var userWeights = await _context.UserMoods
                 .Where(uw => uw.UserId == user.Id)
                 .ToListAsync();
 
@@ -47,17 +47,17 @@ public partial class UserController
     {
         if (true || ModelState.IsValid)
         {
-            var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
             if (user == null)
             {
                 return NotFound();
             }
 
             // Set the new weight on the UserVariation
-            var previousUserMood = await context.UserMoods.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
+            var previousUserMood = await _context.UserMoods.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (previousUserMood == null)
             {
-                context.Add(new UserMood()
+                _context.Add(new UserMood()
                 {
                     Date = DateHelpers.Today,
                     UserId = user.Id,
@@ -69,7 +69,7 @@ public partial class UserController
                 previousUserMood.Mood = userMood.Mood;
             }
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
         }
 
@@ -83,16 +83,16 @@ public partial class UserController
     {
         if (true || ModelState.IsValid)
         {
-            var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
             if (user == null)
             {
                 return NotFound();
             }
 
             var customIds = customs.Where(f => f.Selected).Select(ic => ic.Id).ToList();
-            var userCustoms = await context.UserCustoms.Where(c => customIds.Contains(c.Id)).ToListAsync();
+            var userCustoms = await _context.UserCustoms.Where(c => customIds.Contains(c.Id)).ToListAsync();
 
-            var previousUserMood = await context.UserSleeps.Include(us => us.UserCustoms).FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
+            var previousUserMood = await _context.UserSleeps.Include(us => us.UserCustoms).FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (previousUserMood != null)
             {
                 previousUserMood.UserCustoms.Clear();
@@ -102,7 +102,7 @@ public partial class UserController
             }
             else
             {
-                context.Add(new UserSleep()
+                _context.Add(new UserSleep()
                 {
                     Date = DateHelpers.Today,
                     UserId = user.Id,
@@ -112,7 +112,7 @@ public partial class UserController
                 });
             }
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
         }
 
@@ -125,22 +125,22 @@ public partial class UserController
     {
         if (true || ModelState.IsValid)
         {
-            var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
             if (user == null)
             {
                 return NotFound();
             }
 
             var customIds = customs.Where(f => f.Selected).Select(ic => ic.Id).ToList();
-            var userCustoms = await context.UserCustoms.Where(c => customIds.Contains(c.Id)).ToListAsync();
-            context.UserActivities.RemoveRange(context.UserActivities.Where(uf => uf.UserId == user.Id && uf.Date == DateHelpers.Today));
-            context.UserActivities.Add(new UserActivity()
+            var userCustoms = await _context.UserCustoms.Where(c => customIds.Contains(c.Id)).ToListAsync();
+            _context.UserActivities.RemoveRange(_context.UserActivities.Where(uf => uf.UserId == user.Id && uf.Date == DateHelpers.Today));
+            _context.UserActivities.Add(new UserActivity()
             {
                 User = user,
                 UserCustoms = userCustoms
             });
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
         }
 
@@ -153,22 +153,22 @@ public partial class UserController
     {
         if (true || ModelState.IsValid)
         {
-            var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
             if (user == null)
             {
                 return NotFound();
             }
 
             var customIds = customs.Where(f => f.Selected).Select(ic => ic.Id).ToList();
-            var userCustoms = await context.UserCustoms.Where(c => customIds.Contains(c.Id)).ToListAsync();
-            context.UserEmotions.RemoveRange(context.UserEmotions.Where(uf => uf.UserId == user.Id && uf.Date == DateHelpers.Today));
-            context.UserEmotions.Add(new UserEmotion()
+            var userCustoms = await _context.UserCustoms.Where(c => customIds.Contains(c.Id)).ToListAsync();
+            _context.UserEmotions.RemoveRange(_context.UserEmotions.Where(uf => uf.UserId == user.Id && uf.Date == DateHelpers.Today));
+            _context.UserEmotions.Add(new UserEmotion()
             {
                 User = user,
                 UserCustoms = userCustoms
             });
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
         }
 
@@ -181,22 +181,22 @@ public partial class UserController
     {
         if (true || ModelState.IsValid)
         {
-            var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
             if (user == null)
             {
                 return NotFound();
             }
 
             var customIds = customs.Where(f => f.Selected).Select(ic => ic.Id).ToList();
-            var userCustoms = await context.UserCustoms.Where(c => customIds.Contains(c.Id)).ToListAsync();
-            context.UserMedicines.RemoveRange(context.UserMedicines.Where(uf => uf.UserId == user.Id && uf.Date == DateHelpers.Today));
-            context.UserMedicines.Add(new UserMedicine()
+            var userCustoms = await _context.UserCustoms.Where(c => customIds.Contains(c.Id)).ToListAsync();
+            _context.UserMedicines.RemoveRange(_context.UserMedicines.Where(uf => uf.UserId == user.Id && uf.Date == DateHelpers.Today));
+            _context.UserMedicines.Add(new UserMedicine()
             {
                 User = user,
                 UserCustoms = userCustoms
             });
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
         }
 
@@ -209,22 +209,22 @@ public partial class UserController
     {
         if (true || ModelState.IsValid)
         {
-            var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
             if (user == null)
             {
                 return NotFound();
             }
 
             var customIds = customs.Where(f => f.Selected).Select(ic => ic.Id).ToList();
-            var userCustoms = await context.UserCustoms.Where(c => customIds.Contains(c.Id)).ToListAsync();
-            context.UserPeoples.RemoveRange(context.UserPeoples.Where(uf => uf.UserId == user.Id && uf.Date == DateHelpers.Today));
-            context.UserPeoples.Add(new UserPeople()
+            var userCustoms = await _context.UserCustoms.Where(c => customIds.Contains(c.Id)).ToListAsync();
+            _context.UserPeoples.RemoveRange(_context.UserPeoples.Where(uf => uf.UserId == user.Id && uf.Date == DateHelpers.Today));
+            _context.UserPeoples.Add(new UserPeople()
             {
                 User = user,
                 UserCustoms = userCustoms
             });
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
         }
 
@@ -237,22 +237,22 @@ public partial class UserController
     {
         if (true || ModelState.IsValid)
         {
-            var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
             if (user == null)
             {
                 return NotFound();
             }
 
             var customIds = customs.Where(f => f.Selected).Select(ic => ic.Id).ToList();
-            var userCustoms = await context.UserCustoms.Where(c => customIds.Contains(c.Id)).ToListAsync();
-            context.UserSymptoms.RemoveRange(context.UserSymptoms.Where(uf => uf.UserId == user.Id && uf.Date == DateHelpers.Today));
-            context.UserSymptoms.Add(new UserSymptom()
+            var userCustoms = await _context.UserCustoms.Where(c => customIds.Contains(c.Id)).ToListAsync();
+            _context.UserSymptoms.RemoveRange(_context.UserSymptoms.Where(uf => uf.UserId == user.Id && uf.Date == DateHelpers.Today));
+            _context.UserSymptoms.Add(new UserSymptom()
             {
                 User = user,
                 UserCustoms = userCustoms
             });
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
         }
 

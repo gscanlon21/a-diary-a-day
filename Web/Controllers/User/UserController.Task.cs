@@ -17,13 +17,13 @@ public partial class UserController
     [HttpGet, Route("{section:section}/{taskId}")]
     public async Task<IActionResult> ManageTask(string email, string token, Section section, int taskId, bool? wasUpdated = null)
     {
-        var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+        var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
         if (user == null)
         {
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
         }
 
-        var task = await context.UserTasks.AsNoTracking()
+        var task = await _context.UserTasks.AsNoTracking()
             .FirstOrDefaultAsync(r => r.Id == taskId && r.UserId == user.Id);
 
         if (task == null) { return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage)); }
@@ -38,17 +38,21 @@ public partial class UserController
     [HttpPost, Route("{section:section}/{taskId}/complete-task")]
     public async Task<IActionResult> CompleteTask(string email, string token, Section section, int taskId)
     {
-        var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+        var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
         if (user == null)
         {
             return NotFound();
         }
 
         // Set the new weight on the UserVariation.
-        var userTask = await context.UserTasks.FirstAsync(p => p.UserId == user.Id && p.Id == taskId);
+        var userTask = await _context.UserTasks.FirstAsync(p => p.UserId == user.Id && p.Id == taskId);
         userTask.LastCompleted = DateHelpers.Today;
+        if (userTask.PersistUntilComplete)
+        {
+            await _newsletterRepo.UpdateLastSeenDate([userTask]);
+        }
 
-        var todaysUserLog = await context.UserTaskLogs
+        var todaysUserLog = await _context.UserTaskLogs
             .Where(uw => uw.UserTaskId == userTask.Id)
             .Where(um => um.Section == section)
             .FirstOrDefaultAsync(uw => uw.Date == DateHelpers.Today);
@@ -59,7 +63,7 @@ public partial class UserController
         }
         else
         {
-            context.Add(new UserTaskLog()
+            _context.Add(new UserTaskLog()
             {
                 UserTaskId = userTask.Id,
                 Date = DateHelpers.Today,
@@ -68,20 +72,20 @@ public partial class UserController
             });
         }
 
-        await context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
         return RedirectToAction(nameof(ManageTask), new { email, token, section, taskId, WasUpdated = true });
     }
 
     [HttpPost, Route("{section:section}/{taskId}/refresh-task")]
     public async Task<IActionResult> RefreshTask(string email, string token, Section section, int taskId)
     {
-        var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+        var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
         if (user == null)
         {
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
         }
 
-        var userProgression = await context.UserTasks
+        var userProgression = await _context.UserTasks
             .Where(ue => ue.UserId == user.Id)
             .FirstOrDefaultAsync(ue => ue.Id == taskId);
 
@@ -93,7 +97,7 @@ public partial class UserController
 
         userProgression.RefreshAfter = null;
         userProgression.LastSeen = userProgression.LastSeen > DateHelpers.Today ? DateHelpers.Today : userProgression.LastSeen;
-        await context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
 
         return RedirectToAction(nameof(ManageTask), new { email, token, section, taskId, WasUpdated = true });
     }
@@ -108,7 +112,7 @@ public partial class UserController
             return RedirectToAction(nameof(ManageTask), new { email, token, section, taskId, WasUpdated = false });
         }
 
-        var user = await userRepo.GetUser(email, token, allowDemoUser: taskId != default);
+        var user = await _userRepo.GetUser(email, token, allowDemoUser: taskId != default);
         if (user == null)
         {
             return NotFound();
@@ -117,7 +121,7 @@ public partial class UserController
         if (taskId == default)
         {
             // Adding task.
-            context.Add(new Data.Entities.Task.UserTask()
+            _context.Add(new Data.Entities.Task.UserTask()
             {
                 User = user,
                 Name = viewModel.Name,
@@ -126,15 +130,16 @@ public partial class UserController
                 Enabled = viewModel.Enabled,
                 PadRefreshXDays = viewModel.PadRefreshXDays,
                 LagRefreshXDays = viewModel.LagRefreshXDays,
+                PersistUntilComplete = viewModel.PersistUntilComplete,
             });
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             TempData[TempData_User.SuccessMessage] = "Your tasks have been updated!";
             return RedirectToAction(nameof(Edit), new { email, token });
         }
         else
         {
-            var userTask = await context.UserTasks
+            var userTask = await _context.UserTasks
                 .FirstAsync(p => p.UserId == user.Id && p.Id == taskId);
 
             // Apply refresh padding immediately.
@@ -145,12 +150,14 @@ public partial class UserController
             }
 
             userTask.Name = user.IsDemoUser ? userTask.Name : viewModel.Name;
+            userTask.PersistUntilComplete = viewModel.PersistUntilComplete;
             userTask.Notes = user.IsDemoUser ? null : viewModel.Notes;
             userTask.LagRefreshXDays = viewModel.LagRefreshXDays;
             userTask.PadRefreshXDays = viewModel.PadRefreshXDays;
             userTask.Section = viewModel.Section;
+            userTask.Enabled = viewModel.Enabled;
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageTask), new { email, token, section, taskId, WasUpdated = true });
         }
     }
@@ -158,13 +165,13 @@ public partial class UserController
     [HttpPost, Route("delete-task")]
     public async Task<IActionResult> RemoveTask(string email, string token, Section section, [FromForm] int taskId)
     {
-        var user = await userRepo.GetUser(email, token);
+        var user = await _userRepo.GetUser(email, token);
         if (user == null)
         {
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
         }
 
-        await context.UserTasks
+        await _context.UserTasks
             .Where(f => f.UserId == user.Id)
             .Where(f => f.Id == taskId)
             .ExecuteDeleteAsync();

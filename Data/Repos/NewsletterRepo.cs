@@ -154,10 +154,10 @@ public partial class NewsletterRepo
             tasks.AddRange(await GetUserTasks(context, section));
         }
         tasks.AddRange(await GetUserTasks(context, Section.None, exclude: tasks));
+        await UpdateLastSeenDate(tasks.Select(t => t.Task).Where(t => !t.PersistUntilComplete));
 
         var images = GetImages(context.User).ToList();
         var newsletter = await CreateAndAddNewsletterToContext(context, tasks);
-        await UpdateLastSeenDate(tasks);
         var viewModel = new NewsletterDto(userViewModel)
         {
             Images = images,

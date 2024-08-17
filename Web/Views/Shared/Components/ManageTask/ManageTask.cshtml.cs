@@ -25,6 +25,8 @@ public class ManageTaskViewModel
     [Display(Name = "Refreshes After", Description = "Refresh this task and try to select a new task if available.")]
     public required UserTask UserTask { get; init; }
 
+    [Display(Name = "Persist Until Complete")]
+    public bool PersistUntilComplete { get; init; }
 
     [Display(Name = "Name")]
     public string Name { get; init; } = null!;
@@ -53,5 +55,12 @@ public class ManageTaskViewModel
 
     public Verbosity RecipeVerbosity => Verbosity.Images;
 
-    public bool Enabled => true;
+    public string? DisabledReason { get; set; } = null;
+
+    [NotMapped, Display(Name = "Enabled")]
+    public bool Enabled
+    {
+        get => string.IsNullOrWhiteSpace(DisabledReason);
+        set => DisabledReason = value ? null : "Disabled by user";
+    }
 }

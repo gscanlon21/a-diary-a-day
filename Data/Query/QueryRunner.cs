@@ -39,7 +39,7 @@ public class QueryRunner(Section section)
     private IQueryable<RecipesQueryResults> CreateFilteredRecipesQuery(CoreContext context)
     {
         return context.UserTasks.IgnoreQueryFilters().TagWith(nameof(CreateFilteredRecipesQuery))
-            .Where(ev => ev.DisabledReason == null)
+            .Where(ev => ev.DisabledReason == null || UserOptions.IgnoreIgnored)
             .Where(t => t.UserId == UserOptions.Id)
             // Don't grab recipes that we want to ignore.
             .Where(vm => !ExclusionOptions.TaskIds.Contains(vm.Id))

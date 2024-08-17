@@ -12,8 +12,19 @@ namespace Web.Controllers.User;
 
 [Route($"u/{{email:regex({UserCreateViewModel.EmailRegex})}}", Order = 1)]
 [Route($"user/{{email:regex({UserCreateViewModel.EmailRegex})}}", Order = 2)]
-public partial class UserController(CoreContext context, UserRepo userRepo) : ViewController()
+public partial class UserController : ViewController
 {
+    private readonly NewsletterRepo _newsletterRepo;
+    private readonly CoreContext _context;
+    private readonly UserRepo _userRepo;
+
+    public UserController(CoreContext context, UserRepo userRepo, NewsletterRepo newsletterRepo)
+    {
+        _context = context;
+        _userRepo = userRepo;
+        _newsletterRepo = newsletterRepo;
+    }
+
     /// <summary>
     /// The name of the controller for routing purposes
     /// </summary>
@@ -40,7 +51,7 @@ public partial class UserController(CoreContext context, UserRepo userRepo) : Vi
     [Route("edit", Order = 3)]
     public async Task<IActionResult> Edit(string email = UserConsts.DemoUser, string token = UserConsts.DemoToken, bool? wasUpdated = null)
     {
-        var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+        var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
         if (user == null)
         {
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
@@ -63,7 +74,7 @@ public partial class UserController(CoreContext context, UserRepo userRepo) : Vi
             return NotFound();
         }
 
-        viewModel.User = await userRepo.GetUser(viewModel.Email, viewModel.Token) ?? throw new ArgumentException(string.Empty, nameof(email));
+        viewModel.User = await _userRepo.GetUser(viewModel.Email, viewModel.Token) ?? throw new ArgumentException(string.Empty, nameof(email));
         if (ModelState.IsValid)
         {
             try
@@ -79,11 +90,11 @@ public partial class UserController(CoreContext context, UserRepo userRepo) : Vi
                     viewModel.User.NewsletterDisabledReason = viewModel.NewsletterEnabled ? null : UserDisabledByUserReason;
                 }
 
-                await context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!(context.Users?.Any(e => e.Email == viewModel.Email)).GetValueOrDefault())
+                if (!(_context.Users?.Any(e => e.Email == viewModel.Email)).GetValueOrDefault())
                 {
                     // User does not exist
                     return NotFound();
@@ -109,7 +120,7 @@ public partial class UserController(CoreContext context, UserRepo userRepo) : Vi
     [Route("edit/advanced", Order = 2)]
     public async Task<IActionResult> EditAdvanced(string email, string token, AdvancedViewModel viewModel)
     {
-        var user = await userRepo.GetUser(email, token) ?? throw new ArgumentException(string.Empty, nameof(email));
+        var user = await _userRepo.GetUser(email, token) ?? throw new ArgumentException(string.Empty, nameof(email));
         if (ModelState.IsValid)
         {
             try
@@ -117,11 +128,11 @@ public partial class UserController(CoreContext context, UserRepo userRepo) : Vi
                 user.FootnoteCountTop = viewModel.FootnoteCountTop;
                 user.FootnoteCountBottom = viewModel.FootnoteCountBottom;
 
-                await context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!(context.Users?.Any(e => e.Email == email)).GetValueOrDefault())
+                if (!(_context.Users?.Any(e => e.Email == email)).GetValueOrDefault())
                 {
                     // User does not exist
                     return NotFound();
@@ -149,7 +160,7 @@ public partial class UserController(CoreContext context, UserRepo userRepo) : Vi
     [Route("redirect", Order = 2)]
     public async Task<IActionResult> IAmStillHere(string email, string token, string? to = null, string? redirectTo = null)
     {
-        var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+        var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
         if (user == null)
         {
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
@@ -157,7 +168,7 @@ public partial class UserController(CoreContext context, UserRepo userRepo) : Vi
 
         var userIsConfirmingAccount = !user.LastActive.HasValue;
         user.LastActive = DateHelpers.Today;
-        await context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
 
         if (!string.IsNullOrWhiteSpace(to))
         {
@@ -183,19 +194,19 @@ public partial class UserController(CoreContext context, UserRepo userRepo) : Vi
     [Route("token/create")]
     public async Task<IActionResult> CreateToken(string email, string token)
     {
-        var user = await userRepo.GetUser(email, token);
+        var user = await _userRepo.GetUser(email, token);
         if (user == null)
         {
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
         }
 
         // Delete old app tokens
-        await context.UserTokens
+        await _context.UserTokens
             .Where(ut => ut.UserId == user.Id)
             .Where(ut => ut.Expires == DateTime.MaxValue)
             .ExecuteDeleteAsync();
 
-        var newToken = await userRepo.AddUserToken(user, DateTime.MaxValue);
+        var newToken = await _userRepo.AddUserToken(user, DateTime.MaxValue);
         TempData[TempData_User.SuccessMessage] = $"Your new app token: {newToken}"; // For your security we wonʼt show this password again, so make sure youʼve got it right before you close this dialog.
         return RedirectToAction(nameof(UserController.Edit), new { email, token });
     }

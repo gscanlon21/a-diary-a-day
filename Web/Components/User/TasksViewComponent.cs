@@ -33,7 +33,7 @@ public class TasksViewComponent(CoreContext context, UserRepo userRepo, IService
             .ToListAsync();
 
         var tasks = await new QueryBuilder()
-            // Include disabled recipes.
+            // Include disabled tasks.
             .WithUser(user, ignoreIgnored: true)
             .WithTasks(x =>
             {

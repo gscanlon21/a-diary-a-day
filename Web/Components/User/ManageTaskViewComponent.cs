@@ -73,9 +73,11 @@ public class ManageTaskViewComponent : ViewComponent
             Notes = userTask.Notes,
             ManageSection = section,
             Section = userTask.Section,
+            DisabledReason = userTask.DisabledReason,
             LagRefreshXDays = userTask.LagRefreshXDays,
             PadRefreshXDays = userTask.PadRefreshXDays,
             CompletedForSection = userTaskLog?.Complete > 0,
+            PersistUntilComplete = userTask.PersistUntilComplete,
             Task = taskDto?.AsType<NewsletterTaskDto, QueryResults>()!,
         });
     }

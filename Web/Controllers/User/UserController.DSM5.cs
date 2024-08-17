@@ -12,18 +12,18 @@ public partial class UserController
     {
         if (true || ModelState.IsValid)
         {
-            var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
             if (user == null)
             {
                 return NotFound();
             }
 
             // Set the new weight on the UserVariation
-            var todaysDepression = await context.UserDepressions.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
+            var todaysDepression = await _context.UserDepressions.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (todaysDepression == null)
             {
                 userDepression.User = user;
-                context.Add(userDepression);
+                _context.Add(userDepression);
             }
             else
             {
@@ -37,7 +37,7 @@ public partial class UserController
                 todaysDepression.Worthless = userDepression.Worthless;
             }
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
         }
 
@@ -50,18 +50,18 @@ public partial class UserController
     {
         if (true || ModelState.IsValid)
         {
-            var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
             if (user == null)
             {
                 return NotFound();
             }
 
             // Set the new weight on the UserVariation
-            var todaysMood = await context.UserPanicSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
+            var todaysMood = await _context.UserPanicSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (todaysMood == null)
             {
                 userMood.User = user;
-                context.Add(userMood);
+                _context.Add(userMood);
             }
             else
             {
@@ -77,7 +77,7 @@ public partial class UserController
                 todaysMood.Tense = userMood.Tense;
             }
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
         }
 
@@ -90,18 +90,18 @@ public partial class UserController
     {
         if (true || ModelState.IsValid)
         {
-            var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
             if (user == null)
             {
                 return NotFound();
             }
 
             // Set the new weight on the UserVariation
-            var todaysMood = await context.UserPostTraumaticStressSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
+            var todaysMood = await _context.UserPostTraumaticStressSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (todaysMood == null)
             {
                 userMood.User = user;
-                context.Add(userMood);
+                _context.Add(userMood);
             }
             else
             {
@@ -116,7 +116,7 @@ public partial class UserController
                 todaysMood.NoInterest = userMood.NoInterest;
             }
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
         }
 
@@ -129,18 +129,18 @@ public partial class UserController
     {
         if (true || ModelState.IsValid)
         {
-            var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
             if (user == null)
             {
                 return NotFound();
             }
 
             // Set the new weight on the UserVariation
-            var todaysMood = await context.UserGeneralizedAnxietySeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
+            var todaysMood = await _context.UserGeneralizedAnxietySeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (todaysMood == null)
             {
                 userMood.User = user;
-                context.Add(userMood);
+                _context.Add(userMood);
             }
             else
             {
@@ -157,7 +157,7 @@ public partial class UserController
                 todaysMood.Tense = userMood.Tense;
             }
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
         }
 
@@ -170,18 +170,18 @@ public partial class UserController
     {
         if (true || ModelState.IsValid)
         {
-            var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
             if (user == null)
             {
                 return NotFound();
             }
 
             // Set the new weight on the UserVariation
-            var todaysMood = await context.UserDissociativeSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
+            var todaysMood = await _context.UserDissociativeSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (todaysMood == null)
             {
                 userMood.User = user;
-                context.Add(userMood);
+                _context.Add(userMood);
             }
             else
             {
@@ -195,7 +195,7 @@ public partial class UserController
                 todaysMood.EasyWhenHard = userMood.EasyWhenHard;
             }
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
         }
 
@@ -208,18 +208,18 @@ public partial class UserController
     {
         if (true || ModelState.IsValid)
         {
-            var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
             if (user == null)
             {
                 return NotFound();
             }
 
             // Set the new weight on the UserVariation
-            var todaysMood = await context.UserDepressionSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
+            var todaysMood = await _context.UserDepressionSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (todaysMood == null)
             {
                 userMood.User = user;
-                context.Add(userMood);
+                _context.Add(userMood);
             }
             else
             {
@@ -234,7 +234,7 @@ public partial class UserController
                 todaysMood.BetterOffDead = userMood.BetterOffDead;
             }
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
         }
 
@@ -247,18 +247,18 @@ public partial class UserController
     {
         if (true || ModelState.IsValid)
         {
-            var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
             if (user == null)
             {
                 return NotFound();
             }
 
             // Set the new weight on the UserVariation
-            var todaysMood = await context.UserAgoraphobiaSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
+            var todaysMood = await _context.UserAgoraphobiaSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (todaysMood == null)
             {
                 userMood.User = user;
-                context.Add(userMood);
+                _context.Add(userMood);
             }
             else
             {
@@ -274,7 +274,7 @@ public partial class UserController
                 todaysMood.Tense = userMood.Tense;
             }
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
         }
 
@@ -287,18 +287,18 @@ public partial class UserController
     {
         if (true || ModelState.IsValid)
         {
-            var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
             if (user == null)
             {
                 return NotFound();
             }
 
             // Set the new weight on the UserVariation
-            var todaysMood = await context.UserAcuteStressSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
+            var todaysMood = await _context.UserAcuteStressSeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (todaysMood == null)
             {
                 userMood.User = user;
-                context.Add(userMood);
+                _context.Add(userMood);
             }
             else
             {
@@ -311,7 +311,7 @@ public partial class UserController
                 todaysMood.Irritable = userMood.Irritable;
             }
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
         }
 
@@ -324,18 +324,18 @@ public partial class UserController
     {
         if (true || ModelState.IsValid)
         {
-            var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
             if (user == null)
             {
                 return NotFound();
             }
 
             // Set the new weight on the UserVariation
-            var todaysMood = await context.UserSocialAnxietySeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
+            var todaysMood = await _context.UserSocialAnxietySeverities.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (todaysMood == null)
             {
                 userMood.User = user;
-                context.Add(userMood);
+                _context.Add(userMood);
             }
             else
             {
@@ -351,7 +351,7 @@ public partial class UserController
                 todaysMood.Tense = userMood.Tense;
             }
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
         }
 

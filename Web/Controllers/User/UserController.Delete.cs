@@ -16,7 +16,7 @@ public partial class UserController
     [Route("delete", Order = 2)]
     public async Task<IActionResult> Delete(string email, string token)
     {
-        var user = await userRepo.GetUser(email, token);
+        var user = await _userRepo.GetUser(email, token);
         if (user == null)
         {
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
@@ -30,14 +30,14 @@ public partial class UserController
     [Route("delete", Order = 2)]
     public async Task<IActionResult> DeleteConfirmed(string email, string token)
     {
-        var user = await userRepo.GetUser(email, token);
+        var user = await _userRepo.GetUser(email, token);
         if (user != null)
         {
-            context.UserMoods.RemoveRange(await context.UserMoods.Where(n => n.UserId == user.Id).ToListAsync());
-            context.Users.Remove(user); // Will also remove from ExerciseUserProgressions and EquipmentUsers
+            _context.UserMoods.RemoveRange(await _context.UserMoods.Where(n => n.UserId == user.Id).ToListAsync());
+            _context.Users.Remove(user); // Will also remove from ExerciseUserProgressions and EquipmentUsers
         }
 
-        await context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
         return RedirectToAction(nameof(IndexController.Index), IndexController.Name, new { WasUnsubscribed = true });
     }
 }

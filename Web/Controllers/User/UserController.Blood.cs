@@ -11,18 +11,18 @@ public partial class UserController
     {
         if (true || ModelState.IsValid)
         {
-            var user = await userRepo.GetUser(email, token, allowDemoUser: true);
+            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
             if (user == null)
             {
                 return NotFound();
             }
 
             // Set the new weight on the UserVariation
-            var todaysCompleteMetabolicPanel = await context.UserCompleteMetabolicPanels.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
+            var todaysCompleteMetabolicPanel = await _context.UserCompleteMetabolicPanels.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
             if (todaysCompleteMetabolicPanel == null)
             {
                 userMood.User = user;
-                context.Add(userMood);
+                _context.Add(userMood);
             }
             else
             {
@@ -44,7 +44,7 @@ public partial class UserController
                 todaysCompleteMetabolicPanel.AlkalinePhosphatase = userMood.AlkalinePhosphatase;
             }
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
         }
 

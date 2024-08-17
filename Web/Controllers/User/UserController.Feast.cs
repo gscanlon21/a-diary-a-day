@@ -9,7 +9,7 @@ public partial class UserController
     [HttpPost, Route("feast")]
     public async Task<IActionResult> EditFeast(string email, string token, [FromForm] string feastEmail, [FromForm] string? feastToken)
     {
-        var user = await userRepo.GetUser(email, token);
+        var user = await _userRepo.GetUser(email, token);
         if (user == null)
         {
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
@@ -18,7 +18,7 @@ public partial class UserController
         user.FeastEmail = feastEmail;
         user.FeastToken = feastToken;
 
-        await context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
 
         TempData[TempData_User.SuccessMessage] = "Your preferences have been saved.";
         return RedirectToAction(nameof(Edit), new { email, token, WasUpdated = true });
