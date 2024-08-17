@@ -203,8 +203,8 @@ public partial class NewsletterRepo
     private IEnumerable<ComponentImage> GetImages(User user)
     {
         var prefix = $"moods/{user.Uid}";
-        var components = EnumExtensions.GetSingleValuesExcludingAny32(Components.Journal).Where(c => user.Components.HasFlag(c)).ToList();
-        foreach (var component in components)
+        var components = EnumExtensions.GetSingleValuesExcludingAny32(Components.Journal | Components.Tasks);
+        foreach (var component in components.Where(c => user.Components.HasFlag(c)))
         {
             var key = $"{prefix}/{component}";
             yield return new ComponentImage()
