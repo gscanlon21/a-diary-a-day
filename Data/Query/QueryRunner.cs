@@ -64,6 +64,7 @@ public class QueryRunner(Section section)
             // If there are specific tasks to select, don't filter down by Section or LastSeen date.
             filteredQuery = Filters.FilterSection(filteredQuery, section);
             filteredQuery = filteredQuery.Where(vm => vm.Task.LastSeen <= DateHelpers.Today);
+            filteredQuery = filteredQuery.Where(vm => vm.Task.LastDeload.AddDays(7) <= DateHelpers.Today);
         }
 
         var queryResults = (await filteredQuery.Select(a => new InProgressQueryResults(a)).AsNoTracking().TagWithCallSite().ToListAsync()).ToList();

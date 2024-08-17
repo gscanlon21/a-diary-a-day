@@ -35,6 +35,10 @@ public class UserConsts
     public const int PadRefreshXDaysDefault = 0;
     public const int PadRefreshXDaysMax = 365;
 
+    public const int DeloadWeeksMin = 0;
+    public const int DeloadWeeksDefault = 0;
+    public const int DeloadWeeksMax = 52;
+
     public const int UserTaskCompleteMin = 0;
     public const int UserTaskCompleteDefault = 0;
     public const int UserTaskCompleteMax = 10;

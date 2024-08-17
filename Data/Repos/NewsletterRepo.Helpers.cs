@@ -73,7 +73,15 @@ public partial class NewsletterRepo
                 {
                     task.RefreshAfter = null;
                     task.LastSeen = DateHelpers.Today.AddDays(task.PadRefreshXDays);
+
+                    // Only refresh the deload week when the refresh lag is complete.
+                    if (task.LastDeload < DateHelpers.Today.AddDays(-7 * task.DeloadAfterXWeeks))
+                    {
+                        // Add the refresh padding onto the deload week.
+                        task.LastDeload = task.LastSeen;
+                    }
                 }
+
                 scopedCoreContext.UserTasks.Update(task);
             }
         }

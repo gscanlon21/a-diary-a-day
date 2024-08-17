@@ -69,6 +69,15 @@
             <span asp-validation-for="Notes" class="text-danger"></span>
         </div>
 
+        <div class="form-group mb-3">
+            <label asp-for="SectionBinder" class="control-label">@Html.DisplayNameFor(_ => Model.Section)</label>
+            <select asp-for="SectionBinder" class="form-control overflow-auto" aria-describedby="verbosity-help" size="5"
+                    asp-items="@(EnumExtensions.GetValuesExcluding32(Section.None, Section.All).AsSelectListItems32(EnumViewExtensions.EnumOrdering.Order))">
+            </select>
+            <span asp-validation-for="SectionBinder" class="text-danger"></span>
+            <div id="verbosity-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.Section)</div>
+        </div>
+
         @if (Model.User.IsDemoUser)
         {
             <div class="alert alert-info callout">
@@ -120,13 +129,26 @@
             </details>
         </div>
 
-        <div class="form-group mb-3">
-            <label asp-for="SectionBinder" class="control-label">@Html.DisplayNameFor(_ => Model.Section)</label>
-            <select asp-for="SectionBinder" class="form-control overflow-auto" aria-describedby="verbosity-help" size="5"
-                    asp-items="@(EnumExtensions.GetValuesExcluding32(Section.None, Section.All).AsSelectListItems32(EnumViewExtensions.EnumOrdering.Order))">
-            </select>
-            <span asp-validation-for="SectionBinder" class="text-danger"></span>
-            <div id="verbosity-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.Section)</div>
+        <div class="form-group mb-3 mt-3">
+            <label asp-for="DeloadAfterXWeeks" class="control-label">@Html.DisplayNameFor(_ => Model.DeloadAfterXWeeks)</label>
+            <div style="display:flex;column-gap:1ex;">
+                <input id="@(Html.IdFor(_ => Model.DeloadAfterXWeeks))" type="number" asp-for="DeloadAfterXWeeks" style="width:6ch;height:fit-content;" class=""
+                       oninput="@Html.IdFor(_ => Model.DeloadAfterXWeeks)Input.value = this.valueAsNumber" />
+                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                    <input type="range" style="width:100%;" class=""
+                           name="@Html.IdFor(_ => Model.DeloadAfterXWeeks)Input" id="@Html.IdFor(_ => Model.DeloadAfterXWeeks)-input"
+                           min="@UserConsts.DeloadWeeksMin" max="@UserConsts.DeloadWeeksMax" step="1" value="@Model.DeloadAfterXWeeks"
+                           oninput="@(Html.IdFor(_ => Model.DeloadAfterXWeeks)).value = this.valueAsNumber" />
+                </div>
+            </div>
+            <span asp-validation-for="DeloadAfterXWeeks" class="text-danger"></span>
+            <details id="delay-functional-help" class="form-text">
+                <summary>@Html.DisplayDescriptionFor(_ => Model.DeloadAfterXWeeks)</summary>
+
+                <div class="mt-1">
+                    <span>This may not apply if there are no other recipes available.</span>
+                </div>
+            </details>
         </div>
 
         <div class="form-group form-check mb-3">

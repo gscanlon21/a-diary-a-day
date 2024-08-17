@@ -42,6 +42,10 @@ public class ManageTaskViewModel
     [Display(Name = "Pad Refresh by X Days", Description = "Add a delay before this task is recirculated back into your task list.")]
     public int PadRefreshXDays { get; init; }
 
+    [Required, Range(UserConsts.DeloadWeeksMin, UserConsts.DeloadWeeksMax)]
+    [Display(Name = "Deload After Every X Weeks", Description = "After how many weeks of seeing a task do you want to take a deload week?")]
+    public int DeloadAfterXWeeks { get; init; }
+
     public Section ManageSection { get; set; }
 
     public Section Section { get; set; }

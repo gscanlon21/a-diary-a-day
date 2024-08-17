@@ -61,6 +61,8 @@ public class UserTask
     /// </summary>
     public DateOnly? RefreshAfter { get; set; }
 
+    public DateOnly LastDeload { get; set; } = DateHelpers.Today;
+
     /// <summary>
     /// How often to refresh exercises.
     /// </summary>
@@ -72,6 +74,12 @@ public class UserTask
     /// </summary>
     [Required, Range(UserConsts.PadRefreshXDaysMin, UserConsts.PadRefreshXDaysMax)]
     public int PadRefreshXDays { get; set; } = UserConsts.PadRefreshXDaysDefault;
+
+    /// <summary>
+    /// How often to refresh exercises.
+    /// </summary>
+    [Required, Range(UserConsts.DeloadWeeksMin, UserConsts.DeloadWeeksMax)]
+    public int DeloadAfterXWeeks { get; set; } = UserConsts.DeloadWeeksDefault;
 
     public string? DisabledReason { get; set; } = null;
 
