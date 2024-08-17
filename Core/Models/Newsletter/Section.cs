@@ -45,7 +45,7 @@ public enum Section
     [Display(Name = "After Dinner")]
     AfterDinner = 1 << 11, // 2048
 
-    [Display(Name = "Before Bed")]
+    [Display(Name = "Evening")]
     Evening = 1 << 12, // 4096
 
     [Display(Name = "Before Bed")]
