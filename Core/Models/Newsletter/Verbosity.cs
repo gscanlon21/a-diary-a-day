@@ -24,21 +24,40 @@ public enum Verbosity
 
     /// <summary>
     /// Show section to the user.
+    /// 
+    /// This is not user-facing. 
+    /// It should not have a Display attribute. 
     /// </summary>
     Section = 1 << 2, // 4
 
     /// <summary>
     /// Show lag refresh to the user.
+    /// 
+    /// This is not user-facing. 
+    /// It should not have a Display attribute. 
     /// </summary>
     LagRefresh = 1 << 3, // 8
 
     /// <summary>
     /// Show pad refresh to the user.
+    /// 
+    /// This is not user-facing. 
+    /// It should not have a Display attribute. 
     /// </summary>
     PadRefresh = 1 << 4, // 16
 
     /// <summary>
     /// Show enabled to the user.
+    /// 
+    /// This is not user-facing. 
+    /// It should not have a Display attribute. 
     /// </summary>
     Enabled = 1 << 5, // 32
+
+    /// <summary>
+    /// This is not user-facing. 
+    /// It should not have a Display attribute. 
+    /// </summary>
+    Debug = Images | Notes | Section | LagRefresh | PadRefresh | Enabled
+        | 1 << 30 // 1073741824
 }
