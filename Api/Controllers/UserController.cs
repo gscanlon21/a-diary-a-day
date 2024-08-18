@@ -11,6 +11,7 @@ using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Api.Controllers;
 
@@ -50,6 +51,7 @@ public class UserController : ControllerBase
     /// Get the user's past workouts.
     /// </summary>
     [HttpPost("UploadImage")]
+    [SuppressMessage("Style", "IDE0075:Simplify conditional expression", Justification = "Easier to read unsimplified.")]
     public async Task<IActionResult> UploadImage([FromForm] Components type = Components.None, [FromForm] string email = UserConsts.DemoUser, [FromForm] string token = UserConsts.DemoToken, [FromForm] IFormFile? image = null, [FromForm] string? name = null)
     {
         if (type == Components.None)

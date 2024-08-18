@@ -92,12 +92,12 @@ public class UserConsts
     public const int DeleteAfterXMonths = 6;
 
     /// <summary>
-    /// How many months until the user's newsletter logs are deleted.
+    /// How many months until the user's diary entries are deleted.
     /// </summary>
-    public const int DeleteLogsAfterXMonths = 12;
+    public const int DeleteEntriesAfterXMonths = 12;
 
     /// <summary>
-    /// How many months until the user's mood logs are deleted.
+    /// How many months until the user's task logs are deleted.
     /// </summary>
-    public const int DeleteMoodsAfterXMonths = 60;
+    public const int DeleteLogsAfterXMonths = 60;
 }

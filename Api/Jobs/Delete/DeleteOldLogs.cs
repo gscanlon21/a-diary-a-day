@@ -1,4 +1,7 @@
-﻿using Data;
+﻿using Core.Code.Helpers;
+using Core.Consts;
+using Data;
+using Microsoft.EntityFrameworkCore;
 using Quartz;
 
 namespace Api.Jobs.Delete;
@@ -9,7 +12,9 @@ public class DeleteOldLogs(ILogger<DeleteOldLogs> logger, CoreContext coreContex
     {
         try
         {
-
+            await coreContext.UserTaskLogs.IgnoreQueryFilters()
+                .Where(u => u.Date < DateHelpers.Today.AddMonths(-1 * UserConsts.DeleteLogsAfterXMonths))
+                .ExecuteDeleteAsync();
         }
         catch (Exception e)
         {
