@@ -45,7 +45,7 @@
                 </div>
 
                 <h5 class="text-center">We're sorry to see you go!</h5>
-                <h6 class="text-center mb-3">All of your data has been permanently deleted.</h6>
+                <h6 class="text-center mb-3">Your account has been scheduled for deletion. All of your data will be permanently deleted.</h6>
                 <p class="text-center mb-3">Please contact us at <a href="mailto:goodbye@@@_siteSettings.Value.Domain">goodbye@@@_siteSettings.Value.Domain</a> and let us know how we can improve.</p>
                 <p class="text-center">Click <a href="@Url.ActionLink(nameof(IndexController.Index), IndexController.Name)">here</a> to resubscribe.</p>
             }
@@ -103,12 +103,12 @@
                     <div class="form-group mb-3">
                         <div>
                             <div class="form-check-inline">
-                                <input checked class="form-check-input allow-demo" id="IExistNo" name="@Html.NameFor(_ => Model.UserCreateViewModel.IExist)" type="radio" value="false" aria-describedby="bot-help" />
-                                <span><label for="IExistNo" class="control-label">I'm a bot</label></span>
-                            </div>
-                            <div class="form-check-inline">
                                 <input class="form-check-input allow-demo" id="IExistYes" name="@Html.NameFor(_ => Model.UserCreateViewModel.IExist)" type="radio" value="true" aria-describedby="bot-help" />
                                 <span><label for="IExistYes" class="control-label">I'm a human</label></span>
+                            </div>
+                            <div class="form-check-inline">
+                                <input checked class="form-check-input allow-demo" id="IExistNo" name="@Html.NameFor(_ => Model.UserCreateViewModel.IExist)" type="radio" value="false" aria-describedby="bot-help" />
+                                <span><label for="IExistNo" class="control-label">I'm a bot</label></span>
                             </div>
                         </div>
                         <span asp-validation-for="UserCreateViewModel.IExist" class="text-danger"></span>

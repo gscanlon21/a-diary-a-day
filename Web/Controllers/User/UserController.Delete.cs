@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Core.Consts;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web.Controllers.Index;
 using Web.ViewModels.User;
@@ -33,11 +34,19 @@ public partial class UserController
         var user = await _userRepo.GetUser(email, token);
         if (user != null)
         {
-            _context.UserMoods.RemoveRange(await _context.UserMoods.Where(n => n.UserId == user.Id).ToListAsync());
-            _context.Users.Remove(user); // Will also remove from ExerciseUserProgressions and EquipmentUsers
+            // Will also delete from related tables, cascade delete is enabled.
+            // Schedule the api job to clean it up since that handles image deletions.
+            user.LastActive = DateHelpers.Today.AddMonths(-UserConsts.DeleteAfterXMonths);
         }
 
-        await _context.SaveChangesAsync();
-        return RedirectToAction(nameof(IndexController.Index), IndexController.Name, new { WasUnsubscribed = true });
+        try
+        {
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(IndexController.Index), IndexController.Name, new { WasUnsubscribed = true });
+        }
+        catch
+        {
+            return RedirectToAction(nameof(IndexController.Index), IndexController.Name, new { WasUnsubscribed = false });
+        }
     }
 }
