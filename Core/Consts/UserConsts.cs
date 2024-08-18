@@ -9,7 +9,7 @@ namespace Core.Consts;
 /// </summary>
 public class UserConsts
 {
-    public const string DemoUser = "demo@amoodaday.com";
+    public const string DemoUser = "demo@adiaryaday.com";
     public const string DemoToken = "00000000-0000-0000-0000-000000000000";
 
     /// <summary>

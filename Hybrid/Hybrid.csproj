@@ -16,10 +16,10 @@
         <Nullable>enable</Nullable>
 
         <!-- Display name -->
-        <ApplicationTitle>A Mood a Day</ApplicationTitle>
+        <ApplicationTitle>A Diary a Day</ApplicationTitle>
 
         <!-- App Identifier. Cannot contain reserved keywords. -->
-        <ApplicationId>com.amoodaday.hybrid</ApplicationId>
+        <ApplicationId>com.adiaryaday.hybrid</ApplicationId>
         <ApplicationIdGuid>B69A8160-4135-428F-88CD-CC41793A1460</ApplicationIdGuid>
 
         <!-- Versions -->

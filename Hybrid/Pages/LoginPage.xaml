@@ -15,7 +15,7 @@
             VerticalOptions="Center">
 
             <Label
-                Text="A Mood a Day"
+                Text="A Diary a Day"
                 FontSize="32"
                 HorizontalOptions="Center" />
 

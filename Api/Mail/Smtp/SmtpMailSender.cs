@@ -8,7 +8,7 @@ namespace Api.Mail.Smtp;
 
 public class SmtpMailSender : IMailSender
 {
-    public const string FromDisplayName = "A Mood a Day";
+    public const string FromDisplayName = "A Diary a Day";
 
     private readonly IOptions<SmtpSettings> _smtpSettings;
     private readonly SmtpClient _smtpClient;

@@ -1,3 +1,3 @@
-[submodule ".a-mood-a-day"]
-	path = .a-mood-a-day
-	url = git@github.com:gscanlon21/_a-mood-a-day.git
+[submodule ".a-diary-a-day"]
+	path = .a-diary-a-day
+	url = git@github.com:gscanlon21/_a-diary-a-day.git

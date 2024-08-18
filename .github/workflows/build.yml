@@ -59,7 +59,7 @@ jobs:
         run: dotnet restore Hybrid/Hybrid.csproj
 
       - name: Build MAUI Android
-        run: dotnet publish Hybrid/Hybrid.csproj -c Release -f net8.0-android --no-restore -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=../.a-mood-a-day/amoodaday.keystore -p:AndroidSigningKeyAlias=amoodaday -p:AndroidSigningKeyPass=env:ANDROID_SIGNING_PASSWORD -p:AndroidSigningStorePass=env:ANDROID_SIGNING_PASSWORD
+        run: dotnet publish Hybrid/Hybrid.csproj -c Release -f net8.0-android --no-restore -p:AndroidKeyStore=true -p:AndroidSigningKeyStore=../.a-diary-a-day/adiaryaday.keystore -p:AndroidSigningKeyAlias=adiaryaday -p:AndroidSigningKeyPass=env:ANDROID_SIGNING_PASSWORD -p:AndroidSigningStorePass=env:ANDROID_SIGNING_PASSWORD
 
       - name: Upload Android Artifact
         uses: actions/upload-artifact@v3

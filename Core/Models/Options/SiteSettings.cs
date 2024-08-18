@@ -9,21 +9,21 @@ public class SiteSettings
     /// <summary>
     /// The user-friendly name of the website.
     /// 
-    /// sa. A Mood a Day
+    /// sa. A Diary a Day
     /// </summary>
     public string Name { get; set; } = null!;
 
     /// <summary>
     /// Link to the site's source code.
     /// 
-    /// sa. https://github.com/gscanlon21/a-feast-a-day
+    /// sa. https://github.com/gscanlon21/a-diary-a-day
     /// </summary>
     public string? Source { get; set; }
 
     /// <summary>
     /// The link to the main website.
     /// 
-    /// sa. https://amoodaday.com
+    /// sa. https://adiaryaday.com
     /// </summary>
     public string WebLink { get; set; } = null!;
     public Uri WebUri => new(WebLink);
@@ -31,21 +31,21 @@ public class SiteSettings
     /// <summary>
     /// The domain name of the site.
     /// 
-    /// sa. amoodaday.com
+    /// sa. adiaryaday.com
     /// </summary>
     public string Domain => WebUri.Host;
 
     /// <summary>
     /// Get the root domain sans TLD and sans subdomains.
     /// 
-    /// sa. amoodaday
+    /// sa. adiaryaday
     /// </summary>
     public string ApexDomainSansTLD => Domain.Split('.')[^2];
 
     /// <summary>
     /// The link to the cdn.
     /// 
-    /// sa. https://cdn.amoodaday.com
+    /// sa. https://cdn.adiaryaday.com
     /// </summary>
     public string CdnLink { get; set; } = null!;
     public Uri CdnUri => new(CdnLink);
@@ -53,7 +53,7 @@ public class SiteSettings
     /// <summary>
     /// The path to the api.
     /// 
-    /// sa. https://amoodaday.com/api
+    /// sa. https://adiaryaday.com/api
     /// </summary>
     public string ApiLink { get; set; } = null!;
     public Uri ApiUri => new(ApiLink);

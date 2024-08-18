@@ -15,7 +15,7 @@
                 <toolkit:IconTintColorBehavior TintColor="{StaticResource Primary}" />
             </Image.Behaviors>
         </Image>
-        <Label Text="A Mood a Day"
+        <Label Text="A Diary a Day"
                FontAttributes="Bold"
                HorizontalOptions="Center" />
         <Label Text="{Binding Email}"

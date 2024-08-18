@@ -12,7 +12,7 @@ namespace Api.Mail.Azure;
 /// </summary>
 public class AzureMailSender : IMailSender
 {
-    public const string FromDisplayName = "A Mood a Day";
+    public const string FromDisplayName = "A Diary a Day";
 
     private readonly EmailClient _emailClient;
 

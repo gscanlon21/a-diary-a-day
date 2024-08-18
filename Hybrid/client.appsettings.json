@@ -9,10 +9,10 @@
   },
   "AllowedHosts": "*",
   "SiteSettings": {
-    "Name": "A Mood a Day",
-    "Source": "https://github.com/gscanlon21/a-feast-a-day",
-    "WebLink": "https://amoodaday.com",
-    "ApiLink": "https://amoodaday.com/api",
-    "CdnLink": "https://cdn.amoodaday.com"
+    "Name": "A Diary a Day",
+    "Source": "https://github.com/gscanlon21/a-diary-a-day",
+    "WebLink": "https://adiaryaday.com",
+    "ApiLink": "https://adiaryaday.com/api",
+    "CdnLink": "https://cdn.adiaryaday.com"
   }
 }

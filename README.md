@@ -1,10 +1,10 @@
-# A Mood a Day
+# A Diary a Day
 
-A Mood a Day is a workout routine newsletter aimed at making it easy and simple to work out.
+A Diary a Day is a workout routine newsletter aimed at making it easy and simple to work out.
 
 ## App
 
-[Download the app](https://github.com/gscanlon21/a-mood-a-day/releases). App tokens are generated from the preferences page on the [website](https://amoodaday.com). 
+[Download the app](https://github.com/gscanlon21/a-diary-a-day/releases). App tokens are generated from the preferences page on the [website](https://adiaryaday.com). 
 
 The program [Obtainium](https://github.com/ImranR98/Obtainium) can be used for automatic updates. 
 
@@ -39,17 +39,17 @@ Because of how the emails are formatted, we require support for [absolutely posi
 
 ## Why a Newsletter?
 
-Other fitness apps require users to keep track of how often they need to workout and seek the workouts themselves. I find that reminder notifications are too easy to swipe away or disable when they arrive at inconvenient times. Opening a dedicated fitness app can also be intimidating or overwhelming. A Mood a Day sends at most one workout per day and utilizes your email client's features to remind you later, or pin the workout, so that it's always visible when you check your email.
+Other fitness apps require users to keep track of how often they need to workout and seek the workouts themselves. I find that reminder notifications are too easy to swipe away or disable when they arrive at inconvenient times. Opening a dedicated fitness app can also be intimidating or overwhelming. A Diary a Day sends at most one workout per day and utilizes your email client's features to remind you later, or pin the workout, so that it's always visible when you check your email.
 
-However, emails have their limitations as well. A Mood a Day is geared towards new-to-fitness users or users who aren't as inclined to optimize their workout to 100%.
+However, emails have their limitations as well. A Diary a Day is geared towards new-to-fitness users or users who aren't as inclined to optimize their workout to 100%.
 
 ## Screenshots
 
-<img src="https://github.com/gscanlon21/a-mood-a-day/assets/9373942/0ba8124f-cdef-42fb-b033-48e454ca34bf" width="200" />
-<img src="https://github.com/gscanlon21/a-mood-a-day/assets/9373942/3cb45d98-5889-4674-bcc1-ce8f3fe57e55" width="200" />
-<img src="https://github.com/gscanlon21/a-mood-a-day/assets/9373942/c247efaa-e86c-4bd0-9eb9-959a701abcbe" width="200" />
+<img src="https://github.com/gscanlon21/a-diary-a-day/assets/9373942/0ba8124f-cdef-42fb-b033-48e454ca34bf" width="200" />
+<img src="https://github.com/gscanlon21/a-diary-a-day/assets/9373942/3cb45d98-5889-4674-bcc1-ce8f3fe57e55" width="200" />
+<img src="https://github.com/gscanlon21/a-diary-a-day/assets/9373942/c247efaa-e86c-4bd0-9eb9-959a701abcbe" width="200" />
 <br>
-<img src="https://github.com/gscanlon21/a-mood-a-day/assets/9373942/a9ca1410-6aa1-461e-8a12-e54af6e9efbb" width="400" />
-<img src="https://github.com/gscanlon21/a-mood-a-day/assets/9373942/d70beb97-c6ce-446d-af16-0a9d665b1433" width="425" />
+<img src="https://github.com/gscanlon21/a-diary-a-day/assets/9373942/a9ca1410-6aa1-461e-8a12-e54af6e9efbb" width="400" />
+<img src="https://github.com/gscanlon21/a-diary-a-day/assets/9373942/d70beb97-c6ce-446d-af16-0a9d665b1433" width="425" />
 <br>
-<img src="https://github.com/gscanlon21/a-mood-a-day/assets/9373942/ce932b72-91f1-481b-af3d-8704e373ac6e" width="400" />
+<img src="https://github.com/gscanlon21/a-diary-a-day/assets/9373942/ce932b72-91f1-481b-af3d-8704e373ac6e" width="400" />
