@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Web.Code.TempData;
 using Web.Controllers.User;
 using Web.Services;
 using Web.ViewModels.User;

@@ -45,11 +45,11 @@
                         type: 'linear',
                         beginAtZero: false,
                         // How much blank space to add in above and below y-axis data?
-                        grace: '5%',
+                        grace: '0%',
                         title: {
                             // Display a label for the y-axis
                             display: false,
-                            text: 'Weight',
+                            text: 'Complete',
                         },
                         ticks: {
                             color: 'skyblue',
@@ -104,7 +104,10 @@
             }
         });
 
-        window.uploadChart(chart, 400, 300, '@Html.Raw(Model.User.Email)', '@Html.Raw(Model.Token)', '@Model.Type', '@Model.Name');
+        @if (TempData.IsSuccess())
+        {
+            @:window.uploadChart(chart, 400, 225, '@Html.Raw(Model.User.Email)', '@Html.Raw(Model.Token)', '@Model.Type', '@Model.Name');
+        }
     }
 </script>
 

@@ -41,5 +41,5 @@ window.uploadChart = function uploadChart(chart, width, height, email, token, ty
         //    console.debug({ reader.result })
         //}
         //reader.readAsDataURL(blob) 
-    }, 1000);
+    }, 100); // Minimum time required?
 }
