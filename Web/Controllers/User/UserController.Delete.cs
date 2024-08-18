@@ -1,6 +1,5 @@
 ﻿using Core.Consts;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Web.Controllers.Index;
 using Web.ViewModels.User;
 using Web.Views.Shared.Components.Edit;

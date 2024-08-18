@@ -108,15 +108,19 @@
 
         @await Component.InvokeAsync(AdvancedViewComponent.Name, new { Model.User })
 
-        <details class="mb-25">
-            <summary class="mb-1 h5">New Task</summary>
+        @if (Model.User.Components.HasFlag(Components.Tasks))
+        {
+            <details class="mb-25">
+                <summary class="mb-1 h5">New Task</summary>
 
-            @await Component.InvokeAsync(ManageTaskViewComponent.Name, new { Model.User })
-        </details>
+                @await Component.InvokeAsync(ManageTaskViewComponent.Name, new { Model.User })
+            </details>
+        }
     </div>
 
     <div id="info" class="col">
         @await Component.InvokeAsync(ConfirmationViewComponent.Name, new { Model.User })
+        @await Component.InvokeAsync(DeletionViewComponent.Name, new { Model.User })
         @await Component.InvokeAsync(UnsupportedClientViewComponent.Name, new { Model.User })
         @await Component.InvokeAsync(NewsletterViewComponent.Name, new { Model.User })
         @await Component.InvokeAsync(NextNewsletterViewComponent.Name, new { Model.User })

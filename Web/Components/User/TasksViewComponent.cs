@@ -24,6 +24,11 @@ public class TasksViewComponent(CoreContext context, UserRepo userRepo, IService
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
+        if (!user.Components.HasFlag(Core.Models.User.Components.Tasks))
+        {
+            return Content("");
+        }
+
         // Need a user context so the manage link is clickable and the user can un-ignore an exercise/variation.
         var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userNewsletter = new UserNewsletterDto(user.AsType<UserDto, Data.Entities.User.User>()!, token);

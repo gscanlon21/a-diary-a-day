@@ -217,6 +217,11 @@ public partial class NewsletterRepo
 
     internal async Task<IList<QueryResults>> GetUserTasks(NewsletterContext newsletterContext, Section section, IEnumerable<QueryResults>? exclude = null)
     {
+        if (!newsletterContext.User.Components.HasFlag(Components.Tasks))
+        {
+            return [];
+        }
+
         return await new QueryBuilder(section)
             .WithUser(newsletterContext.User)
             .WithExcludeTasks(x =>

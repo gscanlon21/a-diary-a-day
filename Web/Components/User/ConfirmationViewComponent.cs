@@ -17,9 +17,11 @@ public class ConfirmationViewComponent : ViewComponent
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
-        return View("Confirmation", new ConfirmationViewModel()
+        if (user.LastActive.HasValue)
         {
-            User = user,
-        });
+            return Content("");
+        }
+
+        return View("Confirmation", new ConfirmationViewModel());
     }
 }
