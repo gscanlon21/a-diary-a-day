@@ -137,12 +137,12 @@
                         <div class="form-group mb-3">
                             <div>
                                 <div class="form-check-inline">
-                                    <input checked class="form-check-input allow-demo" id="IExistNo2" name="@Html.NameFor(_ => Model.UserLoginViewModel.IExist)" type="radio" value="false" aria-describedby="bot2-help" />
-                                    <span><label for="IExistNo2" class="control-label">I'm a bot</label></span>
-                                </div>
-                                <div class="form-check-inline">
                                     <input class="form-check-input allow-demo" id="IExistYes2" name="@Html.NameFor(_ => Model.UserLoginViewModel.IExist)" type="radio" value="true" aria-describedby="bot2-help" />
                                     <span><label for="IExistYes2" class="control-label">I'm a human</label></span>
+                                </div>
+                                <div class="form-check-inline">
+                                    <input checked class="form-check-input allow-demo" id="IExistNo2" name="@Html.NameFor(_ => Model.UserLoginViewModel.IExist)" type="radio" value="false" aria-describedby="bot2-help" />
+                                    <span><label for="IExistNo2" class="control-label">I'm a bot</label></span>
                                 </div>
                             </div>
                             <span asp-validation-for="UserLoginViewModel.IExist" class="text-danger"></span>
