@@ -49,4 +49,12 @@ public partial class UserController
             return RedirectToAction(nameof(IndexController.Index), IndexController.Name, new { WasUnsubscribed = false });
         }
     }
+
+    [HttpPost, Route("ResendConfirmation")]
+    public async Task<IActionResult> ResendConfirmation(string email, string token)
+    {
+        // TODO: Resend confirmation email.
+        var user = await _userRepo.GetUser(email, token);
+        return RedirectToAction(nameof(Edit), new { email, token });
+    }
 }
