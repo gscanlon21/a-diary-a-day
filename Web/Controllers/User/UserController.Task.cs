@@ -1,4 +1,5 @@
-﻿using Core.Models.Newsletter;
+﻿using Core.Consts;
+using Core.Models.Newsletter;
 using Data.Entities.Task;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -114,6 +115,13 @@ public partial class UserController
         if (user == null)
         {
             return NotFound();
+        }
+
+        // Limit the number of tasks that can be created.
+        if ((await _context.UserTasks.CountAsync(ut => ut.UserId == user.Id)) >= UserConsts.MaxTasks)
+        {
+            TempData[TempData_User.FailureMessage] = "Max tasks reached.";
+            return RedirectToAction(nameof(ManageTask), new { email, token, section, taskId, WasUpdated = false });
         }
 
         if (taskId == default)
