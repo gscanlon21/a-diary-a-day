@@ -16,7 +16,10 @@ $("[data-dismiss]").each((i, elem) => elem.addEventListener('click', (e) => {
 
 window.uploadChart = function uploadChart(chart, width, height, email, token, type, name) {
     const offscreen = new OffscreenCanvas(width, height);
-    const chartDuplicate = new Chart(offscreen, chart.config);
+
+    // Since the original chart was already created we don't need to deep clone.
+    chart.config.options.animation.duration = 0; // Disable animation.
+    const chartClone = new Chart(offscreen, chart.config);
 
     // Let the charts finish drawing.
     setTimeout(async () => {
