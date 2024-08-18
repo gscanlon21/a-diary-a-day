@@ -36,7 +36,8 @@ public partial class UserController
         {
             // Will also delete from related tables, cascade delete is enabled.
             // Schedule the api job to clean it up since that handles image deletions.
-            user.LastActive = DateHelpers.Today.AddMonths(-UserConsts.DeleteAfterXMonths);
+            // Double the decrement value in case we end up increasing DeleteAfterXMonths.
+            user.LastActive = DateHelpers.Today.AddMonths(-2 * UserConsts.DeleteAfterXMonths);
         }
 
         try
