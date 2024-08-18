@@ -84,7 +84,7 @@ public class UserRepo(CoreContext context)
 
 
     /// <summary>
-    /// Get the last 7 days of workouts for the user. Excludes the current workout.
+    /// Get the last 7 days of newsletters for the user. Excludes the current newsletter.
     /// </summary>
     public async Task<IList<UserDiary>> GetPastDiaries(User user)
     {
