@@ -60,11 +60,11 @@ public partial class NewsletterRepo
 
         foreach (var task in tasks.DistinctBy(e => e))
         {
-            // >= so that today is the last day seeing the same exercises and tomorrow the exercises will refresh.
+            // >= so that today is the last day seeing the same tasks and tomorrow the tasks will refresh.
             if (task != null && (task.RefreshAfter == null || DateHelpers.Today >= task.RefreshAfter))
             {
                 var refreshAfter = task.LagRefreshXDays == 0 ? (DateOnly?)null : DateHelpers.Today.AddDays(task.LagRefreshXDays);
-                // If refresh after is today, we want to see a different exercises tomorrow so update the last seen date.
+                // If refresh after is today, we want to see a different task tomorrow so update the last seen date.
                 if (task.RefreshAfter == null && refreshAfter.HasValue && refreshAfter.Value > DateHelpers.Today)
                 {
                     task.RefreshAfter = refreshAfter.Value;
@@ -75,9 +75,10 @@ public partial class NewsletterRepo
                     task.LastSeen = DateHelpers.Today.AddDays(task.PadRefreshXDays);
 
                     // Only refresh the deload week when the refresh lag is complete.
-                    if (task.LastDeload < DateHelpers.Today.AddDays(-7 * task.DeloadAfterXWeeks))
+                    // Don't update when no there's deload refresh interval.
+                    if (task.DeloadAfterXWeeks > 0 && task.NeedsDeload)
                     {
-                        // Add the refresh padding onto the deload week.
+                        // Add the refresh padding onto the deload week. 
                         task.LastDeload = task.LastSeen;
                     }
                 }

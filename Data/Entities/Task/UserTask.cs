@@ -61,22 +61,25 @@ public class UserTask
     /// </summary>
     public DateOnly? RefreshAfter { get; set; }
 
-    public DateOnly LastDeload { get; set; } = DateHelpers.Today;
+    public DateOnly LastDeload { get; set; }
+
+    [NotMapped] // Add 1 week for the deload week duration.
+    public bool NeedsDeload => LastDeload.AddDays(7) <= DateHelpers.Today.AddDays(-7 * DeloadAfterXWeeks);
 
     /// <summary>
-    /// How often to refresh exercises.
+    /// How often to refresh tasks.
     /// </summary>
     [Required, Range(UserConsts.LagRefreshXDaysMin, UserConsts.LagRefreshXDaysMax)]
     public int LagRefreshXDays { get; set; } = UserConsts.LagRefreshXDaysDefault;
 
     /// <summary>
-    /// How often to refresh exercises.
+    /// How often to refresh tasks.
     /// </summary>
     [Required, Range(UserConsts.PadRefreshXDaysMin, UserConsts.PadRefreshXDaysMax)]
     public int PadRefreshXDays { get; set; } = UserConsts.PadRefreshXDaysDefault;
 
     /// <summary>
-    /// How often to refresh exercises.
+    /// How often to refresh tasks.
     /// </summary>
     [Required, Range(UserConsts.DeloadWeeksMin, UserConsts.DeloadWeeksMax)]
     public int DeloadAfterXWeeks { get; set; } = UserConsts.DeloadWeeksDefault;
