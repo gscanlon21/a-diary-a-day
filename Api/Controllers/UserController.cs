@@ -98,7 +98,7 @@ public class UserController : ControllerBase
         // Image was already uploaded today.
         if (userComponent?.LastUpload >= DateHelpers.Today == true)
         {
-            return Ok();
+            return NoContent();
         }
 
         // Upload the image.
