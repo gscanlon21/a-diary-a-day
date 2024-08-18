@@ -183,10 +183,13 @@ public partial class NewsletterRepo
                 })
                 .Build()
                 .Query(_serviceScopeFactory))
-                // Re-order the recipes to match their original order.
-                // May be null when the user substitutes in a recipe for an ingredient after the first feast was sent.
+                // Re-order the tasks to match their original order.
                 .OrderBy(e => newsletter.UserDiaryTasks.FirstOrDefault(nv => nv.UserTaskId == e.Task.Id)?.Order ?? -1));
         }
+
+        // Hide tasks that we have already completed today.
+        var taskLogs = await _context.UserTaskLogs.Where(utl => utl.Date == date).Where(utl => tasks.Select(t => t.Task.Id).Contains(utl.UserTaskId)).ToListAsync();
+        tasks = tasks.Where(t => (taskLogs.FirstOrDefault(tl => tl.Section == t.Section && tl.UserTaskId == t.Task.Id)?.Complete ?? 0) == 0).ToList();
 
         var images = GetImages(user).ToList();
         var userViewModel = new UserNewsletterDto(user.AsType<UserDto, User>()!, token);

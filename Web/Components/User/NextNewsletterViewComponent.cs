@@ -23,7 +23,7 @@ public class NextNewsletterViewComponent(CoreContext context, UserRepo userRepo)
         DateOnly? nextSendDate = null;
         if (user.RestDays < Days.All)
         {
-            nextSendDate = DateTime.UtcNow.Hour <= user.SendHour ? DateOnly.FromDateTime(DateTime.UtcNow) : DateOnly.FromDateTime(DateTime.UtcNow).AddDays(1);
+            nextSendDate = DateTime.UtcNow.Hour <= user.SendHour ? DateHelpers.Today : DateHelpers.Today.AddDays(1);
             // Next send date is a rest day and user does not want off day workouts, next send date is the day after.
             while ((user.RestDays.HasFlag(DaysExtensions.FromDate(nextSendDate.Value)))
                 // User was sent a newsletter for the next send date, next send date is the day after.

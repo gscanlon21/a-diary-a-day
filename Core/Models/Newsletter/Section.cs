@@ -48,9 +48,9 @@ public enum Section
     [Display(Name = "Before Bed")]
     BeforeBed = 1 << 12, // 4096
 
-    All = AfterWakingUp | BeforeBreakfast | WithBreakfast | AfterBreakfast 
-        | BeforeLunch | WithLunch | AfterLunch 
-        | BeforeDinner | WithDinner | AfterDinner 
+    All = AfterWakingUp | BeforeBreakfast | WithBreakfast | AfterBreakfast
+        | BeforeLunch | WithLunch | AfterLunch
+        | BeforeDinner | WithDinner | AfterDinner
         | PreWorkout | PostWorkout | BeforeBed,
 }
 

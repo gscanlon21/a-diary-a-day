@@ -26,7 +26,7 @@ public partial class NewsletterRepo
     /// </summary>
     internal async Task<UserDiary> CreateAndAddNewsletterToContext(NewsletterContext newsletterContext, IList<QueryResults>? tasks = null)
     {
-        var newsletter = new UserDiary(DateHelpers.Today, newsletterContext);
+        var newsletter = new UserDiary(newsletterContext.User.TodayOffset, newsletterContext);
         _context.UserDiaries.Add(newsletter); // Sets the newsletter.Id after changes are saved.
         await _context.SaveChangesAsync();
 

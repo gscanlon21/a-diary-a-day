@@ -31,7 +31,7 @@ public class UserDiary
     public int UserId { get; private init; }
 
     /// <summary>
-    /// The date the workout is for, using the user's UTC offset date.
+    /// The date the diary entry is for, using the user's UTC offset date.
     /// </summary>
     [Required]
     public DateOnly Date { get; private init; }

@@ -1,5 +1,6 @@
 ﻿using Core.Consts;
 using Core.Models.Newsletter;
+using Data.Entities.User;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,22 +15,32 @@ namespace Data.Entities.Task;
 [Table("user_task_log"), Comment("User task log")]
 public class UserTaskLog
 {
+    [Obsolete("Public parameterless constructor required for EF Core .AsSplitQuery()", error: true)]
+    public UserTaskLog() { }
+
+    public UserTaskLog(User.User user, UserTask userTask)
+    {
+        // Don't set UserTask, so that EF Core doesn't add/update UserTask.
+        UserTaskId = userTask.Id;
+        Date = user.TodayOffset;
+    }
+
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private init; }
 
     [Required]
-    public int UserTaskId { get; set; }
+    public int UserTaskId { get; private init; }
 
     public Section Section { get; set; }
 
-    [Range(UserConsts.UserTaskCompleteMin, UserConsts.UserTaskCompleteMax)]
-    public int Complete { get; set; } = UserConsts.UserTaskCompleteDefault;
-
     /// <summary>
-    /// The token should stop working after this date.
+    /// The date the task was completed, using the user's UTC offset date.
     /// </summary>
     [Required]
-    public DateOnly Date { get; init; } = DateOnly.FromDateTime(DateTime.UtcNow);
+    public DateOnly Date { get; private init; }
+
+    [Range(UserConsts.UserTaskCompleteMin, UserConsts.UserTaskCompleteMax)]
+    public int Complete { get; set; } = UserConsts.UserTaskCompleteDefault;
 
     [JsonIgnore, InverseProperty(nameof(UserTask.UserTaskLogs))]
     public virtual UserTask UserTask { get; private init; } = null!;

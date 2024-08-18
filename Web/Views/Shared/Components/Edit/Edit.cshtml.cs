@@ -13,11 +13,6 @@ namespace Web.Views.Shared.Components.Edit;
 /// </summary>
 public class UserEditViewModel
 {
-    /// <summary>
-    /// Today's date in UTC.
-    /// </summary>
-    public DateOnly Today => DateOnly.FromDateTime(DateTime.UtcNow);
-
     [Obsolete("Public parameterless constructor for model binding.", error: true)]
     public UserEditViewModel() { }
 

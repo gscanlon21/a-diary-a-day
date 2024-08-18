@@ -43,11 +43,12 @@ public partial class UserController
             return NotFound();
         }
 
-        // Set the new weight on the UserVariation.
+        // Set the last completed date on the UserTask.
         var userTask = await _context.UserTasks.FirstAsync(p => p.UserId == user.Id && p.Id == taskId);
         userTask.LastCompleted = DateHelpers.Today;
         if (userTask.PersistUntilComplete)
         {
+            // Update the refresh dates if we were waiting for task completion.
             await _newsletterRepo.UpdateLastSeenDate([userTask]);
         }
 
@@ -62,10 +63,8 @@ public partial class UserController
         }
         else
         {
-            _context.Add(new UserTaskLog()
+            _context.Add(new UserTaskLog(user, userTask)
             {
-                UserTaskId = userTask.Id,
-                Date = DateHelpers.Today,
                 Section = section,
                 Complete = 1,
             });
