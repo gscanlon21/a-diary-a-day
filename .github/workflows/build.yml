@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: true
-          ssh-key: '${{ secrets.AMOODADAY_SSH_KEY }}'
+          ssh-key: '${{ secrets.ADIARYADAY_SSH_KEY }}'
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -77,7 +77,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: true
-          ssh-key: '${{ secrets.AMOODADAY_SSH_KEY }}'
+          ssh-key: '${{ secrets.ADIARYADAY_SSH_KEY }}'
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -109,7 +109,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: true
-          ssh-key: '${{ secrets.AMOODADAY_SSH_KEY }}'
+          ssh-key: '${{ secrets.ADIARYADAY_SSH_KEY }}'
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -141,7 +141,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: true
-          ssh-key: '${{ secrets.AMOODADAY_SSH_KEY }}'
+          ssh-key: '${{ secrets.ADIARYADAY_SSH_KEY }}'
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
