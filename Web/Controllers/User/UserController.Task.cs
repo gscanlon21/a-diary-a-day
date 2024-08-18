@@ -3,7 +3,7 @@ using Data.Entities.Task;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web.ViewModels.User;
-using Web.Views.Shared.Components.ManageRecipe;
+using Web.Views.Shared.Components.ManageTask;
 using Web.Views.User;
 
 namespace Web.Controllers.User;
@@ -23,13 +23,14 @@ public partial class UserController
         }
 
         var task = await _context.UserTasks.AsNoTracking()
-            .FirstOrDefaultAsync(r => r.Id == taskId && r.UserId == user.Id);
+            .FirstOrDefaultAsync(ut => ut.UserId == user.Id && ut.Id == taskId);
 
         if (task == null) { return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage)); }
         return View(new UserManageTaskViewModel()
         {
             User = user,
             Task = task,
+            Section = section,
             WasUpdated = wasUpdated,
         });
     }
@@ -44,7 +45,7 @@ public partial class UserController
         }
 
         // Set the last completed date on the UserTask.
-        var userTask = await _context.UserTasks.FirstAsync(p => p.UserId == user.Id && p.Id == taskId);
+        var userTask = await _context.UserTasks.FirstAsync(ut => ut.UserId == user.Id && ut.Id == taskId);
         userTask.LastCompleted = DateHelpers.Today;
         if (userTask.PersistUntilComplete)
         {
@@ -83,18 +84,17 @@ public partial class UserController
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
         }
 
-        var userProgression = await _context.UserTasks
-            .Where(ue => ue.UserId == user.Id)
-            .FirstOrDefaultAsync(ue => ue.Id == taskId);
+        var userTask = await _context.UserTasks
+            .FirstOrDefaultAsync(ut => ut.UserId == user.Id && ut.Id == taskId);
 
         // May be null if the exercise was soft/hard deleted
-        if (userProgression == null)
+        if (userTask == null)
         {
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
         }
 
-        userProgression.RefreshAfter = null;
-        userProgression.LastSeen = userProgression.LastSeen > DateHelpers.Today ? DateHelpers.Today : userProgression.LastSeen;
+        userTask.RefreshAfter = null;
+        userTask.LastSeen = userTask.LastSeen > DateHelpers.Today ? DateHelpers.Today : userTask.LastSeen;
         await _context.SaveChangesAsync();
 
         return RedirectToAction(nameof(ManageTask), new { email, token, section, taskId, WasUpdated = true });
@@ -119,7 +119,7 @@ public partial class UserController
         if (taskId == default)
         {
             // Adding task.
-            _context.Add(new Data.Entities.Task.UserTask()
+            _context.Add(new UserTask()
             {
                 User = user,
                 Name = viewModel.Name,
@@ -139,7 +139,7 @@ public partial class UserController
         else
         {
             var userTask = await _context.UserTasks
-                .FirstAsync(p => p.UserId == user.Id && p.Id == taskId);
+                .FirstAsync(ut => ut.UserId == user.Id && ut.Id == taskId);
 
             // Apply refresh padding immediately.
             if (viewModel.PadRefreshXDays != userTask.PadRefreshXDays)

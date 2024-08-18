@@ -1,4 +1,4 @@
-﻿@model Views.Shared.Components.ManageRecipe.ManageTaskViewModel
+﻿@model ManageTaskViewModel
 @using System.Numerics
 @using Core.Consts
 @using Web.Components.UserTask
@@ -174,7 +174,7 @@
         </div>
     </form>
 
-    <div class="row form-group justify-content-end gy-2 mb-4">
+    <div class="row form-group justify-content-end gy-2">
         <div class="col">
             <input type="submit" value="Save" class="btn btn-primary" form="task-form" />
         </div>
@@ -194,6 +194,8 @@
 
     @if (Model.UserTask.Id != default)
     {
-        @await Component.InvokeAsync(TaskLogViewComponent.Name, new { Model.User, Task = Model.UserTask })
+        <div class="mt-4">
+            @await Component.InvokeAsync(TaskLogViewComponent.Name, new { Model.User, Task = Model.UserTask })
+        </div>
     }
 </div>

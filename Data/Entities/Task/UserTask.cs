@@ -38,16 +38,19 @@ public class UserTask
 
     public bool PersistUntilComplete { get; set; }
 
+    /// <summary>
+    /// What sections this task will show for.
+    /// </summary>
     public Section Section { get; set; }
 
     /// <summary>
-    /// When was this exercise last seen in the user's newsletter.
+    /// When was this task last seen in the user's newsletter.
     /// </summary>
     [Required]
     public DateOnly LastSeen { get; set; }
 
     /// <summary>
-    /// When was this exercise last seen in the user's newsletter.
+    /// When was this task last marked as completed by the user.
     /// </summary>
     [Required]
     public DateOnly LastCompleted { get; set; }
@@ -61,8 +64,8 @@ public class UserTask
     /// </summary>
     public DateOnly? RefreshAfter { get; set; }
 
-    // Set to 1 week in past so deload week doesn't refresh immediately 
-    // ... or filter out tasks for a week after creation.
+    // Set to 1 week in past so the deload week doesn't immediately refresh
+    // ... or filter out tasks for a week after user creation.
     public DateOnly LastDeload { get; set; } = DateHelpers.Today.AddDays(-7);
 
     [NotMapped] // Add 1 week for the deload week duration.

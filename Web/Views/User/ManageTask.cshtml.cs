@@ -8,11 +8,11 @@ namespace Web.Views.User;
 /// </summary>
 public class UserManageTaskViewModel
 {
-    public Data.Entities.User.User User { get; init; } = null!;
+    public required Data.Entities.User.User User { get; init; } = null!;
 
     public required UserTask Task { get; init; }
 
-    public bool? WasUpdated { get; init; }
+    public required Section Section { get; init; }
 
-    public Section Section { get; init; }
+    public bool? WasUpdated { get; init; }
 }

@@ -7,7 +7,7 @@ using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web.Code;
-using Web.Views.Shared.Components.ManageRecipe;
+using Web.Views.Shared.Components.ManageTask;
 
 namespace Web.Components.User;
 
