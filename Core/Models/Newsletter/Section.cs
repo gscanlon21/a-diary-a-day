@@ -67,7 +67,7 @@ public static class SectionExtensions
         Section.Morning or Section.BeforeBreakfast or Section.WithBreakfast or Section.AfterBreakfast => ExerciseTheme.Other,
         Section.Midday or Section.BeforeLunch or Section.WithLunch or Section.AfterLunch or Section.Afternoon => ExerciseTheme.Extra,
         Section.Evening or Section.BeforeDinner or Section.WithDinner or Section.AfterDinner => ExerciseTheme.Cooldown,
-        Section.BeforeBed => ExerciseTheme.Main,
+        Section.BeforeBed => ExerciseTheme.Main or Section.PreWorkout or Section.PostWorkout,
         Section.None => ExerciseTheme.Warmup,
         _ => ExerciseTheme.None,
     };
