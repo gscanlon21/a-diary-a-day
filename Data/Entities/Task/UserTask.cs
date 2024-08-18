@@ -61,7 +61,9 @@ public class UserTask
     /// </summary>
     public DateOnly? RefreshAfter { get; set; }
 
-    public DateOnly LastDeload { get; set; }
+    // Set to 1 week in past so deload week doesn't refresh immediately 
+    // ... or filter out tasks for a week after creation.
+    public DateOnly LastDeload { get; set; } = DateHelpers.Today.AddDays(-7);
 
     [NotMapped] // Add 1 week for the deload week duration.
     public bool NeedsDeload => LastDeload.AddDays(7) <= DateHelpers.Today.AddDays(-7 * DeloadAfterXWeeks);
