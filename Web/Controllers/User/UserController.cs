@@ -182,7 +182,7 @@ public partial class UserController : ViewController
 
         // User is enabling their account or preventing it from being disabled for inactivity.
         TempData[TempData_User.SuccessMessage] = userIsConfirmingAccount
-            ? "Thank you! Your first workout is on its way."
+            ? "Thank you! Your first diary entry is on its way."
             : "Thank you! Take a moment to update your Workout Intensity to avoid adaptions.";
         return RedirectToAction(nameof(UserController.Edit), new { email, token });
     }
