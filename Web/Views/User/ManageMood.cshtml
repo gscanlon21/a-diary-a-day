@@ -12,20 +12,7 @@
     <div class="col-auto mb-3">
         <h1 class="primary-heading">Manage Mood</h1>
     </div>
-    <div class="col-lg-6 m-0--empty">@if (Model.WasUpdated == false)
-    {
-        <div class="alert alert-danger alert-dismissible mb-1" role="alert">
-            <span>Something went wrong.</span>
-            <button type="button" class="btn-close allow-demo" data-dismiss=".alert" aria-label="Close"></button>
-        </div>
-    }
-    else if (Model.WasUpdated == true)
-    {
-        <div class="alert alert-success alert-dismissible mb-1" role="alert">
-                <span>Your preferences have been saved. Changes will be reflected in the next email.</span>
-            <button type="button" class="btn-close allow-demo" data-dismiss=".alert" aria-label="Close"></button>
-        </div>
-    }</div>
+    <partial name="_ValidationMessagePartial" model='new ValidationMessagePartialModel() { WasUpdated = Model.WasUpdated, GoBackOnSave = true }' />
 </div>
 
 <div class="row gy-2">
