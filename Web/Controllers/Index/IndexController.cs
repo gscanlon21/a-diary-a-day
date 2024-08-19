@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Web.Controllers.User;
 using Web.Services;
-using Web.ViewModels.User;
+using Web.Views.Index;
 
 namespace Web.Controllers.Index;
 

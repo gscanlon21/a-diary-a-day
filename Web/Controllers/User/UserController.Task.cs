@@ -3,7 +3,6 @@ using Core.Models.Newsletter;
 using Data.Entities.Task;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Web.ViewModels.User;
 using Web.Views.Shared.Components.ManageTask;
 using Web.Views.User;
 

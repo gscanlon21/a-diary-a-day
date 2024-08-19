@@ -1,6 +1,8 @@
 ﻿using Data.Entities.User;
+using Web.ViewModels;
 
-namespace Web.ViewModels.Shared;
+namespace Web.Views.Shared;
+
 
 public class RadarChartViewModel
 {

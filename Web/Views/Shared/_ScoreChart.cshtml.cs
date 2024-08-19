@@ -1,4 +1,7 @@
-﻿namespace Web.ViewModels.Shared;
+﻿using Web.ViewModels;
+
+namespace Web.Views.Shared;
+
 
 public class ScoreChartViewModel
 {

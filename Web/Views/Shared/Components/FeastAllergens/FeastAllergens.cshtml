@@ -7,7 +7,7 @@
 <div class="alert alert-light shadow">
     @if (Model.PreviousMood?.Date == DateHelpers.Today.StartOfWeek())
     {
-        await Html.RenderPartialAsync("_RadarChart", new Web.ViewModels.Shared.RadarChartViewModel()
+        await Html.RenderPartialAsync("_LineChart", new LineChartViewModel()
         {
             XysGrouped = Model.XysGrouped,
             User = Model.User,
@@ -20,7 +20,7 @@
         <details>
             <summary>
                 @{
-                    await Html.RenderPartialAsync("_RadarChart", new Web.ViewModels.Shared.RadarChartViewModel()
+                    await Html.RenderPartialAsync("_LineChart", new LineChartViewModel()
                 {
                     XysGrouped = Model.XysGrouped,
                     User = Model.User,

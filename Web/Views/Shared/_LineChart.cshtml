@@ -1,6 +1,6 @@
-﻿@model TagChartViewModel
+﻿@model LineChartViewModel
 
-<div style="height:min(70vw, 300px)">
+<div style="height:min(70vw, @(LineChartViewModel.Height)px)">
     <canvas id="@Model.Id"></canvas>
 </div>
 
@@ -12,7 +12,7 @@
     if (canvas) {
         Chart.defaults.font.size = 16;
         const chart = new Chart(canvas, {
-            type: 'bar',
+            type: 'line',
             data: {
                 datasets: [
                     @for (var i = 0; i < Model.XysGrouped.Count; i++)
@@ -50,24 +50,29 @@
                     },
                 },
                 parsing: {
-                    xAxisKey: 'x'
+                    xAxisKey: 'x',
+                    //yAxisKey: 'y'
                 },
                 scales: {
                     y: {
                         type: 'linear',
-                        position: 'left',
-                        beginAtZero: false,
+                        beginAtZero: true,
                         // How much blank space to add in above and below y-axis data?
                         grace: '5%',
                         title: {
                             // Display a label for the y-axis
                             display: false,
+                            text: 'Score',
                         },
                         ticks: {
-                            display: true,
                             color: 'skyblue',
                             // No decimal places
                             precision: 0,
+                            // Customize the y-axis tick name
+                            //callback: function (value, index, ticks) {
+                            //    var enumMap = @(Json.Serialize(Enum.GetNames<Mood>()));
+                            //    return enumMap[index];
+                            //}
                         },
                     },
                     // https://www.chartjs.org/docs/next/axes/cartesian/time.html
@@ -91,7 +96,7 @@
                 },
                 plugins: {
                     legend: {
-                        // Don't show the graph legend
+                        // Show the graph legend
                         display: true,
                     },
                     tooltip: {
@@ -100,6 +105,10 @@
                                 // Pretty-print the x-axis date in the hover tooltip
                                 return context.map(c => new Date(c.parsed.x).toDateString());
                             },
+                            //footer: (context) => {
+                            //    // Pretty-print the x-axis date in the hover tooltip
+                            //    return context.map(c => `${c.raw.count}/${c.raw.total} questions answered`);
+                            //},
                         },
                     },
                     /*
@@ -117,6 +126,6 @@
             }
         });
 
-        window.uploadChart(chart, 400, 300, '@Html.Raw(Model.User.Email)', '@Html.Raw(Model.Token)', '@Model.Type');
+        window.uploadChart(chart, 350, 350, '@Html.Raw(Model.User.Email)', '@Html.Raw(Model.Token)', '@Model.Type');
     }
 </script>

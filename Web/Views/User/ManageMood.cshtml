@@ -152,6 +152,6 @@
 
 @section Scripts {
     @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial", new Web.ViewModels.Shared.ValidationScriptsPartialViewModel() { IsDemoUser = Model.User.IsDemoUser });
+        await Html.RenderPartialAsync("_ValidationScriptsPartial", new ValidationScriptsPartialViewModel() { IsDemoUser = Model.User.IsDemoUser });
     }
 }

@@ -1,4 +1,5 @@
-﻿using Data.Entities.User;
+﻿using Core.Models.Footnote;
+using Data.Entities.User;
 using Web.ViewModels;
 
 namespace Web.Views.Shared.Components.FeastAllergens;
@@ -11,9 +12,9 @@ public class FeastAllergensViewModel
         {
             var flatMap = userMoods.SelectMany(m =>
             {
-                return customs.Select(c => new UserCustomGroup(m.Date, c.Type, c.Id, c.Name)
+                return m.Allergens.Select(c => new UserCustomGroup(m.Date, CustomType.None, (int)c.Key, c.Key.GetSingleDisplayName())
                 {
-                    One = c.Count
+                    One = (int)c.Value
                 });
             });
 
@@ -36,5 +37,5 @@ public class FeastAllergensViewModel
     public UserFeastAllergens? PreviousMood { get; init; }
 
     internal List<XCustom> Xys { get; init; } = [];
-    internal List<IGrouping<UserCustom, XCustom>> XysGrouped => Xys.GroupBy(xy => xy.Label).ToList();
+    internal List<IGrouping<UserCustom, XCustom>> XysGrouped => Xys.Where(xy => xy.Y?.One > 0).GroupBy(xy => xy.Label).ToList();
 }

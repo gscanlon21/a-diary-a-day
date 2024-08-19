@@ -5,9 +5,10 @@ using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Web.ViewModels.User;
+using Web.Views.Index;
 using Web.Views.Shared.Components.Advanced;
 using Web.Views.Shared.Components.Edit;
+using Web.Views.User;
 
 namespace Web.Controllers.User;
 

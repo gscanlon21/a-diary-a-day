@@ -1,4 +1,5 @@
 ﻿using Core.Models.Footnote;
+using Core.Models.User;
 using Data;
 using Data.Entities.User;
 using Data.Repos;
@@ -26,13 +27,13 @@ public class FeastAllergensViewComponent(CoreContext context, UserRepo userRepo)
             .Where(ud => ud.UserId == user.Id)
             .ToListAsync();
 
-        var userCustoms = userMoods.SelectMany(em => em.Allergens.Select(a => new UserCustom()
+        var userCustoms = EnumExtensions.GetValuesExcluding32(Allergy.None).Select(a => new UserCustom()
         {
-            Id = (int)a.Key,
-            Count = (int)a.Value,
+            Id = (int)a,
+            Count = (int)a,
             Type = CustomType.None,
-            Name = a.Key.GetSingleDisplayName(),
-        })).ToList();
+            Name = a.GetSingleDisplayName(),
+        }).ToList();
 
         var viewModel = new FeastAllergensViewModel(userMoods, userCustoms)
         {

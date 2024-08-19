@@ -1,8 +1,8 @@
 ﻿using Core.Consts;
 using Microsoft.AspNetCore.Mvc;
 using Web.Controllers.Index;
-using Web.ViewModels.User;
 using Web.Views.Shared.Components.Edit;
+using Web.Views.User;
 
 namespace Web.Controllers.User;
 

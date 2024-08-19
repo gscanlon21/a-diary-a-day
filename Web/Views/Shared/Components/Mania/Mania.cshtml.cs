@@ -1,6 +1,8 @@
-﻿using Data.Entities.User;
+using Data.Entities.User;
+using Web.ViewModels;
 
-namespace Web.ViewModels.User.Components;
+namespace Web.Views.Shared.Components.Mania;
+
 
 public class ManiaViewModel
 {

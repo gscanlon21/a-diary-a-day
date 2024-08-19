@@ -4,7 +4,7 @@ using Core.Models.Newsletter;
 using Core.Models.User;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
-using Web.ViewModels.User;
+using Web.Views.Index;
 
 namespace Web.Views.Shared.Components.Edit;
 

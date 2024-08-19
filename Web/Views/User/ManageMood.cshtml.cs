@@ -1,7 +1,9 @@
 ﻿using Data.Entities.User;
 using System.ComponentModel.DataAnnotations;
+using Web.ViewModels;
 
-namespace Web.ViewModels.User;
+namespace Web.Views.User;
+
 
 /// <summary>
 /// For CRUD actions

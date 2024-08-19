@@ -1,6 +1,7 @@
-﻿using Data.Entities.User;
+using Data.Entities.User;
+using Web.ViewModels;
 
-namespace Web.ViewModels.User.Components;
+namespace Web.Views.Shared.Components.Anger;
 
 public class AngerViewModel
 {
@@ -26,3 +27,4 @@ public class AngerViewModel
 
     internal IList<Xy> Xys { get; init; } = [];
 }
+

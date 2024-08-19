@@ -12,7 +12,7 @@ namespace Data.Entities.User;
 /// A collection of sage advice.
 /// </summary>
 [Table("user_custom"), Comment("Sage advice")]
-[DebuggerDisplay("{Note} - {Source}")]
+[DebuggerDisplay("{Name} - {Type}")]
 public class UserCustom : ICustom, IComparable<UserCustom>
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

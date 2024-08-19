@@ -1,7 +1,7 @@
 ﻿using Data.Entities.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Web.ViewModels.User;
+using Web.Views.User;
 
 namespace Web.Controllers.User;
 

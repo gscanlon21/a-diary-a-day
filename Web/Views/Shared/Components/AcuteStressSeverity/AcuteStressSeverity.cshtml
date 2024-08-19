@@ -12,7 +12,7 @@
 <div class="alert alert-light shadow">
     @if (!show) 
     {
-        await Html.RenderPartialAsync("_ScoreChart", new Web.ViewModels.Shared.ScoreChartViewModel() 
+        await Html.RenderPartialAsync("_ScoreChart", new ScoreChartViewModel() 
         { 
             Scores = Model.Xys,
             User = Model.User,
@@ -25,7 +25,7 @@
         <details>
             <summary>
                 @{
-                    await Html.RenderPartialAsync("_ScoreChart", new Web.ViewModels.Shared.ScoreChartViewModel()
+                    await Html.RenderPartialAsync("_ScoreChart", new ScoreChartViewModel()
                     {
                         Scores = Model.Xys,
                         User = Model.User,
