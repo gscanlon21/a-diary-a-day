@@ -1,12 +1,11 @@
 ﻿using Data.Entities.User;
 using Web.ViewModels;
 
-namespace Web.Views.Shared.Components.Medicine;
+namespace Web.Views.Shared.Components.DryEyes;
 
-
-public class MedicineViewModel
+public class DryEyesViewModel
 {
-    public MedicineViewModel(IList<UserMedicine>? userMoods, List<UserCustom> customs)
+    public DryEyesViewModel(IList<UserActivity>? userMoods, List<UserCustom> customs)
     {
         Customs = customs;
         //Mood = currentWeight.GetValueOrDefault();
@@ -32,8 +31,8 @@ public class MedicineViewModel
     public string Token { get; init; } = null!;
     public Data.Entities.User.User User { get; init; } = null!;
 
-    public UserMedicine UserMood { get; init; } = null!;
-    public UserMedicine? PreviousMood { get; init; }
+    public UserActivity UserMood { get; init; } = null!;
+    public UserActivity? PreviousMood { get; init; }
 
     internal List<XCustom> Xys { get; init; } = [];
     internal List<IGrouping<UserCustom, XCustom>> XysGrouped => Xys.GroupBy(xy => xy.Label).ToList();

@@ -1,5 +1,6 @@
 ﻿using Core.Models.Footnote;
 using Data.Entities.Footnote;
+using Data.Entities.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web.ViewModels.User;
@@ -76,7 +77,7 @@ public partial class UserController
 
         await _context.SaveChangesAsync();
 
-        TempData[TempData_User.SuccessMessage] = "Your footnotes have been updated!";
+        TempData[TempData_User.SuccessMessage] = "Your custom tags have been updated!";
         return RedirectToAction(nameof(UserController.Edit), new { email, token });
     }
 
@@ -98,7 +99,7 @@ public partial class UserController
 
         await _context.SaveChangesAsync();
 
-        TempData[TempData_User.SuccessMessage] = "Your footnotes have been updated!";
+        TempData[TempData_User.SuccessMessage] = "Your custom tags have been updated!";
         return RedirectToAction(nameof(UserController.Edit), new { email, token });
     }
 }

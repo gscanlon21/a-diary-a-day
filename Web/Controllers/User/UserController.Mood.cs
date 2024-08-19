@@ -1,5 +1,4 @@
-﻿using Data.Entities.Footnote;
-using Data.Entities.User;
+﻿using Data.Entities.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web.ViewModels.User;

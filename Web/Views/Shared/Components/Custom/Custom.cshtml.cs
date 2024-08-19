@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Data.Entities.User;
+using System.ComponentModel.DataAnnotations;
 
 namespace Web.Views.Shared.Components.Custom;
 
@@ -11,5 +12,5 @@ public class CustomViewModel
     public Data.Entities.User.User User { get; init; } = null!;
 
     [Display(Name = "Custom Tags")]
-    public IList<Data.Entities.Footnote.UserCustom> Customs { get; init; } = null!;
+    public IList<UserCustom> Customs { get; init; } = null!;
 }

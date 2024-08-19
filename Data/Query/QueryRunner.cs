@@ -36,9 +36,9 @@ public class QueryRunner(Section section)
     public required ExclusionOptions ExclusionOptions { get; init; }
     public required TaskOptions TaskOptions { get; init; }
 
-    private IQueryable<RecipesQueryResults> CreateFilteredRecipesQuery(CoreContext context)
+    private IQueryable<RecipesQueryResults> CreateFilteredTasksQuery(CoreContext context)
     {
-        return context.UserTasks.IgnoreQueryFilters().TagWith(nameof(CreateFilteredRecipesQuery))
+        return context.UserTasks.IgnoreQueryFilters().TagWith(nameof(CreateFilteredTasksQuery))
             .Where(ev => ev.DisabledReason == null || UserOptions.IgnoreIgnored)
             .Where(t => t.UserId == UserOptions.Id)
             // Don't grab recipes that we want to ignore.
@@ -57,7 +57,7 @@ public class QueryRunner(Section section)
         using var scope = factory.CreateScope();
         using var context = scope.ServiceProvider.GetRequiredService<CoreContext>();
 
-        var filteredQuery = CreateFilteredRecipesQuery(context);
+        var filteredQuery = CreateFilteredTasksQuery(context);
 
         if (!Filters.FilterTasks(ref filteredQuery, TaskOptions.UserTaskIds))
         {

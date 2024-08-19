@@ -5,14 +5,13 @@ using System.Text.Json.Serialization;
 
 namespace Data.Entities.User;
 
-
 /// <summary>
 /// User's progression level of an exercise.
 /// </summary>
-[Table("user_people"), Comment("User variation weight log")]
-public class UserPeople
+[Table("user_feast_allergens"), Comment("User variation weight log")]
+public class UserFeastAllergens
 {
-    public UserPeople() { }
+    public UserFeastAllergens() { }
 
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private init; }
@@ -23,9 +22,9 @@ public class UserPeople
     [Required]
     public DateOnly Date { get; init; } = DateHelpers.Today;
 
-    [JsonIgnore, InverseProperty(nameof(UserCustom.UserPeoples))]
-    public virtual List<UserCustom> UserCustoms { get; init; } = null!;
+    [JsonInclude, InverseProperty(nameof(UserCustom.UserActivities))]
+    public virtual IList<UserCustom> UserCustoms { get; init; } = null!;
 
-    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserPeoples))]
+    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserActivities))]
     public virtual User User { get; init; } = null!;
 }

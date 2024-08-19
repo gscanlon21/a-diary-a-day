@@ -140,6 +140,20 @@
             @await Component.InvokeAsync(CompleteMetabolicPanelViewComponent.Name, new { Model.User })
         </div>
     }
+
+    @if (Model.User.Components.HasFlag(Components.DryEyes))
+    {
+        <div class="col-lg-6">
+            @await Component.InvokeAsync(DryEyesViewComponent.Name, new { Model.User })
+        </div>
+    }
+
+    @if (Model.User.Components.HasFlag(Components.FeastAllergens))
+    {
+        <div class="col-lg-6">
+            @await Component.InvokeAsync(FeastAllergensViewComponent.Name, new { Model.User })
+        </div>
+    }
         
     @if (Model.User.Components.HasFlag(Components.Journal))
     {

@@ -180,11 +180,11 @@ public class User : IUser
     [JsonIgnore, InverseProperty(nameof(UserEmail.User))]
     public virtual ICollection<UserEmail> UserEmails { get; private init; } = null!;
 
-    [JsonIgnore, InverseProperty(nameof(Footnote.UserFootnote.User))]
-    public virtual ICollection<Footnote.UserFootnote> UserFootnotes { get; private init; } = null!;
+    [JsonIgnore, InverseProperty(nameof(UserFootnote.User))]
+    public virtual ICollection<UserFootnote> UserFootnotes { get; private init; } = null!;
 
     [JsonIgnore, InverseProperty(nameof(UserCustom.User))]
-    public virtual ICollection<Footnote.UserCustom> UserCustoms { get; private init; } = null!;
+    public virtual ICollection<UserCustom> UserCustoms { get; private init; } = null!;
 
     [JsonIgnore, InverseProperty(nameof(UserDepression.User))]
     public virtual ICollection<UserAcuteStressSeverity> UserAcuteStressSeverities { get; private init; } = null!;

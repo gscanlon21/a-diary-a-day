@@ -1,13 +1,12 @@
 ﻿using Core.Models.Footnote;
 using Core.Models.User;
-using Data.Entities.User;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using System.Text.Json.Serialization;
 
-namespace Data.Entities.Footnote;
+namespace Data.Entities.User;
 
 /// <summary>
 /// A collection of sage advice.
@@ -44,7 +43,7 @@ public class UserCustom : ICustom, IComparable<UserCustom>
     public CustomType Type { get; init; }
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserCustoms))]
-    public User.User? User { get; init; }
+    public User? User { get; init; }
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.UserActivity.UserCustoms))]
     public IList<UserActivity>? UserActivities { get; init; }

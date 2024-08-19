@@ -54,17 +54,27 @@
                 <h3 style="margin-block-start:0;margin-block-end:.4em;font-size:1.2em;">
                     <span style="text-decoration:underline;">@Model.Task.Name</span>
                 </h3>
+
+                @if (!string.IsNullOrWhiteSpace(Model.Task.Notes))
+                {
+                    <div style="margin-block:.5em;">
+                        <small>@Model.Task.Notes</small>
+                    </div>
+                }
             </div>
 
-            @if (!string.IsNullOrWhiteSpace(Model.Task.Notes))
+            @if (Verbosity.HasFlag(Verbosity.LagRefresh))
             {
-                <div style="margin-block:.5em;">
-                    <small>@Model.Task.Notes</small>
-                </div>
+                <div style="margin-block:.5em;font-size:x-small;"><b>Lag Refresh</b>: todo</div>
+            }
+
+            @if (Verbosity.HasFlag(Verbosity.PadRefresh))
+            {
+                <div style="margin-block:.5em;font-size:x-small;"><b>Pad Refresh</b>: todo</div>
             }
         </div>
 
-        @if (Verbosity.HasFlag(Verbosity.Images) && User != null)
+        @if (Verbosity.HasFlag(Verbosity.Images) && User != null && Model.Task.LastCompleted > DateOnly.MinValue)
         {
             // If we want to reduce layout shift with aspect-ratio, that really needs to be included on the table with the image because our images don't have consistent aspect ratios.
             // Setting min-height (200 / (25/14)) gets us close though. 25/14 is, for the most part, our widest aspect-ratio.

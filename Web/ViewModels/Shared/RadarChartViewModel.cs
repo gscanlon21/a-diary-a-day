@@ -1,4 +1,4 @@
-﻿using Data.Entities.Footnote;
+﻿using Data.Entities.User;
 
 namespace Web.ViewModels.Shared;
 

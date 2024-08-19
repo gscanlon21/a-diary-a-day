@@ -1,5 +1,4 @@
-﻿using Data.Entities.Footnote;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -24,7 +23,7 @@ public class UserActivity
     [Required]
     public DateOnly Date { get; init; } = DateHelpers.Today;
 
-    [JsonInclude, InverseProperty(nameof(Entities.Footnote.UserCustom.UserActivities))]
+    [JsonInclude, InverseProperty(nameof(UserCustom.UserActivities))]
     public virtual IList<UserCustom> UserCustoms { get; init; } = null!;
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserActivities))]

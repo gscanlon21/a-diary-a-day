@@ -1,5 +1,4 @@
-﻿using Data.Entities.Footnote;
-using Data.Entities.User;
+﻿using Data.Entities.User;
 using Web.ViewModels;
 
 namespace Web.Views.Shared.Components.Emotion;

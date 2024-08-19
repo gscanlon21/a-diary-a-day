@@ -64,8 +64,14 @@ public enum Components
     [Display(Name = "Tasks")]
     Tasks = 1 << 17, // 131072
 
+    [Display(Name = "Dry Eyes")]
+    DryEyes = 1 << 18, // 262144
+
+    [Display(Name = "Tasks")]
+    FeastAllergens = 1 << 19, // 524288
+
     All = Mood | Sleep | People | Symptom | Emotion | Activity | Medicine
         | AcuteStressSeverity | AgoraphobiaSeverity | DepressionSeverity | DissociativeSeverity
         | GeneralizedAnxietySeverity | PanicSeverity | PTSDSeverity | SocialAnxietySeverity
-        | Journal | CompleteMetabolicPanel | Tasks
+        | Journal | CompleteMetabolicPanel | Tasks | DryEyes | FeastAllergens
 }

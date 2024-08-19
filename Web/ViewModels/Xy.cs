@@ -1,6 +1,6 @@
 ﻿using Core.Models.Footnote;
 using Core.Models.User;
-using Data.Entities.Footnote;
+using Data.Entities.User;
 
 namespace Web.ViewModels;
 
