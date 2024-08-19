@@ -62,7 +62,7 @@ public class ManageTaskViewComponent : ViewComponent
         var userTaskLog = await _context.UserTaskLogs
             .Where(ut => ut.UserTaskId == userTask.Id)
             .Where(ut => ut.Section == section)
-            .FirstOrDefaultAsync(ut => ut.Date == DateHelpers.Today);
+            .FirstOrDefaultAsync(ut => ut.Date == user.TodayOffset);
 
         return View("ManageTask", new ManageTaskViewModel()
         {
