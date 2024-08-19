@@ -67,7 +67,7 @@ public enum Components
     [Display(Name = "Dry Eyes")]
     DryEyes = 1 << 18, // 262144
 
-    [Display(Name = "Tasks")]
+    [Display(Name = "Feast Allergens")]
     FeastAllergens = 1 << 19, // 524288
 
     All = Mood | Sleep | People | Symptom | Emotion | Activity | Medicine

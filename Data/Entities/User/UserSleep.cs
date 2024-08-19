@@ -13,8 +13,6 @@ namespace Data.Entities.User;
 [Table("user_sleep"), Comment("User variation weight log")]
 public class UserSleep : IScore
 {
-    public UserSleep() { }
-
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private init; }
 

@@ -12,8 +12,6 @@ namespace Data.Entities.User;
 [Table("user_component"), Comment("Auth tokens for a user")]
 public class UserComponent
 {
-    public UserComponent() { }
-
     /// <summary>
     /// Creates a new token for the user.
     /// </summary>

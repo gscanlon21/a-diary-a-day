@@ -1,8 +1,10 @@
 ﻿using Core.Consts;
+using Core.Models.Options;
 using Data;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Web.ViewModels.User;
 using Web.Views.Shared.Components.Advanced;
 using Web.Views.Shared.Components.Edit;
@@ -13,15 +15,23 @@ namespace Web.Controllers.User;
 [Route($"user/{{email:regex({UserCreateViewModel.EmailRegex})}}", Order = 2)]
 public partial class UserController : ViewController
 {
+    private readonly HttpClient _httpClient;
+    private readonly IOptions<SiteSettings> _siteSettings;
     private readonly NewsletterRepo _newsletterRepo;
     private readonly CoreContext _context;
     private readonly UserRepo _userRepo;
 
-    public UserController(CoreContext context, UserRepo userRepo, NewsletterRepo newsletterRepo)
+    public UserController(CoreContext context, UserRepo userRepo, NewsletterRepo newsletterRepo, IHttpClientFactory httpClientFactory, IOptions<SiteSettings> siteSettings)
     {
         _context = context;
         _userRepo = userRepo;
         _newsletterRepo = newsletterRepo;
+        _siteSettings = siteSettings;
+        _httpClient = httpClientFactory.CreateClient();
+        if (_httpClient.BaseAddress != _siteSettings.Value.FeastUri)
+        {
+            _httpClient.BaseAddress = _siteSettings.Value.FeastUri;
+        }
     }
 
     /// <summary>

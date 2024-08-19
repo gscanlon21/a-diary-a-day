@@ -28,6 +28,9 @@ public class UserCustom : ICustom, IComparable<UserCustom>
 
     public int Order { get; init; }
 
+    [NotMapped]
+    public int Count { get; init; }
+
     /// <summary>
     /// Either a link or a name that was the reference of the note.
     /// </summary>

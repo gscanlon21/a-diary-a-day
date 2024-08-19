@@ -5,18 +5,19 @@ namespace Web.Views.Shared.Components.FeastAllergens;
 
 public class FeastAllergensViewModel
 {
-    public FeastAllergensViewModel(IList<UserActivity>? userMoods, List<UserCustom> customs)
+    public FeastAllergensViewModel(IList<UserFeastAllergens>? userMoods, List<UserCustom> customs)
     {
-        Customs = customs;
-        //Mood = currentWeight.GetValueOrDefault();
         if (userMoods != null)
         {
             var flatMap = userMoods.SelectMany(m =>
             {
-                return m.UserCustoms.Select(c => new UserCustomGroup(m.Date, c.Type, c.Id, c.Name));
+                return customs.Select(c => new UserCustomGroup(m.Date, c.Type, c.Id, c.Name)
+                {
+                    One = c.Count
+                });
             });
 
-            foreach (var custom in Customs)
+            foreach (var custom in customs)
             {
                 // Skip today, start at 1, because we append the current weight onto the end regardless.
                 Xys.AddRange(Enumerable.Range(1, 365).Select(i =>
@@ -31,11 +32,9 @@ public class FeastAllergensViewModel
     public string Token { get; init; } = null!;
     public Data.Entities.User.User User { get; init; } = null!;
 
-    public UserActivity UserMood { get; init; } = null!;
-    public UserActivity? PreviousMood { get; init; }
+    public UserFeastAllergens UserMood { get; init; } = null!;
+    public UserFeastAllergens? PreviousMood { get; init; }
 
     internal List<XCustom> Xys { get; init; } = [];
     internal List<IGrouping<UserCustom, XCustom>> XysGrouped => Xys.GroupBy(xy => xy.Label).ToList();
-
-    public List<UserCustom> Customs { get; set; } = [];
 }

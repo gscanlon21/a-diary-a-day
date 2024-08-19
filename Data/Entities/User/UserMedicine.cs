@@ -12,8 +12,6 @@ namespace Data.Entities.User;
 [Table("user_medicine"), Comment("User variation weight log")]
 public class UserMedicine
 {
-    public UserMedicine() { }
-
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private init; }
 

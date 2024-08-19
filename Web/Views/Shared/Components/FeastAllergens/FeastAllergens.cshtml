@@ -3,16 +3,16 @@
 @using Data.Entities.User
 @using Lib.Pages.Shared.Exercise
 
-<h5 class="mb-1">Activities</h5>
+<h5 class="mb-1">Allergens</h5>
 <div class="alert alert-light shadow">
-    @if (Model.PreviousMood?.Date == DateHelpers.Today)
+    @if (Model.PreviousMood?.Date == DateHelpers.Today.StartOfWeek())
     {
         await Html.RenderPartialAsync("_RadarChart", new Web.ViewModels.Shared.RadarChartViewModel()
         {
             XysGrouped = Model.XysGrouped,
             User = Model.User,
             Token = Model.Token,
-            Type = Components.Activity
+            Type = Components.FeastAllergens
         });
     }
     else
@@ -25,29 +25,15 @@
                     XysGrouped = Model.XysGrouped,
                     User = Model.User,
                     Token = Model.Token,
-                    Type = Components.Activity
+                    Type = Components.FeastAllergens
                 });
                 }
             </summary>
 
-            <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageActivity)" method="post"
+            <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageAllergens)" method="post"
                   asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
 
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                <div class="form-group mb-3 mt-3">
-                    @for (var i = 0; i < Model.Customs.Count; i++)
-                    {
-                        <div class="form-check">
-                            <input class="allow-demo" type="hidden" asp-for="@Model.Customs[i].Id" />
-                            <input class="allow-demo" type="hidden" asp-for="@Model.Customs[i].Name" />
-                            <input id="@Html.IdFor(_ => Model.Customs[i].Selected)-activity" asp-for="@Model.Customs[i].Selected" class="form-check-input allow-demo" type="checkbox">
-                            <label for="@Html.IdFor(_ => Model.Customs[i].Selected)-activity" class="form-check-label">
-                                @Model.Customs[i].Name
-                            </label>
-                        </div>
-                    }
-                </div>
 
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary allow-demo" />

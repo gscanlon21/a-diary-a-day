@@ -1,4 +1,6 @@
-﻿using Data.Entities.User;
+﻿using Core.Models.User;
+using Data.Entities.User;
+using Lib.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,6 +8,91 @@ namespace Web.Controllers.User;
 
 public partial class UserController
 {
+    [HttpPost, Route("allergens")]
+    public async Task<IActionResult> ManageAllergens(string email, string token, UserFeastAllergens userMood)
+    {
+        if (true || ModelState.IsValid)
+        {
+            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
+            if (user == null || string.IsNullOrWhiteSpace(user.FeastEmail) || string.IsNullOrWhiteSpace(user.FeastToken))
+            {
+                return NotFound();
+            }
+
+            var response = await _httpClient.GetAsync($"{_siteSettings.Value.FeastUri.AbsolutePath}/user/Allergens?weeks={1}&email={Uri.EscapeDataString(user.FeastEmail)}&token={Uri.EscapeDataString(user.FeastToken)}");
+            var allergens = await ApiResult<IDictionary<Allergy, double>>.FromResponse(response);
+            if (allergens.Result == null)
+            {
+                return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+            }
+
+            var startOfWeek = DateHelpers.Today.StartOfWeek();
+            var todaysMood = await _context.UserFeastAllergens.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == startOfWeek);
+            if (todaysMood == null)
+            {
+                userMood.UserId = user.Id;
+                userMood.Allergens = allergens.Result;
+                _context.Add(userMood);
+            }
+            else
+            {
+                todaysMood.Allergens = allergens.Result;
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+        }
+
+        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+    }
+
+    [HttpPost, Route("dryeyes")]
+    public async Task<IActionResult> ManageDryEyes(string email, string token, UserDryEyes userMood)
+    {
+        if (true || ModelState.IsValid)
+        {
+            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Set the new weight on the UserVariation
+            var todaysDryEyes = await _context.UserDryEyes.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
+            if (todaysDryEyes == null)
+            {
+                userMood.UserId = user.Id;
+                _context.Add(userMood);
+            }
+            else
+            {
+                todaysDryEyes.DropsLast4Hours = userMood.DropsLast4Hours;
+                todaysDryEyes.GelsLast12Hours = userMood.GelsLast12Hours;
+                todaysDryEyes.DropDuration = userMood.DropDuration;
+                todaysDryEyes.BurningFrequency = userMood.BurningFrequency;
+                todaysDryEyes.BurningSeverity = userMood.BurningSeverity;
+                todaysDryEyes.DropsUsedToday = userMood.DropsUsedToday;
+                todaysDryEyes.DrynessFrequency = userMood.DrynessFrequency;
+                todaysDryEyes.DrynessSeverity = userMood.DrynessSeverity;
+                todaysDryEyes.EyeDrops = userMood.EyeDrops;
+                todaysDryEyes.FatigueFrequency = userMood.FatigueFrequency;
+                todaysDryEyes.FatigueSeverity = userMood.FatigueSeverity;
+                todaysDryEyes.LastExeriencedSymptoms = userMood.LastExeriencedSymptoms;
+                todaysDryEyes.MakeupToday = userMood.MakeupToday;
+                todaysDryEyes.MoisturizerToday = userMood.MoisturizerToday;
+                todaysDryEyes.SorenessFrequency = userMood.SorenessFrequency;
+                todaysDryEyes.SorenessSeverity = userMood.SorenessSeverity;
+                todaysDryEyes.TouchedEyesToday = userMood.TouchedEyesToday;
+                todaysDryEyes.VisualBlinking = userMood.VisualBlinking;
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+        }
+
+        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+    }
+
     [HttpPost]
     [Route("depression", Order = 1)]
     public async Task<IActionResult> ManageDepression(string email, string token, UserDepression userDepression)

@@ -13,8 +13,6 @@ namespace Data.Entities.User;
 [Table("user_complete_metabolic_panel"), Comment("User variation weight log")]
 public class UserCompleteMetabolicPanel : IScore
 {
-    public UserCompleteMetabolicPanel() { }
-
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private init; }
 

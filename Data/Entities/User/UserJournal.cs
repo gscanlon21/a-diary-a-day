@@ -12,8 +12,6 @@ namespace Data.Entities.User;
 [Table("user_journal"), Comment("User variation weight log")]
 public class UserJournal
 {
-    public UserJournal() { }
-
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private init; }
 

@@ -13,8 +13,6 @@ namespace Data.Entities.User;
 [Table("user_social_anxiety_severity"), Comment("User variation weight log")]
 public class UserSocialAnxietySeverity : IScore
 {
-    public UserSocialAnxietySeverity() { }
-
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private init; }
 

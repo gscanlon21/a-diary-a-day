@@ -1,5 +1,8 @@
-﻿using Data.Repos;
+﻿using Core.Models.Options;
+using Core.Models.User;
+using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Web.Views.Shared.Components.LinkFeasts;
 
 namespace Web.Components.User;
@@ -18,14 +21,16 @@ public class LinkFeastsViewComponent : ViewComponent
 
     private readonly UserRepo _userRepo;
     private readonly HttpClient _httpClient;
+    private readonly IOptions<SiteSettings> _siteSettings;
 
-    public LinkFeastsViewComponent(UserRepo userRepo, IHttpClientFactory httpClientFactory)
+    public LinkFeastsViewComponent(UserRepo userRepo, IHttpClientFactory httpClientFactory, IOptions<SiteSettings> siteSettings)
     {
         _userRepo = userRepo;
+        _siteSettings = siteSettings;
         _httpClient = httpClientFactory.CreateClient();
-        if (_httpClient.BaseAddress != FeastUri)
+        if (_httpClient.BaseAddress != siteSettings.Value.FeastUri)
         {
-            _httpClient.BaseAddress = FeastUri;
+            _httpClient.BaseAddress = siteSettings.Value.FeastUri;
         }
     }
 
@@ -33,7 +38,7 @@ public class LinkFeastsViewComponent : ViewComponent
     {
         if (user.FeastEmail != null && user.FeastToken != null)
         {
-            var weeklyFeast = await _httpClient.GetFromJsonAsync<IDictionary<string, double?>?>($"{FeastUri}/User/Nutrients?email={Uri.EscapeDataString(user.FeastEmail)}&token={Uri.EscapeDataString(user.FeastToken)}");
+            var weeklyFeast = await _httpClient.GetFromJsonAsync<IDictionary<Allergy, double?>?>($"{_siteSettings.Value.FeastUri}/User/Allergens?weeks={1}&email={Uri.EscapeDataString(user.FeastEmail)}&token={Uri.EscapeDataString(user.FeastToken)}");
             var one = 1;
         }
 

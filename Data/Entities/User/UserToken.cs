@@ -15,6 +15,7 @@ namespace Data.Entities.User;
 [Index(nameof(UserId), nameof(Token), IsUnique = false)]
 public class UserToken
 {
+    [Obsolete("Public parameterless constructor required for model binding.", error: true)]
     public UserToken() { }
 
     /// <summary>

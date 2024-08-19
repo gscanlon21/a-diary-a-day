@@ -13,8 +13,6 @@ namespace Data.Entities.User;
 [Table("user_agoraphobia_severity"), Comment("User variation weight log")]
 public class UserAgoraphobiaSeverity : IScore
 {
-    public UserAgoraphobiaSeverity() { }
-
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private init; }
 

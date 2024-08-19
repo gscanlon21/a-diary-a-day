@@ -44,5 +44,5 @@ public record XYScore(string X, double? Y, IList<int?> Items)
 
 public record UserCustomGroup(DateOnly Date, CustomType Type, int Id, string Name)
 {
-    public int One { get; } = 1;
+    public int One { get; init; } = 1;
 };

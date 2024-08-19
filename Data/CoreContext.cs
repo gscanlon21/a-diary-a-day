@@ -1,8 +1,11 @@
-﻿using Data.Entities.Footnote;
+﻿using Core.Models.User;
+using Data.Entities.Footnote;
 using Data.Entities.Newsletter;
 using Data.Entities.Task;
 using Data.Entities.User;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Text.Json;
 
 namespace Data;
 
@@ -30,6 +33,8 @@ public class CoreContext : DbContext
     public DbSet<UserMedicine> UserMedicines { get; set; } = null!;
     public DbSet<UserSleep> UserSleeps { get; set; } = null!;
     public DbSet<UserActivity> UserActivities { get; set; } = null!;
+    public DbSet<UserDryEyes> UserDryEyes { get; set; } = null!;
+    public DbSet<UserFeastAllergens> UserFeastAllergens { get; set; } = null!;
     public DbSet<UserAgoraphobiaSeverity> UserAgoraphobiaSeverities { get; set; } = null!;
     public DbSet<UserCompleteMetabolicPanel> UserCompleteMetabolicPanels { get; set; } = null!;
     public DbSet<UserAnger> UserAngers { get; set; } = null!;
@@ -46,20 +51,20 @@ public class CoreContext : DbContext
 
     public CoreContext(DbContextOptions<CoreContext> context) : base(context) { }
 
-    //private static readonly JsonSerializerOptions JsonSerializerOptions = new();
+    private static readonly JsonSerializerOptions JsonSerializerOptions = new();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         ////////// Keys //////////
         //modelBuilder.Entity<ExerciseVariation>().HasKey(sc => new { sc.ExerciseId, sc.VariationId });
 
-        //modelBuilder
-        //    .Entity<Variation>()
-        //    .Property(e => e.StrengthMuscles)
-        //    .HasConversion(v => JsonSerializer.Serialize(v, new JsonSerializerOptions()),
-        //        v => JsonSerializer.Deserialize<List<MuscleGroups>>(v, new JsonSerializerOptions()),
-        //        new ValueComparer<List<MuscleGroups>>((mg, mg2) => mg == mg2, mg => mg.GetHashCode())
-        //    );
+        modelBuilder
+            .Entity<UserFeastAllergens>()
+            .Property(e => e.Allergens)
+            .HasConversion(v => JsonSerializer.Serialize(v, JsonSerializerOptions),
+                v => JsonSerializer.Deserialize<Dictionary<Allergy, double>>(v, JsonSerializerOptions) ?? new Dictionary<Allergy, double>(),
+                new ValueComparer<IDictionary<Allergy, double>>((mg, mg2) => mg == mg2, mg => mg.GetHashCode())
+            );
 
 
         ////////// Query Filters //////////

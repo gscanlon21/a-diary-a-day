@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Core.Models.User;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -11,8 +12,6 @@ namespace Data.Entities.User;
 [Table("user_feast_allergens"), Comment("User variation weight log")]
 public class UserFeastAllergens
 {
-    public UserFeastAllergens() { }
-
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private init; }
 
@@ -20,11 +19,10 @@ public class UserFeastAllergens
     public int UserId { get; set; }
 
     [Required]
-    public DateOnly Date { get; init; } = DateHelpers.Today;
+    public DateOnly Date { get; init; } = DateHelpers.Today.StartOfWeek();
 
-    [JsonInclude, InverseProperty(nameof(UserCustom.UserActivities))]
-    public virtual IList<UserCustom> UserCustoms { get; init; } = null!;
+    public IDictionary<Allergy, double> Allergens { get; set; } = new Dictionary<Allergy, double>();
 
-    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserActivities))]
+    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserFeastAllergens))]
     public virtual User User { get; init; } = null!;
 }

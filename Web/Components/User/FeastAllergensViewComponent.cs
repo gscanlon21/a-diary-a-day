@@ -1,4 +1,6 @@
-﻿using Data;
+﻿using Core.Models.Footnote;
+using Data;
+using Data.Entities.User;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,21 +21,25 @@ public class FeastAllergensViewComponent(CoreContext context, UserRepo userRepo)
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var token = await userRepo.AddUserToken(user, durationDays: 1);
-        var userMood = await context.UserActivities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
-        var userMoods = (await context.UserActivities
-            .Include(ud => ud.UserCustoms)
+        var userMood = await context.UserFeastAllergens.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
+        var userMoods = await context.UserFeastAllergens
             .Where(ud => ud.UserId == user.Id)
-            .ToListAsync());
-        var userCustoms = await context.UserCustoms
-            .Where(c => c.Type == Core.Models.Footnote.CustomType.Activity)
-            .Where(c => c.UserId == null || c.UserId == user.Id)
             .ToListAsync();
+
+        var userCustoms = userMoods.SelectMany(em => em.Allergens.Select(a => new UserCustom()
+        {
+            Id = (int)a.Key,
+            Count = (int)a.Value,
+            Type = CustomType.None,
+            Name = a.Key.GetSingleDisplayName(),
+        })).ToList();
+
         var viewModel = new FeastAllergensViewModel(userMoods, userCustoms)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
             PreviousMood = userMood,
-            UserMood = new Data.Entities.User.UserActivity()
+            UserMood = new UserFeastAllergens()
             {
                 UserId = user.Id,
                 User = user

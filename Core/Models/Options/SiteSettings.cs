@@ -57,4 +57,13 @@ public class SiteSettings
     /// </summary>
     public string ApiLink { get; set; } = null!;
     public Uri ApiUri => new(ApiLink);
+
+    /// <summary>
+    /// The path to the feast api.
+    /// 
+    /// sa. https://afeastaday.com/api
+    /// TODO move this into appsettings.
+    /// </summary>
+    public string FeastLink { get; set; } = "https://afeastaday.com/api";
+    public Uri FeastUri => new(FeastLink);
 }
