@@ -1,4 +1,5 @@
-﻿using Data.Entities.User;
+﻿using Core.Consts;
+using Data.Entities.User;
 using Web.ViewModels;
 
 namespace Web.Views.Shared.Components.Emotion;
@@ -20,7 +21,7 @@ public class EmotionViewModel
             foreach (var custom in Customs)
             {
                 // Skip today, start at 1, because we append the current weight onto the end regardless.
-                Xys.AddRange(Enumerable.Range(1, 365).Select(i =>
+                Xys.AddRange(Enumerable.Range(1, UserConsts.ChartTimeFrameDays).Select(i =>
                 {
                     var date = DateHelpers.Today.AddDays(-i);
                     return new XCustom(date, flatMap.FirstOrDefault(uw => uw.Date == date && uw.Id == custom.Id), custom);

@@ -2,6 +2,7 @@
 using Core.Models.Footnote;
 using Core.Models.Newsletter;
 using Core.Models.User;
+using Data.Entities.User;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 using Web.Views.Index;
@@ -99,5 +100,21 @@ public class UserEditViewModel
     {
         get => Enum.GetValues<Days>().Where(e => SendDays.HasFlag(e)).ToArray();
         set => SendDays = value?.Aggregate(Days.None, (a, e) => a | e) ?? Days.None;
+    }
+
+    public class UserEditComponentSkillViewModel
+    {
+        public UserEditComponentSkillViewModel() { }
+
+        public UserEditComponentSkillViewModel(UserComponentSetting userMuscleMobility)
+        {
+            UserId = userMuscleMobility.UserId;
+            Component = userMuscleMobility.Component;
+        }
+
+        public Core.Models.User.Components Component { get; init; }
+
+        public int UserId { get; init; }
+
     }
 }

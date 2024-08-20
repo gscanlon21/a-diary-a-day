@@ -29,6 +29,23 @@ public class EditViewComponent(UserRepo userRepo) : ViewComponent
 
     private async Task<UserEditViewModel> PopulateUserEditViewModel(UserEditViewModel viewModel)
     {
+        if (viewModel.ComponentsBinder != null)
+        {
+            /* TODO Component Settings:
+            foreach (var prehabFocus in viewModel.ComponentsBinder
+                .OrderBy(mg => mg.GetSingleDisplayName(DisplayType.GroupName))
+                .ThenBy(mg => mg.GetSingleDisplayName()))
+            {
+                var userMuscleFlexibility = viewModel.User.UserPrehabSkills.SingleOrDefault(umm => umm.PrehabFocus == prehabFocus);
+                viewModel.UserPrehabSkills.Add(userMuscleFlexibility != null ? new UserEditViewModel.UserEditPrehabSkillViewModel(userMuscleFlexibility) : new UserEditViewModel.UserEditPrehabSkillViewModel()
+                {
+                    UserId = viewModel.User.Id,
+                    PrehabFocus = prehabFocus,
+                    Count = 1
+                });
+            }*/
+        }
+
         return viewModel;
     }
 }

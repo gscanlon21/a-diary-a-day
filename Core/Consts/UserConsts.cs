@@ -17,6 +17,8 @@ public class UserConsts
     /// </summary>
     public const int MaxTasks = 100;
 
+    public const int ChartTimeFrameDays = 180;
+
     public const int SendHourMin = 0;
     public const int SendHourDefault = 0;
     public const int SendHourMax = 23;

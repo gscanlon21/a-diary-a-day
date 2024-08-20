@@ -89,6 +89,19 @@ public partial class UserController : ViewController
         {
             try
             {
+                /* TODO Component Settings:
+                _context.UserPrehabSkills.RemoveRange(_context.UserPrehabSkills.Where(uf => uf.UserId == viewModel.User.Id));
+                _context.UserPrehabSkills.AddRange(viewModel.UserPrehabSkills
+                    .Select(umm => new UserPrehabSkill()
+                    {
+                        UserId = umm.UserId,
+                        Count = umm.Count,
+                        Skills = umm.Skills,
+                        AllRefreshed = umm.AllRefreshed,
+                        PrehabFocus = umm.PrehabFocus
+                    })
+                );*/
+
                 viewModel.User.Verbosity = viewModel.Verbosity;
                 viewModel.User.Components = viewModel.Components;
                 viewModel.User.FootnoteType = viewModel.FootnoteType;
