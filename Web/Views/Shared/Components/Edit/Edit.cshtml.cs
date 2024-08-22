@@ -74,13 +74,16 @@ public class UserEditViewModel
     [Display(Name = "Send Time (UTC)", Description = "What hour of the day (UTC) do you want to receive new emails?")]
     public int SendHour { get; init; }
 
+    [Display(Name = "Component Settings")]
+    public IList<UserEditComponentSkillViewModel> UserComponentSettings { get; set; } = [];
+
     [Required]
     [Display(Name = "Send Days", Description = "What days do you want to receive new emails?")]
     public Days SendDays { get; private set; }
 
     public Core.Models.User.Components[]? ComponentsBinder
     {
-        get => Enum.GetValues<Core.Models.User.Components>().Where(e => Components.HasFlag(e)).ToArray();
+        get => EnumExtensions.GetValuesExcluding32(Core.Models.User.Components.None).Where(e => Components.HasFlag(e)).ToArray();
         set => Components = value?.Aggregate(Core.Models.User.Components.None, (a, e) => a | e) ?? Core.Models.User.Components.None;
     }
 
@@ -116,5 +119,6 @@ public class UserEditViewModel
 
         public int UserId { get; init; }
 
+        public int Days { get; init; }
     }
 }

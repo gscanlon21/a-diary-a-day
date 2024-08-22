@@ -1,6 +1,7 @@
 ﻿using Core.Consts;
 using Core.Models.Options;
 using Data;
+using Data.Entities.User;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -61,7 +62,7 @@ public partial class UserController : ViewController
     [Route("edit", Order = 3)]
     public async Task<IActionResult> Edit(string email = UserConsts.DemoUser, string token = UserConsts.DemoToken, bool? wasUpdated = null)
     {
-        var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
+        var user = await _userRepo.GetUser(email, token, includeSettings: true, allowDemoUser: true);
         if (user == null)
         {
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
@@ -84,23 +85,20 @@ public partial class UserController : ViewController
             return NotFound();
         }
 
-        viewModel.User = await _userRepo.GetUser(viewModel.Email, viewModel.Token) ?? throw new ArgumentException(string.Empty, nameof(email));
+        viewModel.User = await _userRepo.GetUser(viewModel.Email, viewModel.Token, includeSettings: true) ?? throw new ArgumentException(string.Empty, nameof(email));
         if (ModelState.IsValid)
         {
             try
             {
-                /* TODO Component Settings:
-                _context.UserPrehabSkills.RemoveRange(_context.UserPrehabSkills.Where(uf => uf.UserId == viewModel.User.Id));
-                _context.UserPrehabSkills.AddRange(viewModel.UserPrehabSkills
-                    .Select(umm => new UserPrehabSkill()
+                _context.UserComponentSettings.RemoveRange(_context.UserComponentSettings.Where(uf => uf.UserId == viewModel.User.Id));
+                _context.UserComponentSettings.AddRange(viewModel.UserComponentSettings
+                    .Select(umm => new UserComponentSetting()
                     {
                         UserId = umm.UserId,
-                        Count = umm.Count,
-                        Skills = umm.Skills,
-                        AllRefreshed = umm.AllRefreshed,
-                        PrehabFocus = umm.PrehabFocus
+                        Days = umm.Days,
+                        Component = umm.Component,
                     })
-                );*/
+                );
 
                 viewModel.User.Verbosity = viewModel.Verbosity;
                 viewModel.User.Components = viewModel.Components;

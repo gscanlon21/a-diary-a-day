@@ -1,18 +1,17 @@
-﻿using Core.Consts;
-using Data.Entities.User;
+﻿using Data.Entities.User;
 using Web.ViewModels;
 
 namespace Web.Views.Shared.Components.PanicSeverity;
 
 public class PanicSeverityViewModel
 {
-    public PanicSeverityViewModel(IList<UserPanicSeverity>? userMoods)
+    public PanicSeverityViewModel(Data.Entities.User.User user, IList<UserPanicSeverity>? userMoods)
     {
-        //Mood = currentWeight.GetValueOrDefault();
+        User = user;
         if (userMoods != null)
         {
             // Skip today, start at 1, because we append the current weight onto the end regardless.
-            Xys = Enumerable.Range(1, UserConsts.ChartTimeFrameDays).Select(i =>
+            Xys = Enumerable.Range(1, user.GetComponentDaysFor(Core.Models.User.Components.PanicSeverity)).Select(i =>
             {
                 var date = DateHelpers.Today.AddDays(-i);
                 return new XScore(date, userMoods.FirstOrDefault(uw => uw.Date == date));
@@ -20,8 +19,8 @@ public class PanicSeverityViewModel
         }
     }
 
-    public string Token { get; init; } = null!;
-    public Data.Entities.User.User User { get; init; } = null!;
+    public Data.Entities.User.User User { get; private init; } = null!;
+    public required string Token { get; init; } = null!;
 
     public UserPanicSeverity UserMood { get; init; } = null!;
     public UserPanicSeverity? PreviousMood { get; init; }

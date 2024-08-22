@@ -15,7 +15,7 @@ public partial class UserController
     [Route("mood", Order = 2)]
     public async Task<IActionResult> ManageMood(string email, string token, bool? wasUpdated = null)
     {
-        var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
+        var user = await _userRepo.GetUser(email, token, includeSettings: true, allowDemoUser: true);
         if (user == null)
         {
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));

@@ -1,5 +1,6 @@
 ﻿using Core.Models.User;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Data.Entities.User;
 
@@ -11,6 +12,8 @@ public class UserComponentSetting
     [ForeignKey(nameof(Entities.User.User.Id))]
     public int UserId { get; init; }
 
-    //[JsonIgnore, InverseProperty(nameof(Entities.User.User.UserComponentSettings))]
+    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserComponentSettings))]
     public virtual User User { get; private init; } = null!;
+
+    public int Days { get; init; }
 }

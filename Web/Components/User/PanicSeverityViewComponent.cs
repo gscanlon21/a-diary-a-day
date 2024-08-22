@@ -22,10 +22,9 @@ public class PanicSeverityViewComponent(CoreContext context, UserRepo userRepo) 
         var userMood = await context.UserPanicSeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserPanicSeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
 
-        var viewModel = new PanicSeverityViewModel(userMoods)
+        var viewModel = new PanicSeverityViewModel(user, userMoods)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
-            User = user,
             PreviousMood = userMood,
             UserMood = new Data.Entities.User.UserPanicSeverity()
             {

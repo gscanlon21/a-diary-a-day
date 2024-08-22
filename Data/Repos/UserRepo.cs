@@ -17,15 +17,15 @@ public class UserRepo(CoreContext context)
     /// <summary>
     /// Grab a user from the db with a specific token.
     /// </summary>
-    public async Task<User> GetUserStrict(string? email, string? token, bool allowDemoUser = false)
+    public async Task<User> GetUserStrict(string? email, string? token, bool includeSettings = false, bool allowDemoUser = false)
     {
-        return await GetUser(email, token, allowDemoUser: allowDemoUser) ?? throw new UserException("User is null.");
+        return await GetUser(email, token, includeSettings: includeSettings, allowDemoUser: allowDemoUser) ?? throw new UserException("User is null.");
     }
 
     /// <summary>
     /// Grab a user from the db with a specific token.
     /// </summary>
-    public async Task<User?> GetUser(string? email, string? token, bool allowDemoUser = false)
+    public async Task<User?> GetUser(string? email, string? token, bool includeSettings = false, bool allowDemoUser = false)
     {
         if (email == null || token == null)
         {
@@ -33,6 +33,11 @@ public class UserRepo(CoreContext context)
         }
 
         IQueryable<User> query = _context.Users.AsSplitQuery().TagWithCallSite();
+
+        if (includeSettings)
+        {
+            query = query.Include(u => u.UserComponentSettings);
+        }
 
         var user = await query
             // User token is valid.

@@ -1,4 +1,5 @@
 ﻿using Core.Consts;
+using Core.Models;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Web.Views.Shared.Components.Edit;
@@ -17,7 +18,7 @@ public class EditViewComponent(UserRepo userRepo) : ViewComponent
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User? user = null)
     {
-        user ??= await userRepo.GetUser(UserConsts.DemoUser, UserConsts.DemoToken, allowDemoUser: true);
+        user ??= await userRepo.GetUser(UserConsts.DemoUser, UserConsts.DemoToken, includeSettings: true, allowDemoUser: true);
         if (user == null)
         {
             return Content("");
@@ -31,19 +32,18 @@ public class EditViewComponent(UserRepo userRepo) : ViewComponent
     {
         if (viewModel.ComponentsBinder != null)
         {
-            /* TODO Component Settings:
-            foreach (var prehabFocus in viewModel.ComponentsBinder
+            foreach (var component in viewModel.ComponentsBinder
                 .OrderBy(mg => mg.GetSingleDisplayName(DisplayType.GroupName))
                 .ThenBy(mg => mg.GetSingleDisplayName()))
             {
-                var userMuscleFlexibility = viewModel.User.UserPrehabSkills.SingleOrDefault(umm => umm.PrehabFocus == prehabFocus);
-                viewModel.UserPrehabSkills.Add(userMuscleFlexibility != null ? new UserEditViewModel.UserEditPrehabSkillViewModel(userMuscleFlexibility) : new UserEditViewModel.UserEditPrehabSkillViewModel()
+                var userMuscleFlexibility = viewModel.User.UserComponentSettings.SingleOrDefault(umm => umm.Component == component);
+                viewModel.UserComponentSettings.Add(userMuscleFlexibility != null ? new UserEditViewModel.UserEditComponentSkillViewModel(userMuscleFlexibility) : new UserEditViewModel.UserEditComponentSkillViewModel()
                 {
                     UserId = viewModel.User.Id,
-                    PrehabFocus = prehabFocus,
-                    Count = 1
+                    Component = component,
+                    Days = 180
                 });
-            }*/
+            }
         }
 
         return viewModel;
