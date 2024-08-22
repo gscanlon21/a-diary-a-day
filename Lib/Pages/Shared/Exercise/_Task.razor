@@ -58,7 +58,7 @@
                 @if (!string.IsNullOrWhiteSpace(Model.Task.Notes))
                 {
                     <div style="margin-block:.5em;">
-                        <small>@Model.Task.Notes</small>
+                        <small style="overflow-wrap:break-word;">@Model.Task.Notes</small>
                     </div>
                 }
             </div>
