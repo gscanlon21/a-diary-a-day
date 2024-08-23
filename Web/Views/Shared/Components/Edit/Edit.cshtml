@@ -147,7 +147,7 @@
 
         @if (Model.User.Components.HasFlag(Components.Tasks))
         {
-            <details class="mt-4 mb-25">
+            <details class="mb-25">
                 <summary class="mb-1 h5">New Task</summary>
 
                 @await Component.InvokeAsync(ManageTaskViewComponent.Name, new { Model.User })
