@@ -12,7 +12,7 @@
         <local:FlyoutHeader />
     </Shell.FlyoutHeader>
 
-    <ShellContent Title="Daily Mood"
+    <ShellContent Title="Daily Diary"
                     Route="NewsletterPage"
                     Icon="{StaticResource Mood}"
                     ContentTemplate="{DataTemplate local:NewsletterPage}" />
