@@ -1,6 +1,7 @@
 ﻿using Core.Models.Options;
 using Core.Models.User;
 using Data.Repos;
+using Lib.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Web.Views.Shared.Components.LinkFeasts;
@@ -38,7 +39,8 @@ public class LinkFeastsViewComponent : ViewComponent
     {
         if (user.FeastEmail != null && user.FeastToken != null)
         {
-            var weeklyFeast = await _httpClient.GetFromJsonAsync<IDictionary<Allergy, double?>?>($"{_siteSettings.Value.FeastUri}/User/Allergens?weeks={1}&email={Uri.EscapeDataString(user.FeastEmail)}&token={Uri.EscapeDataString(user.FeastToken)}");
+            var response = await _httpClient.GetAsync($"{_siteSettings.Value.FeastUri}/User/Allergens?weeks={1}&email={Uri.EscapeDataString(user.FeastEmail)}&token={Uri.EscapeDataString(user.FeastToken)}");
+            var weeklyFeast = await ApiResult<IDictionary<Allergy, double?>>.FromResponse(response);
             var one = 1;
         }
 
