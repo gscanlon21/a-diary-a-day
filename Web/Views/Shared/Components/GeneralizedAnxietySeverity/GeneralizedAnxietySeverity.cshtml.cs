@@ -13,7 +13,7 @@ public class GeneralizedAnxietySeverityViewModel
         if (userMoods != null)
         {
             // Skip today, start at 1, because we append the current weight onto the end regardless.
-            Xys = Enumerable.Range(1, UserConsts.ChartTimeFrameDays).Select(i =>
+            Xys = Enumerable.Range(1, UserConsts.ChartDaysDefault).Select(i =>
             {
                 var date = DateHelpers.Today.AddDays(-i);
                 return new XScore(date, userMoods.FirstOrDefault(uw => uw.Date == date));

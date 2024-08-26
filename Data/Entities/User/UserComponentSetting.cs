@@ -1,10 +1,14 @@
-﻿using Core.Models.User;
+﻿using Core.Consts;
+using Core.Models.User;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 using System.Text.Json.Serialization;
 
 namespace Data.Entities.User;
 
 [Table("user_component_setting")]
+[DebuggerDisplay("{Component}: {Days}")]
 public class UserComponentSetting
 {
     public Components Component { get; init; }
@@ -15,5 +19,6 @@ public class UserComponentSetting
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserComponentSettings))]
     public virtual User User { get; private init; } = null!;
 
-    public int Days { get; init; }
+    [Range(UserConsts.ChartDaysMin, UserConsts.ChartDaysMax)]
+    public int Days { get; init; } = UserConsts.ChartDaysDefault;
 }

@@ -11,12 +11,12 @@ namespace Web.Controllers.User;
 public partial class UserController
 {
     /// <summary>
-    /// Shows a form to the user where they can update their Pounds lifted.
+    /// Shows a form to the user where they can update their Task.
     /// </summary>
     [HttpGet, Route("{section:section}/{taskId}")]
     public async Task<IActionResult> ManageTask(string email, string token, Section section, int taskId, bool? wasUpdated = null)
     {
-        var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
+        var user = await _userRepo.GetUser(email, token, includeSettings: true, allowDemoUser: true);
         if (user == null)
         {
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));

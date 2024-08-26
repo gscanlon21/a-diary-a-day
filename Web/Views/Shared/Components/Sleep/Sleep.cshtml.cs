@@ -14,7 +14,7 @@ public class SleepViewModel
         {
             // Skip today, start at 1, because we append the current weight onto the end regardless.
             var todaysDuration = userMoods.FirstOrDefault(um => um.Date == DateHelpers.Today);
-            SleepDurations = Enumerable.Range(1, UserConsts.ChartTimeFrameDays).Select(i =>
+            SleepDurations = Enumerable.Range(1, UserConsts.ChartDaysDefault).Select(i =>
             {
                 var date = DateHelpers.Today.AddDays(-i);
                 var userDuration = userMoods.FirstOrDefault(uw => uw.Date == date);
@@ -23,7 +23,7 @@ public class SleepViewModel
 
             // Skip today, start at 1, because we append the current weight onto the end regardless.
             var todaysSleep = userMoods.FirstOrDefault(um => um.Date == DateHelpers.Today);
-            SleepTimes = Enumerable.Range(1, UserConsts.ChartTimeFrameDays).Select(i =>
+            SleepTimes = Enumerable.Range(1, UserConsts.ChartDaysDefault).Select(i =>
             {
                 var date = DateHelpers.Today.AddDays(-i);
                 var userSleep = userMoods.FirstOrDefault(uw => uw.Date == date);
@@ -39,7 +39,7 @@ public class SleepViewModel
             {
                 var todaysCustom = flatMap.FirstOrDefault(um => um.Date == DateHelpers.Today && um.Id == custom.Id);
                 // Skip today, start at 1, because we append the current weight onto the end regardless.
-                Xys.AddRange(Enumerable.Range(1, UserConsts.ChartTimeFrameDays).Select(i =>
+                Xys.AddRange(Enumerable.Range(1, UserConsts.ChartDaysDefault).Select(i =>
                 {
                     var date = DateHelpers.Today.AddDays(-i);
                     var userCustom = flatMap.FirstOrDefault(uw => uw.Date == date && uw.Id == custom.Id);

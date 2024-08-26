@@ -5,6 +5,7 @@ using Core.Models.User;
 using Data.Entities.User;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using Web.Views.Index;
 
 namespace Web.Views.Shared.Components.Edit;
@@ -105,20 +106,23 @@ public class UserEditViewModel
         set => SendDays = value?.Aggregate(Days.None, (a, e) => a | e) ?? Days.None;
     }
 
+    [DebuggerDisplay("{Component}: {Days}")]
     public class UserEditComponentSkillViewModel
     {
         public UserEditComponentSkillViewModel() { }
 
-        public UserEditComponentSkillViewModel(UserComponentSetting userMuscleMobility)
+        public UserEditComponentSkillViewModel(UserComponentSetting userComponentSetting)
         {
-            UserId = userMuscleMobility.UserId;
-            Component = userMuscleMobility.Component;
+            Days = userComponentSetting.Days;
+            UserId = userComponentSetting.UserId;
+            Component = userComponentSetting.Component;
         }
-
-        public Core.Models.User.Components Component { get; init; }
 
         public int UserId { get; init; }
 
-        public int Days { get; init; }
+        public Core.Models.User.Components Component { get; init; }
+
+        [Range(UserConsts.ChartDaysMin, UserConsts.ChartDaysMax)]
+        public int Days { get; init; } = UserConsts.ChartDaysDefault;
     }
 }

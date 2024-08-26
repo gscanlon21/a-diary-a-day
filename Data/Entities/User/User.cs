@@ -161,7 +161,7 @@ public class User : IUser
 
     [JsonInclude, InverseProperty(nameof(UserComponentSetting.User))]
     public virtual ICollection<UserComponentSetting> UserComponentSettings { get; init; } = [];
-    public int GetComponentDaysFor(Components component) => UserComponentSettings.FirstOrDefault(ucs => ucs.Component == component)?.Days ?? UserConsts.ChartTimeFrameDays;
+    public int GetComponentDaysFor(Components component) => UserComponentSettings.FirstOrDefault(ucs => ucs.Component == component)?.Days ?? UserConsts.ChartDaysDefault;
 
     [JsonIgnore, InverseProperty(nameof(UserToken.User))]
     public virtual ICollection<UserToken> UserTokens { get; private init; } = [];

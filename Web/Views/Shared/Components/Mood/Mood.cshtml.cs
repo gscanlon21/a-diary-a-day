@@ -13,7 +13,7 @@ public class MoodViewModel
         {
             var todaysMood = userMoods.FirstOrDefault(um => um.Date == DateHelpers.Today);
             // Skip today, start at 1, because we append the current weight onto the end regardless.
-            Xys = Enumerable.Range(1, UserConsts.ChartTimeFrameDays).Select(i =>
+            Xys = Enumerable.Range(1, UserConsts.ChartDaysDefault).Select(i =>
             {
                 var date = DateHelpers.Today.AddDays(-i);
                 var userMood = userMoods.FirstOrDefault(uw => uw.Date == date);

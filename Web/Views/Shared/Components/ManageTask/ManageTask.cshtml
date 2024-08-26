@@ -88,10 +88,10 @@
         <div class="form-group mb-3 mt-3">
             <label asp-for="LagRefreshXDays" class="control-label">@Html.DisplayNameFor(_ => Model.LagRefreshXDays)</label>
             <div style="display:flex;column-gap:1ex;">
-                <input id="@(Html.IdFor(_ => Model.LagRefreshXDays))" type="number" asp-for="LagRefreshXDays" style="width:6ch;height:fit-content;" class=""
+                <input id="@(Html.IdFor(_ => Model.LagRefreshXDays))" type="number" asp-for="LagRefreshXDays" style="width:6ch;height:fit-content;"
                        oninput="@Html.IdFor(_ => Model.LagRefreshXDays)Input.value = this.valueAsNumber" />
                 <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                    <input type="range" style="width:100%;" class=""
+                    <input type="range" style="width:100%;"
                            name="@Html.IdFor(_ => Model.LagRefreshXDays)Input" id="@Html.IdFor(_ => Model.LagRefreshXDays)-input"
                            min="@UserConsts.LagRefreshXDaysMin" max="@UserConsts.LagRefreshXDaysMax" step="1" value="@Model.LagRefreshXDays"
                            oninput="@(Html.IdFor(_ => Model.LagRefreshXDays)).value = this.valueAsNumber" />
@@ -110,10 +110,10 @@
         <div class="form-group mb-3 mt-3">
             <label asp-for="PadRefreshXDays" class="control-label">@Html.DisplayNameFor(_ => Model.PadRefreshXDays)</label>
             <div style="display:flex;column-gap:1ex;">
-                <input id="@(Html.IdFor(_ => Model.PadRefreshXDays))" type="number" asp-for="PadRefreshXDays" style="width:6ch;height:fit-content;" class=""
+                <input id="@(Html.IdFor(_ => Model.PadRefreshXDays))" type="number" asp-for="PadRefreshXDays" style="width:6ch;height:fit-content;"
                        oninput="@Html.IdFor(_ => Model.PadRefreshXDays)Input.value = this.valueAsNumber" />
                 <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                    <input type="range" style="width:100%;" class=""
+                    <input type="range" style="width:100%;"
                            name="@Html.IdFor(_ => Model.PadRefreshXDays)Input" id="@Html.IdFor(_ => Model.PadRefreshXDays)-input"
                            min="@UserConsts.PadRefreshXDaysMin" max="@UserConsts.PadRefreshXDaysMax" step="1" value="@Model.PadRefreshXDays"
                            oninput="@(Html.IdFor(_ => Model.PadRefreshXDays)).value = this.valueAsNumber" />
@@ -132,10 +132,10 @@
         <div class="form-group mb-3 mt-3">
             <label asp-for="DeloadAfterXWeeks" class="control-label">@Html.DisplayNameFor(_ => Model.DeloadAfterXWeeks)</label>
             <div style="display:flex;column-gap:1ex;">
-                <input id="@(Html.IdFor(_ => Model.DeloadAfterXWeeks))" type="number" asp-for="DeloadAfterXWeeks" style="width:6ch;height:fit-content;" class=""
+                <input id="@(Html.IdFor(_ => Model.DeloadAfterXWeeks))" type="number" asp-for="DeloadAfterXWeeks" style="width:6ch;height:fit-content;"
                        oninput="@Html.IdFor(_ => Model.DeloadAfterXWeeks)Input.value = this.valueAsNumber" />
                 <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                    <input type="range" style="width:100%;" class=""
+                    <input type="range" style="width:100%;"
                            name="@Html.IdFor(_ => Model.DeloadAfterXWeeks)Input" id="@Html.IdFor(_ => Model.DeloadAfterXWeeks)-input"
                            min="@UserConsts.DeloadWeeksMin" max="@UserConsts.DeloadWeeksMax" step="1" value="@Model.DeloadAfterXWeeks"
                            oninput="@(Html.IdFor(_ => Model.DeloadAfterXWeeks)).value = this.valueAsNumber" />

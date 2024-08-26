@@ -20,7 +20,7 @@ public class SymptomViewModel
             foreach (var custom in Customs)
             {
                 // Skip today, start at 1, because we append the current weight onto the end regardless.
-                Xys.AddRange(Enumerable.Range(1, UserConsts.ChartTimeFrameDays).Select(i =>
+                Xys.AddRange(Enumerable.Range(1, UserConsts.ChartDaysDefault).Select(i =>
                 {
                     var date = DateHelpers.Today.AddDays(-i);
                     return new XCustom(date, flatMap.FirstOrDefault(uw => uw.Date == date && uw.Id == custom.Id), custom);

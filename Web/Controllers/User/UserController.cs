@@ -91,14 +91,12 @@ public partial class UserController : ViewController
             try
             {
                 _context.UserComponentSettings.RemoveRange(_context.UserComponentSettings.Where(uf => uf.UserId == viewModel.User.Id));
-                _context.UserComponentSettings.AddRange(viewModel.UserComponentSettings
-                    .Select(umm => new UserComponentSetting()
-                    {
-                        UserId = umm.UserId,
-                        Days = umm.Days,
-                        Component = umm.Component,
-                    })
-                );
+                _context.UserComponentSettings.AddRange(viewModel.UserComponentSettings.Select(umm => new UserComponentSetting()
+                {
+                    UserId = umm.UserId,
+                    Days = umm.Days,
+                    Component = umm.Component,
+                }));
 
                 viewModel.User.Verbosity = viewModel.Verbosity;
                 viewModel.User.Components = viewModel.Components;

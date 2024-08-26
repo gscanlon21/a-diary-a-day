@@ -42,7 +42,7 @@
             {
                 <div class="form-group mb-3">
                     <details class="mb-3" @(Model.WasUpdated == false ? "open='open'" : "")>
-                        <summary class=""><b class="">Edit @Html.DisplayNameFor(_ => Model.UserComponentSettings)</b></summary>
+                        <summary><b>Edit @Html.DisplayNameFor(_ => Model.UserComponentSettings)</b></summary>
 
                         <div class="mt-1 ps-3">
                             @for (var i = 0; i < Model.UserComponentSettings.Count; i++)
@@ -55,15 +55,16 @@
                                     <div class="mb-2" style="display:flex;column-gap:1ch;flex-wrap:wrap;">
                                         <div style="display:flex;margin-bottom:-.5ex;">@Html.DisplayNameFor(_ => Model.UserComponentSettings[i].Days)</div>
                                         <div style="display:flex;gap:1ch;align-items:center;flex:1 0 150px;">
-                                            <output name="prehabMusclesOutput@(i)" for="@Html.IdFor(_ => Model.UserComponentSettings[i])">@Model.UserComponentSettings[i].Days</output>
+                                            <input id="prehabMusclesOutput@(i)" type="number" asp-for="UserComponentSettings[i].Days" style="width:6ch;height:fit-content;"
+                                                   oninput="prehabMusclesOutput@(i)Input.value = this.valueAsNumber" />
                                             <div style="display:flex;width:100%;">
-                                                <input asp-for="UserComponentSettings[i].Days" type="range" style="width:100%;" aria-describedby="refresh-functional-help"
-                                                       min="30" max="360" step="1"
+                                                <input id="prehabMusclesOutput@(i)Input" asp-for="UserComponentSettings[i].Days" type="range" style="width:100%;"
+                                                       min="@UserConsts.ChartDaysMin" max="@UserConsts.ChartDaysMax" step="1" aria-describedby="component-days-help"
                                                        oninput="prehabMusclesOutput@(i).value = this.valueAsNumber" />
                                             </div>
                                         </div>
                                         <span asp-validation-for="UserComponentSettings[i]" class="text-danger"></span>
-                                        <div id="refresh-functional-help" class="form-text">
+                                        <div id="component-days-help" class="form-text">
                                             <p>@Html.DisplayDescriptionFor(_ => Model.UserComponentSettings[i])</p>
                                         </div>
                                     </div>

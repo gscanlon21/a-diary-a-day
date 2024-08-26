@@ -36,8 +36,8 @@ public class EditViewComponent(UserRepo userRepo) : ViewComponent
                 .OrderBy(mg => mg.GetSingleDisplayName(DisplayType.GroupName))
                 .ThenBy(mg => mg.GetSingleDisplayName()))
             {
-                var userMuscleFlexibility = viewModel.User.UserComponentSettings.SingleOrDefault(umm => umm.Component == component);
-                viewModel.UserComponentSettings.Add(userMuscleFlexibility != null ? new UserEditViewModel.UserEditComponentSkillViewModel(userMuscleFlexibility) : new UserEditViewModel.UserEditComponentSkillViewModel()
+                var userComponentSetting = viewModel.User.UserComponentSettings.SingleOrDefault(umm => umm.Component == component);
+                viewModel.UserComponentSettings.Add(userComponentSetting != null ? new UserEditViewModel.UserEditComponentSkillViewModel(userComponentSetting) : new UserEditViewModel.UserEditComponentSkillViewModel()
                 {
                     UserId = viewModel.User.Id,
                     Component = component,
