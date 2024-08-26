@@ -27,13 +27,12 @@ public class TaskLogViewComponent : ViewComponent
         if (task == null) { return Content(""); }
 
         var token = await _userRepo.AddUserToken(user, durationDays: 1);
-        var userWeights = await _context.UserTaskLogs
+        var userLogs = await _context.UserTaskLogs
             .Where(uw => uw.UserTaskId == task.Id)
             .ToListAsync();
 
-        return View("TaskLog", new TaskLogViewModel(userWeights, task)
+        return View("TaskLog", new TaskLogViewModel(user, userLogs)
         {
-            User = user,
             Token = token,
             Name = task.Uid.ToString(),
         });

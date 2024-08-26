@@ -191,11 +191,4 @@
             </div>
         }
     </div>
-
-    @if (Model.UserTask.Id != default)
-    {
-        <div class="mt-4">
-            @await Component.InvokeAsync(TaskLogViewComponent.Name, new { Model.User, Task = Model.UserTask })
-        </div>
-    }
 </div>

@@ -3,13 +3,11 @@
 @using Core.Models.Exercise
 @using Core.Consts
 
-<details class="mt-4 mb-2">
-    <summary class="h5">Log</summary>
-
+<div class="alert alert-light shadow">
     <div style="height:min(70vw, 300px)">
         <canvas id="myChart"></canvas>
     </div>
-</details>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
@@ -21,7 +19,7 @@
             type: 'line',
             data: {
                 datasets: [{
-                    label: 'Weight',
+                    label: 'Completions',
                     fill: false,
                     spanGaps: true,
                     showLine: true,
