@@ -1,24 +1,21 @@
-﻿using Core.Consts;
-using Data.Entities.User;
+﻿using Data.Entities.User;
 using Web.ViewModels;
 
 namespace Web.Views.Shared.Components.Mood;
 
 public class MoodViewModel
 {
-    public MoodViewModel(IList<UserMood>? userMoods)
+    public MoodViewModel(Data.Entities.User.User user, IList<UserMood>? userMoods)
     {
         //Mood = currentWeight.GetValueOrDefault();
         if (userMoods != null)
         {
-            var todaysMood = userMoods.FirstOrDefault(um => um.Date == DateHelpers.Today);
-            // Skip today, start at 1, because we append the current weight onto the end regardless.
-            Xys = Enumerable.Range(1, UserConsts.ChartDaysDefault).Select(i =>
-            {
-                var date = DateHelpers.Today.AddDays(-i);
-                var userMood = userMoods.FirstOrDefault(uw => uw.Date == date);
-                return new Xy(date, userMood?.AverageScore, userMood?.Mood.GetSingleDisplayName());
-            }).Where(xy => xy.Y != null).Reverse().Append(new Xy(DateHelpers.Today, todaysMood?.AverageScore, todaysMood?.Mood.GetSingleDisplayName())).ToList();
+            var daysBack = Enumerable.Range(0, user.GetComponentDaysFor(Core.Models.User.Components.Mood));
+            var dailyLogs = daysBack.SelectMany(i => userMoods.Where(uw => uw.Date == DateHelpers.Today.AddDays(-i)));
+            var weeklyLogs = dailyLogs.GroupBy(l => l.Date.StartOfWeek()).Select(g => new Xy(g.Key, g.Average(l => l.AverageScore),
+                ((Core.Models.User.Mood?)(int?)g.Average(l => l.AverageScore))?.GetSingleDisplayName()));
+
+            Xys = weeklyLogs.Where(xy => xy.Y.HasValue).Reverse().ToList();
         }
     }
 

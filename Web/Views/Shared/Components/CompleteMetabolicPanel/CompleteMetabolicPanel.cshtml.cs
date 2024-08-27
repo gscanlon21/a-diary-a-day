@@ -1,4 +1,3 @@
-using Core.Consts;
 using Data.Entities.User;
 using Web.ViewModels;
 

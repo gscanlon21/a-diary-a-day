@@ -28,7 +28,4 @@ public class RadarChartViewModel
         .OrderBy(g => g.Key.Order)
         .Select(g => g.Where(s => s?.Y?.Date.Month == DateHelpers.Today.Month && s?.Y?.Date.Year == DateHelpers.Today.Year).Sum(s => s?.Y?.One) ?? 0)
         .ToList();
-
-    public List<string> Ids = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "i", "j", "k", "l", "z", "c", "v", "b", "n", "m"];
-    public List<string> Colors = ["skyblue", "red", "orange", "green", "purple", "skyblue", "red", "orange", "green", "purple", "skyblue", "red", "orange", "green", "purple", "skyblue", "red", "orange", "green", "purple", "skyblue", "red", "orange", "green", "purple"];
 }

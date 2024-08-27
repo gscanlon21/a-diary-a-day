@@ -26,7 +26,8 @@
                                 yAxisID: 'y',
                                 spanGaps: true,
                                 showLine: true,
-                                backgroundColor: '@Model.Colors[i]',
+                                borderColor: '@ChartConsts.Colors[i]',
+                                backgroundColor: '@ChartConsts.Colors[i]',
                                 parsing: {
                                     yAxisKey: 'y.one'
                                 },
@@ -40,7 +41,7 @@
                 maintainAspectRatio: false,
                 elements: {
                     line: {
-
+                        tension: 0.1,
                     },
                     point: {
                         // Increase the radius around the point when the tooltip shows

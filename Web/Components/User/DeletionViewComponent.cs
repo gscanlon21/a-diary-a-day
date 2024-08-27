@@ -1,5 +1,4 @@
-﻿using Core.Consts;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Web.Views.Shared.Components.Deletion;
 
 namespace Web.Components.User;

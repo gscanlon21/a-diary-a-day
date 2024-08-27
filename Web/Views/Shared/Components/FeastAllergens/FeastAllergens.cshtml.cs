@@ -1,5 +1,4 @@
-﻿using Core.Consts;
-using Core.Models.Footnote;
+﻿using Core.Models.Footnote;
 using Data.Entities.User;
 using Web.ViewModels;
 

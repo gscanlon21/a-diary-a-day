@@ -36,4 +36,8 @@ public class UserMood : IScore
     public int? ProratedScore => Items.Sum();
 
     public double? AverageScore => Items.Sum() / (double)Items.Count;
+
+    public override int GetHashCode() => HashCode.Combine(Id);
+    public override bool Equals(object? obj) => obj is UserMood other
+        && other.Id == Id;
 }
