@@ -1,4 +1,6 @@
-﻿using Data;
+﻿using Core.Models.Footnote;
+using Data;
+using Data.Entities.User;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,15 +20,24 @@ public class CompleteMetabolicPanelViewComponent(CoreContext context, UserRepo u
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
+        var i = 0;
         var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserCompleteMetabolicPanels.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserCompleteMetabolicPanels.Where(ud => ud.UserId == user.Id).ToListAsync();
-        var viewModel = new CompleteMetabolicPanelViewModel(userMoods)
+        var userCustoms = userMoods.FirstOrDefault()?.Items.Keys.Select(a => new UserCustom()
+        {
+            Id = ++i,
+            Count = i,
+            Type = CustomType.None,
+            Name = a,
+        }).ToList();
+
+        var viewModel = new CompleteMetabolicPanelViewModel(userMoods, userCustoms)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
             PreviousMood = userMood,
-            UserMood = new Data.Entities.User.UserCompleteMetabolicPanel()
+            UserMood = new UserCompleteMetabolicPanel()
             {
                 UserId = user.Id,
                 User = user

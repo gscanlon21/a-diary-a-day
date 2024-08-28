@@ -1,5 +1,5 @@
-﻿using Core.Models.User;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -11,7 +11,7 @@ namespace Data.Entities.User;
 /// https://www.psychiatry.org/getmedia/3345c156-1aac-4e29-ac61-1c6541cb39be/APA-DSM5TR-SeverityMeasureForAgoraphobiaAdult.pdf
 /// </summary>
 [Table("user_complete_metabolic_panel"), Comment("User variation weight log")]
-public class UserCompleteMetabolicPanel : IScore
+public class UserCompleteMetabolicPanel
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private init; }
@@ -90,22 +90,25 @@ public class UserCompleteMetabolicPanel : IScore
     public int? EGFRbyCKDEPI { get; set; }
 
     [NotMapped]
-    public List<int?> Items =>
-    [
-        Glucose, Sodium, Potassium, Chloride, CO2, Calcium, AnionGap, BUN, Creatinine, AlkalinePhosphatase, ALT, AST, ProteinTotal, Albumin, BilirubinTotal, EGFRbyCKDEPI
-    ];
-
-    /// <summary>
-    /// Prorated score.
-    /// </summary>
-    [Range(0, 99)]
-    public int? ProratedScore => Items.Any(d => d.HasValue) ? Convert.ToInt32(Items.Count * Items.Sum() / (double)Items.Count(d => d.HasValue)) : null;
-
-    /// <summary>
-    /// Prorated score.
-    /// </summary>
-    [Range(0, 99)]
-    public double? AverageScore => Items.All(d => d.HasValue) ? Items.Sum() / (double)Items.Count : null;
+    public Dictionary<string, int?> Items => new()
+    {
+        { nameof(Glucose), Glucose },
+        { nameof(Sodium), Sodium },
+        { nameof(Potassium), Potassium },
+        { nameof(Chloride), Chloride },
+        { nameof(CO2), CO2 },
+        { nameof(Calcium), Calcium },
+        { nameof(AnionGap), AnionGap },
+        { nameof(BUN), BUN },
+        { nameof(Creatinine), Creatinine },
+        { nameof(AlkalinePhosphatase), AlkalinePhosphatase },
+        { nameof(ALT), ALT },
+        { nameof(AST), AST },
+        { nameof(ProteinTotal), ProteinTotal },
+        { nameof(Albumin), Albumin },
+        { nameof(BilirubinTotal), BilirubinTotal },
+        { nameof(EGFRbyCKDEPI), EGFRbyCKDEPI },
+    };
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserCompleteMetabolicPanels))]
     public virtual User User { get; set; } = null!;

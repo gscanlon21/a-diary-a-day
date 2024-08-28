@@ -52,7 +52,7 @@ public partial class UserController
 
             var response = await _httpClient.GetAsync($"{_siteSettings.Value.FeastUri.AbsolutePath}/user/Allergens?weeks={1}&email={Uri.EscapeDataString(user.FeastEmail)}&token={Uri.EscapeDataString(user.FeastToken)}");
             var allergens = await ApiResult<IDictionary<Allergy, double>>.FromResponse(response);
-            if (allergens.HasValue)
+            if (!allergens.HasValue)
             {
                 return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
             }

@@ -1,3 +1,4 @@
+using Core.Models.Footnote;
 using Data.Entities.User;
 using Web.ViewModels;
 
@@ -5,17 +6,29 @@ namespace Web.Views.Shared.Components.CompleteMetabolicPanel;
 
 public class CompleteMetabolicPanelViewModel
 {
-    public CompleteMetabolicPanelViewModel(IList<UserCompleteMetabolicPanel>? userMoods)
+    public CompleteMetabolicPanelViewModel(IList<UserCompleteMetabolicPanel>? userMoods, List<UserCustom>? customs)
     {
         //Mood = currentWeight.GetValueOrDefault();
-        if (userMoods != null)
+        if (userMoods != null && customs != null)
         {
-            // Skip today, start at 1, because we append the current weight onto the end regardless.
-            Xys = Enumerable.Range(1, UserConsts.ChartDaysDefault).Select(i =>
+            var flatMap = userMoods.SelectMany(m =>
             {
-                var date = DateHelpers.Today.AddDays(-i);
-                return new XScore(date, userMoods.FirstOrDefault(uw => uw.Date == date));
-            }).Where(xy => xy.Y != null).Reverse().Append(new XScore(DateHelpers.Today, userMoods.FirstOrDefault(um => um.Date == DateHelpers.Today))).ToList();
+                // Excluding complex allergens from here so the graph has less data points and is easier to follow.
+                return m.Items.Select(c => new UserCustomGroup(m.Date, CustomType.None, 0, c.Key)
+                {
+                    One = c.Value ?? 0
+                });
+            });
+
+            foreach (var custom in customs)
+            {
+                // Skip today, start at 1, because we append the current weight onto the end regardless.
+                Xys.AddRange(Enumerable.Range(1, UserConsts.ChartDaysDefault).Select(i =>
+                {
+                    var date = DateHelpers.Today.AddDays(-i);
+                    return new XCustom(date, flatMap.FirstOrDefault(uw => uw.Date == date && uw.Name == custom.Name), custom);
+                }).Where(xy => xy.Y != null).Reverse().Append(new XCustom(DateHelpers.Today, flatMap.FirstOrDefault(um => um.Date == DateHelpers.Today && um.Id == custom.Id), custom)).ToList());
+            }
         }
     }
 
@@ -25,5 +38,6 @@ public class CompleteMetabolicPanelViewModel
     public UserCompleteMetabolicPanel UserMood { get; init; } = null!;
     public UserCompleteMetabolicPanel? PreviousMood { get; init; }
 
-    internal IList<XScore> Xys { get; init; } = [];
+    internal List<XCustom> Xys { get; init; } = [];
+    internal List<IGrouping<UserCustom, XCustom>> XysGrouped => Xys.Where(xy => xy.Y?.One > 0).GroupBy(xy => xy.Label).ToList();
 }
