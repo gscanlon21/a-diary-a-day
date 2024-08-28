@@ -1,5 +1,4 @@
-﻿using Core.Code.Exceptions;
-using Core.Consts;
+﻿using Core.Consts;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 
