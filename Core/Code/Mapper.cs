@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Web.Code;
+namespace Core.Code;
 
 public static class Mapper
 {

@@ -5,7 +5,6 @@ using Api.Jobs.Delete;
 using Api.Jobs.Update;
 using Api.Mail.Azure;
 using Api.Services;
-using Core.Code;
 using Core.Models.Options;
 using Data;
 using Data.Repos;
@@ -106,6 +105,7 @@ var scheduler = await schedulerFactory.GetScheduler();
 
 await CreateEmails.Schedule(scheduler);
 await CreateMoods.Schedule(scheduler);
+await FetchFeasts.Schedule(scheduler);
 await DisableInactiveUsers.Schedule(scheduler);
 await DisableErroredUsers.Schedule(scheduler);
 await DeleteOldMoods.Schedule(scheduler);

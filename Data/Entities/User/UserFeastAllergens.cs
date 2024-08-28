@@ -23,6 +23,11 @@ public class UserFeastAllergens
 
     public IDictionary<Allergy, double> Allergens { get; set; } = new Dictionary<Allergy, double>();
 
+    /// <summary>
+    /// Get allergens that are not part of other allergens.
+    /// </summary>
+    public IEnumerable<KeyValuePair<Allergy, double>> SimpleAllergens => Allergens.Where(kv => kv.Key.PopCount() == 1);
+
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserFeastAllergens))]
     public virtual User User { get; init; } = null!;
 }

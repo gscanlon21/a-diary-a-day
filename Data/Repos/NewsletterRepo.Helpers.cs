@@ -72,7 +72,11 @@ public partial class NewsletterRepo
                 else
                 {
                     task.RefreshAfter = null;
-                    task.LastSeen = DateHelpers.Today.AddDays(task.PadRefreshXDays);
+                    // If there is no refresh padding, allow the same task to be seen
+                    // ... if the diary needs to be re-created. Applies to demo user.
+                    task.LastSeen = task.PadRefreshXDays == 0 ? DateHelpers.Today
+                        // Else, add 1 to the refresh padding so we skip a day.
+                        : DateHelpers.Today.AddDays(task.PadRefreshXDays + 1);
 
                     // Only refresh the deload week when the refresh lag is complete.
                     // Don't update when no there's deload refresh interval.

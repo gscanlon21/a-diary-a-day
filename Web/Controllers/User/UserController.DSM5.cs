@@ -1,6 +1,4 @@
-﻿using Core.Models.User;
-using Data.Entities.User;
-using Lib.Services;
+﻿using Data.Entities.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,44 +6,6 @@ namespace Web.Controllers.User;
 
 public partial class UserController
 {
-    [HttpPost, Route("allergens")]
-    public async Task<IActionResult> ManageAllergens(string email, string token, UserFeastAllergens userMood)
-    {
-        if (true || ModelState.IsValid)
-        {
-            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
-            if (user == null || string.IsNullOrWhiteSpace(user.FeastEmail) || string.IsNullOrWhiteSpace(user.FeastToken))
-            {
-                return NotFound();
-            }
-
-            var response = await _httpClient.GetAsync($"{_siteSettings.Value.FeastUri.AbsolutePath}/user/Allergens?weeks={1}&email={Uri.EscapeDataString(user.FeastEmail)}&token={Uri.EscapeDataString(user.FeastToken)}");
-            var allergens = await ApiResult<IDictionary<Allergy, double>>.FromResponse(response);
-            if (allergens.Result == null)
-            {
-                return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
-            }
-
-            var startOfWeek = DateHelpers.Today.StartOfWeek();
-            var todaysMood = await _context.UserFeastAllergens.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == startOfWeek);
-            if (todaysMood == null)
-            {
-                userMood.UserId = user.Id;
-                userMood.Allergens = allergens.Result;
-                _context.Add(userMood);
-            }
-            else
-            {
-                todaysMood.Allergens = allergens.Result;
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
-        }
-
-        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
-    }
-
     [HttpPost, Route("dryeyes")]
     public async Task<IActionResult> ManageDryEyes(string email, string token, UserDryEyes userMood)
     {

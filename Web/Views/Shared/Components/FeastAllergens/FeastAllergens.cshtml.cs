@@ -12,7 +12,8 @@ public class FeastAllergensViewModel
         {
             var flatMap = userMoods.SelectMany(m =>
             {
-                return m.Allergens.Select(c => new UserCustomGroup(m.Date, CustomType.None, (int)c.Key, c.Key.GetSingleDisplayName())
+                // Excluding complex allergens from here so the graph has less data points and is easier to follow.
+                return m.SimpleAllergens.Select(c => new UserCustomGroup(m.Date, CustomType.None, (int)c.Key, c.Key.GetSingleDisplayName())
                 {
                     One = (int)c.Value
                 });

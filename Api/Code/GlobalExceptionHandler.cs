@@ -1,5 +1,4 @@
-﻿using Core.Code.Exceptions;
-using Core.Code.Helpers;
+﻿using Core.Code.Helpers;
 using Core.Consts;
 using Core.Models.User;
 using Data;
