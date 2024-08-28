@@ -34,6 +34,9 @@ public class TaskDto
     /// </summary>
     public DateOnly LastCompleted { get; set; }
 
+    public string? DisabledReason { get; init; }
+    public bool Enabled => string.IsNullOrWhiteSpace(DisabledReason);
+
     public override int GetHashCode() => HashCode.Combine(Id);
     public override bool Equals(object? obj) => obj is TaskDto other
         && other.Id == Id;

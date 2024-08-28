@@ -1,5 +1,6 @@
 ﻿@model TasksViewModel
 @using Core.Models.User
+@using Lib.Pages.Shared.Exercise
 
 @if (Model.Tasks != null && Model.Tasks.Any())
 {
@@ -9,6 +10,8 @@
             <span class="float-end">@Model.Tasks.Count()</span>
         </summary>
 
-        <component type="typeof(Lib.Pages.Shared.Exercise.TaskSection)" render-mode="Static" param-User="Model.UserNewsletter" param-Tasks='Model.Tasks' param-Theme='ExerciseTheme.None' param-Verbosity="Model.Verbosity" />
+        <component type="typeof(TaskSection)" render-mode="Static" param-User="Model.UserNewsletter" param-Tasks='Model.EnabledTasks' param-Theme='ExerciseTheme.None' param-Verbosity="Model.Verbosity" />
+
+        <component type="typeof(TaskSection)" render-mode="Static" param-User="Model.UserNewsletter" param-Tasks='Model.DisabledTasks' param-Theme='ExerciseTheme.Warmup' param-Verbosity="Model.Verbosity" param-Title='new TaskSection.Titles("Disabled Tasks")' />
     </details>
 }

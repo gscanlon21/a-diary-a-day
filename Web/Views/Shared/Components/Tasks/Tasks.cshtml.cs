@@ -9,6 +9,8 @@ public class TasksViewModel
 {
     [Display(Name = "My Tasks")]
     public required IList<NewsletterTaskDto> Tasks { get; init; }
+    public IList<NewsletterTaskDto> EnabledTasks => Tasks.Where(t => t.Task.Enabled).ToList();
+    public IList<NewsletterTaskDto> DisabledTasks => Tasks.Where(t => !t.Task.Enabled).ToList();
 
     public required UserNewsletterDto UserNewsletter { get; init; }
 
