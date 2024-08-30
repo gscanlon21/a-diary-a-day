@@ -97,8 +97,12 @@
                 },
                 plugins: {
                     legend: {
-                        // Show the graph legend
                         display: true,
+                        labels: {
+                            usePointStyle: true,
+                            boxHeight: 12,
+                            boxWidth: 6,
+                        },
                     },
                     tooltip: {
                         callbacks: {

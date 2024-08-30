@@ -89,6 +89,12 @@ public class UserTask
     [Required, Range(UserConsts.DeloadWeeksMin, UserConsts.DeloadWeeksMax)]
     public int DeloadAfterXWeeks { get; set; } = UserConsts.DeloadWeeksDefault;
 
+    /// <summary>
+    /// How often to refresh tasks.
+    /// </summary>
+    [Required, Range(UserConsts.DeloadDurationMin, UserConsts.DeloadDurationMax)]
+    public int DeloadDurationWeeks { get; set; } = UserConsts.DeloadDurationDefault;
+
     public string? DisabledReason { get; set; } = null;
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserTasks))]

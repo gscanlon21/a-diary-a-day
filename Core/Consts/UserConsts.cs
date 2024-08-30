@@ -43,6 +43,10 @@ public class UserConsts
     public const int DeloadWeeksDefault = 0;
     public const int DeloadWeeksMax = 52;
 
+    public const int DeloadDurationMin = 1;
+    public const int DeloadDurationDefault = 1;
+    public const int DeloadDurationMax = 4;
+
     public const int UserTaskCompleteMin = 0;
     public const int UserTaskCompleteDefault = 0;
     public const int UserTaskCompleteMax = 10;

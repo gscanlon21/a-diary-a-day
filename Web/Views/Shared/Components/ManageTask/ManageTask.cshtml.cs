@@ -45,6 +45,10 @@ public class ManageTaskViewModel
     [Display(Name = "Deload After Every X Weeks", Description = "After how many weeks of seeing a task do you want to take a deload week?")]
     public int DeloadAfterXWeeks { get; init; }
 
+    [Required, Range(UserConsts.DeloadDurationMin, UserConsts.DeloadDurationMax)]
+    [Display(Name = "Deload Duration (Weeks)", Description = "How long should deloads last?")]
+    public int DeloadDurationWeeks { get; set; } = UserConsts.DeloadDurationDefault;
+
     public Section ManageSection { get; set; }
 
     public Section Section { get; set; }

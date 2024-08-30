@@ -135,6 +135,7 @@ public partial class UserController
                 PadRefreshXDays = viewModel.PadRefreshXDays,
                 LagRefreshXDays = viewModel.LagRefreshXDays,
                 DeloadAfterXWeeks = viewModel.DeloadAfterXWeeks,
+                DeloadDurationWeeks = viewModel.DeloadDurationWeeks,
                 PersistUntilComplete = viewModel.PersistUntilComplete,
             });
 
@@ -156,6 +157,7 @@ public partial class UserController
 
             userTask.Name = user.IsDemoUser ? userTask.Name : viewModel.Name;
             userTask.PersistUntilComplete = viewModel.PersistUntilComplete;
+            userTask.DeloadDurationWeeks = viewModel.DeloadDurationWeeks;
             userTask.Notes = user.IsDemoUser ? null : viewModel.Notes;
             userTask.DeloadAfterXWeeks = viewModel.DeloadAfterXWeeks;
             userTask.LagRefreshXDays = viewModel.LagRefreshXDays;

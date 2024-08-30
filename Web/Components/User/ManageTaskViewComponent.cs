@@ -78,6 +78,7 @@ public class ManageTaskViewComponent : ViewComponent
             CompletedForSection = userTaskLog?.Complete > 0,
             PersistUntilComplete = userTask.PersistUntilComplete,
             DeloadAfterXWeeks = userTask.DeloadAfterXWeeks,
+            DeloadDurationWeeks = userTask.DeloadDurationWeeks,
             Task = taskDto?.AsType<NewsletterTaskDto, QueryResults>()!,
         });
     }

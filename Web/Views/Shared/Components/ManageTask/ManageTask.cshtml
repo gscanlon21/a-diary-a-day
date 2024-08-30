@@ -120,13 +120,7 @@
                 </div>
             </div>
             <span asp-validation-for="PadRefreshXDays" class="text-danger"></span>
-            <details id="delay-functional-help" class="form-text">
-                <summary>@Html.DisplayDescriptionFor(_ => Model.PadRefreshXDays)</summary>
-
-                <div class="mt-1">
-                    <span>This may not apply if there are no other recipes available.</span>
-                </div>
-            </details>
+            <div id="delay-functional-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.PadRefreshXDays)</div>
         </div>
 
         <div class="form-group mb-3 mt-3">
@@ -142,22 +136,30 @@
                 </div>
             </div>
             <span asp-validation-for="DeloadAfterXWeeks" class="text-danger"></span>
-            <details id="delay-functional-help" class="form-text">
-                <summary>@Html.DisplayDescriptionFor(_ => Model.DeloadAfterXWeeks)</summary>
+            <div id="delay-functional-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.DeloadAfterXWeeks)</div>
+        </div>
 
-                <div class="mt-1">
-                    <span>This may not apply if there are no other recipes available.</span>
+        <div class="form-group mb-3 mt-3">
+            <label asp-for="DeloadDurationWeeks" class="control-label">@Html.DisplayNameFor(_ => Model.DeloadDurationWeeks)</label>
+            <div style="display:flex;column-gap:1ex;">
+                <input id="@(Html.IdFor(_ => Model.DeloadDurationWeeks))" type="number" asp-for="DeloadDurationWeeks" style="width:6ch;height:fit-content;"
+                       oninput="@Html.IdFor(_ => Model.DeloadDurationWeeks)Input.value = this.valueAsNumber" />
+                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                    <input type="range" style="width:100%;"
+                           name="@Html.IdFor(_ => Model.DeloadDurationWeeks)Input" id="@Html.IdFor(_ => Model.DeloadDurationWeeks)-input"
+                           min="@UserConsts.DeloadDurationMin" max="@UserConsts.DeloadDurationMax" step="1" value="@Model.DeloadDurationWeeks"
+                           oninput="@(Html.IdFor(_ => Model.DeloadDurationWeeks)).value = this.valueAsNumber" />
                 </div>
-            </details>
+            </div>
+            <span asp-validation-for="DeloadDurationWeeks" class="text-danger"></span>
+            <div id="delay-functional-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.DeloadDurationWeeks)</div>
         </div>
 
         <div class="form-group form-check mb-3">
             <label asp-for="PersistUntilComplete" class="control-label">@Html.DisplayNameFor(_ => Model.PersistUntilComplete)</label>
-            <input class="form-check-input" asp-for="PersistUntilComplete" aria-describedby="disabled-help" />
+            <input class="form-check-input" asp-for="PersistUntilComplete" aria-describedby="persist-help" />
             <span asp-validation-for="PersistUntilComplete" class="text-danger"></span>
-            <div id="disabled-help" class="form-text">
-                @Html.DisplayDescriptionFor(_ => Model.PersistUntilComplete)
-            </div>
+            <div id="persist-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.PersistUntilComplete)</div>
         </div>
 
         <div class="form-group form-check mb-3">
