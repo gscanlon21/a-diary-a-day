@@ -62,22 +62,10 @@ public class UserPostTraumaticStressSeverity : IScore
     public int? Irritable { get; set; }
 
     [NotMapped]
-    public List<int?> Items => new()
-    {
+    public List<int?> Items =>
+    [
         Flashbacks, Upset, StressfulEvent, Avoid, Alert, Startled, Irritable, NegativeEmotions, NoInterest
-    };
-
-    //// <summary>
-    /// Prorated score.
-    /// </summary>
-    [Range(0, 99)]
-    public int? ProratedScore => Items.Any(d => d.HasValue) ? Convert.ToInt32(Items.Count * Items.Sum() / (double)Items.Count(d => d.HasValue)) : null;
-
-    /// <summary>
-    /// Prorated score.
-    /// </summary>
-    [Range(0, 99)]
-    public double? AverageScore => Items.All(d => d.HasValue) ? Items.Sum() / (double)Items.Count : null;
+    ];
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserPostTraumaticStressSeverities))]
     public virtual User User { get; set; } = null!;

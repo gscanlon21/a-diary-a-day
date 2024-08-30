@@ -59,18 +59,6 @@ public class UserAcuteStressSeverity : IScore
         Flashbacks, Upset, Distant, Avoid, Alert, Startled, Irritable
     ];
 
-    /// <summary>
-    /// Prorated score.
-    /// </summary>
-    [Range(0, 99)]
-    public int? ProratedScore => Items.Any(d => d.HasValue) ? Convert.ToInt32(Items.Count * Items.Sum() / (double)Items.Count(d => d.HasValue)) : null;
-
-    /// <summary>
-    /// Prorated score.
-    /// </summary>
-    [Range(0, 99)]
-    public double? AverageScore => Items.All(d => d.HasValue) ? Items.Sum() / (double)Items.Count : null;
-
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserAcuteStressSeverities))]
     public virtual User User { get; set; } = null!;
 }

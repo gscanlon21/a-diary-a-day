@@ -66,22 +66,10 @@ public class UserGeneralizedAnxietySeverity : IScore
     public int? Cope { get; set; }
 
     [NotMapped]
-    public List<int?> Items => new()
-    {
+    public List<int?> Items =>
+    [
         Fright, Nervous, Accidents, Heart, Tense, Avoided, LeftEarly, Time, Reassurance, Cope
-    };
-
-    /// <summary>
-    /// Prorated score.
-    /// </summary>
-    [Range(0, 99)]
-    public int? ProratedScore => Items.Any(d => d.HasValue) ? Convert.ToInt32(Items.Count * Items.Sum() / (double)Items.Count(d => d.HasValue)) : null;
-
-    /// <summary>
-    /// Prorated score.
-    /// </summary>
-    [Range(0, 99)]
-    public double? AverageScore => Items.All(d => d.HasValue) ? Items.Sum() / (double)Items.Count : null;
+    ];
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserGeneralizedAnxietySeverities))]
     public virtual User User { get; set; } = null!;

@@ -56,10 +56,10 @@ public class UserDepression
     public int? Hopeless { get; set; }
 
     [NotMapped]
-    public List<int?> Items => new()
-    {
+    public List<int?> Items =>
+    [
         Worthless, NoFuture, Helpless, Sad, Failure, Depressed, Unhappy, Hopeless
-    };
+    ];
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserDepressions))]
     public virtual User User { get; set; } = null!;

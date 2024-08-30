@@ -87,23 +87,15 @@ public class UserDryEyes : IScore
     [Display(Name = "Do you have fluctuating vision problems? (That can be corrected with blinking)")]
     public int? VisualBlinking { get; set; }
 
-    /// <summary>
-    /// Prorated score.
-    /// </summary>
-    [Range(0, 99)]
-    public int? ProratedScore => Items.Any(d => d.HasValue) ? Convert.ToInt32(Items.Count * Items.Sum() / (double)Items.Count(d => d.HasValue)) : null;
-
-    /// <summary>
-    /// Prorated score.
-    /// </summary>
-    [Range(0, 99)]
-    public double? AverageScore => Items.All(d => d.HasValue) ? Items.Sum() / (double)Items.Count : null;
-
     [NotMapped]
     public List<int?> Items =>
     [
         DrynessFrequency, BurningFrequency, FatigueFrequency, SorenessFrequency, BurningSeverity, DrynessSeverity, FatigueSeverity, SorenessSeverity
     ];
+
+    public int? ProratedScore => Items.Sum();
+
+    public double? AverageScore => Items.Sum() / (double)Items.Count;
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserDryEyes))]
     public virtual User User { get; init; } = null!;

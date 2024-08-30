@@ -34,10 +34,10 @@ public class UserSleep : IScore
     [JsonIgnore, InverseProperty(nameof(UserCustom.UserSleeps))]
     public virtual List<UserCustom> UserCustoms { get; init; } = [];
 
-    public List<int?> Items => new()
-    {
+    public List<int?> Items =>
+    [
         (int?)SleepDuration, (int?)SleepTime
-    };
+    ];
 
     public int? ProratedScore => Items.Sum();
 

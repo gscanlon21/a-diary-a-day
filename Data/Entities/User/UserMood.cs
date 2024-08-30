@@ -28,10 +28,10 @@ public class UserMood : IScore
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserMoods))]
     public virtual User User { get; init; } = null!;
 
-    public List<int?> Items => new()
-    {
+    public List<int?> Items =>
+    [
         (int?)Mood
-    };
+    ];
 
     public int? ProratedScore => Items.Sum();
 
