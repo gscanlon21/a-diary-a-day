@@ -91,13 +91,7 @@ public class QueryRunner(Section section)
             }
         }
 
-        // REFACTORME
-        return section switch
-        {
-            // Not in a workout context, order by name.
-            Section.None => [.. orderedResults.Take(take).OrderBy(vm => vm.Task.Name)],
-            // We are in a workout context, keep the result order.
-            _ => orderedResults.Take(take).ToList()
-        };
+        // Order by name.
+        return  [.. orderedResults.Take(take).OrderBy(vm => vm.Task.Name)];
     }
 }
