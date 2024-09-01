@@ -39,7 +39,8 @@ public class QueryRunner(Section section)
     private IQueryable<RecipesQueryResults> CreateFilteredTasksQuery(CoreContext context)
     {
         return context.UserTasks.IgnoreQueryFilters().TagWith(nameof(CreateFilteredTasksQuery))
-            .Where(ev => ev.DisabledReason == null || UserOptions.IgnoreIgnored)
+            .Where(ev => ev.DisabledReason == null || UserOptions.Ignored != false)
+            .Where(ev => ev.DisabledReason != null || UserOptions.Ignored != true)
             .Where(t => t.UserId == UserOptions.Id)
             // Don't grab recipes that we want to ignore.
             .Where(vm => !ExclusionOptions.TaskIds.Contains(vm.Id))
@@ -92,6 +93,6 @@ public class QueryRunner(Section section)
         }
 
         // Order by name.
-        return  [.. orderedResults.Take(take).OrderBy(vm => vm.Task.Name)];
+        return [.. orderedResults.Take(take).OrderBy(vm => vm.Task.Name)];
     }
 }

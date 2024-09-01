@@ -175,7 +175,7 @@ public partial class NewsletterRepo
         foreach (var section in EnumExtensions.GetValuesExcluding32(Section.All))
         {
             tasks.AddRange((await new QueryBuilder(section)
-                .WithUser(user)
+                .WithUser(user, ignored: false)
                 .WithTasks(options =>
                 {
                     options.AddTasks(newsletter.UserDiaryTasks);
@@ -229,7 +229,7 @@ public partial class NewsletterRepo
         }
 
         return await new QueryBuilder(section)
-            .WithUser(newsletterContext.User)
+            .WithUser(newsletterContext.User, ignored: false)
             .WithExcludeTasks(x =>
             {
                 x.AddExcludeTasks(exclude?.Select(r => r.Task));

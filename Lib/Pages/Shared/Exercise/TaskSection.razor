@@ -18,7 +18,7 @@
     {
         foreach (var exerciseGroup in Tasks.GroupBy(e => e, new TaskSectionComparer()))
         {
-            @*<h2 style="margin-bottom:0;margin-top:1em;color:@titleColor;font-size:revert;">@exerciseGroup.Key.Section.GetSingleDisplayName()</h2>*@
+            <h2 style="margin-bottom:0;margin-top:1em;color:@titleColor;font-size:revert;">@exerciseGroup.Key.Section.GetSingleDisplayName()</h2>
 
             <div style="margin-top:.2rem;display:flex;flex-flow:row wrap;gap:1ch;line-height:normal;">
                 @foreach (var item in exerciseGroup)
@@ -78,8 +78,8 @@
     private class TaskSectionComparer : IEqualityComparer<NewsletterTaskDto>
     {
         public bool Equals(NewsletterTaskDto? a, NewsletterTaskDto? b)
-            => EqualityComparer<NewsletterTaskDto>.Default.Equals(a, b);
+            => EqualityComparer<Section?>.Default.Equals(a?.Section, b?.Section);
 
-        public int GetHashCode(NewsletterTaskDto e) => e.GetHashCode();
+        public int GetHashCode(NewsletterTaskDto e) => e.Section.GetHashCode();
     }
 }

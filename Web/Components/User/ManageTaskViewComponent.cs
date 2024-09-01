@@ -48,7 +48,7 @@ public class ManageTaskViewComponent : ViewComponent
         if (userTask == null) { return Content(""); }
 
         var taskDto = (await new QueryBuilder(Section.None)
-            .WithUser(user, ignoreIgnored: true)
+            .WithUser(user, ignored: null)
             .WithTasks(x =>
             {
                 x.AddTasks([task]);

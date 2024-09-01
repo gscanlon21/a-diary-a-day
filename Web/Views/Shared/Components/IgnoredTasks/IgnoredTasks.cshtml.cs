@@ -3,14 +3,14 @@ using Core.Dtos.User;
 using Core.Models.Newsletter;
 using System.ComponentModel.DataAnnotations;
 
-namespace Web.Views.Shared.Components.Tasks;
+namespace Web.Views.Shared.Components.IgnoredTasks;
 
-public class TasksViewModel
+public class IgnoredTasksViewModel
 {
-    [Display(Name = "My Tasks")]
+    [Display(Name = "Ignored Tasks")]
     public required IList<NewsletterTaskDto> Tasks { get; init; }
 
     public required UserNewsletterDto UserNewsletter { get; init; }
 
-    public Verbosity Verbosity => Verbosity.Notes | Verbosity.Images;
+    public Verbosity Verbosity => Verbosity.Notes;
 }

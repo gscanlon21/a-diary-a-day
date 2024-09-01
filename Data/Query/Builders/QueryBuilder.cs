@@ -39,19 +39,19 @@ public class QueryBuilder
     /// TODO: Refactor user options to better select what is filtered and what isn't.
     /// ..... (prerequisites, progressions, equipment, no use caution when new, unique exercises).
     /// </summary>
-    public QueryBuilder WithUser(User user, bool ignoreIgnored = false)
+    public QueryBuilder WithUser(User user, bool? ignored = null)
     {
         UserOptions = new UserOptions(user)
         {
-            IgnoreIgnored = ignoreIgnored,
+            Ignored = ignored,
         };
 
         return this;
     }
 
-    public QueryBuilder WithUser(UserOptions userOptions, bool? ignoreIgnored = null)
+    public QueryBuilder WithUser(UserOptions userOptions, bool? ignored = null)
     {
-        userOptions.IgnoreIgnored = ignoreIgnored ?? userOptions.IgnoreIgnored;
+        userOptions.Ignored = ignored ?? userOptions.Ignored;
         UserOptions = userOptions;
         return this;
     }

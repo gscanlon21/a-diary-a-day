@@ -7,7 +7,7 @@ public class UserOptions : IOptions
     public int Id { get; }
     public DateOnly CreatedDate { get; }
 
-    public bool IgnoreIgnored { get; set; } = false;
+    public bool? Ignored { get; set; } = null;
 
     public UserOptions() { }
 
