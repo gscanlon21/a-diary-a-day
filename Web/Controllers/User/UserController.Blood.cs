@@ -50,4 +50,52 @@ public partial class UserController
 
         return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
     }
+
+    [HttpPost, Route("CbcWAutoDiff")]
+    public async Task<IActionResult> ManageCbcWAutoDiff(string email, string token, UserCbcWAutoDiff userMood)
+    {
+        if (true || ModelState.IsValid)
+        {
+            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Set the new weight on the UserVariation
+            var todaysCompleteMetabolicPanel = await _context.UserCbcWAutoDiffs.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
+            if (todaysCompleteMetabolicPanel == null)
+            {
+                userMood.User = user;
+                _context.Add(userMood);
+            }
+            else
+            {
+                todaysCompleteMetabolicPanel.WBC = userMood.WBC;
+                todaysCompleteMetabolicPanel.RBCCount = userMood.RBCCount;
+                todaysCompleteMetabolicPanel.Hemoglobin = userMood.Hemoglobin;
+                todaysCompleteMetabolicPanel.Hematocrit = userMood.Hematocrit;
+                todaysCompleteMetabolicPanel.MCV = userMood.MCV;
+                todaysCompleteMetabolicPanel.MCH = userMood.MCH;
+                todaysCompleteMetabolicPanel.MCHC = userMood.MCHC;
+                todaysCompleteMetabolicPanel.RDW_CV = userMood.RDW_CV;
+                todaysCompleteMetabolicPanel.PlatletCount = userMood.PlatletCount;
+                todaysCompleteMetabolicPanel.MPV = userMood.MPV;
+                todaysCompleteMetabolicPanel.MonocytePercent = userMood.MonocytePercent;
+                todaysCompleteMetabolicPanel.EosinophilPercent = userMood.EosinophilPercent;
+                todaysCompleteMetabolicPanel.BasophilPercent = userMood.BasophilPercent;
+                todaysCompleteMetabolicPanel.ImmatureGranulocytesPercent = userMood.ImmatureGranulocytesPercent;
+                todaysCompleteMetabolicPanel.EosinophilAbsolute = userMood.EosinophilAbsolute;
+                todaysCompleteMetabolicPanel.NeutrophilAbsolute = userMood.NeutrophilAbsolute;
+                todaysCompleteMetabolicPanel.MonocyteAbsolute = userMood.MonocyteAbsolute;
+                todaysCompleteMetabolicPanel.LymphocyteAbsolute = userMood.LymphocyteAbsolute;
+                todaysCompleteMetabolicPanel.BasophilAbsolute = userMood.BasophilAbsolute;
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+        }
+
+        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+    }
 }

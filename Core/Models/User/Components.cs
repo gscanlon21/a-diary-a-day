@@ -70,8 +70,11 @@ public enum Components
     [Display(Name = "Feast Allergens")]
     FeastAllergens = 1 << 19, // 524288
 
+    [Display(Name = "Cbc W Auto Differential")]
+    CbcWAutoDiff = 1 << 20, // 1048576
+
     All = Mood | Sleep | People | Symptom | Emotion | Activity | Medicine
         | AcuteStressSeverity | AgoraphobiaSeverity | DepressionSeverity | DissociativeSeverity
         | GeneralizedAnxietySeverity | PanicSeverity | PTSDSeverity | SocialAnxietySeverity
-        | Journal | CompleteMetabolicPanel | Tasks | DryEyes | FeastAllergens
+        | Journal | CompleteMetabolicPanel | Tasks | DryEyes | FeastAllergens | CbcWAutoDiff
 }

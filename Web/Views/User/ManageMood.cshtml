@@ -128,6 +128,13 @@
         </div>
     }
 
+    @if (Model.User.Components.HasFlag(Components.CbcWAutoDiff))
+    {
+        <div class="col-lg-6">
+            @await Component.InvokeAsync(CbcWAutoDiffViewComponent.Name, new { Model.User })
+        </div>
+    }
+
     @if (Model.User.Components.HasFlag(Components.DryEyes))
     {
         <div class="col-lg-6">
