@@ -1,4 +1,4 @@
-﻿@using Core.Models.Exercise
+﻿@using Core.Models.Components
 @using Core.Models.Newsletter;
 @using Core.Models.User;
 
@@ -6,11 +6,11 @@
 {
     var titleColor = Theme switch
     {
-        ExerciseTheme.Warmup => "palevioletred",
-        ExerciseTheme.Main => "mediumpurple",
-        ExerciseTheme.Cooldown => "lightskyblue",
-        ExerciseTheme.Extra => "lightgreen",
-        ExerciseTheme.Other => "lightsalmon",
+        Theme.Warmup => "palevioletred",
+        Theme.Main => "mediumpurple",
+        Theme.Cooldown => "lightskyblue",
+        Theme.Extra => "lightgreen",
+        Theme.Other => "lightsalmon",
         _ => "currentColor"
     };
 
@@ -60,7 +60,7 @@
     public Core.Dtos.User.UserNewsletterDto? User { get; init; }
 
     [Parameter, EditorRequired]
-    public ExerciseTheme Theme { get; init; }
+    public Theme Theme { get; init; }
 
     [Parameter, EditorRequired]
     public IList<ComponentImage> Images { get; init; } = [];

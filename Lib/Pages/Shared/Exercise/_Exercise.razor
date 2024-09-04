@@ -5,28 +5,28 @@
 @using Core.Dtos.Newsletter
 @using Core.Models.Options
 @using Microsoft.Extensions.Options
-@using Core.Models.Exercise
+@using Core.Models.Components
 @using Core.Models.User
 @using Core.Models.Newsletter
 
 @{
     var borderColor = Theme switch
     {
-        ExerciseTheme.Warmup => "palevioletred",
-        ExerciseTheme.Main => "mediumpurple",
-        ExerciseTheme.Cooldown => "lightskyblue",
-        ExerciseTheme.Extra => "lightgreen",
-        ExerciseTheme.Other => "lightsalmon",
+        Theme.Warmup => "palevioletred",
+        Theme.Main => "mediumpurple",
+        Theme.Cooldown => "lightskyblue",
+        Theme.Extra => "lightgreen",
+        Theme.Other => "lightsalmon",
         _ => "currentColor"
     };
 
     var backgroundColor = Theme switch
     {
-        ExerciseTheme.Warmup => "rgba(250,200,200,.1)",
-        ExerciseTheme.Main => "rgba(250,200,250,.1)",
-        ExerciseTheme.Cooldown => "rgba(200,200,250,.1)",
-        ExerciseTheme.Extra => "rgba(200,250,200,.1)",
-        ExerciseTheme.Other => "rgba(250,200,150,.1)",
+        Theme.Warmup => "rgba(250,200,200,.1)",
+        Theme.Main => "rgba(250,200,250,.1)",
+        Theme.Cooldown => "rgba(200,200,250,.1)",
+        Theme.Extra => "rgba(200,250,200,.1)",
+        Theme.Other => "rgba(250,200,150,.1)",
         _ => "transparent"
     };
 }
@@ -41,7 +41,7 @@
     {
         @* Check min and max progression ranges so they don't ignore an exercise outside of their progression range. *@
         <small style="position:absolute;right:0;top:0;padding-inline:1ch;writing-mode:vertical-lr;">
-            <a class="allow-demo" target="_blank" href="@DH.UserLink(User, "m")">Manage</a>
+            <a class="allow-demo" target="_blank" href="@DH.UserLink(User, $"{Model.Type}")">Manage</a>
         </small>
     }
 
@@ -77,5 +77,5 @@
     public Verbosity Verbosity { get; set; }
 
     [Parameter, EditorRequired]
-    public ExerciseTheme Theme { get; init; }
+    public Theme Theme { get; init; }
 }

@@ -115,6 +115,7 @@ public class UserEditViewModel
             Days = userComponentSetting.Days;
             UserId = userComponentSetting.UserId;
             Component = userComponentSetting.Component;
+            SubComponents = userComponentSetting.SubComponents;
         }
 
         public int UserId { get; init; }
@@ -123,5 +124,14 @@ public class UserEditViewModel
 
         [Range(UserConsts.ChartDaysMin, UserConsts.ChartDaysMax)]
         public int Days { get; init; } = UserConsts.ChartDaysDefault;
+
+        [Display(Name = "Sub Components", Description = "What sub-components to focus on?")]
+        public int SubComponents { get; set; }
+
+        public int[]? SubComponentsBinder
+        {
+            get => Component.GetSubComponent()?.AllValues.Select(Convert.ToInt32).Where(e => (SubComponents & e) == e).ToArray();
+            set => SubComponents = value?.Aggregate(0, (a, e) => a | e) ?? 0;
+        }
     }
 }

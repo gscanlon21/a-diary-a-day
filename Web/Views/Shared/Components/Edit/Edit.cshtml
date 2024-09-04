@@ -1,6 +1,6 @@
 ﻿@model UserEditViewModel
 @using System.Numerics
-@using Core.Models.Exercise
+@using Core.Models.Components
 @using Core.Dtos.Newsletter
 @using Core.Models.User
 @using Core.Consts
@@ -52,6 +52,21 @@
                                 <div class="mb-3">
                                     <label asp-for="UserComponentSettings[i].Component" class="control-label mb-1"><b>@Model.UserComponentSettings[i].Component.GetDisplayName322()</b></label>
 
+                                    @if (Model.UserComponentSettings[i].Component.GetSubComponent() == null)
+                                    {
+                                        <input type="hidden" asp-for="UserComponentSettings[i].SubComponentsBinder" value="0" />
+                                    }
+                                    else
+                                    {
+                                        <div class="mb-2">
+                                            <label asp-for="UserComponentSettings[i].SubComponentsBinder" class="control-label">@Html.DisplayNameFor(_ => Model.UserComponentSettings[i].SubComponents)</label>
+                                            <select asp-for="UserComponentSettings[i].SubComponentsBinder" class="form-control" aria-describedby="skills-help" size="5"
+                                                    asp-items='@(Model.UserComponentSettings[i].Component.GetSubComponent()!.SelectList.AsSelectListItems32(EnumViewExtensions.EnumOrdering.GroupText))'>
+                                            </select>
+                                            <span asp-validation-for="UserComponentSettings[i].SubComponents" class="text-danger"></span>
+                                            <div id="skills-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserComponentSettings[i].SubComponents)</div>
+                                        </div>
+                                    }
                                     <div class="mb-2" style="display:flex;column-gap:1ch;flex-wrap:wrap;">
                                         <div style="display:flex;margin-bottom:-.5ex;">@Html.DisplayNameFor(_ => Model.UserComponentSettings[i].Days)</div>
                                         <div style="display:flex;gap:1ch;align-items:center;flex:1 0 150px;">

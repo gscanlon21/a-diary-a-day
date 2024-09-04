@@ -40,7 +40,7 @@ public class EditViewComponent(UserRepo userRepo) : ViewComponent
                 {
                     UserId = viewModel.User.Id,
                     Component = component,
-                    Days = 180
+                    Days = 180,
                 });
             }
         }

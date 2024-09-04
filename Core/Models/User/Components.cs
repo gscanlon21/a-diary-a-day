@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Core.Attributes;
+using Core.Models.Components.SubComponents;
+using System.ComponentModel.DataAnnotations;
 
 namespace Core.Models.User;
 
@@ -58,7 +60,7 @@ public enum Components
     [Display(Name = "Journal")]
     Journal = 1 << 15, // 32768
 
-    [Display(Name = "Complete Metabolic Panel")]
+    [Display(Name = "Complete Metabolic Panel"), SubComponent<CompleteMetabolicPanel>()]
     CompleteMetabolicPanel = 1 << 16, // 65536
 
     [Display(Name = "Tasks")]
@@ -70,11 +72,18 @@ public enum Components
     [Display(Name = "Feast Allergens")]
     FeastAllergens = 1 << 19, // 524288
 
-    [Display(Name = "Cbc W Auto Differential")]
+    [Display(Name = "Cbc W Auto Differential"), SubComponent<CbcWAutoDiff>()]
     CbcWAutoDiff = 1 << 20, // 1048576
+
+    [Display(Name = "Blood Work"), SubComponent<BloodWork>()]
+    BloodWork = 1 << 21, // 2097152
+
+    [Display(Name = "Depression")]
+    Depression = 1 << 22, // 4194304
 
     All = Mood | Sleep | People | Symptom | Emotion | Activity | Medicine
         | AcuteStressSeverity | AgoraphobiaSeverity | DepressionSeverity | DissociativeSeverity
         | GeneralizedAnxietySeverity | PanicSeverity | PTSDSeverity | SocialAnxietySeverity
         | Journal | CompleteMetabolicPanel | Tasks | DryEyes | FeastAllergens | CbcWAutoDiff
+        | BloodWork | Depression
 }

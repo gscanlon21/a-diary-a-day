@@ -1,9 +1,9 @@
-﻿namespace Core.Models.Exercise;
+﻿namespace Core.Models.Newsletter;
 
 /// <summary>
 /// Color schemes for exercises.
 /// </summary>
-public enum ExerciseTheme
+public enum Theme
 {
     /// <summary>
     /// Text.

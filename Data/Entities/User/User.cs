@@ -202,6 +202,9 @@ public class User : IUser
     [JsonIgnore, InverseProperty(nameof(UserCbcWAutoDiff.User))]
     public virtual ICollection<UserCbcWAutoDiff> UserCbcWAutoDiffs { get; private init; } = null!;
 
+    [JsonIgnore, InverseProperty(nameof(UserBloodWork.User))]
+    public virtual ICollection<UserBloodWork> UserBloodWorks { get; private init; } = null!;
+
     [JsonIgnore, InverseProperty(nameof(UserDepression.User))]
     public virtual ICollection<UserAnger> UserAngers { get; private init; } = null!;
 

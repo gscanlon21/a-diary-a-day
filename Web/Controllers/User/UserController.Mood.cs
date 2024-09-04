@@ -7,13 +7,8 @@ namespace Web.Controllers.User;
 
 public partial class UserController
 {
-    /// <summary>
-    /// Shows a form to the user where they can update their Pounds lifted.
-    /// </summary>
-    [HttpGet]
-    [Route("m", Order = 1)]
-    [Route("mood", Order = 2)]
-    public async Task<IActionResult> ManageMood(string email, string token, bool? wasUpdated = null)
+    [HttpGet, Route("{component:components}")]
+    public async Task<IActionResult> ManageMood(string email, string token, Core.Models.User.Components component, bool? wasUpdated = null)
     {
         var user = await _userRepo.GetUser(email, token, includeSettings: true, allowDemoUser: true);
         if (user == null)
@@ -22,16 +17,7 @@ public partial class UserController
         }
 
         var parameters = new UserManageMoodViewModel.TheParameters(email, token);
-
-        var userMood = await _context.UserMoods
-            .IgnoreQueryFilters()
-            .FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
-
-        var userWeights = await _context.UserMoods
-                .Where(uw => uw.UserId == user.Id)
-                .ToListAsync();
-
-        return View(new UserManageMoodViewModel(userWeights, (int?)userMood?.Mood)
+        return View(new UserManageMoodViewModel(component)
         {
             User = user,
             Parameters = parameters,
@@ -39,9 +25,7 @@ public partial class UserController
         });
     }
 
-    [HttpPost]
-    [Route("m", Order = 1)]
-    [Route("mood", Order = 2)]
+    [HttpPost, Route(nameof(Core.Models.User.Components.Mood))]
     public async Task<IActionResult> ManageMood(string email, string token, UserMood userMood)
     {
         if (true || ModelState.IsValid)
@@ -75,9 +59,7 @@ public partial class UserController
         return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
     }
 
-    [HttpPost]
-    [Route("s", Order = 1)]
-    [Route("sleep", Order = 2)]
+    [HttpPost, Route(nameof(Core.Models.User.Components.Sleep))]
     public async Task<IActionResult> ManageSleep(string email, string token, UserSleep userMood, List<UserCustom> customs)
     {
         if (true || ModelState.IsValid)
@@ -118,8 +100,7 @@ public partial class UserController
         return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
     }
 
-    [HttpPost]
-    [Route("activities", Order = 1)]
+    [HttpPost, Route(nameof(Core.Models.User.Components.Activity))]
     public async Task<IActionResult> ManageActivity(string email, string token, List<UserCustom> customs)
     {
         if (true || ModelState.IsValid)
@@ -146,8 +127,7 @@ public partial class UserController
         return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
     }
 
-    [HttpPost]
-    [Route("ManageEmotions", Order = 1)]
+    [HttpPost, Route(nameof(Core.Models.User.Components.Emotion))]
     public async Task<IActionResult> ManageEmotion(string email, string token, List<UserCustom> customs)
     {
         if (true || ModelState.IsValid)
@@ -174,8 +154,7 @@ public partial class UserController
         return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
     }
 
-    [HttpPost]
-    [Route("ManageMedicines", Order = 1)]
+    [HttpPost, Route(nameof(Core.Models.User.Components.Medicine))]
     public async Task<IActionResult> ManageMedicine(string email, string token, List<UserCustom> customs)
     {
         if (true || ModelState.IsValid)
@@ -202,8 +181,7 @@ public partial class UserController
         return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
     }
 
-    [HttpPost]
-    [Route("ManagePeoples", Order = 1)]
+    [HttpPost, Route(nameof(Core.Models.User.Components.People))]
     public async Task<IActionResult> ManagePeople(string email, string token, List<UserCustom> customs)
     {
         if (true || ModelState.IsValid)
@@ -230,8 +208,7 @@ public partial class UserController
         return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
     }
 
-    [HttpPost]
-    [Route("symptoms", Order = 1)]
+    [HttpPost, Route(nameof(Core.Models.User.Components.Symptom))]
     public async Task<IActionResult> ManageSymptom(string email, string token, List<UserCustom> customs)
     {
         if (true || ModelState.IsValid)

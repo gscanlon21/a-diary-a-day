@@ -1,6 +1,6 @@
 ﻿@model UserManageMoodViewModel
 @using System.Numerics
-@using Core.Models.Exercise
+@using Core.Models.Components
 @using Core.Dtos.Newsletter
 @using Core.Consts
 
@@ -10,146 +10,139 @@
 
 <div class="row gy-2 mb-2 mt-1 justify-content-between align-items-end">
     <div class="col-auto mb-3">
-        <h1 class="primary-heading">Manage Mood</h1>
+        <h1 class="primary-heading">Manage @Model.Component.GetSingleDisplayName()</h1>
     </div>
     <partial name="_ValidationMessagePartial" model='new ValidationMessagePartialModel() { WasUpdated = Model.WasUpdated, GoBackOnSave = true }' />
 </div>
 
 <div class="row gy-2">
-    @if (Model.User.Components.HasFlag(Components.Mood))
+    @if (Model.Component.HasFlag(Components.Mood))
     {
         <div class="col-lg-6">
             @await Component.InvokeAsync(MoodViewComponent.Name, new { Model.User })
         </div>
     }
-
-    @if (Model.User.Components.HasFlag(Components.Sleep))
+    else if (Model.Component.HasFlag(Components.Sleep))
     {
         <div class="col-lg-6">
             @await Component.InvokeAsync(SleepViewComponent.Name, new { Model.User })
         </div>
     }
-
-    @if (Model.User.Components.HasFlag(Components.People))
+    else if (Model.Component.HasFlag(Components.People))
     {
         <div class="col-lg-6">
             @await Component.InvokeAsync(PeopleViewComponent.Name, new { Model.User })
         </div>
     }
-        
-    @if (Model.User.Components.HasFlag(Components.Symptom))
+    else if (Model.Component.HasFlag(Components.Symptom))
     {
         <div class="col-lg-6">
             @await Component.InvokeAsync(SymptomViewComponent.Name, new { Model.User })
         </div>
     }
- 
-    @if (Model.User.Components.HasFlag(Components.Emotion))
+    else if (Model.Component.HasFlag(Components.Emotion))
     {
         <div class="col-lg-6">
             @await Component.InvokeAsync(EmotionViewComponent.Name, new { Model.User })
         </div>
     }
-    
-    @if (Model.User.Components.HasFlag(Components.Activity))
+    else if (Model.Component.HasFlag(Components.Activity))
     {
         <div class="col-lg-6">
             @await Component.InvokeAsync(ActivityViewComponent.Name, new { Model.User })
         </div>
     }
-
-    @if (Model.User.Components.HasFlag(Components.Medicine))
+    else if (Model.Component.HasFlag(Components.Medicine))
     {
         <div class="col-lg-6">
             @await Component.InvokeAsync(MedicineViewComponent.Name, new { Model.User })
         </div>
     }
-        
-    @if (Model.User.Components.HasFlag(Components.AcuteStressSeverity))
+    else if (Model.Component.HasFlag(Components.AcuteStressSeverity))
     {
         <div class="col-lg-6">
             @await Component.InvokeAsync(AcuteStressSeverityViewComponent.Name, new { Model.User })
         </div>
     }
-  
-    @if (Model.User.Components.HasFlag(Components.AgoraphobiaSeverity))
+    else if (Model.Component.HasFlag(Components.AgoraphobiaSeverity))
     {
         <div class="col-lg-6">
             @await Component.InvokeAsync(AgoraphobiaSeverityViewComponent.Name, new { Model.User })
         </div>
     }
-       
-    @if (Model.User.Components.HasFlag(Components.DepressionSeverity))
+    else if (Model.Component.HasFlag(Components.Depression))
+    {
+        <div class="col-lg-6">
+            @await Component.InvokeAsync(DepressionViewComponent.Name, new { Model.User })
+        </div>
+    }
+    else if (Model.Component.HasFlag(Components.DepressionSeverity))
     {
         <div class="col-lg-6">
             @await Component.InvokeAsync(DepressionSeverityViewComponent.Name, new { Model.User })
         </div>
     }
-    
-    @if (Model.User.Components.HasFlag(Components.DissociativeSeverity))
+    else if (Model.Component.HasFlag(Components.DissociativeSeverity))
     {
         <div class="col-lg-6">
             @await Component.InvokeAsync(DissociativeSeverityViewComponent.Name, new { Model.User })
         </div>
     }
-        
-    @if (Model.User.Components.HasFlag(Components.GeneralizedAnxietySeverity))
+    else if (Model.Component.HasFlag(Components.GeneralizedAnxietySeverity))
     {
         <div class="col-lg-6">
             @await Component.InvokeAsync(GeneralizedAnxietySeverityViewComponent.Name, new { Model.User })
         </div>
     }
-  
-    @if (Model.User.Components.HasFlag(Components.PanicSeverity))
+    else if (Model.Component.HasFlag(Components.PanicSeverity))
     {
         <div class="col-lg-6">
             @await Component.InvokeAsync(PanicSeverityViewComponent.Name, new { Model.User })
         </div>
     }
-        
-    @if (Model.User.Components.HasFlag(Components.PTSDSeverity))
+    else if (Model.Component.HasFlag(Components.PTSDSeverity))
     {
         <div class="col-lg-6">
             @await Component.InvokeAsync(PostTraumaticStressSeverityViewComponent.Name, new { Model.User })
         </div>
     }
-
-    @if (Model.User.Components.HasFlag(Components.SocialAnxietySeverity))
+    else if (Model.Component.HasFlag(Components.SocialAnxietySeverity))
     {
         <div class="col-lg-6">
             @await Component.InvokeAsync(SocialAnxietySeverityViewComponent.Name, new { Model.User })
         </div>
     }
-
-    @if (Model.User.Components.HasFlag(Components.CompleteMetabolicPanel))
+    else if (Model.Component.HasFlag(Components.CompleteMetabolicPanel))
     {
         <div class="col-lg-6">
             @await Component.InvokeAsync(CompleteMetabolicPanelViewComponent.Name, new { Model.User })
         </div>
     }
-
-    @if (Model.User.Components.HasFlag(Components.CbcWAutoDiff))
+    else if (Model.Component.HasFlag(Components.CbcWAutoDiff))
     {
         <div class="col-lg-6">
             @await Component.InvokeAsync(CbcWAutoDiffViewComponent.Name, new { Model.User })
         </div>
     }
-
-    @if (Model.User.Components.HasFlag(Components.DryEyes))
+    else if (Model.Component.HasFlag(Components.BloodWork))
+    {
+        <div class="col-lg-6">
+            @await Component.InvokeAsync(BloodWorkViewComponent.Name, new { Model.User })
+        </div>
+    }
+    else if (Model.Component.HasFlag(Components.DryEyes))
     {
         <div class="col-lg-6">
             @await Component.InvokeAsync(DryEyesViewComponent.Name, new { Model.User })
         </div>
     }
-
-    @if (Model.User.Components.HasFlag(Components.FeastAllergens))
+    else if (Model.Component.HasFlag(Components.FeastAllergens))
     {
         <div class="col-lg-6">
             @await Component.InvokeAsync(FeastAllergensViewComponent.Name, new { Model.User })
         </div>
     }
-        
-    @if (Model.User.Components.HasFlag(Components.Journal))
+    else if (Model.Component.HasFlag(Components.Journal))
     {
         <div class="col-lg-6">
             @await Component.InvokeAsync(JournalViewComponent.Name, new { Model.User })
