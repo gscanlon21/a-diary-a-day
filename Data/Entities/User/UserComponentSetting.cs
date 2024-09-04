@@ -1,4 +1,5 @@
 ﻿using Core.Consts;
+using Core.Models.Components.SubComponents;
 using Core.Models.User;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,4 +22,20 @@ public class UserComponentSetting
 
     [Range(UserConsts.ChartDaysMin, UserConsts.ChartDaysMax)]
     public int Days { get; init; } = UserConsts.ChartDaysDefault;
+
+    public int SubComponents { get; set; }
+
+    [NotMapped]
+    public Enum? UnusedSkills => Component switch
+    {
+        Components.BloodWork => BloodWork.All & ~(BloodWork)SubComponents,
+        _ => null,
+    };
+
+    [NotMapped]
+    public Enum? TypedSkills => Component switch
+    {
+        Components.BloodWork => (BloodWork)SubComponents,
+        _ => null,
+    };
 }

@@ -6,7 +6,7 @@ namespace Web.Controllers.User;
 
 public partial class UserController
 {
-    [HttpPost, Route("completemetabolicpanel")]
+    [HttpPost, Route(nameof(Core.Models.User.Components.CompleteMetabolicPanel))]
     public async Task<IActionResult> ManageCompleteMetabolicPanel(string email, string token, UserCompleteMetabolicPanel userMood)
     {
         if (true || ModelState.IsValid)
@@ -51,7 +51,7 @@ public partial class UserController
         return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
     }
 
-    [HttpPost, Route("CbcWAutoDiff")]
+    [HttpPost, Route(nameof(Core.Models.User.Components.CbcWAutoDiff))]
     public async Task<IActionResult> ManageCbcWAutoDiff(string email, string token, UserCbcWAutoDiff userMood)
     {
         if (true || ModelState.IsValid)
@@ -90,6 +90,37 @@ public partial class UserController
                 todaysCompleteMetabolicPanel.MonocyteAbsolute = userMood.MonocyteAbsolute;
                 todaysCompleteMetabolicPanel.LymphocyteAbsolute = userMood.LymphocyteAbsolute;
                 todaysCompleteMetabolicPanel.BasophilAbsolute = userMood.BasophilAbsolute;
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+        }
+
+        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+    }
+
+    [HttpPost, Route(nameof(Core.Models.User.Components.BloodWork))]
+    public async Task<IActionResult> ManageBloodWork(string email, string token, UserBloodWork userMood)
+    {
+        if (true || ModelState.IsValid)
+        {
+            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Set the new weight on the UserVariation
+            var todaysCompleteMetabolicPanel = await _context.UserBloodWorks.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
+            if (todaysCompleteMetabolicPanel == null)
+            {
+                userMood.User = user;
+                _context.Add(userMood);
+            }
+            else
+            {
+                todaysCompleteMetabolicPanel.VitaminA = userMood.VitaminA;
+                todaysCompleteMetabolicPanel.Homocysteine = userMood.Homocysteine;
             }
 
             await _context.SaveChangesAsync();

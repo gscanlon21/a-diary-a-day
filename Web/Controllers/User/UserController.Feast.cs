@@ -8,6 +8,9 @@ namespace Web.Controllers.User;
 
 public partial class UserController
 {
+    /// <summary>
+    /// Links the users to a feast account.
+    /// </summary>
     [HttpPost, Route("feast")]
     public async Task<IActionResult> EditFeast(string email, string token, [FromForm] string feastEmail, [FromForm] string? feastToken)
     {
@@ -39,7 +42,7 @@ public partial class UserController
         return RedirectToAction(nameof(Edit), new { email, token, WasUpdated = true });
     }
 
-    [HttpPost, Route("allergens")]
+    [HttpPost, Route(nameof(Core.Models.User.Components.FeastAllergens))]
     public async Task<IActionResult> ManageAllergens(string email, string token, UserFeastAllergens userMood)
     {
         if (true || ModelState.IsValid)

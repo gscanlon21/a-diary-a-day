@@ -4,7 +4,7 @@
 @inject NewsletterService NewsletterService
 @inject IOptions<SiteSettings> SiteSettings
 @inject NavigationManager Navigation
-@using Core.Models.Exercise
+@using Core.Models.Components
 @using Core.Models.Newsletter
 @using Core.Models.Footnote
 @using Core.Models.Options
@@ -44,7 +44,7 @@ else
             <Lib.Pages.Shared.Exercise.TaskSection User="Model.User" Verbosity="Model.Verbosity" Tasks="Model.Tasks.Where(t => t.Section == section).ToList()" Theme="section.AsTheme()" Title="@(new TaskSection.Titles(section.GetSingleDisplayName()))" />
         }
 
-        <Lib.Pages.Shared.Exercise.ExerciseSection User="Model.User" Verbosity="Model.Verbosity" Images="Model.Images" Theme="ExerciseTheme.None" Title="@(new ExerciseSection.Titles("Moods"))" />
+        <Lib.Pages.Shared.Exercise.ExerciseSection User="Model.User" Verbosity="Model.Verbosity" Images="Model.Images" Theme="Theme.None" Title="@(new ExerciseSection.Titles("Moods"))" />
     </div>
 
     <Lib.Pages.Shared.Newsletter.Footnote User="Model.User" Verbosity="Model.Verbosity" Type="Shared.Newsletter.Footnote.FootnoteComponentType.System" Count="Model.User.FootnoteCountBottom" />

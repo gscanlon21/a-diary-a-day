@@ -6,7 +6,7 @@ namespace Web.Controllers.User;
 
 public partial class UserController
 {
-    [HttpPost, Route("dryeyes")]
+    [HttpPost, Route(nameof(Core.Models.User.Components.DryEyes))]
     public async Task<IActionResult> ManageDryEyes(string email, string token, UserDryEyes userMood)
     {
         if (true || ModelState.IsValid)
@@ -53,8 +53,7 @@ public partial class UserController
         return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
     }
 
-    [HttpPost]
-    [Route("depression", Order = 1)]
+    [HttpPost, Route(nameof(Core.Models.User.Components.Depression))]
     public async Task<IActionResult> ManageDepression(string email, string token, UserDepression userDepression)
     {
         if (true || ModelState.IsValid)
@@ -91,8 +90,7 @@ public partial class UserController
         return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
     }
 
-    [HttpPost]
-    [Route("panic-severity", Order = 1)]
+    [HttpPost, Route(nameof(Core.Models.User.Components.PanicSeverity))]
     public async Task<IActionResult> ManagePanicSeverity(string email, string token, UserPanicSeverity userMood)
     {
         if (true || ModelState.IsValid)
@@ -131,8 +129,7 @@ public partial class UserController
         return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
     }
 
-    [HttpPost]
-    [Route("ptsd-severity", Order = 1)]
+    [HttpPost, Route(nameof(Core.Models.User.Components.PTSDSeverity))]
     public async Task<IActionResult> ManagePtsdSeverity(string email, string token, UserPostTraumaticStressSeverity userMood)
     {
         if (true || ModelState.IsValid)
@@ -170,8 +167,7 @@ public partial class UserController
         return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
     }
 
-    [HttpPost]
-    [Route("Generalized-severity", Order = 1)]
+    [HttpPost, Route(nameof(Core.Models.User.Components.GeneralizedAnxietySeverity))]
     public async Task<IActionResult> ManageGeneralizedSeverity(string email, string token, UserGeneralizedAnxietySeverity userMood)
     {
         if (true || ModelState.IsValid)
@@ -211,8 +207,7 @@ public partial class UserController
         return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
     }
 
-    [HttpPost]
-    [Route("Dissociative-severity", Order = 1)]
+    [HttpPost, Route(nameof(Core.Models.User.Components.DissociativeSeverity))]
     public async Task<IActionResult> ManageDissociativeSeverity(string email, string token, UserDissociativeSeverity userMood)
     {
         if (true || ModelState.IsValid)
@@ -249,8 +244,7 @@ public partial class UserController
         return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
     }
 
-    [HttpPost]
-    [Route("ManageDepressionSeverity-severity", Order = 1)]
+    [HttpPost, Route(nameof(Core.Models.User.Components.DepressionSeverity))]
     public async Task<IActionResult> ManageDepressionSeverity(string email, string token, UserDepressionSeverity userMood)
     {
         if (true || ModelState.IsValid)
@@ -288,8 +282,7 @@ public partial class UserController
         return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
     }
 
-    [HttpPost]
-    [Route("ManageAgoraphobiaSeverity-severity", Order = 1)]
+    [HttpPost, Route(nameof(Core.Models.User.Components.AgoraphobiaSeverity))]
     public async Task<IActionResult> ManageAgoraphobiaSeverity(string email, string token, UserAgoraphobiaSeverity userMood)
     {
         if (true || ModelState.IsValid)
@@ -328,8 +321,7 @@ public partial class UserController
         return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
     }
 
-    [HttpPost]
-    [Route("ManageStressSeverity-severity", Order = 1)]
+    [HttpPost, Route(nameof(Core.Models.User.Components.AcuteStressSeverity))]
     public async Task<IActionResult> ManageStressSeverity(string email, string token, UserAcuteStressSeverity userMood)
     {
         if (true || ModelState.IsValid)
@@ -365,8 +357,7 @@ public partial class UserController
         return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
     }
 
-    [HttpPost]
-    [Route("social-severity", Order = 1)]
+    [HttpPost, Route(nameof(Core.Models.User.Components.SocialAnxietySeverity))]
     public async Task<IActionResult> ManageSocialAnxietySeverity(string email, string token, UserSocialAnxietySeverity userMood)
     {
         if (true || ModelState.IsValid)

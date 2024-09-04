@@ -12,6 +12,16 @@ namespace Data.Entities.User;
 [Table("user_journal"), Comment("User variation weight log")]
 public class UserJournal
 {
+    [Obsolete("Public parameterless constructor required for model binding.", error: true)]
+    public UserJournal() { }
+
+    public UserJournal(User user, string text)
+    {
+        // Don't set User, so that EF Core doesn't add/update User.
+        UserId = user.Id;
+        Value = text;
+    }
+
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private init; }
 

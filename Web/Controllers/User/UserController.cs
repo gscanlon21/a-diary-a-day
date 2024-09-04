@@ -95,6 +95,7 @@ public partial class UserController : ViewController
                     UserId = umm.UserId,
                     Days = umm.Days,
                     Component = umm.Component,
+                    SubComponents = umm.SubComponents,
                 }));
 
                 viewModel.User.Verbosity = viewModel.Verbosity;

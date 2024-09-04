@@ -58,6 +58,7 @@ builder.Services.AddResponseCompression(options =>
 builder.Services.Configure<RouteOptions>(options =>
 {
     options.ConstraintMap.Add(SectionRouteConstraint.Name, typeof(SectionRouteConstraint));
+    options.ConstraintMap.Add(ComponentsRouteConstraint.Name, typeof(ComponentsRouteConstraint));
 });
 
 builder.Services.Configure<BrotliCompressionProviderOptions>(options =>

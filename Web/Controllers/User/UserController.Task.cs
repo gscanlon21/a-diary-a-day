@@ -149,7 +149,7 @@ public partial class UserController
                 .FirstAsync(ut => ut.UserId == user.Id && ut.Id == taskId);
 
             // Apply refresh padding immediately.
-            if (viewModel.PadRefreshXDays != userTask.PadRefreshXDays)
+            if (viewModel.PadRefreshXDays != userTask.PadRefreshXDays && userTask.LastSeen > DateOnly.MinValue)
             {
                 var difference = viewModel.PadRefreshXDays - userTask.PadRefreshXDays; // 11 new - 1 old = 10 weeks.
                 userTask.LastSeen = userTask.LastSeen.AddDays(difference); // Add 70 days onto the LastSeen date.

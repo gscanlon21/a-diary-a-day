@@ -555,6 +555,36 @@ namespace Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Data.Entities.User.UserBloodWork", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<int?>("Homocysteine")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("VitaminA")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("user_blood_work", t =>
+                        {
+                            t.HasComment("User variation weight log");
+                        });
+                });
+
             modelBuilder.Entity("Data.Entities.User.UserCbcWAutoDiff", b =>
                 {
                     b.Property<int>("Id")
@@ -747,6 +777,9 @@ namespace Data.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int>("Days")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SubComponents")
                         .HasColumnType("integer");
 
                     b.HasKey("UserId", "Component");
@@ -1710,6 +1743,17 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Data.Entities.User.UserBloodWork", b =>
+                {
+                    b.HasOne("Data.Entities.User.User", "User")
+                        .WithMany("UserBloodWorks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Data.Entities.User.UserCbcWAutoDiff", b =>
                 {
                     b.HasOne("Data.Entities.User.User", "User")
@@ -2074,6 +2118,8 @@ namespace Data.Migrations
                     b.Navigation("UserAngers");
 
                     b.Navigation("UserAnxieties");
+
+                    b.Navigation("UserBloodWorks");
 
                     b.Navigation("UserCbcWAutoDiffs");
 

@@ -1,5 +1,4 @@
-﻿using Core.Models.Exercise;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Core.Models.Newsletter;
 
@@ -56,14 +55,14 @@ public enum Section
 
 public static class SectionExtensions
 {
-    public static ExerciseTheme AsTheme(this Section section) => section switch
+    public static Theme AsTheme(this Section section) => section switch
     {
-        Section.AfterWakingUp => ExerciseTheme.Warmup,
-        Section.BeforeBreakfast or Section.WithBreakfast or Section.AfterBreakfast => ExerciseTheme.Other,
-        Section.BeforeLunch or Section.WithLunch or Section.AfterLunch => ExerciseTheme.Extra,
-        Section.BeforeDinner or Section.WithDinner or Section.AfterDinner => ExerciseTheme.Cooldown,
-        Section.PreWorkout or Section.PostWorkout or Section.BeforeBed => ExerciseTheme.Main,
-        Section.None => ExerciseTheme.None,
-        _ => ExerciseTheme.None,
+        Section.AfterWakingUp => Theme.Warmup,
+        Section.BeforeBreakfast or Section.WithBreakfast or Section.AfterBreakfast => Theme.Other,
+        Section.BeforeLunch or Section.WithLunch or Section.AfterLunch => Theme.Extra,
+        Section.BeforeDinner or Section.WithDinner or Section.AfterDinner => Theme.Cooldown,
+        Section.PreWorkout or Section.PostWorkout or Section.BeforeBed => Theme.Main,
+        Section.None => Theme.None,
+        _ => Theme.None,
     };
 }
