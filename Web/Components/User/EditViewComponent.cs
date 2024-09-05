@@ -27,7 +27,7 @@ public class EditViewComponent(UserRepo userRepo) : ViewComponent
         return View("Edit", await PopulateUserEditViewModel(new UserEditViewModel(user, token)));
     }
 
-    private async Task<UserEditViewModel> PopulateUserEditViewModel(UserEditViewModel viewModel)
+    private static async Task<UserEditViewModel> PopulateUserEditViewModel(UserEditViewModel viewModel)
     {
         if (viewModel.ComponentsBinder != null)
         {
