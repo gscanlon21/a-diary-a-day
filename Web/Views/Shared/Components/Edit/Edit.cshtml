@@ -33,12 +33,12 @@
             <div class="form-group mb-3">
                 <label asp-for="ComponentsBinder" class="control-label">@Html.DisplayNameFor(_ => Model.Components)</label>
                 <select asp-for="ComponentsBinder" class="form-control overflow-auto" aria-describedby="Components-help" size="5"
-                        asp-items="@(EnumExtensions.GetDisplayValues<Components>().AsSelectListItems32(EnumViewExtensions.EnumOrdering.Text))">
+                        asp-items="@(EnumExtensions.GetDisplayValues<Core.Models.Components.Component>().AsSelectListItems32(EnumViewExtensions.EnumOrdering.Text))">
                 </select>
                 <span asp-validation-for="ComponentsBinder" class="text-danger"></span>
                 <div id="Components-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.Components)</div>
             </div>
-            @if (Model.Components != Components.None && Model.ComponentsBinder != null)
+            @if (Model.Components != Core.Models.Components.Component.None && Model.ComponentsBinder != null)
             {
                 <div class="form-group mb-3">
                     <details class="mb-3" @(Model.WasUpdated == false ? "open='open'" : "")>
@@ -161,7 +161,7 @@
 
         @await Component.InvokeAsync(AdvancedViewComponent.Name, new { Model.User })
 
-        @if (Model.User.Components.HasFlag(Components.Tasks))
+        @if (Model.User.Components.HasFlag(Core.Models.Components.Component.Tasks))
         {
             <details class="mb-25">
                 <summary class="mb-1 h5">New Task</summary>

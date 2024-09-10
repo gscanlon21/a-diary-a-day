@@ -6,7 +6,7 @@ namespace Web.Controllers.User;
 
 public partial class UserController
 {
-    [HttpPost, Route(nameof(Core.Models.User.Components.CompleteMetabolicPanel))]
+    [HttpPost, Route(nameof(Component.CompleteMetabolicPanel))]
     public async Task<IActionResult> ManageCompleteMetabolicPanel(string email, string token, UserCompleteMetabolicPanel userMood)
     {
         if (true || ModelState.IsValid)
@@ -45,13 +45,13 @@ public partial class UserController
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.CompleteMetabolicPanel, WasUpdated = true });
         }
 
-        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.CompleteMetabolicPanel, WasUpdated = false });
     }
 
-    [HttpPost, Route(nameof(Core.Models.User.Components.CbcWAutoDiff))]
+    [HttpPost, Route(nameof(Component.CbcWAutoDiff))]
     public async Task<IActionResult> ManageCbcWAutoDiff(string email, string token, UserCbcWAutoDiff userMood)
     {
         if (true || ModelState.IsValid)
@@ -93,13 +93,13 @@ public partial class UserController
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.CbcWAutoDiff, WasUpdated = true });
         }
 
-        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.CbcWAutoDiff, WasUpdated = false });
     }
 
-    [HttpPost, Route(nameof(Core.Models.User.Components.BloodWork))]
+    [HttpPost, Route(nameof(Component.BloodWork))]
     public async Task<IActionResult> ManageBloodWork(string email, string token, UserBloodWork userMood)
     {
         if (true || ModelState.IsValid)
@@ -124,9 +124,9 @@ public partial class UserController
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.BloodWork, WasUpdated = true });
         }
 
-        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.BloodWork, WasUpdated = false });
     }
 }

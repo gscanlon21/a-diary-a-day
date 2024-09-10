@@ -2,13 +2,13 @@
 using Core.Models.Components.SubComponents;
 using System.ComponentModel.DataAnnotations;
 
-namespace Core.Models.User;
+namespace Core.Models.Components;
 
 /// <summary>
 /// Controls access to user features.
 /// </summary>
 [Flags]
-public enum Components
+public enum Component
 {
     None = 0,
 

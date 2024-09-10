@@ -87,7 +87,7 @@ public class UserDto : IUser
     /// <summary>
     /// What features should the user have access to?
     /// </summary>
-    public Components Components { get; set; } = Components.All;
+    public Component Components { get; set; } = Component.All;
 
     /// <summary>
     /// What features should the user have access to?

@@ -3,14 +3,13 @@ using Web.ViewModels;
 
 namespace Web.Views.Shared;
 
-
 public class LineChartViewModel
 {
     public const int Height = 350;
 
     public string Id { get; } = $"S{Guid.NewGuid():N}";
 
-    public required Core.Models.User.Components Type { get; init; }
+    public required Component Type { get; init; }
 
     public required Data.Entities.User.User User { get; init; }
 

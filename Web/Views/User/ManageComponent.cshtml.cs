@@ -1,22 +1,21 @@
-﻿
-namespace Web.Views.User;
+﻿namespace Web.Views.User;
 
 /// <summary>
 /// For CRUD actions.
 /// </summary>
-public class UserManageMoodViewModel
+public class UserManageComponentViewModel
 {
     public record TheParameters(string Email, string Token);
 
     [Obsolete("Public parameterless constructor for model binding.", error: true)]
-    public UserManageMoodViewModel() { }
+    public UserManageComponentViewModel() { }
 
-    public UserManageMoodViewModel(Core.Models.User.Components component)
+    public UserManageComponentViewModel(Component component)
     {
         Component = component;
     }
 
-    public Core.Models.User.Components Component { get; init; }
+    public Component Component { get; init; }
 
     public required TheParameters Parameters { get; init; }
 

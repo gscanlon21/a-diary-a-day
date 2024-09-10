@@ -1,5 +1,4 @@
-﻿using Core.Models.User;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -15,7 +14,7 @@ public class UserComponent
     /// <summary>
     /// Creates a new token for the user.
     /// </summary>
-    public UserComponent(int userId, Components component)
+    public UserComponent(int userId, Component component)
     {
         UserId = userId;
         Component = component;
@@ -32,7 +31,7 @@ public class UserComponent
     /// This is kinda like a bearer token.
     /// </summary>
     [Required]
-    public Components Component { get; init; }
+    public Component Component { get; init; }
 
     [Required]
     public int UserId { get; init; }

@@ -3,7 +3,6 @@ using Amazon.S3.Model;
 using Core.Code.Helpers;
 using Core.Consts;
 using Core.Models.Options;
-using Core.Models.User;
 using Data;
 using Data.Entities.Newsletter;
 using Data.Entities.User;
@@ -52,9 +51,9 @@ public class UserController : ControllerBase
     /// </summary>
     [HttpPost("UploadImage")]
     [SuppressMessage("Style", "IDE0075:Simplify conditional expression", Justification = "Easier to read unsimplified.")]
-    public async Task<IActionResult> UploadImage([FromForm] Components type = Components.None, [FromForm] string email = UserConsts.DemoUser, [FromForm] string token = UserConsts.DemoToken, [FromForm] IFormFile? image = null, [FromForm] string? name = null)
+    public async Task<IActionResult> UploadImage([FromForm] Component type = Component.None, [FromForm] string email = UserConsts.DemoUser, [FromForm] string token = UserConsts.DemoToken, [FromForm] IFormFile? image = null, [FromForm] string? name = null)
     {
-        if (type == Components.None)
+        if (type == Component.None)
         {
             return BadRequest("Invalid Type");
         }
@@ -73,7 +72,7 @@ public class UserController : ControllerBase
         if (name != null)
         {
             // Named images are only allowed for the tasks component.
-            if (type != Components.Tasks)
+            if (type != Component.Tasks)
             {
                 return BadRequest("Invalid Name");
             }

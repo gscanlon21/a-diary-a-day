@@ -125,7 +125,7 @@ public class User : IUser
     /// <summary>
     /// What features should the user have access to?
     /// </summary>
-    public Components Components { get; set; } = Components.All;
+    public Component Components { get; set; } = Component.All;
 
     /// <summary>
     /// What features should the user have access to?
@@ -161,7 +161,7 @@ public class User : IUser
 
     [JsonInclude, InverseProperty(nameof(UserComponentSetting.User))]
     public virtual ICollection<UserComponentSetting> UserComponentSettings { get; init; } = [];
-    public int GetComponentDaysFor(Components component) => UserComponentSettings.FirstOrDefault(ucs => ucs.Component == component)?.Days ?? UserConsts.ChartDaysDefault;
+    public int GetComponentDaysFor(Component component) => UserComponentSettings.FirstOrDefault(ucs => ucs.Component == component)?.Days ?? UserConsts.ChartDaysDefault;
 
     [JsonIgnore, InverseProperty(nameof(UserToken.User))]
     public virtual ICollection<UserToken> UserTokens { get; private init; } = [];

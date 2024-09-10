@@ -7,7 +7,7 @@ public class ScoreChartViewModel
 {
     public string Id { get; } = $"S{Guid.NewGuid():N}";
 
-    public required Core.Models.User.Components Type { get; init; }
+    public required Component Type { get; init; }
 
     public required Data.Entities.User.User User { get; init; }
 
