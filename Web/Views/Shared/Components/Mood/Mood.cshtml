@@ -144,13 +144,10 @@
                     legend: { display: false, },
                     tooltip: {
                         callbacks: {
+                            label: (context) => context.raw.extra,
                             title: (context) => {
                                 // Pretty-print the x-axis date in the hover tooltip
-                                return context.map(c => new Date(c.parsed.x).toDateString());
-                            },
-                            label: (context) => {
-                                // Pretty-print the x-axis date in the hover tooltip
-                                return context.raw.extra;
+                                return new Date(context[0].parsed.x).toDateString();
                             },
                         },
                     },

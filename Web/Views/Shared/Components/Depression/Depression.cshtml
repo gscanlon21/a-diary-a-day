@@ -367,7 +367,7 @@
                         callbacks: {
                             title: (context) => {
                                 // Pretty-print the x-axis date in the hover tooltip
-                                return context.map(c => new Date(c.parsed.x).toDateString());
+                                return new Date(context[0].parsed.x).toDateString();
                             },
                         },
                     },
