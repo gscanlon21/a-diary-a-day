@@ -3,42 +3,43 @@
 @using Data.Entities.User
 @using Lib.Pages.Shared.Exercise
 
-<h5 class="mb-1">Allergens</h5>
-<div class="alert alert-light shadow">
-    @if (Model.PreviousMood?.Date == DateHelpers.Today.StartOfWeek())
-    {
-        await Html.RenderPartialAsync("_LineChart", new LineChartViewModel()
+@{
+    bool hide = Model.PreviousMood?.Date == DateHelpers.Today.StartOfWeek();
+}
+
+<div class="alert alert-secondary">
+    <div class="row gy-2">
+        @if (!hide)
         {
-            XysGrouped = Model.XysGrouped,
-            User = Model.User,
-            Token = Model.Token,
-            Type = Core.Models.Components.Component.FeastAllergens
-        });
-    }
-    else
-    {
-        <details>
-            <summary>
+            <div class="col-lg-6">
+                <h6 class="mb-1">Allergens</h6>
+                <div class="alert alert-light shadow">
+                    <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageAllergens)" method="post"
+                          asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary allow-demo" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+
+        <div class="col-lg-6">
+            <h6 class="mb-1">Log</h6>
+            <div class="alert alert-light shadow">
                 @{
                     await Html.RenderPartialAsync("_LineChart", new LineChartViewModel()
-                {
-                    XysGrouped = Model.XysGrouped,
-                    User = Model.User,
-                    Token = Model.Token,
-                    Type = Core.Models.Components.Component.FeastAllergens
-                });
+                    {
+                        XysGrouped = Model.XysGrouped,
+                        User = Model.User,
+                        Token = Model.Token,
+                        Type = Core.Models.Components.Component.FeastAllergens
+                    });
                 }
-            </summary>
-
-            <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageAllergens)" method="post"
-                  asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
-
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary allow-demo" />
-                </div>
-            </form>
-        </details>
-    }
+            </div>
+        </div>
+    </div>
 </div>

@@ -3,44 +3,49 @@
 @using Core.Dtos.Newsletter
 @using Core.Models.User
 
-<details class="mb-25">
-    <summary class="mb-1 h5">
-        @Html.DisplayNameFor(_ => Model.Journals)
-        <span class="float-end">@Model.Journals.Count</span>
-    </summary>
+<div class="alert alert-secondary">
+    <div class="row gy-2">
+        <div class="col-lg-6">
+            <h6 class="mb-1">
+                @Html.DisplayNameFor(_ => Model.Journals)
+                <span class="float-end">@Model.Journals.Count</span>
+            </h6>
+            <div class="alert alert-light shadow">
+                @foreach (var footnote in Model.Journals.OrderByDescending(j => j.Date))
+                {
+                    <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.RemoveJournal)" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" name="FootnoteId" asp-for="@footnote.Id" />
 
-    <div class="alert alert-secondary" role="alert">
-        <div class="mb-4">
-            <h6 class="mb-1">New entry</h6>
-            <form asp-controller="@UserController.Name" class="alert alert-light shadow" asp-action="@nameof(UserController.AddJournal)" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" method="post">
-                <div class="form-group mb-3">
-                    <label for="Note" class="control-label">Note</label>
-                    <input type="text" name="Note" class="form-control" required="required" />
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Add" class="btn btn-secondary" />
-                    <div class="form-text">Journals are not encrypted. Avoid entering in any sensitive information.</div>
-                </div>
-            </form>
+                        <div class="form-group mt-3">
+                            <div class="input-group">
+                                <textarea class="form-control" disabled="disabled" aria-describedby="exercise-help" rows="2">@footnote.Value</textarea>
+                                <input type="submit" value="-" class="btn btn-outline-secondary" />
+                            </div>
+                            <span for="FootnoteId" class="text-danger"></span>
+                            <div class="form-text font-size--smaller">
+                                @footnote.Date.ToString("O")
+                            </div>
+                        </div>
+                    </form>
+                }
+            </div>
         </div>
 
-        @foreach (var footnote in Model.Journals.OrderByDescending(j => j.Date))
-        {
-            <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.RemoveJournal)" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" name="FootnoteId" asp-for="@footnote.Id" />
-
-                <div class="form-group mt-3">
-                    <div class="input-group">
-                        <textarea class="form-control" disabled="disabled" aria-describedby="exercise-help" rows="2">@footnote.Value</textarea>
-                        <input type="submit" value="-" class="btn btn-outline-secondary" />
+        <div class="col-lg-6">
+            <h6 class="mb-1">New entry</h6>
+            <div class="alert alert-light shadow">
+                <form asp-controller="@UserController.Name" class="alert alert-light shadow" asp-action="@nameof(UserController.AddJournal)" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" method="post">
+                    <div class="form-group mb-3">
+                        <label for="Note" class="control-label">Note</label>
+                        <input type="text" name="Note" class="form-control" required="required" />
                     </div>
-                    <span for="FootnoteId" class="text-danger"></span>
-                    <div class="form-text font-size--smaller">
-                        @footnote.Date.ToString("O")
+                    <div class="form-group">
+                        <input type="submit" value="Add" class="btn btn-secondary" />
+                        <div class="form-text">Journals are not encrypted. Avoid entering in any sensitive information.</div>
                     </div>
-                </div>
-            </form>
-        }
+                </form>
+            </div>
+        </div>
     </div>
-</details>
+</div>
