@@ -48,10 +48,10 @@
                             <input id="@(Html.IdFor(_ => Model.UserMood.VitaminA))" asp-for="UserMood.VitaminA" style="width:6ch;height:fit-content;" class="allow-demo"
                                    oninput="@(Html.IdFor(_ => Model.UserMood.VitaminA))Input.value = this.valueAsNumber" />
                             <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                                <input type="range" style="width:100%;" class="allow-demo"
-                                       name="@(Html.IdFor(_ => Model.UserMood.VitaminA))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.VitaminA))-input"
-                                       min="-1" max="250" step="1" value="@(Model.UserMood.VitaminA ?? -1)"
-                                       oninput="@(Html.IdFor(_ => Model.UserMood.VitaminA)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
+                                <input id="@(Html.IdFor(_ => Model.UserMood.VitaminA))-input" class="allow-demo" style="width:100%;" type="range"
+                                       name="@(Html.IdFor(_ => Model.UserMood.VitaminA))Input" list="hashmarks"  value="@(Model.UserMood.VitaminA ?? -1)"
+                                       min="@(UserBloodWork.Consts.VitaminAMin - UserBloodWork.Consts.VitaminAStep)" max="@UserBloodWork.Consts.VitaminAMax" step="@UserBloodWork.Consts.VitaminAStep"
+                                       oninput="@(Html.IdFor(_ => Model.UserMood.VitaminA)).value = this.valueAsNumber < @UserBloodWork.Consts.VitaminAMin ? '' : this.valueAsNumber" />
 
                                 <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
                                     <option value=""></option>
@@ -76,18 +76,18 @@
                             <input id="@(Html.IdFor(_ => Model.UserMood.Homocysteine))" asp-for="UserMood.Homocysteine" style="width:6ch;height:fit-content;" class="allow-demo"
                                    oninput="@(Html.IdFor(_ => Model.UserMood.Homocysteine))Input.value = this.valueAsNumber" />
                             <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                                <input type="range" style="width:100%;" class="allow-demo"
-                                       name="@(Html.IdFor(_ => Model.UserMood.Homocysteine))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.Homocysteine))-input"
-                                       min="-1" max="250" step="1" value="@(Model.UserMood.Homocysteine ?? -1)"
-                                       oninput="@(Html.IdFor(_ => Model.UserMood.Homocysteine)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
+                                <input id="@(Html.IdFor(_ => Model.UserMood.Homocysteine))-input" class="allow-demo" style="width:100%;" type="range"
+                                       name="@(Html.IdFor(_ => Model.UserMood.Homocysteine))Input" list="hashmarks" value="@(Model.UserMood.Homocysteine ?? -1)"
+                                       min="@(UserBloodWork.Consts.HomocysteineMin - UserBloodWork.Consts.HomocysteineStep)" max="@UserBloodWork.Consts.HomocysteineMax" step="@UserBloodWork.Consts.HomocysteineStep"
+                                       oninput="@(Html.IdFor(_ => Model.UserMood.Homocysteine)).value = this.valueAsNumber < @UserBloodWork.Consts.HomocysteineMin ? '' : this.valueAsNumber" />
 
                                 <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
                                     <option value=""></option>
-                                    <option value="50"></option>
-                                    <option value="75"></option>
-                                    <option value="100"></option>
-                                    <option value="125"></option>
-                                    <option value="150"></option>
+                                    <option value="5"></option>
+                                    <option value="10"></option>
+                                    <option value="15"></option>
+                                    <option value="20"></option>
+                                    <option value="25"></option>
                                 </datalist>
                             </div>
                         </div>

@@ -246,10 +246,10 @@
                         <input id="@(Html.IdFor(_ => Model.UserMood.BilirubinTotal))" asp-for="UserMood.BilirubinTotal" style="width:6ch;height:fit-content;" class="allow-demo"
                                oninput="@(Html.IdFor(_ => Model.UserMood.BilirubinTotal))Input.value = this.valueAsNumber" />
                         <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                            <input type="range" style="width:100%;" class="allow-demo"
-                                   name="@(Html.IdFor(_ => Model.UserMood.BilirubinTotal))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.BilirubinTotal))-input" value="@(Model.UserMood.BilirubinTotal ?? -1)"
-                                   min="@(-UserCompleteMetabolicPanel.Consts.BilirubinTotalStep)" max="@UserCompleteMetabolicPanel.Consts.BilirubinTotalMax" step="@UserCompleteMetabolicPanel.Consts.BilirubinTotalStep"
-                                   oninput="@(Html.IdFor(_ => Model.UserMood.BilirubinTotal)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
+                            <input id="@(Html.IdFor(_ => Model.UserMood.BilirubinTotal))-input" class="allow-demo" style="width:100%;" type="range"
+                                   name="@(Html.IdFor(_ => Model.UserMood.BilirubinTotal))Input" list="hashmarks"  value="@(Model.UserMood.BilirubinTotal ?? -1)"
+                                   min="@(UserCompleteMetabolicPanel.Consts.BilirubinTotalMin - UserCompleteMetabolicPanel.Consts.BilirubinTotalStep)" max="@UserCompleteMetabolicPanel.Consts.BilirubinTotalMax" step="@UserCompleteMetabolicPanel.Consts.BilirubinTotalStep"
+                                   oninput="@(Html.IdFor(_ => Model.UserMood.BilirubinTotal)).value = this.valueAsNumber < @UserCompleteMetabolicPanel.Consts.BilirubinTotalMin ? '' : this.valueAsNumber" />
 
                             <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
                                 <option value=""></option>

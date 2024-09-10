@@ -13,6 +13,17 @@ namespace Data.Entities.User;
 [Table("user_blood_work"), Comment("User variation weight log")]
 public class UserBloodWork
 {
+    public class Consts
+    {
+        public const int VitaminAMin = 20;
+        public const int VitaminAMax = 200;
+        public const int VitaminAStep = 1;
+
+        public const double HomocysteineMin = 1;
+        public const double HomocysteineMax = 100;
+        public const double HomocysteineStep = .5;
+    }
+
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private init; }
 
@@ -25,16 +36,16 @@ public class UserBloodWork
     [Required]
     public DateOnly Date { get; init; } = DateHelpers.Today;
 
-    [Range(20, 200)]
+    [Range(Consts.VitaminAMin, Consts.VitaminAMax)]
     [Display(Name = "VitaminA")]
     public int? VitaminA { get; set; }
 
-    [Range(1, 100)]
+    [Range(Consts.HomocysteineMin, Consts.HomocysteineMax)]
     [Display(Name = "Homocysteine")]
-    public int? Homocysteine { get; set; }
+    public double? Homocysteine { get; set; }
 
     [NotMapped]
-    public Dictionary<string, int?> Items => new()
+    public Dictionary<string, double?> Items => new()
     {
         { nameof(VitaminA), VitaminA },
         { nameof(Homocysteine), Homocysteine },
