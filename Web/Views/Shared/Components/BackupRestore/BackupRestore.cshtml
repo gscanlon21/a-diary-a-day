@@ -1,0 +1,20 @@
+﻿@model BackupRestoreViewModel
+
+<div class="alert alert-dark" role="alert">
+    <div class="row gy-2">
+        <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.Backup)" asp-route-email="@Model.Email" asp-route-token="@Model.Token" method="post"
+                class="col">
+            <div class="form-group">
+                <input type="submit" value="Backup" class="btn btn-outline-secondary" />
+            </div>
+        </form>
+        <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.Backup)" asp-route-email="@Model.Email" asp-route-token="@Model.Token" method="post"
+              class="col-auto">
+            <div class="form-group">
+                <input type="submit" value="Restore" class="btn btn-outline-secondary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
