@@ -209,7 +209,7 @@ public partial class NewsletterRepo
     private IEnumerable<ComponentImage> GetImages(User user)
     {
         var prefix = $"moods/{user.Uid}";
-        var components = EnumExtensions.GetSingleValuesExcludingAny32(Components.Journal | Components.Tasks);
+        var components = EnumExtensions.GetSingleValuesExcludingAny32(Component.Journal | Component.Tasks);
         foreach (var component in components.Where(c => user.Components.HasFlag(c)))
         {
             var key = $"{prefix}/{component}";
@@ -223,7 +223,7 @@ public partial class NewsletterRepo
 
     internal async Task<IList<QueryResults>> GetUserTasks(NewsletterContext newsletterContext, Section section, IEnumerable<QueryResults>? exclude = null)
     {
-        if (!newsletterContext.User.Components.HasFlag(Components.Tasks))
+        if (!newsletterContext.User.Components.HasFlag(Component.Tasks))
         {
             return [];
         }

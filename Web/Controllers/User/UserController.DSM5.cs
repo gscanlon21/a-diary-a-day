@@ -6,7 +6,7 @@ namespace Web.Controllers.User;
 
 public partial class UserController
 {
-    [HttpPost, Route(nameof(Core.Models.User.Components.DryEyes))]
+    [HttpPost, Route(nameof(Component.DryEyes))]
     public async Task<IActionResult> ManageDryEyes(string email, string token, UserDryEyes userMood)
     {
         if (true || ModelState.IsValid)
@@ -47,13 +47,13 @@ public partial class UserController
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.DryEyes, WasUpdated = true });
         }
 
-        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.DryEyes, WasUpdated = false });
     }
 
-    [HttpPost, Route(nameof(Core.Models.User.Components.Depression))]
+    [HttpPost, Route(nameof(Component.Depression))]
     public async Task<IActionResult> ManageDepression(string email, string token, UserDepression userDepression)
     {
         if (true || ModelState.IsValid)
@@ -84,13 +84,13 @@ public partial class UserController
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.Depression, WasUpdated = true });
         }
 
-        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.Depression, WasUpdated = false });
     }
 
-    [HttpPost, Route(nameof(Core.Models.User.Components.PanicSeverity))]
+    [HttpPost, Route(nameof(Component.PanicSeverity))]
     public async Task<IActionResult> ManagePanicSeverity(string email, string token, UserPanicSeverity userMood)
     {
         if (true || ModelState.IsValid)
@@ -123,13 +123,13 @@ public partial class UserController
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.PanicSeverity, WasUpdated = true });
         }
 
-        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.PanicSeverity, WasUpdated = false });
     }
 
-    [HttpPost, Route(nameof(Core.Models.User.Components.PTSDSeverity))]
+    [HttpPost, Route(nameof(Component.PTSDSeverity))]
     public async Task<IActionResult> ManagePtsdSeverity(string email, string token, UserPostTraumaticStressSeverity userMood)
     {
         if (true || ModelState.IsValid)
@@ -161,13 +161,13 @@ public partial class UserController
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.PTSDSeverity, WasUpdated = true });
         }
 
-        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.PTSDSeverity, WasUpdated = false });
     }
 
-    [HttpPost, Route(nameof(Core.Models.User.Components.GeneralizedAnxietySeverity))]
+    [HttpPost, Route(nameof(Component.GeneralizedAnxietySeverity))]
     public async Task<IActionResult> ManageGeneralizedSeverity(string email, string token, UserGeneralizedAnxietySeverity userMood)
     {
         if (true || ModelState.IsValid)
@@ -201,13 +201,13 @@ public partial class UserController
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.GeneralizedAnxietySeverity, WasUpdated = true });
         }
 
-        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.GeneralizedAnxietySeverity, WasUpdated = false });
     }
 
-    [HttpPost, Route(nameof(Core.Models.User.Components.DissociativeSeverity))]
+    [HttpPost, Route(nameof(Component.DissociativeSeverity))]
     public async Task<IActionResult> ManageDissociativeSeverity(string email, string token, UserDissociativeSeverity userMood)
     {
         if (true || ModelState.IsValid)
@@ -238,13 +238,13 @@ public partial class UserController
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.DissociativeSeverity, WasUpdated = true });
         }
 
-        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.DissociativeSeverity, WasUpdated = false });
     }
 
-    [HttpPost, Route(nameof(Core.Models.User.Components.DepressionSeverity))]
+    [HttpPost, Route(nameof(Component.DepressionSeverity))]
     public async Task<IActionResult> ManageDepressionSeverity(string email, string token, UserDepressionSeverity userMood)
     {
         if (true || ModelState.IsValid)
@@ -276,13 +276,13 @@ public partial class UserController
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.DepressionSeverity, WasUpdated = true });
         }
 
-        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.DepressionSeverity, WasUpdated = false });
     }
 
-    [HttpPost, Route(nameof(Core.Models.User.Components.AgoraphobiaSeverity))]
+    [HttpPost, Route(nameof(Component.AgoraphobiaSeverity))]
     public async Task<IActionResult> ManageAgoraphobiaSeverity(string email, string token, UserAgoraphobiaSeverity userMood)
     {
         if (true || ModelState.IsValid)
@@ -315,13 +315,13 @@ public partial class UserController
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.AgoraphobiaSeverity, WasUpdated = true });
         }
 
-        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.AgoraphobiaSeverity, WasUpdated = false });
     }
 
-    [HttpPost, Route(nameof(Core.Models.User.Components.AcuteStressSeverity))]
+    [HttpPost, Route(nameof(Component.AcuteStressSeverity))]
     public async Task<IActionResult> ManageStressSeverity(string email, string token, UserAcuteStressSeverity userMood)
     {
         if (true || ModelState.IsValid)
@@ -351,13 +351,13 @@ public partial class UserController
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.AcuteStressSeverity, WasUpdated = true });
         }
 
-        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.AcuteStressSeverity, WasUpdated = false });
     }
 
-    [HttpPost, Route(nameof(Core.Models.User.Components.SocialAnxietySeverity))]
+    [HttpPost, Route(nameof(Component.SocialAnxietySeverity))]
     public async Task<IActionResult> ManageSocialAnxietySeverity(string email, string token, UserSocialAnxietySeverity userMood)
     {
         if (true || ModelState.IsValid)
@@ -390,9 +390,9 @@ public partial class UserController
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.SocialAnxietySeverity, WasUpdated = true });
         }
 
-        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.SocialAnxietySeverity, WasUpdated = false });
     }
 }

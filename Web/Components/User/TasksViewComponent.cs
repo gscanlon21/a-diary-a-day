@@ -23,7 +23,7 @@ public class TasksViewComponent(CoreContext context, UserRepo userRepo, IService
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
-        if (!user.Components.HasFlag(Core.Models.User.Components.Tasks))
+        if (!user.Components.HasFlag(Component.Tasks))
         {
             return Content("");
         }

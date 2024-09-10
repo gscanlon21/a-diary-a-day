@@ -1,31 +1,12 @@
 ﻿using Data.Entities.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Web.Views.User;
 
 namespace Web.Controllers.User;
 
 public partial class UserController
 {
-    [HttpGet, Route("{component:components}")]
-    public async Task<IActionResult> ManageMood(string email, string token, Core.Models.User.Components component, bool? wasUpdated = null)
-    {
-        var user = await _userRepo.GetUser(email, token, includeSettings: true, allowDemoUser: true);
-        if (user == null)
-        {
-            return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
-        }
-
-        var parameters = new UserManageMoodViewModel.TheParameters(email, token);
-        return View(new UserManageMoodViewModel(component)
-        {
-            User = user,
-            Parameters = parameters,
-            WasUpdated = wasUpdated,
-        });
-    }
-
-    [HttpPost, Route(nameof(Core.Models.User.Components.Mood))]
+    [HttpPost, Route(nameof(Component.Mood))]
     public async Task<IActionResult> ManageMood(string email, string token, UserMood userMood)
     {
         if (true || ModelState.IsValid)
@@ -53,13 +34,13 @@ public partial class UserController
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.Mood, WasUpdated = true });
         }
 
-        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.Mood, WasUpdated = false });
     }
 
-    [HttpPost, Route(nameof(Core.Models.User.Components.Sleep))]
+    [HttpPost, Route(nameof(Component.Sleep))]
     public async Task<IActionResult> ManageSleep(string email, string token, UserSleep userMood, List<UserCustom> customs)
     {
         if (true || ModelState.IsValid)
@@ -94,13 +75,13 @@ public partial class UserController
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.Sleep, WasUpdated = true });
         }
 
-        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.Sleep, WasUpdated = false });
     }
 
-    [HttpPost, Route(nameof(Core.Models.User.Components.Activity))]
+    [HttpPost, Route(nameof(Component.Activity))]
     public async Task<IActionResult> ManageActivity(string email, string token, List<UserCustom> customs)
     {
         if (true || ModelState.IsValid)
@@ -121,13 +102,13 @@ public partial class UserController
             });
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.Activity, WasUpdated = true });
         }
 
-        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.Activity, WasUpdated = false });
     }
 
-    [HttpPost, Route(nameof(Core.Models.User.Components.Emotion))]
+    [HttpPost, Route(nameof(Component.Emotion))]
     public async Task<IActionResult> ManageEmotion(string email, string token, List<UserCustom> customs)
     {
         if (true || ModelState.IsValid)
@@ -148,13 +129,13 @@ public partial class UserController
             });
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.Emotion, WasUpdated = true });
         }
 
-        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.Emotion, WasUpdated = false });
     }
 
-    [HttpPost, Route(nameof(Core.Models.User.Components.Medicine))]
+    [HttpPost, Route(nameof(Component.Medicine))]
     public async Task<IActionResult> ManageMedicine(string email, string token, List<UserCustom> customs)
     {
         if (true || ModelState.IsValid)
@@ -175,13 +156,13 @@ public partial class UserController
             });
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.Medicine, WasUpdated = true });
         }
 
-        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.Medicine, WasUpdated = false });
     }
 
-    [HttpPost, Route(nameof(Core.Models.User.Components.People))]
+    [HttpPost, Route(nameof(Component.People))]
     public async Task<IActionResult> ManagePeople(string email, string token, List<UserCustom> customs)
     {
         if (true || ModelState.IsValid)
@@ -202,13 +183,13 @@ public partial class UserController
             });
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.People, WasUpdated = true });
         }
 
-        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.People, WasUpdated = false });
     }
 
-    [HttpPost, Route(nameof(Core.Models.User.Components.Symptom))]
+    [HttpPost, Route(nameof(Component.Symptom))]
     public async Task<IActionResult> ManageSymptom(string email, string token, List<UserCustom> customs)
     {
         if (true || ModelState.IsValid)
@@ -229,9 +210,9 @@ public partial class UserController
             });
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.Symptom, WasUpdated = true });
         }
 
-        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = false });
+        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.Symptom, WasUpdated = false });
     }
 }

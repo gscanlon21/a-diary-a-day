@@ -21,7 +21,7 @@ public partial class UserController
         await _context.SaveChangesAsync();
 
         TempData[TempData_User.SuccessMessage] = "Your journal entries have been updated!";
-        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+        return RedirectToAction(nameof(ManageComponent), new { email, token, WasUpdated = true });
     }
 
     [HttpPost, Route("journal/remove")]
@@ -40,6 +40,6 @@ public partial class UserController
             .ExecuteDeleteAsync();
 
         TempData[TempData_User.SuccessMessage] = "Your journal entries have been updated!";
-        return RedirectToAction(nameof(ManageMood), new { email, token, WasUpdated = true });
+        return RedirectToAction(nameof(ManageComponent), new { email, token, WasUpdated = true });
     }
 }

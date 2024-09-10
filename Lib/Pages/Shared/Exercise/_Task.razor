@@ -1,7 +1,6 @@
 ﻿@page "/task/task"
 @inject DisplayHelper DH
 @inject IOptions<SiteSettings> SiteSettings
-@using Core.Consts;
 @using Core.Dtos.Newsletter
 @using Core.Models.Options
 @using Microsoft.Extensions.Options
@@ -79,7 +78,7 @@
             // If we want to reduce layout shift with aspect-ratio, that really needs to be included on the table with the image because our images don't have consistent aspect ratios.
             // Setting min-height (200 / (25/14)) gets us close though. 25/14 is, for the most part, our widest aspect-ratio.
             <img style="display:block;margin-top:1ex;height:auto;min-height:112px;max-height:350px;max-width:100%;object-fit:contain;object-position:left top;"
-                 src="@($"{SiteSettings.Value.CdnLink}/moods/{User.Uid}/{Components.Tasks}-{Model.Task.Uid}")" loading="lazy" />
+                 src="@($"{SiteSettings.Value.CdnLink}/moods/{User.Uid}/{Component.Tasks}-{Model.Task.Uid}")" loading="lazy" />
         }
     </div>
 </div>

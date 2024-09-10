@@ -1,12 +1,11 @@
 ﻿using Core.Attributes;
-using Core.Models.User;
 using System.Reflection;
 
 namespace Core.Code.Extensions;
 
 public static class ComponentExtensions
 {
-    public static SubComponentAttributeInternal? GetSubComponent(this Components component)
+    public static SubComponentAttributeInternal? GetSubComponent(this Component component)
     {
         var memberInfo = component.GetType().GetMember(component.ToString());
         if (memberInfo != null && memberInfo.Length > 0)

@@ -32,7 +32,7 @@ public class BloodWorkViewComponent(CoreContext context, UserRepo userRepo) : Vi
             Name = a,
         }).ToList();
 
-        var subComponents = user.UserComponentSettings.First(s => s.Component == Core.Models.User.Components.BloodWork).TypedSkills;
+        var subComponents = user.UserComponentSettings.First(s => s.Component == Component.BloodWork).TypedSkills;
         var viewModel = new BloodWorkViewModel(userMoods, userCustoms)
         {
             SubComponents = (Core.Models.Components.SubComponents.BloodWork)subComponents!,

@@ -10,7 +10,7 @@ public class TaskLogViewModel
         User = user;
         if (userLogs != null)
         {
-            var daysBack = Enumerable.Range(0, user.GetComponentDaysFor(Core.Models.User.Components.Tasks));
+            var daysBack = Enumerable.Range(0, user.GetComponentDaysFor(Component.Tasks));
             var dailyLogs = daysBack.SelectMany(i => userLogs.Where(uw => uw.Date == DateHelpers.Today.AddDays(-i)));
             var weeklyLogs = dailyLogs.GroupBy(l => l.Date.StartOfWeek()).Select(g => new Xy(g.Key, g.Sum(l => l.Complete)));
             Xys = weeklyLogs.Where(xy => xy.Y.HasValue).Reverse().ToList();
@@ -28,5 +28,5 @@ public class TaskLogViewModel
 
     public IList<Xy> Xys { get; init; } = [];
 
-    public Core.Models.User.Components Type => Core.Models.User.Components.Tasks;
+    public Component Type => Component.Tasks;
 }

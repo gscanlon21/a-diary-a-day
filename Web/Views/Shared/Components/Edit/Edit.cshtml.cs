@@ -68,7 +68,7 @@ public class UserEditViewModel
     /// What features should the user have access to?
     /// </summary>
     [Required]
-    public Core.Models.User.Components Components { get; set; }
+    public Component Components { get; set; }
 
     [Required, Range(UserConsts.SendHourMin, UserConsts.SendHourMax)]
     [Display(Name = "Send Time (UTC)", Description = "What hour of the day (UTC) do you want to receive new emails?")]
@@ -81,10 +81,10 @@ public class UserEditViewModel
     [Display(Name = "Send Days", Description = "What days do you want to receive new emails?")]
     public Days SendDays { get; private set; }
 
-    public Core.Models.User.Components[]? ComponentsBinder
+    public Component[]? ComponentsBinder
     {
-        get => EnumExtensions.GetValuesExcluding32(Core.Models.User.Components.None).Where(e => Components.HasFlag(e)).ToArray();
-        set => Components = value?.Aggregate(Core.Models.User.Components.None, (a, e) => a | e) ?? Core.Models.User.Components.None;
+        get => EnumExtensions.GetValuesExcluding32(Component.None).Where(e => Components.HasFlag(e)).ToArray();
+        set => Components = value?.Aggregate(Component.None, (a, e) => a | e) ?? Component.None;
     }
 
     public Verbosity[]? VerbosityBinder
@@ -120,7 +120,7 @@ public class UserEditViewModel
 
         public int UserId { get; init; }
 
-        public Core.Models.User.Components Component { get; init; }
+        public Component Component { get; init; }
 
         [Range(UserConsts.ChartDaysMin, UserConsts.ChartDaysMax)]
         public int Days { get; init; } = UserConsts.ChartDaysDefault;

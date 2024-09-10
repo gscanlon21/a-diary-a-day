@@ -1,6 +1,5 @@
 ﻿using Core.Consts;
 using Core.Models.Components.SubComponents;
-using Core.Models.User;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
@@ -12,7 +11,7 @@ namespace Data.Entities.User;
 [DebuggerDisplay("{Component}: {Days}")]
 public class UserComponentSetting
 {
-    public Components Component { get; init; }
+    public Component Component { get; init; }
 
     [ForeignKey(nameof(Entities.User.User.Id))]
     public int UserId { get; init; }
@@ -28,14 +27,14 @@ public class UserComponentSetting
     [NotMapped]
     public Enum? UnusedSkills => Component switch
     {
-        Components.BloodWork => BloodWork.All & ~(BloodWork)SubComponents,
+        Component.BloodWork => BloodWork.All & ~(BloodWork)SubComponents,
         _ => null,
     };
 
     [NotMapped]
     public Enum? TypedSkills => Component switch
     {
-        Components.BloodWork => (BloodWork)SubComponents,
+        Component.BloodWork => (BloodWork)SubComponents,
         _ => null,
     };
 }

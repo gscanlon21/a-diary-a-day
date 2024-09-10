@@ -10,7 +10,7 @@ public class MoodViewModel
         //Mood = currentWeight.GetValueOrDefault();
         if (userMoods != null)
         {
-            var daysBack = Enumerable.Range(0, user.GetComponentDaysFor(Core.Models.User.Components.Mood));
+            var daysBack = Enumerable.Range(0, user.GetComponentDaysFor(Component.Mood));
             var dailyLogs = daysBack.SelectMany(i => userMoods.Where(uw => uw.Date == DateHelpers.Today.AddDays(-i)));
             var weeklyLogs = dailyLogs.GroupBy(l => l.Date.StartOfWeek()).Select(g => new Xy(g.Key, g.Average(l => l.AverageScore),
                 ((Core.Models.User.Mood?)(int?)g.Average(l => l.AverageScore))?.GetSingleDisplayName()));
