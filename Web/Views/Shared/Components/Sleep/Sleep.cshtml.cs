@@ -11,23 +11,21 @@ public class SleepViewModel
         //Mood = currentWeight.GetValueOrDefault();
         if (userMoods != null && userMoods.Any())
         {
-            // Skip today, start at 1, because we append the current weight onto the end regardless.
             var todaysDuration = userMoods.FirstOrDefault(um => um.Date == DateHelpers.Today);
-            SleepDurations = Enumerable.Range(1, UserConsts.ChartDaysDefault).Select(i =>
+            SleepDurations = Enumerable.Range(0, UserConsts.ChartDaysDefault).Select(i =>
             {
                 var date = DateHelpers.Today.AddDays(-i);
                 var userDuration = userMoods.FirstOrDefault(uw => uw.Date == date);
                 return new Xy(date, (int?)userDuration?.SleepDuration, userDuration?.SleepDuration.GetSingleDisplayName());
-            }).Where(xy => xy.Y != null).Reverse().Append(new Xy(DateHelpers.Today, (int?)todaysDuration?.SleepDuration, todaysDuration?.SleepDuration.GetSingleDisplayName())).ToList();
+            }).Where(xy => xy.Y != null).Reverse().ToList();
 
-            // Skip today, start at 1, because we append the current weight onto the end regardless.
             var todaysSleep = userMoods.FirstOrDefault(um => um.Date == DateHelpers.Today);
-            SleepTimes = Enumerable.Range(1, UserConsts.ChartDaysDefault).Select(i =>
+            SleepTimes = Enumerable.Range(0, UserConsts.ChartDaysDefault).Select(i =>
             {
                 var date = DateHelpers.Today.AddDays(-i);
                 var userSleep = userMoods.FirstOrDefault(uw => uw.Date == date);
                 return new Xy(date, (int?)userSleep?.SleepTime, userSleep?.SleepTime.GetSingleDisplayName());
-            }).Where(xy => xy.Y != null).Reverse().Append(new Xy(DateHelpers.Today, (int?)todaysSleep?.SleepTime, todaysSleep?.SleepTime.GetSingleDisplayName())).ToList();
+            }).Where(xy => xy.Y != null).Reverse().ToList();
 
             var flatMap = userMoods.SelectMany(m =>
             {
@@ -37,13 +35,12 @@ public class SleepViewModel
             foreach (var custom in Customs)
             {
                 var todaysCustom = flatMap.FirstOrDefault(um => um.Date == DateHelpers.Today && um.Id == custom.Id);
-                // Skip today, start at 1, because we append the current weight onto the end regardless.
-                Xys.AddRange(Enumerable.Range(1, UserConsts.ChartDaysDefault).Select(i =>
+                Xys.AddRange(Enumerable.Range(0, UserConsts.ChartDaysDefault).Select(i =>
                 {
                     var date = DateHelpers.Today.AddDays(-i);
                     var userCustom = flatMap.FirstOrDefault(uw => uw.Date == date && uw.Id == custom.Id);
                     return new XCustom(date, userCustom, custom);
-                }).Where(xy => xy.Y != null).Reverse().Append(new XCustom(DateHelpers.Today, todaysCustom, custom)).ToList());
+                }).Where(xy => xy.Y != null).Reverse());
             }
         }
     }

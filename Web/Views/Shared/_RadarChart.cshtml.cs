@@ -20,11 +20,11 @@ public class RadarChartViewModel
 
     public IList<string> Labels => XysGrouped.OrderBy(g => g.Key.Order).Select(g => g.Key.Name).ToList();
 
-    public IList<int> LastMonth => XysGrouped
+    public IList<double> LastMonth => XysGrouped
         .OrderBy(g => g.Key.Order)
         .Select(g => g.Where(s => s?.Y?.Date.Month == DateHelpers.Today.AddMonths(-1).Month && s?.Y?.Date.Year == DateHelpers.Today.AddMonths(-1).Year).Sum(s => s?.Y?.One) ?? 0)
         .ToList();
-    public IList<int> ThisMonth => XysGrouped
+    public IList<double> ThisMonth => XysGrouped
         .OrderBy(g => g.Key.Order)
         .Select(g => g.Where(s => s?.Y?.Date.Month == DateHelpers.Today.Month && s?.Y?.Date.Year == DateHelpers.Today.Year).Sum(s => s?.Y?.One) ?? 0)
         .ToList();

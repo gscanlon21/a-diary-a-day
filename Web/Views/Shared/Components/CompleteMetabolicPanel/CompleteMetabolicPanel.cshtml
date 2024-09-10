@@ -247,17 +247,15 @@
                                oninput="@(Html.IdFor(_ => Model.UserMood.BilirubinTotal))Input.value = this.valueAsNumber" />
                         <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
                             <input type="range" style="width:100%;" class="allow-demo"
-                                   name="@(Html.IdFor(_ => Model.UserMood.BilirubinTotal))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.BilirubinTotal))-input"
-                                   min="-1" max="250" step="1" value="@(Model.UserMood.BilirubinTotal ?? -1)"
+                                   name="@(Html.IdFor(_ => Model.UserMood.BilirubinTotal))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.BilirubinTotal))-input" value="@(Model.UserMood.BilirubinTotal ?? -1)"
+                                   min="@(-UserCompleteMetabolicPanel.Consts.BilirubinTotalStep)" max="@UserCompleteMetabolicPanel.Consts.BilirubinTotalMax" step="@UserCompleteMetabolicPanel.Consts.BilirubinTotalStep"
                                    oninput="@(Html.IdFor(_ => Model.UserMood.BilirubinTotal)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
 
                             <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
                                 <option value=""></option>
-                                <option value="50"></option>
-                                <option value="75"></option>
-                                <option value="100"></option>
-                                <option value="125"></option>
-                                <option value="150"></option>
+                                <option value="1"></option>
+                                <option value="2"></option>
+                                <option value="3"></option>
                             </datalist>
                         </div>
                     </div>

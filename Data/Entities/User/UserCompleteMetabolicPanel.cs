@@ -13,6 +13,13 @@ namespace Data.Entities.User;
 [Table("user_complete_metabolic_panel"), Comment("User variation weight log")]
 public class UserCompleteMetabolicPanel
 {
+    public class Consts
+    {
+        public const double BilirubinTotalMin = 0;
+        public const double BilirubinTotalMax = 10;
+        public const double BilirubinTotalStep = .1;
+    }
+
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private init; }
 
@@ -81,16 +88,16 @@ public class UserCompleteMetabolicPanel
     [Display(Name = "Albumin")]
     public int? Albumin { get; set; }
 
-    [Range(40, 240)]
+    [Range(Consts.BilirubinTotalMin, Consts.BilirubinTotalMax)]
     [Display(Name = "Bilirubin Total")]
-    public int? BilirubinTotal { get; set; }
+    public double? BilirubinTotal { get; set; }
 
     [Range(40, 240)]
     [Display(Name = "eGFR by CKD-EPI")]
     public int? EGFRbyCKDEPI { get; set; }
 
     [NotMapped]
-    public Dictionary<string, int?> Items => new()
+    public Dictionary<string, double?> Items => new()
     {
         { nameof(Glucose), Glucose },
         { nameof(Sodium), Sodium },
