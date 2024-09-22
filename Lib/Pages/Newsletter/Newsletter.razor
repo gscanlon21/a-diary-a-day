@@ -9,8 +9,9 @@
 @using Core.Models.Footnote
 @using Core.Models.Options
 @using Core.Models.User
+@using Lib.Pages.Shared.Task
+@using Lib.Pages.Shared.Component
 @using Microsoft.Extensions.Options
-@using Shared.Exercise
 
 @if (Error != null)
 {
@@ -41,10 +42,10 @@ else
     <div style="margin-block:1rem;">
         @foreach (var section in Enum.GetValues<Section>().OrderBy(s => s.GetDisplayName32(DisplayType.Order).Length).ThenBy(s => s.GetDisplayName32(DisplayType.Order)))
         {
-            <Lib.Pages.Shared.Exercise.TaskSection User="Model.User" Verbosity="Model.Verbosity" Tasks="Model.Tasks.Where(t => t.Section == section).ToList()" Theme="section.AsTheme()" Title="@(new TaskSection.Titles(section.GetSingleDisplayName()))" />
+            <Lib.Pages.Shared.Task.TaskSection User="Model.User" Verbosity="Model.Verbosity" Tasks="Model.Tasks.Where(t => t.Section == section).ToList()" Theme="section.AsTheme()" Title="@(new TaskSection.Titles(section.GetSingleDisplayName()))" />
         }
 
-        <Lib.Pages.Shared.Exercise.ExerciseSection User="Model.User" Verbosity="Model.Verbosity" Images="Model.Images" Theme="Theme.None" Title="@(new ExerciseSection.Titles("Moods"))" />
+        <Lib.Pages.Shared.Component.ComponentSection User="Model.User" Verbosity="Model.Verbosity" Images="Model.Images" Theme="Theme.None" Title="@(new ComponentSection.Titles("Moods"))" />
     </div>
 
     <Lib.Pages.Shared.Newsletter.Footnote User="Model.User" Verbosity="Model.Verbosity" Type="Shared.Newsletter.Footnote.FootnoteComponentType.System" Count="Model.User.FootnoteCountBottom" />

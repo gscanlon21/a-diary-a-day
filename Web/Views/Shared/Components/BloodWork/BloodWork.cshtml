@@ -1,7 +1,6 @@
 ﻿@model BloodWorkViewModel
 @using Core.Models.Components
 @using Data.Entities.User
-@using Lib.Pages.Shared.Exercise
 
 @{
     bool show = Model.PreviousMood == null || Model.PreviousMood.Date < DateHelpers.Today.AddMonths(-1);

@@ -97,14 +97,13 @@
                 plugins: {
                     legend: { display: false, },
                     tooltip: {
+                        mode: 'x',
+                        position: 'nearest',
                         callbacks: {
-                            title: (context) => {
-                                // Pretty-print the x-axis date in the hover tooltip
-                                return new Date(context[0].parsed.x).toDateString();
-                            },
-                            footer: (context) => {
-                                return context.map(c => `${c.raw.count}/${c.raw.total} questions answered`);
-                            },
+                            // Pretty-print the x-axis date in the hover tooltip.
+                            title: (context) => new Date(context[0].parsed.x).toDateString(),
+                            // Show the number of questions answered in the footer.
+                            footer: (context) => `${context[0].raw.count}/${context[0].raw.total} questions answered`,
                         },
                     },
                     /*

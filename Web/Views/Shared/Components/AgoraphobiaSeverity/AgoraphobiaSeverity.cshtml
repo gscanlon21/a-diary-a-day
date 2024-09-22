@@ -1,14 +1,10 @@
 ﻿@model AgoraphobiaSeverityViewModel
 @using Core.Models.Components
 @using Data.Entities.User
-@using Lib.Pages.Shared.Exercise
 
 @{
     bool show = Model.PreviousMood == null || Model.PreviousMood.Date < DateHelpers.Today.AddDays(-7);
 }
-
-
-
 
 <div class="alert alert-secondary">
     <div class="row gy-2">

@@ -1,7 +1,6 @@
 ﻿@model SleepViewModel
 @using Core.Models.Components
 @using Data.Entities.User
-@using Lib.Pages.Shared.Exercise
 
 @{
     bool hide = Model.UserMood.Date == DateHelpers.Today && Model.UserMood.Id != default;

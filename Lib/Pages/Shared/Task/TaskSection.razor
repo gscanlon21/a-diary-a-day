@@ -16,12 +16,12 @@
 
     if (Title == null)
     {
-        foreach (var exerciseGroup in Tasks.GroupBy(e => e, new TaskSectionComparer()))
+        foreach (var taskGroup in Tasks.GroupBy(e => e, new TaskSectionComparer()))
         {
-            <h2 style="margin-bottom:0;margin-top:1em;color:@titleColor;font-size:revert;">@exerciseGroup.Key.Section.GetSingleDisplayName()</h2>
+            <h2 style="margin-bottom:0;margin-top:1em;color:@titleColor;font-size:revert;">@taskGroup.Key.Section.GetSingleDisplayName()</h2>
 
             <div style="margin-top:.2rem;display:flex;flex-flow:row wrap;gap:1ch;line-height:normal;">
-                @foreach (var item in exerciseGroup)
+                @foreach (var item in taskGroup)
                 {
                     <CascadingValue Value="User">
                         <_Task Model="item" Verbosity="Verbosity" Theme="Theme" />

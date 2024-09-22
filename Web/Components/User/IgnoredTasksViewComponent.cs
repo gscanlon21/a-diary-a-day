@@ -17,7 +17,7 @@ namespace Web.Components.User;
 public class IgnoredTasksViewComponent(CoreContext context, UserRepo userRepo, IServiceScopeFactory serviceScopeFactory) : ViewComponent
 {
     /// <summary>
-    /// For routing
+    /// For routing.
     /// </summary>
     public const string Name = "IgnoredTasks";
 
@@ -28,7 +28,7 @@ public class IgnoredTasksViewComponent(CoreContext context, UserRepo userRepo, I
             return Content("");
         }
 
-        // Need a user context so the manage link is clickable and the user can un-ignore an exercise/variation.
+        // Need a user context so the manage link is clickable and the user can un-ignore a task.
         var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userNewsletter = new UserNewsletterDto(user.AsType<UserDto, Data.Entities.User.User>()!, token);
 

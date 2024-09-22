@@ -27,10 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Pages\Shared\Exercise\TaskSection.razor">
+    <Content Update="Pages\Shared\Task\TaskSection.razor">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Pages\Shared\Exercise\_Task.razor">
+    <Content Update="Pages\Shared\Task\_Task.razor">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
     <Content Update="Pages\Shared\Newsletter\_Footer.razor">
@@ -39,13 +39,10 @@
     <Content Update="Pages\Newsletter\Newsletter.razor">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Pages\Shared\Exercise\_Debug.razor">
+    <Content Update="Pages\Shared\Component\_Component.razor">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Pages\Shared\Exercise\_Exercise.razor">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Pages\Shared\Exercise\ExerciseSection.razor">
+    <Content Update="Pages\Shared\Component\ComponentSection.razor">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
     <Content Update="Pages\Shared\Newsletter\_Preview.razor">

@@ -86,7 +86,7 @@ public partial class UserController
         var userTask = await _context.UserTasks
             .FirstOrDefaultAsync(ut => ut.UserId == user.Id && ut.Id == taskId);
 
-        // May be null if the exercise was soft/hard deleted
+        // May be null if the task was soft/hard deleted
         if (userTask == null)
         {
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
