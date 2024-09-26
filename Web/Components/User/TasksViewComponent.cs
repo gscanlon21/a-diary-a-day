@@ -1,5 +1,6 @@
 ﻿using Core.Dtos.Newsletter;
 using Core.Dtos.User;
+using Core.Models.User;
 using Data;
 using Data.Models;
 using Data.Query.Builders;
@@ -28,6 +29,9 @@ public class TasksViewComponent(CoreContext context, UserRepo userRepo, IService
             return Content("");
         }
 
+        // Filtering options.
+        var taskType = Enum.TryParse(Request.Query["type"], ignoreCase: true, out UserTaskType typeTmp) ? typeTmp : UserTaskType.None;
+
         // Need a user context so the manage link is clickable and the user can un-ignore an exercise/variation.
         var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userNewsletter = new UserNewsletterDto(user.AsType<UserDto, Data.Entities.User.User>()!, token);
@@ -45,6 +49,12 @@ public class TasksViewComponent(CoreContext context, UserRepo userRepo, IService
             })
             .Build()
             .Query(serviceScopeFactory);
+
+        // TODO: Move this into the query runner.
+        if (taskType != UserTaskType.None)
+        {
+            tasks = tasks.Where(t => t.Task.Type == taskType).ToList();
+        }
 
         return View("Tasks", new TasksViewModel()
         {

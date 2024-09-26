@@ -1,5 +1,6 @@
 ﻿using Core.Consts;
 using Core.Models.Newsletter;
+using Core.Models.User;
 using Data.Entities.Newsletter;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
@@ -11,7 +12,7 @@ namespace Data.Entities.Task;
 
 
 /// <summary>
-/// Exercises listed on the website
+/// User's custom todo tasks.
 /// </summary>
 [Table("user_task"), Comment("Tasks listed on the website")]
 [DebuggerDisplay("{Name,nq}")]
@@ -32,16 +33,29 @@ public class UserTask
     public string Name { get; set; } = null!;
 
     /// <summary>
-    /// Notes about the recipe (externally shown).
+    /// User's notes. (externally shown).
     /// </summary>
     public string? Notes { get; set; } = null;
 
-    public bool PersistUntilComplete { get; set; }
+    /// <summary>
+    /// User's notes. (externally shown).
+    /// </summary>
+    public string? InternalNotes { get; set; } = null;
 
     /// <summary>
     /// What sections this task will show for.
     /// </summary>
     public Section Section { get; set; }
+
+    /// <summary>
+    /// The type of the task.
+    /// </summary>
+    public UserTaskType Type { get; set; }
+
+    /// <summary>
+    /// Keep the task in the newsletter if it was left uncompleted.
+    /// </summary>
+    public bool PersistUntilComplete { get; set; }
 
     /// <summary>
     /// When was this task last seen in the user's newsletter.
@@ -95,7 +109,16 @@ public class UserTask
     [Required, Range(UserConsts.DeloadDurationMin, UserConsts.DeloadDurationMax)]
     public int DeloadDurationWeeks { get; set; } = UserConsts.DeloadDurationDefault;
 
+
     public string? DisabledReason { get; set; } = null;
+
+    [NotMapped]
+    public bool Enabled
+    {
+        get => string.IsNullOrWhiteSpace(DisabledReason);
+        set => DisabledReason = value ? null : "Disabled by user";
+    }
+
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserTasks))]
     public virtual User.User User { get; set; } = null!;
@@ -106,14 +129,8 @@ public class UserTask
     [JsonIgnore, InverseProperty(nameof(UserTaskLog.UserTask))]
     public virtual ICollection<UserTaskLog> UserTaskLogs { get; private init; } = [];
 
+
     public override int GetHashCode() => HashCode.Combine(Id);
     public override bool Equals(object? obj) => obj is UserTask other
         && other.Id == Id;
-
-    [NotMapped]
-    public bool Enabled
-    {
-        get => string.IsNullOrWhiteSpace(DisabledReason);
-        set => DisabledReason = value ? null : "Disabled by user";
-    }
 }

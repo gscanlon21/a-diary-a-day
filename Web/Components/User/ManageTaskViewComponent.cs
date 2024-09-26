@@ -33,15 +33,11 @@ public class ManageTaskViewComponent : ViewComponent
         var token = await _userRepo.AddUserToken(user, durationDays: 1);
         if (task == null)
         {
-            return View("ManageTask", new ManageTaskViewModel()
+            // Create a new user task.
+            return View("ManageTask", new ManageTaskViewModel(user, new Data.Entities.Task.UserTask()
             {
-                User = user,
-                Token = token,
-                UserTask = new Data.Entities.Task.UserTask()
-                {
-                    UserId = user.Id
-                }
-            });
+                UserId = user.Id
+            }, token));
         }
 
         var userTask = await _context.UserTasks.AsNoTracking().FirstOrDefaultAsync(r => r.UserId == user.Id && r.Id == task.Id);
@@ -63,22 +59,11 @@ public class ManageTaskViewComponent : ViewComponent
             .Where(ut => ut.Section == section)
             .FirstOrDefaultAsync(ut => ut.Date == user.TodayOffset);
 
-        return View("ManageTask", new ManageTaskViewModel()
+        // Edit an existing user task.
+        return View("ManageTask", new ManageTaskViewModel(user, userTask, token)
         {
-            User = user,
-            Token = token,
-            UserTask = userTask,
-            Name = userTask.Name,
-            Notes = userTask.Notes,
             ManageSection = section,
-            Section = userTask.Section,
-            DisabledReason = userTask.DisabledReason,
-            LagRefreshXDays = userTask.LagRefreshXDays,
-            PadRefreshXDays = userTask.PadRefreshXDays,
             CompletedForSection = userTaskLog?.Complete > 0,
-            PersistUntilComplete = userTask.PersistUntilComplete,
-            DeloadAfterXWeeks = userTask.DeloadAfterXWeeks,
-            DeloadDurationWeeks = userTask.DeloadDurationWeeks,
             Task = taskDto?.AsType<NewsletterTaskDto, QueryResults>()!,
         });
     }

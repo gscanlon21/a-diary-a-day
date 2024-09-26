@@ -1,5 +1,6 @@
 ﻿using Core.Dtos.Newsletter;
 using Core.Models.Newsletter;
+using Core.Models.User;
 using Data.Entities.Task;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
@@ -10,14 +11,38 @@ namespace Web.Views.Shared.Components.ManageTask;
 
 public class ManageTaskViewModel
 {
-    public Section ManageSection { get; set; }
+    [Obsolete("Public parameterless constructor required for model binding.", error: true)]
+    public ManageTaskViewModel() { }
 
-    public bool CompletedForSection { get; init; }
+    public ManageTaskViewModel(Data.Entities.User.User user, UserTask userTask, string token) 
+    {
+        User = user;
+        Token = token;
+        UserTask = userTask;
+        Type = userTask.Type;
+        Name = userTask.Name;
+        Notes = userTask.Notes;
+        Section = userTask.Section;
+        InternalNotes = userTask.InternalNotes;
+        DisabledReason = userTask.DisabledReason;
+        LagRefreshXDays = userTask.LagRefreshXDays;
+        PadRefreshXDays = userTask.PadRefreshXDays;
+        PersistUntilComplete = userTask.PersistUntilComplete;
+        DeloadAfterXWeeks = userTask.DeloadAfterXWeeks;
+        DeloadDurationWeeks = userTask.DeloadDurationWeeks;
+    }
 
     [ValidateNever]
-    public required Data.Entities.User.User User { get; init; }
+    public Data.Entities.User.User User { get; init; } = null!;
 
+    [ValidateNever]
     public string Token { get; init; } = null!;
+
+    [ValidateNever]
+    public Section ManageSection { get; init; }
+
+    [ValidateNever]
+    public bool CompletedForSection { get; init; }
 
     [ValidateNever]
     [Display(Name = "Task", Description = "Ignore this task.")]
@@ -25,7 +50,7 @@ public class ManageTaskViewModel
 
     [ValidateNever]
     [Display(Name = "Refreshes After", Description = "Refresh this task and try to select a new task if available.")]
-    public required UserTask UserTask { get; init; }
+    public UserTask UserTask { get; init; } = null!;
 
 
     /********** UserTask Properties **********/
@@ -33,8 +58,14 @@ public class ManageTaskViewModel
     [Display(Name = "Name")]
     public string Name { get; init; } = null!;
 
+    [Display(Name = "Type")]
+    public UserTaskType Type { get; set; }
+
     [Display(Name = "Notes")]
     public string? Notes { get; init; }
+
+    [Display(Name = "Internal Notes")]
+    public string? InternalNotes { get; init; }
 
     [Display(Name = "Persist Until Complete")]
     public bool PersistUntilComplete { get; init; }

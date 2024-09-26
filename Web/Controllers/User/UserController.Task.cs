@@ -128,10 +128,12 @@ public partial class UserController
             _context.Add(new UserTask()
             {
                 User = user,
+                Type = viewModel.Type,
                 Name = viewModel.Name,
                 Notes = viewModel.Notes,
                 Section = viewModel.Section,
                 Enabled = viewModel.Enabled,
+                InternalNotes = viewModel.InternalNotes,
                 PadRefreshXDays = viewModel.PadRefreshXDays,
                 LagRefreshXDays = viewModel.LagRefreshXDays,
                 DeloadAfterXWeeks = viewModel.DeloadAfterXWeeks,
@@ -155,6 +157,8 @@ public partial class UserController
                 userTask.LastSeen = userTask.LastSeen.AddDays(difference); // Add 70 days onto the LastSeen date.
             }
 
+            userTask.InternalNotes = user.IsDemoUser ? null : viewModel.InternalNotes;
+            userTask.Type = user.IsDemoUser ? userTask.Type : viewModel.Type;
             userTask.Name = user.IsDemoUser ? userTask.Name : viewModel.Name;
             userTask.PersistUntilComplete = viewModel.PersistUntilComplete;
             userTask.DeloadDurationWeeks = viewModel.DeloadDurationWeeks;
