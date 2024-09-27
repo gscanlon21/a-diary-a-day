@@ -15,7 +15,7 @@ public class UserConsts
     /// <summary>
     /// Since we upload an image for each task, let's limit it to keep costs low.
     /// </summary>
-    public const int MaxTasks = 100;
+    public const int MaxTasks = 128;
 
     public const int ChartDaysMin = 30;
     public const int ChartDaysDefault = 180;
