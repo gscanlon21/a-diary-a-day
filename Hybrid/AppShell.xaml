@@ -17,7 +17,7 @@
                     Icon="{StaticResource Mood}"
                     ContentTemplate="{DataTemplate local:NewsletterPage}" />
 
-    <ShellContent Title="Moods"
+    <ShellContent Title="Diaries"
                     Route="NewslettersPage"
                     Icon="{StaticResource Moods}"
                     ContentTemplate="{DataTemplate local:NewslettersPage}" />

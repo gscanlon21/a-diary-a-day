@@ -44,7 +44,7 @@
     }
 
     @* div for margin-collapse between text content and image. *@
-    <div>
+    <div style="@(!Model.Task.ShowLog ? "display:flex;flex-direction:column;height:100%;" : "")">
         @* min-height so the Manage link doesn't overlap the image. *@
         <div style="min-height:5.5ch;">
             @* padding-inline-end so title and instruction text doesn't overlap with the Manage link. *@
@@ -63,21 +63,23 @@
 
             @if (Verbosity.HasFlag(Verbosity.LagRefresh))
             {
-                <div style="margin-block:.5em;font-size:x-small;"><b>Lag Refresh</b>: todo</div>
+                <div style="margin-block:.5em;font-size:x-small;"><b>Lag Refresh (days)</b>: @Model.Task.LagRefreshXDays</div>
             }
 
             @if (Verbosity.HasFlag(Verbosity.PadRefresh))
             {
-                <div style="margin-block:.5em;font-size:x-small;"><b>Pad Refresh</b>: todo</div>
+                <div style="margin-block:.5em;font-size:x-small;"><b>Pad Refresh (days)</b>: @Model.Task.PadRefreshXDays</div>
             }
         </div>
 
-        @if (Verbosity.HasFlag(Verbosity.Images) && User != null && Model.Task.LastCompleted > DateOnly.MinValue && Model.Task.ShowLog)
+        @if (Verbosity.HasFlag(Verbosity.Images) && User != null && Model.Task.LastCompleted > DateOnly.MinValue)
         {
-            // If we want to reduce layout shift with aspect-ratio, that really needs to be included on the table with the image because our images don't have consistent aspect ratios.
-            // Setting min-height (200 / (25/14)) gets us close though. 25/14 is, for the most part, our widest aspect-ratio.
-            <img style="display:block;margin-top:1ex;height:auto;min-height:112px;max-height:350px;max-width:100%;object-fit:contain;object-position:left top;"
-                 src="@($"{SiteSettings.Value.CdnLink}/moods/{User.Uid}/{Component.Tasks}-{Model.Task.Uid}")" loading="lazy" />
+            <div style="display:flex;flex-direction:column;flex:1 1 auto;">
+                @* If we want to reduce layout shift with aspect-ratio, that really needs to be included on the table with the image because our images don't have consistent aspect ratios. *@
+                @* Setting min-height (200 / (25/14)) gets us close though. 25/14 is, for the most part, our widest aspect-ratio. *@
+                <img style="display:block;margin-top:1ex;height:auto;max-height:350px;max-width:100%;object-fit:contain;object-position:left top;@(Model.Task.ShowLog ? "min-height:112px;" : "min-height:0;flex:1 1 0;")"
+                     src="@($"{SiteSettings.Value.CdnLink}/moods/{User.Uid}/{Component.Tasks}-{Model.Task.Uid}")" loading="lazy" />
+            </div>
         }
     </div>
 </div>
