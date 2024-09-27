@@ -80,7 +80,7 @@ public class QueryRunner(Section section)
             // ... The LagRefreshXDays will prevent the LastSeen date from updating
             // ... and we may see two randomly alternating recipes for the LagRefreshXDays duration.
             .ThenBy(a => a.Task?.LastSeen.DayNumber)
-            // Mostly for the demo, show mostly random exercises.
+            // Mostly for the demo, show mostly random tasks.
             .ThenBy(_ => RandomNumberGenerator.GetInt32(Int32.MaxValue))
             // Don't re-order the list on each read.
             .ToList())
@@ -92,7 +92,7 @@ public class QueryRunner(Section section)
             }
         }
 
-        // Order by name.
-        return [.. orderedResults.Take(take).OrderBy(vm => vm.Task.Name)];
+        // Order by order then by name.
+        return [.. orderedResults.Take(take).OrderBy(vm => vm.Task.Order).ThenBy(vm => vm.Task.Name)];
     }
 }

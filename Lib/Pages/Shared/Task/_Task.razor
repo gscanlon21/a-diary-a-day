@@ -72,7 +72,7 @@
             }
         </div>
 
-        @if (Verbosity.HasFlag(Verbosity.Images) && User != null && Model.Task.LastCompleted > DateOnly.MinValue)
+        @if (Verbosity.HasFlag(Verbosity.Images) && User != null && Model.Task.LastCompleted > DateOnly.MinValue && Model.Task.ShowLog)
         {
             // If we want to reduce layout shift with aspect-ratio, that really needs to be included on the table with the image because our images don't have consistent aspect ratios.
             // Setting min-height (200 / (25/14)) gets us close though. 25/14 is, for the most part, our widest aspect-ratio.

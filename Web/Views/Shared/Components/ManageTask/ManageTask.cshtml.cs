@@ -14,7 +14,7 @@ public class ManageTaskViewModel
     [Obsolete("Public parameterless constructor required for model binding.", error: true)]
     public ManageTaskViewModel() { }
 
-    public ManageTaskViewModel(Data.Entities.User.User user, UserTask userTask, string token) 
+    public ManageTaskViewModel(Data.Entities.User.User user, UserTask userTask, string token)
     {
         User = user;
         Token = token;
@@ -22,6 +22,8 @@ public class ManageTaskViewModel
         Type = userTask.Type;
         Name = userTask.Name;
         Notes = userTask.Notes;
+        Order = userTask.Order;
+        ShowLog = userTask.ShowLog;
         Section = userTask.Section;
         InternalNotes = userTask.InternalNotes;
         DisabledReason = userTask.DisabledReason;
@@ -59,13 +61,19 @@ public class ManageTaskViewModel
     public string Name { get; init; } = null!;
 
     [Display(Name = "Type")]
-    public UserTaskType Type { get; set; }
+    public UserTaskType Type { get; init; }
 
     [Display(Name = "Notes")]
     public string? Notes { get; init; }
 
     [Display(Name = "Internal Notes")]
     public string? InternalNotes { get; init; }
+
+    [Display(Name = "Order")]
+    public int Order { get; init; }
+
+    [Display(Name = "Show Log")]
+    public bool ShowLog { get; init; }
 
     [Display(Name = "Persist Until Complete")]
     public bool PersistUntilComplete { get; init; }

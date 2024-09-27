@@ -8,6 +8,8 @@ namespace Web.Views.User;
 /// </summary>
 public class UserManageTaskViewModel
 {
+    public required string Token { get; init; } = null!;
+
     public required Data.Entities.User.User User { get; init; } = null!;
 
     public required UserTask Task { get; init; }
