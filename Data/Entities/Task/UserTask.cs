@@ -53,6 +53,16 @@ public class UserTask
     public UserTaskType Type { get; set; }
 
     /// <summary>
+    /// The order of the task.
+    /// </summary>
+    public int Order { get; set; }
+
+    /// <summary>
+    /// Should the task show the graph in the newsletter?
+    /// </summary>
+    public bool ShowLog { get; set; }
+
+    /// <summary>
     /// Keep the task in the newsletter if it was left uncompleted.
     /// </summary>
     public bool PersistUntilComplete { get; set; }

@@ -40,6 +40,7 @@ public class ManageTaskViewComponent : ViewComponent
             }, token));
         }
 
+        // User must have created the task to be able to edit it.
         var userTask = await _context.UserTasks.AsNoTracking().FirstOrDefaultAsync(r => r.UserId == user.Id && r.Id == task.Id);
         if (userTask == null) { return Content(""); }
 

@@ -29,9 +29,27 @@ public partial class UserController
         {
             User = user,
             Task = task,
+            Token = token,
             Section = section,
             WasUpdated = wasUpdated,
         });
+    }
+
+    [HttpPost, Route("{section:section}/{taskId}/show-log")]
+    public async Task<IActionResult> ShowLog(string email, string token, Section section, int taskId, UserTask task)
+    {
+        var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        // Set the last completed date on the UserTask.
+        var userTask = await _context.UserTasks.FirstAsync(ut => ut.UserId == user.Id && ut.Id == taskId);
+        userTask.ShowLog = task.ShowLog;
+
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(ManageTask), new { email, token, section, taskId, WasUpdated = true });
     }
 
     [HttpPost, Route("{section:section}/{taskId}/complete-task")]
@@ -131,6 +149,8 @@ public partial class UserController
                 Type = viewModel.Type,
                 Name = viewModel.Name,
                 Notes = viewModel.Notes,
+                Order = viewModel.Order,
+                ShowLog = viewModel.ShowLog,
                 Section = viewModel.Section,
                 Enabled = viewModel.Enabled,
                 InternalNotes = viewModel.InternalNotes,
@@ -166,8 +186,10 @@ public partial class UserController
             userTask.DeloadAfterXWeeks = viewModel.DeloadAfterXWeeks;
             userTask.LagRefreshXDays = viewModel.LagRefreshXDays;
             userTask.PadRefreshXDays = viewModel.PadRefreshXDays;
+            userTask.ShowLog = viewModel.ShowLog;
             userTask.Section = viewModel.Section;
             userTask.Enabled = viewModel.Enabled;
+            userTask.Order = viewModel.Order;
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageTask), new { email, token, section, taskId, WasUpdated = true });

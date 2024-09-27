@@ -3,7 +3,7 @@
 namespace Core.Dtos.Newsletter;
 
 /// <summary>
-/// DTO class for Recipe.cs
+/// DTO class for UserTask.cs
 /// </summary>
 [DebuggerDisplay("{Name,nq}")]
 public class TaskDto
@@ -14,25 +14,15 @@ public class TaskDto
 
     public int? UserId { get; init; }
 
-    /// <summary>
-    /// Friendly name.
-    /// </summary>
+    public bool ShowLog { get; init; }
+
     public string Name { get; init; } = null!;
 
-    /// <summary>
-    /// Notes about the task (externally shown).
-    /// </summary>
     public string? Notes { get; init; } = null;
 
-    /// <summary>
-    /// When was this task last seen in the user's newsletter.
-    /// </summary>
-    public DateOnly LastSeen { get; init; }
+    public DateOnly LastCompleted { get; init; }
 
-    /// <summary>
-    /// When was this task last marked as completed by the user.
-    /// </summary>
-    public DateOnly LastCompleted { get; set; }
+    public DateOnly LastSeen { get; init; }
 
     public string? DisabledReason { get; init; }
     public bool Enabled => string.IsNullOrWhiteSpace(DisabledReason);
