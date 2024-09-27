@@ -24,8 +24,14 @@ public class TaskDto
 
     public DateOnly LastSeen { get; init; }
 
+    public int LagRefreshXDays { get; init; }
+
+    public int PadRefreshXDays { get; init; }
+
+
     public string? DisabledReason { get; init; }
     public bool Enabled => string.IsNullOrWhiteSpace(DisabledReason);
+
 
     public override int GetHashCode() => HashCode.Combine(Id);
     public override bool Equals(object? obj) => obj is TaskDto other
