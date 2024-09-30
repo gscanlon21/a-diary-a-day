@@ -70,7 +70,8 @@ public class ManageTaskViewModel
     public string? InternalNotes { get; init; }
 
     [Display(Name = "Order")]
-    public int Order { get; init; }
+    [Range(UserTask.Consts.OrderMin, UserTask.Consts.OrderMax)]
+    public int Order { get; init; } = UserTask.Consts.OrderDefault;
 
     [Display(Name = "Show Log")]
     public bool ShowLog { get; init; }

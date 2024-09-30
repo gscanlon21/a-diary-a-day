@@ -18,6 +18,13 @@ namespace Data.Entities.Task;
 [DebuggerDisplay("{Name,nq}")]
 public class UserTask
 {
+    public class Consts
+    {
+        public const int OrderMin = 0;
+        public const int OrderDefault = 50;
+        public const int OrderMax = 500;
+    }
+
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; init; }
 
@@ -55,7 +62,8 @@ public class UserTask
     /// <summary>
     /// The order of the task.
     /// </summary>
-    public int Order { get; set; }
+    [Range(Consts.OrderMin, Consts.OrderMax)]
+    public int Order { get; set; } = Consts.OrderDefault;
 
     /// <summary>
     /// Should the task show the graph in the newsletter?

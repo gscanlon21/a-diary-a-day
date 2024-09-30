@@ -2,6 +2,7 @@
 @using System.Numerics
 @using Core.Consts
 @using Web.Components.UserTask
+@using Data.Entities.Task
 
 <div class="alert alert-light shadow">
     @if (Model.UserTask.Id != default)
@@ -53,8 +54,8 @@
         @if (Model.UserTask.Id == default)
         {
             <div class="form-group mb-3">
-                <label for="Name" class="control-label">@Html.DisplayNameFor(_ => Model.Name)</label>
-                <input type="text" asp-for="Name" class="form-control" aria-describedby="exercise-notes-help" rows="1" value="@Model.Name" />
+                <label asp-for="Name" class="control-label">@Html.DisplayNameFor(_ => Model.Name)</label>
+                <input asp-for="Name" type="text" class="form-control" aria-describedby="exercise-notes-help" rows="1" value="@Model.Name" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
         }
@@ -64,14 +65,14 @@
         }
 
         <div class="form-group mb-3 mt-3">
-            <label for="Notes" class="control-label">@Html.DisplayNameFor(_ => Model.Notes)</label>
-            <input type="text" asp-for="Notes" class="form-control" aria-describedby="exercise-notes-help" rows="1" value="@Model.Notes" />
+            <label asp-for="Notes" class="control-label">@Html.DisplayNameFor(_ => Model.Notes)</label>
+            <input asp-for="Notes" type="text" class="form-control" aria-describedby="exercise-notes-help" rows="1" value="@Model.Notes" />
             <span asp-validation-for="Notes" class="text-danger"></span>
         </div>
 
         <div class="form-group mb-3 mt-3">
-            <label for="InternalNotes" class="control-label">@Html.DisplayNameFor(_ => Model.InternalNotes)</label>
-            <input type="text" asp-for="InternalNotes" class="form-control" aria-describedby="task-internal-notes-help" rows="1" value="@Model.InternalNotes" />
+            <label asp-for="InternalNotes" class="control-label">@Html.DisplayNameFor(_ => Model.InternalNotes)</label>
+            <input asp-for="InternalNotes" type="text" class="form-control" aria-describedby="task-internal-notes-help" rows="1" value="@Model.InternalNotes" />
             <span asp-validation-for="InternalNotes" class="text-danger"></span>
         </div>
 
@@ -85,8 +86,9 @@
                 <div id="type-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.Type)</div>
             </div>
             <div class="col">
-                <label for="Order" class="control-label">@Html.DisplayNameFor(_ => Model.Order)</label>
-                <input type="number" asp-for="Order" class="form-control" aria-describedby="exercise-order-help" value="@Model.Order" />
+                <label asp-for="Order" class="control-label">@Html.DisplayNameFor(_ => Model.Order)</label>
+                <input asp-for="Order" type="number" class="form-control" aria-describedby="order-help"
+                       min="@UserTask.Consts.OrderMin" max="@UserTask.Consts.OrderMax" />
                 <span asp-validation-for="Order" class="text-danger"></span>
             </div>
         </div>
