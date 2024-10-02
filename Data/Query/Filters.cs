@@ -1,9 +1,10 @@
 ﻿using Core.Models.Newsletter;
+using Core.Models.User;
 using Data.Entities.Task;
 
 namespace Data.Query;
 
-public interface IRecipeCombo
+public interface ITaskCombo
 {
     UserTask Task { get; }
 }
@@ -11,9 +12,22 @@ public interface IRecipeCombo
 public static class Filters
 {
     /// <summary>
-    /// Make sure the exercise is for the correct task type
+    /// Make sure the task is for the correct task type.
     /// </summary>
-    public static IQueryable<T> FilterSection<T>(IQueryable<T> query, Section? value) where T : IRecipeCombo
+    public static IQueryable<T> FilterTaskType<T>(IQueryable<T> query, UserTaskType? value) where T : ITaskCombo
+    {
+        if (value.HasValue)
+        {
+            query = query.Where(vm => vm.Task.Type == value.Value);
+        }
+
+        return query;
+    }
+
+    /// <summary>
+    /// Make sure the task is for the correct section.
+    /// </summary>
+    public static IQueryable<T> FilterSection<T>(IQueryable<T> query, Section? value) where T : ITaskCombo
     {
         if (value.HasValue && value != Section.None)
         {
@@ -24,9 +38,9 @@ public static class Filters
     }
 
     /// <summary>
-    /// Filter down to these specific tasks
+    /// Filter down to these specific tasks.
     /// </summary>
-    public static bool FilterTasks<T>(ref IQueryable<T> query, IList<int>? taskIds) where T : IRecipeCombo
+    public static bool FilterTasks<T>(ref IQueryable<T> query, IList<int>? taskIds) where T : ITaskCombo
     {
         if (taskIds != null)
         {

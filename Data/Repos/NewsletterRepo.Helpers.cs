@@ -1,8 +1,8 @@
 ﻿using Data.Entities.Newsletter;
 using Data.Entities.Task;
 using Data.Entities.User;
-using Data.Models;
 using Data.Models.Newsletter;
+using Data.Query;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Data.Repos;

@@ -1,6 +1,5 @@
 ﻿using Core.Models.Newsletter;
 using Data.Entities.Task;
-using Data.Models;
 using Data.Query.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,14 +14,13 @@ namespace Data.Query;
 public class QueryRunner(Section section)
 {
     [DebuggerDisplay("{Task}")]
-    public class RecipesQueryResults : IRecipeCombo
+    public class RecipesQueryResults : ITaskCombo
     {
         public UserTask Task { get; init; } = null!;
     }
 
     [DebuggerDisplay("{Task}")]
-    private class InProgressQueryResults(RecipesQueryResults queryResult) :
-        IRecipeCombo
+    private class InProgressQueryResults(RecipesQueryResults queryResult) : ITaskCombo
     {
         public UserTask Task { get; } = queryResult.Task;
 
@@ -33,8 +31,9 @@ public class QueryRunner(Section section)
     }
 
     public required UserOptions UserOptions { get; init; }
-    public required ExclusionOptions ExclusionOptions { get; init; }
+    public required SelectionOptions SelectionOptions { get; init; }
     public required TaskOptions TaskOptions { get; init; }
+    public required ExclusionOptions ExclusionOptions { get; init; }
 
     private IQueryable<RecipesQueryResults> CreateFilteredTasksQuery(CoreContext context)
     {
@@ -61,11 +60,16 @@ public class QueryRunner(Section section)
         var filteredQuery = CreateFilteredTasksQuery(context);
 
         // If there are specific tasks to select, don't filter down by Section or LastSeen date.
-        if (!Filters.FilterTasks(ref filteredQuery, TaskOptions.UserTaskIds))
+        if (!Filters.FilterTasks(ref filteredQuery, SelectionOptions.UserTaskIds))
         {
             filteredQuery = Filters.FilterSection(filteredQuery, section);
-            filteredQuery = filteredQuery.Where(vm => vm.Task.LastSeen <= DateHelpers.Today);
-            filteredQuery = filteredQuery.Where(vm => vm.Task.LastDeload.AddDays(7 * vm.Task.DeloadDurationWeeks) <= DateHelpers.Today);
+            filteredQuery = Filters.FilterTaskType(filteredQuery, TaskOptions.TaskType);
+
+            if (!SelectionOptions.All)
+            {
+                filteredQuery = filteredQuery.Where(vm => vm.Task.LastSeen <= DateHelpers.Today);
+                filteredQuery = filteredQuery.Where(vm => vm.Task.LastDeload.AddDays(7 * vm.Task.DeloadDurationWeeks) <= DateHelpers.Today);
+            }
         }
 
         var queryResults = (await filteredQuery.Select(a => new InProgressQueryResults(a)).AsNoTracking().TagWithCallSite().ToListAsync()).ToList();

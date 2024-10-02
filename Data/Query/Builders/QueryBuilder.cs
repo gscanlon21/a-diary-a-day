@@ -1,6 +1,5 @@
-﻿
-using Core.Models.Newsletter;
-
+﻿using Core.Models.Newsletter;
+using Core.Models.User;
 using Data.Entities.User;
 using Data.Query.Options;
 
@@ -14,8 +13,9 @@ public class QueryBuilder
     private readonly Section Section;
 
     private UserOptions? UserOptions;
-    private ExclusionOptions? ExclusionOptions;
     private TaskOptions? TaskOptions;
+    private SelectionOptions? SelectionOptions;
+    private ExclusionOptions? ExclusionOptions;
 
     /// <summary>
     /// Looks for similar buckets of exercise variations.
@@ -64,11 +64,19 @@ public class QueryBuilder
         return this;
     }
 
-    public QueryBuilder WithTasks(Action<TaskOptions>? builder = null)
+    public QueryBuilder WithTaskType(UserTaskType? taskType = null, Action<TaskOptions>? builder = null)
     {
-        var options = TaskOptions ?? new TaskOptions(Section);
+        var options = TaskOptions ?? new TaskOptions(taskType);
         builder?.Invoke(options);
         TaskOptions = options;
+        return this;
+    }
+
+    public QueryBuilder WithTasks(Action<SelectionOptions>? builder = null)
+    {
+        var options = SelectionOptions ?? new SelectionOptions(Section);
+        builder?.Invoke(options);
+        SelectionOptions = options;
         return this;
     }
 
@@ -80,8 +88,9 @@ public class QueryBuilder
         return new QueryRunner(Section)
         {
             UserOptions = UserOptions ?? new UserOptions(),
-            ExclusionOptions = ExclusionOptions ?? new ExclusionOptions(),
             TaskOptions = TaskOptions ?? new TaskOptions(),
+            SelectionOptions = SelectionOptions ?? new SelectionOptions(),
+            ExclusionOptions = ExclusionOptions ?? new ExclusionOptions(),
         };
     }
 }

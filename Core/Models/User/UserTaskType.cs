@@ -1,9 +1,10 @@
-﻿using Core.Attributes;
-using Core.Models.Components.SubComponents;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Core.Models.User;
 
+/// <summary>
+/// The type of the task.
+/// </summary>
 public enum UserTaskType
 {
     [Display(Name = "Other")]
@@ -12,6 +13,8 @@ public enum UserTaskType
     [Display(Name = "Supplement")]
     Supplement,
 
+
+    /* Keep tasks and components separate.
     [Display(Name = "Mood Tracking")]
     Mood,
 
@@ -76,5 +79,5 @@ public enum UserTaskType
     BloodWork,
 
     [Display(Name = "Depression")]
-    Depression,
+    Depression,*/
 }

@@ -1,18 +1,18 @@
 ﻿using Core.Dtos.Newsletter;
 using Core.Dtos.User;
+using Core.Models.User;
 using Data;
-using Data.Models;
+using Data.Query;
 using Data.Query.Builders;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Web.Views.Shared.Components.IgnoredTasks;
 
 namespace Web.Components.User;
 
 
 /// <summary>
-/// Renders an alert box summary of when the user's next deload week will occur.
+/// Lists all of the user's ignored tasks.
 /// </summary>
 public class IgnoredTasksViewComponent(CoreContext context, UserRepo userRepo, IServiceScopeFactory serviceScopeFactory) : ViewComponent
 {
@@ -28,21 +28,17 @@ public class IgnoredTasksViewComponent(CoreContext context, UserRepo userRepo, I
             return Content("");
         }
 
+        // Filtering options.
+        var taskType = Enum.TryParse(Request.Query["type"], ignoreCase: true, out UserTaskType typeTmp) ? typeTmp : (UserTaskType?)null;
+
         // Need a user context so the manage link is clickable and the user can un-ignore a task.
         var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userNewsletter = new UserNewsletterDto(user.AsType<UserDto, Data.Entities.User.User>()!, token);
 
-        var userTasks = await context.UserTasks
-            .Where(r => r.UserId == user.Id)
-            .ToListAsync();
-
         var tasks = await new QueryBuilder()
-            // Include disabled tasks.
             .WithUser(user, ignored: true)
-            .WithTasks(x =>
-            {
-                x.AddTasks(userTasks);
-            })
+            .WithTasks(options => options.All = true)
+            .WithTaskType(taskType)
             .Build()
             .Query(serviceScopeFactory);
 

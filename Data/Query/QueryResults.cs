@@ -1,12 +1,11 @@
 ﻿using Core.Models.Newsletter;
 using Data.Entities.Task;
-using Data.Query;
 using System.Diagnostics;
 
-namespace Data.Models;
+namespace Data.Query;
 
 [DebuggerDisplay("{Section}: {Task}")]
-public class QueryResults(Section section, UserTask recipe) : IRecipeCombo
+public class QueryResults(Section section, UserTask recipe) : ITaskCombo
 {
     public Section Section { get; init; } = section;
     public UserTask Task { get; init; } = recipe;

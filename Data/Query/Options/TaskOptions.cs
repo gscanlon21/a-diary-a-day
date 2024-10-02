@@ -1,58 +1,18 @@
-﻿using Core.Models.Newsletter;
-using Data.Entities.Newsletter;
-using Data.Entities.Task;
+﻿using Core.Models.User;
 
 namespace Data.Query.Options;
 
 public class TaskOptions : IOptions
 {
-    private readonly Section _section;
-
     public TaskOptions() { }
 
-    public TaskOptions(Section section)
+    public TaskOptions(UserTaskType? taskType)
     {
-        _section = section;
+        TaskType = taskType;
     }
 
     /// <summary>
-    /// RecipeId:Scale.
+    /// Only select tasks of this type.
     /// </summary>
-    public IList<int>? UserTaskIds { get; private set; }
-
-    /// <summary>
-    /// Only select these recipes.
-    /// </summary>
-    public void AddTasks(IEnumerable<UserDiaryTask>? tasks)
-    {
-        if (tasks != null)
-        {
-            if (UserTaskIds == null)
-            {
-                UserTaskIds = tasks.Where(t => _section == t.Section).Select(t => t.UserTaskId).ToList();
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
-        }
-    }
-
-    /// <summary>
-    /// Only select these recipes.
-    /// </summary>
-    public void AddTasks(IEnumerable<UserTask>? tasks)
-    {
-        if (tasks != null)
-        {
-            if (UserTaskIds == null)
-            {
-                UserTaskIds = tasks.Select(t => t.Id).ToList();
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
-        }
-    }
+    public UserTaskType? TaskType { get; private init; }
 }
