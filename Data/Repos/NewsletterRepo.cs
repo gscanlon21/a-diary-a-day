@@ -179,7 +179,7 @@ public partial class NewsletterRepo
                 .Build()
                 .Query(_serviceScopeFactory))
                 // Re-order the tasks to match their original order.
-                .OrderBy(vm => newsletter.UserDiaryTasks.FirstOrDefault(ut => ut.UserTaskId == vm.Task.Id)?.Order ?? vm.Task.Order));
+                .OrderBy(vm => newsletter.UserDiaryTasks.FirstOrDefault(ut => ut.UserTaskId == vm.Task.Id && ut.Section == vm.Section)?.Order ?? vm.Task.Order));
         }
 
         // Only hide tasks for the current diary.
