@@ -5,10 +5,16 @@ using System.Diagnostics;
 namespace Data.Query;
 
 [DebuggerDisplay("{Section}: {Task}")]
-public class QueryResults(Section section, UserTask recipe) : ITaskCombo
+public class QueryResults : ITaskCombo
 {
-    public Section Section { get; init; } = section;
-    public UserTask Task { get; init; } = recipe;
+    public QueryResults(Section section, UserTask task)
+    {
+        Task = task;
+        Section = section;
+    }
+
+    public UserTask Task { get; }
+    public Section Section { get; }
 
     public override int GetHashCode() => HashCode.Combine(Task.Id);
     public override bool Equals(object? obj) => obj is QueryResults other

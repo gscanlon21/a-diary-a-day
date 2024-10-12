@@ -29,9 +29,16 @@ public static class Filters
     /// </summary>
     public static IQueryable<T> FilterSection<T>(IQueryable<T> query, Section? value) where T : ITaskCombo
     {
-        if (value.HasValue && value != Section.None)
+        if (value.HasValue)
         {
-            query = query.Where(vm => vm.Task.Section.HasFlag(value.Value));
+            if (value == Section.None)
+            {
+                query = query.Where(vm => vm.Task.Section == value.Value);
+            }
+            else
+            {
+                query = query.Where(vm => vm.Task.Section.HasFlag(value.Value));
+            }
         }
 
         return query;

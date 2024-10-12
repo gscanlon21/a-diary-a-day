@@ -145,25 +145,21 @@ public partial class NewsletterRepo
     /// </summary>
     private async Task<NewsletterDto?> OnDayNewsletter(NewsletterContext context)
     {
-        var userViewModel = new UserNewsletterDto(context.User.AsType<UserDto, User>()!, context.Token);
-
-        var tasks = new List<QueryResults>();
+        var tasks = new List<QueryResults>(await GetUserTasks(context, Section.None));
         foreach (var section in EnumExtensions.GetSingleValues32<Section>())
         {
             tasks.AddRange(await GetUserTasks(context, section));
         }
-        tasks.AddRange(await GetUserTasks(context, Section.None, exclude: tasks));
-        await UpdateLastSeenDate(tasks.Select(t => t.Task).Where(t => !t.PersistUntilComplete));
 
-        var images = GetImages(context.User).ToList();
-        var newsletter = await CreateAndAddNewsletterToContext(context, tasks);
-        var viewModel = new NewsletterDto(userViewModel)
+        await UpdateLastSeenDate(tasks.Select(t => t.Task).Where(t => !t.PersistUntilComplete));
+        await CreateAndAddNewsletterToContext(context, tasks);
+
+        var userViewModel = new UserNewsletterDto(context.User.AsType<UserDto, User>()!, context.Token);
+        return new NewsletterDto(userViewModel)
         {
-            Images = images,
+            Images = GetImages(context.User).ToList(),
             Tasks = tasks.Select(t => t.AsType<NewsletterTaskDto, QueryResults>()!).ToList(),
         };
-
-        return viewModel;
     }
 
     /// <summary>
@@ -183,7 +179,7 @@ public partial class NewsletterRepo
                 .Build()
                 .Query(_serviceScopeFactory))
                 // Re-order the tasks to match their original order.
-                .OrderBy(e => newsletter.UserDiaryTasks.FirstOrDefault(nv => nv.UserTaskId == e.Task.Id)?.Order ?? -1));
+                .OrderBy(vm => newsletter.UserDiaryTasks.FirstOrDefault(ut => ut.UserTaskId == vm.Task.Id)?.Order ?? vm.Task.Order));
         }
 
         // Only hide tasks for the current diary.

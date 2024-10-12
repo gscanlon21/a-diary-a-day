@@ -10,24 +10,18 @@ namespace Data.Query.Builders;
 /// </summary>
 public class QueryBuilder
 {
-    private readonly Section Section;
+    private readonly Section? Section;
 
     private UserOptions? UserOptions;
     private TaskOptions? TaskOptions;
     private SelectionOptions? SelectionOptions;
     private ExclusionOptions? ExclusionOptions;
 
-    /// <summary>
-    /// Looks for similar buckets of exercise variations.
-    /// </summary>
     public QueryBuilder()
     {
-        Section = Section.None;
+        Section = null;
     }
 
-    /// <summary>
-    /// Looks for similar buckets of exercise variations.
-    /// </summary>
     public QueryBuilder(Section section)
     {
         Section = section;

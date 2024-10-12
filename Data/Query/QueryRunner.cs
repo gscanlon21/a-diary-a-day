@@ -9,10 +9,17 @@ using System.Security.Cryptography;
 namespace Data.Query;
 
 /// <summary>
-/// Builds and runs an EF Core query for selecting exercises.
+/// Builds and runs an EF Core query for selecting tasks.
 /// </summary>
-public class QueryRunner(Section section)
+public class QueryRunner
 {
+    private readonly Section? _section;
+
+    public QueryRunner(Section? section)
+    {
+        _section = section;
+    }
+
     [DebuggerDisplay("{Task}")]
     public class RecipesQueryResults : ITaskCombo
     {
@@ -62,7 +69,7 @@ public class QueryRunner(Section section)
         // If there are specific tasks to select, don't filter down by Section or LastSeen date.
         if (!Filters.FilterTasks(ref filteredQuery, SelectionOptions.UserTaskIds))
         {
-            filteredQuery = Filters.FilterSection(filteredQuery, section);
+            filteredQuery = Filters.FilterSection(filteredQuery, _section);
             filteredQuery = Filters.FilterTaskType(filteredQuery, TaskOptions.TaskType);
 
             if (!SelectionOptions.All)
@@ -89,7 +96,7 @@ public class QueryRunner(Section section)
             // Don't re-order the list on each read.
             .ToList())
         {
-            var queryResult = new QueryResults(section, recipe.Task);
+            var queryResult = new QueryResults(_section ?? Section.None, recipe.Task);
             if (!orderedResults.Contains(queryResult))
             {
                 orderedResults.Add(queryResult);

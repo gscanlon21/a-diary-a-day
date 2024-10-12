@@ -6,11 +6,11 @@ namespace Data.Query.Options;
 
 public class SelectionOptions : IOptions
 {
-    private readonly Section _section;
+    private readonly Section? _section;
 
     public SelectionOptions() { }
 
-    public SelectionOptions(Section section)
+    public SelectionOptions(Section? section)
     {
         _section = section;
     }
