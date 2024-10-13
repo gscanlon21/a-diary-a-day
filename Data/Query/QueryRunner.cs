@@ -103,7 +103,9 @@ public class QueryRunner
             }
         }
 
-        // Order by order then by name.
-        return [.. orderedResults.Take(take).OrderBy(vm => vm.Task.Order).ThenBy(vm => vm.Task.Name)];
+        return _section switch {
+            null => [.. orderedResults.Take(take).OrderBy(vm => vm.Task.Name)],
+            not null => [.. orderedResults.Take(take).OrderBy(vm => vm.Task.Order).ThenBy(vm => vm.Task.Name)]
+        };
     }
 }

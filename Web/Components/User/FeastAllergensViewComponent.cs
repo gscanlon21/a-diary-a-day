@@ -35,7 +35,7 @@ public class FeastAllergensViewComponent(CoreContext context, UserRepo userRepo)
             Name = a.GetSingleDisplayName(),
         }).ToList();
 
-        var viewModel = new FeastAllergensViewModel(userMoods, userCustoms)
+        return View("FeastAllergens", new FeastAllergensViewModel(userMoods, userCustoms)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
@@ -45,8 +45,6 @@ public class FeastAllergensViewComponent(CoreContext context, UserRepo userRepo)
                 UserId = user.Id,
                 User = user
             },
-        };
-
-        return View("FeastAllergens", viewModel);
+        });
     }
 }

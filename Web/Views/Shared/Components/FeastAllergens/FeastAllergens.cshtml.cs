@@ -17,7 +17,7 @@ public class FeastAllergensViewModel
                 {
                     One = (int)c.Value
                 });
-            });
+            }).ToList();
 
             foreach (var custom in customs)
             {
