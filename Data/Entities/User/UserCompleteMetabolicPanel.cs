@@ -18,6 +18,10 @@ public class UserCompleteMetabolicPanel
         public const double BilirubinTotalMin = 0;
         public const double BilirubinTotalMax = 10;
         public const double BilirubinTotalStep = .1;
+
+        public const double GlucoseMin = 50;
+        public const double GlucoseMax = 200;
+        public const double GlucoseStep = 1;
     }
 
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -32,7 +36,7 @@ public class UserCompleteMetabolicPanel
     [Required]
     public DateOnly Date { get; init; } = DateHelpers.Today;
 
-    [Range(40, 240)]
+    [Range(Consts.GlucoseMin, Consts.GlucoseMax)]
     [Display(Name = "Glucose")]
     public int? Glucose { get; set; }
 

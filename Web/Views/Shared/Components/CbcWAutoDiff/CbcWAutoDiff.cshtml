@@ -225,10 +225,10 @@
                                 <input id="@(Html.IdFor(_ => Model.UserMood.PlatletCount))" asp-for="UserMood.PlatletCount" style="width:6ch;height:fit-content;" class="allow-demo"
                                        oninput="@(Html.IdFor(_ => Model.UserMood.PlatletCount))Input.value = this.valueAsNumber" />
                                 <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                                    <input type="range" style="width:100%;" class="allow-demo"
-                                           name="@(Html.IdFor(_ => Model.UserMood.PlatletCount))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.PlatletCount))-input"
-                                           min="-1" max="250" step="1" value="@(Model.UserMood.PlatletCount ?? -1)"
-                                           oninput="@(Html.IdFor(_ => Model.UserMood.PlatletCount)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.PlatletCount))-input" class="allow-demo" style="width:100%;"type="range"
+                                           name="@(Html.IdFor(_ => Model.UserMood.PlatletCount))Input" list="hashmarks" value="@(Model.UserMood.PlatletCount ?? -1)"
+                                           min="@(UserCbcWAutoDiff.Consts.PlatletCountMin - UserCbcWAutoDiff.Consts.PlatletCountStep)" max="@UserCbcWAutoDiff.Consts.PlatletCountMax" step="@UserCbcWAutoDiff.Consts.PlatletCountStep"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.PlatletCount)).value = this.valueAsNumber < @UserCbcWAutoDiff.Consts.PlatletCountMin ? '' : this.valueAsNumber" />
 
                                     <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
                                         <option value=""></option>

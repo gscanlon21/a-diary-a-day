@@ -13,6 +13,13 @@ namespace Data.Entities.User;
 [Table("user_cbc_w_auto_diff"), Comment("User variation weight log")]
 public class UserCbcWAutoDiff
 {
+    public class Consts
+    {
+        public const double PlatletCountMin = 100;
+        public const double PlatletCountMax = 500;
+        public const double PlatletCountStep = 1;
+    }
+
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private init; }
 
@@ -57,7 +64,7 @@ public class UserCbcWAutoDiff
     [Display(Name = "RDW-CV")]
     public int? RDW_CV { get; set; }
 
-    [Range(40, 240)]
+    [Range(Consts.PlatletCountMin, Consts.PlatletCountMax)]
     [Display(Name = "PlatletCount")]
     public int? PlatletCount { get; set; }
 

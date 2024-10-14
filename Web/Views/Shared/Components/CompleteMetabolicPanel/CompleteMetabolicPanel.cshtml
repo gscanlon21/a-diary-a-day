@@ -373,10 +373,10 @@
                                 <input id="@(Html.IdFor(_ => Model.UserMood.Glucose))" asp-for="UserMood.Glucose" style="width:6ch;height:fit-content;" class="allow-demo"
                                         oninput="@(Html.IdFor(_ => Model.UserMood.Glucose))Input.value = this.valueAsNumber" />
                                 <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                                    <input type="range" style="width:100%;" class="allow-demo"
-                                            name="@(Html.IdFor(_ => Model.UserMood.Glucose))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.Glucose))-input"
-                                            min="-1" max="250" step="1" value="@(Model.UserMood.Glucose ?? -1)"
-                                            oninput="@(Html.IdFor(_ => Model.UserMood.Glucose)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.Glucose))-input" class="allow-demo" style="width:100%;" type="range"
+                                           name="@(Html.IdFor(_ => Model.UserMood.Glucose))Input" list="hashmarks" value="@(Model.UserMood.Glucose ?? -1)"
+                                           min="@(UserCompleteMetabolicPanel.Consts.GlucoseMin - UserCompleteMetabolicPanel.Consts.GlucoseStep)" max="@UserCompleteMetabolicPanel.Consts.GlucoseMax" step="@UserCompleteMetabolicPanel.Consts.GlucoseStep"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.Glucose)).value = this.valueAsNumber < @UserCompleteMetabolicPanel.Consts.GlucoseMin ? '' : this.valueAsNumber" />
 
                                     <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
                                         <option value=""></option>
