@@ -13,9 +13,9 @@ public class UserGutMicronutrients
 {
     public class Consts
     {
-        public const double PlatletCountMin = 100;
-        public const double PlatletCountMax = 500;
-        public const double PlatletCountStep = 1;
+        public const int PlatletCountMin = 100;
+        public const int PlatletCountMax = 500;
+        public const int PlatletCountStep = 1;
     }
 
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

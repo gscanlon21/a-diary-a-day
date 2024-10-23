@@ -46,6 +46,7 @@ public class CoreContext : DbContext
     public DbSet<UserDissociativeSeverity> UserDissociativeSeverities { get; set; } = null!;
     public DbSet<UserGeneralizedAnxietySeverity> UserGeneralizedAnxietySeverities { get; set; } = null!;
     public DbSet<UserGutPillars> UserGutPillars { get; set; } = null!;
+    public DbSet<UserGutFungi> UserGutFungi { get; set; } = null!;
     public DbSet<UserMania> UserManias { get; set; } = null!;
     public DbSet<UserPanicSeverity> UserPanicSeverities { get; set; } = null!;
     public DbSet<UserPostTraumaticStressSeverity> UserPostTraumaticStressSeverities { get; set; } = null!;

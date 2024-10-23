@@ -84,9 +84,12 @@ public enum Component
     [Display(Name = "Gut Pillars")]
     GutPillars = 1 << 23, // 8388608
 
+    [Display(Name = "Gut Fungi")]
+    GutFungi = 1 << 24, // 16777216
+
     All = Mood | Sleep | People | Symptom | Emotion | Activity | Medicine
         | AcuteStressSeverity | AgoraphobiaSeverity | DepressionSeverity | DissociativeSeverity
         | GeneralizedAnxietySeverity | PanicSeverity | PTSDSeverity | SocialAnxietySeverity
         | Journal | CompleteMetabolicPanel | Tasks | DryEyes | FeastAllergens | CbcWAutoDiff
-        | BloodWork | Depression | GutPillars
+        | BloodWork | Depression | GutPillars | GutFungi
 }

@@ -15,13 +15,13 @@ public class UserCompleteMetabolicPanel
 {
     public class Consts
     {
+        public const int GlucoseMin = 50;
+        public const int GlucoseMax = 200;
+        public const int GlucoseStep = 1;
+
         public const double BilirubinTotalMin = 0;
         public const double BilirubinTotalMax = 10;
         public const double BilirubinTotalStep = .1;
-
-        public const double GlucoseMin = 50;
-        public const double GlucoseMax = 200;
-        public const double GlucoseStep = 1;
     }
 
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

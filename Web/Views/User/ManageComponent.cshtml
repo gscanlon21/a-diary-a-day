@@ -91,6 +91,14 @@ else if (Model.Component.HasFlag(Core.Models.Components.Component.BloodWork))
 {
     @await Component.InvokeAsync(BloodWorkViewComponent.Name, new { Model.User })
 }
+else if (Model.Component.HasFlag(Core.Models.Components.Component.GutPillars))
+{
+    @await Component.InvokeAsync(GutPillarsViewComponent.Name, new { Model.User })
+}
+else if (Model.Component.HasFlag(Core.Models.Components.Component.GutFungi))
+{
+    @await Component.InvokeAsync(GutFungiViewComponent.Name, new { Model.User })
+}
 else if (Model.Component.HasFlag(Core.Models.Components.Component.DryEyes))
 {
     @await Component.InvokeAsync(DryEyesViewComponent.Name, new { Model.User })

@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -8,14 +7,14 @@ namespace Data.Entities.User;
 /// <summary>
 /// https://site-akiajqrf22xmaqzsiz6q.s3.amazonaws.com/DDI+Website/Sample+Reports/Sample+Report+GI360.pdf
 /// </summary>
-[Table("user_gut_fungi"), Comment("User variation weight log")]
+[Table("user_gut_fungi")]
 public class UserGutFungi
 {
     public class Consts
     {
-        public const double PlatletCountMin = 100;
-        public const double PlatletCountMax = 500;
-        public const double PlatletCountStep = 1;
+        public const double TotalFungiMin = 0;
+        public const double TotalFungiMax = 150;
+        public const double TotalFungiStep = .1;
     }
 
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -27,12 +26,12 @@ public class UserGutFungi
     [Required]
     public DateOnly Date { get; init; } = DateHelpers.Today;
 
-    [Range(40, 240)]
+    [Range(Consts.TotalFungiMin, Consts.TotalFungiMax)]
     [Display(Name = "Total Fungi")]
-    public int? TotalFungi { get; set; }
+    public double? TotalFungi { get; set; }
 
     [NotMapped]
-    public Dictionary<string, int?> Items => new()
+    public Dictionary<string, double?> Items => new()
     {
         { nameof(TotalFungi), TotalFungi },
     };
