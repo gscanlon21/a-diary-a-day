@@ -13,9 +13,33 @@ public class UserGutPillars
 {
     public class Consts
     {
-        public const int PlatletCountMin = 100;
-        public const int PlatletCountMax = 500;
-        public const int PlatletCountStep = 1;
+        public const double DigestionMin = 0;
+        public const double DigestionMax = 100;
+        public const double DigestionStep = .1;
+
+        public const double InflammationMin = 0;
+        public const double InflammationMax = 100;
+        public const double InflammationStep = .1;
+
+        public const double GutDysbiosisMin = 0;
+        public const double GutDysbiosisMax = 100;
+        public const double GutDysbiosisStep = .1;
+
+        public const double IntestinalPermeabilityMin = 0;
+        public const double IntestinalPermeabilityMax = 100;
+        public const double IntestinalPermeabilityStep = .1;
+
+        public const double NervousSystemMin = 0;
+        public const double NervousSystemMax = 100;
+        public const double NervousSystemStep = .1;
+
+        public const int DiversityScoreMin = 0;
+        public const int DiversityScoreMax = 100;
+        public const int DiversityScoreStep = 1;
+
+        public const int ImmuneReadinessScoreMin = 0;
+        public const int ImmuneReadinessScoreMax = 100;
+        public const int ImmuneReadinessScoreStep = 1;
     }
 
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -27,36 +51,36 @@ public class UserGutPillars
     [Required]
     public DateOnly Date { get; init; } = DateHelpers.Today;
 
-    [Range(40, 240)]
+    [Range(Consts.DigestionMin, Consts.DigestionMax)]
     [Display(Name = "Digestion")]
-    public int? Digestion { get; set; }
+    public double? Digestion { get; set; }
 
-    [Range(40, 240)]
+    [Range(Consts.InflammationMin, Consts.InflammationMax)]
     [Display(Name = "Inflammation")]
-    public int? Inflammation { get; set; }
+    public double? Inflammation { get; set; }
 
-    [Range(40, 240)]
+    [Range(Consts.GutDysbiosisMin, Consts.GutDysbiosisMax)]
     [Display(Name = "Gut Dysbiosis")]
-    public int? GutDysbiosis { get; set; }
+    public double? GutDysbiosis { get; set; }
 
-    [Range(40, 240)]
+    [Range(Consts.IntestinalPermeabilityMin, Consts.IntestinalPermeabilityMax)]
     [Display(Name = "Intestinal Permeability")]
-    public int? IntestinalPermeability { get; set; }
+    public double? IntestinalPermeability { get; set; }
 
-    [Range(40, 240)]
+    [Range(Consts.NervousSystemMin, Consts.NervousSystemMax)]
     [Display(Name = "Nervous System")]
-    public int? NervousSystem { get; set; }
+    public double? NervousSystem { get; set; }
 
-    [Range(40, 240)]
+    [Range(Consts.DiversityScoreMin, Consts.DiversityScoreMax)]
     [Display(Name = "Diversity Score")]
     public int? DiversityScore { get; set; }
 
-    [Range(40, 240)]
+    [Range(Consts.ImmuneReadinessScoreMin, Consts.ImmuneReadinessScoreMax)]
     [Display(Name = "Immune Readiness Score")]
     public int? ImmuneReadinessScore { get; set; }
 
     [NotMapped]
-    public Dictionary<string, int?> Items => new()
+    public Dictionary<string, double?> Items => new()
     {
         { nameof(ImmuneReadinessScore), ImmuneReadinessScore },
         { nameof(DiversityScore), DiversityScore },

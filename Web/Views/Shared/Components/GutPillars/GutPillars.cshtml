@@ -25,18 +25,17 @@
                                 <input id="@(Html.IdFor(_ => Model.UserMood.Digestion))" asp-for="UserMood.Digestion" style="width:6ch;height:fit-content;" class="allow-demo"
                                        oninput="@(Html.IdFor(_ => Model.UserMood.Digestion))Input.value = this.valueAsNumber" />
                                 <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                                    <input type="range" style="width:100%;" class="allow-demo"
-                                           name="@(Html.IdFor(_ => Model.UserMood.Digestion))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.Digestion))-input"
-                                           min="-1" max="250" step="1" value="@(Model.UserMood.Digestion ?? -1)"
-                                           oninput="@(Html.IdFor(_ => Model.UserMood.Digestion)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.Digestion))-input" class="allow-demo" style="width:100%;" type="range"
+                                           name="@(Html.IdFor(_ => Model.UserMood.Digestion))Input" list="hashmarks" value="@(Model.UserMood.Digestion ?? -1)"
+                                           min="@(UserGutPillars.Consts.DigestionMin - UserGutPillars.Consts.DigestionStep)" max="@UserGutPillars.Consts.DigestionMax" step="@UserGutPillars.Consts.DigestionStep"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.Digestion)).value = this.valueAsNumber < @UserGutPillars.Consts.DigestionMin ? '' : this.valueAsNumber" />
 
                                     <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
                                         <option value=""></option>
+                                        <option value="25"></option>
                                         <option value="50"></option>
                                         <option value="75"></option>
                                         <option value="100"></option>
-                                        <option value="125"></option>
-                                        <option value="150"></option>
                                     </datalist>
                                 </div>
                             </div>
@@ -50,18 +49,17 @@
                                 <input id="@(Html.IdFor(_ => Model.UserMood.DiversityScore))" asp-for="UserMood.DiversityScore" style="width:6ch;height:fit-content;" class="allow-demo"
                                        oninput="@(Html.IdFor(_ => Model.UserMood.DiversityScore))Input.value = this.valueAsNumber" />
                                 <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                                    <input type="range" style="width:100%;" class="allow-demo"
-                                           name="@(Html.IdFor(_ => Model.UserMood.DiversityScore))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.DiversityScore))-input"
-                                           min="-1" max="250" step="1" value="@(Model.UserMood.DiversityScore ?? -1)"
-                                           oninput="@(Html.IdFor(_ => Model.UserMood.DiversityScore)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.DiversityScore))-input" class="allow-demo" style="width:100%;" type="range"
+                                           name="@(Html.IdFor(_ => Model.UserMood.DiversityScore))Input" list="hashmarks" value="@(Model.UserMood.DiversityScore ?? -1)"
+                                           min="@(UserGutPillars.Consts.DiversityScoreMin - UserGutPillars.Consts.DiversityScoreStep)" max="@UserGutPillars.Consts.DiversityScoreMax" step="@UserGutPillars.Consts.DiversityScoreStep"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.DiversityScore)).value = this.valueAsNumber < @UserGutPillars.Consts.DiversityScoreMin ? '' : this.valueAsNumber" />
 
                                     <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
                                         <option value=""></option>
+                                        <option value="25"></option>
                                         <option value="50"></option>
                                         <option value="75"></option>
                                         <option value="100"></option>
-                                        <option value="125"></option>
-                                        <option value="150"></option>
                                     </datalist>
                                 </div>
                             </div>
@@ -75,18 +73,17 @@
                                 <input id="@(Html.IdFor(_ => Model.UserMood.Inflammation))" asp-for="UserMood.Inflammation" style="width:6ch;height:fit-content;" class="allow-demo"
                                        oninput="@(Html.IdFor(_ => Model.UserMood.Inflammation))Input.value = this.valueAsNumber" />
                                 <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                                    <input type="range" style="width:100%;" class="allow-demo"
-                                           name="@(Html.IdFor(_ => Model.UserMood.Inflammation))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.Inflammation))-input"
-                                           min="-1" max="250" step="1" value="@(Model.UserMood.Inflammation ?? -1)"
-                                           oninput="@(Html.IdFor(_ => Model.UserMood.Inflammation)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.Inflammation))-input" class="allow-demo" style="width:100%;" type="range"
+                                           name="@(Html.IdFor(_ => Model.UserMood.Inflammation))Input" list="hashmarks" value="@(Model.UserMood.Inflammation ?? -1)"
+                                           min="@(UserGutPillars.Consts.InflammationMin - UserGutPillars.Consts.InflammationStep)" max="@UserGutPillars.Consts.InflammationMax" step="@UserGutPillars.Consts.InflammationStep"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.Inflammation)).value = this.valueAsNumber < @UserGutPillars.Consts.InflammationMin ? '' : this.valueAsNumber" />
 
                                     <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
                                         <option value=""></option>
+                                        <option value="25"></option>
                                         <option value="50"></option>
                                         <option value="75"></option>
                                         <option value="100"></option>
-                                        <option value="125"></option>
-                                        <option value="150"></option>
                                     </datalist>
                                 </div>
                             </div>
@@ -100,18 +97,17 @@
                                 <input id="@(Html.IdFor(_ => Model.UserMood.GutDysbiosis))" asp-for="UserMood.GutDysbiosis" style="width:6ch;height:fit-content;" class="allow-demo"
                                        oninput="@(Html.IdFor(_ => Model.UserMood.GutDysbiosis))Input.value = this.valueAsNumber" />
                                 <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                                    <input type="range" style="width:100%;" class="allow-demo"
-                                           name="@(Html.IdFor(_ => Model.UserMood.GutDysbiosis))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.GutDysbiosis))-input"
-                                           min="-1" max="250" step="1" value="@(Model.UserMood.GutDysbiosis ?? -1)"
-                                           oninput="@(Html.IdFor(_ => Model.UserMood.GutDysbiosis)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.GutDysbiosis))-input" class="allow-demo" style="width:100%;" type="range"
+                                           name="@(Html.IdFor(_ => Model.UserMood.GutDysbiosis))Input" list="hashmarks" value="@(Model.UserMood.GutDysbiosis ?? -1)"
+                                           min="@(UserGutPillars.Consts.GutDysbiosisMin - UserGutPillars.Consts.GutDysbiosisStep)" max="@UserGutPillars.Consts.GutDysbiosisMax" step="@UserGutPillars.Consts.GutDysbiosisStep"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.GutDysbiosis)).value = this.valueAsNumber < @UserGutPillars.Consts.GutDysbiosisMin ? '' : this.valueAsNumber" />
 
                                     <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
                                         <option value=""></option>
+                                        <option value="25"></option>
                                         <option value="50"></option>
                                         <option value="75"></option>
                                         <option value="100"></option>
-                                        <option value="125"></option>
-                                        <option value="150"></option>
                                     </datalist>
                                 </div>
                             </div>
@@ -125,18 +121,17 @@
                                 <input id="@(Html.IdFor(_ => Model.UserMood.ImmuneReadinessScore))" asp-for="UserMood.ImmuneReadinessScore" style="width:6ch;height:fit-content;" class="allow-demo"
                                        oninput="@(Html.IdFor(_ => Model.UserMood.ImmuneReadinessScore))Input.value = this.valueAsNumber" />
                                 <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                                    <input type="range" style="width:100%;" class="allow-demo"
-                                           name="@(Html.IdFor(_ => Model.UserMood.ImmuneReadinessScore))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.ImmuneReadinessScore))-input"
-                                           min="-1" max="250" step="1" value="@(Model.UserMood.ImmuneReadinessScore ?? -1)"
-                                           oninput="@(Html.IdFor(_ => Model.UserMood.ImmuneReadinessScore)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.ImmuneReadinessScore))-input" class="allow-demo" style="width:100%;" type="range"
+                                           name="@(Html.IdFor(_ => Model.UserMood.ImmuneReadinessScore))Input" list="hashmarks" value="@(Model.UserMood.ImmuneReadinessScore ?? -1)"
+                                           min="@(UserGutPillars.Consts.ImmuneReadinessScoreMin - UserGutPillars.Consts.ImmuneReadinessScoreStep)" max="@UserGutPillars.Consts.ImmuneReadinessScoreMax" step="@UserGutPillars.Consts.ImmuneReadinessScoreStep"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.ImmuneReadinessScore)).value = this.valueAsNumber < @UserGutPillars.Consts.ImmuneReadinessScoreMin ? '' : this.valueAsNumber" />
 
                                     <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
                                         <option value=""></option>
+                                        <option value="25"></option>
                                         <option value="50"></option>
                                         <option value="75"></option>
                                         <option value="100"></option>
-                                        <option value="125"></option>
-                                        <option value="150"></option>
                                     </datalist>
                                 </div>
                             </div>
@@ -150,18 +145,17 @@
                                 <input id="@(Html.IdFor(_ => Model.UserMood.IntestinalPermeability))" asp-for="UserMood.IntestinalPermeability" style="width:6ch;height:fit-content;" class="allow-demo"
                                        oninput="@(Html.IdFor(_ => Model.UserMood.IntestinalPermeability))Input.value = this.valueAsNumber" />
                                 <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                                    <input type="range" style="width:100%;" class="allow-demo"
-                                           name="@(Html.IdFor(_ => Model.UserMood.IntestinalPermeability))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.IntestinalPermeability))-input"
-                                           min="-1" max="250" step="1" value="@(Model.UserMood.IntestinalPermeability ?? -1)"
-                                           oninput="@(Html.IdFor(_ => Model.UserMood.IntestinalPermeability)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.IntestinalPermeability))-input" class="allow-demo" style="width:100%;" type="range"
+                                           name="@(Html.IdFor(_ => Model.UserMood.IntestinalPermeability))Input" list="hashmarks" value="@(Model.UserMood.IntestinalPermeability ?? -1)"
+                                           min="@(UserGutPillars.Consts.IntestinalPermeabilityMin - UserGutPillars.Consts.IntestinalPermeabilityStep)" max="@UserGutPillars.Consts.IntestinalPermeabilityMax" step="@UserGutPillars.Consts.IntestinalPermeabilityStep"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.IntestinalPermeability)).value = this.valueAsNumber < @UserGutPillars.Consts.IntestinalPermeabilityMin ? '' : this.valueAsNumber" />
 
                                     <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
                                         <option value=""></option>
+                                        <option value="25"></option>
                                         <option value="50"></option>
                                         <option value="75"></option>
                                         <option value="100"></option>
-                                        <option value="125"></option>
-                                        <option value="150"></option>
                                     </datalist>
                                 </div>
                             </div>
@@ -175,18 +169,17 @@
                                 <input id="@(Html.IdFor(_ => Model.UserMood.NervousSystem))" asp-for="UserMood.NervousSystem" style="width:6ch;height:fit-content;" class="allow-demo"
                                        oninput="@(Html.IdFor(_ => Model.UserMood.NervousSystem))Input.value = this.valueAsNumber" />
                                 <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
-                                    <input type="range" style="width:100%;" class="allow-demo"
-                                           name="@(Html.IdFor(_ => Model.UserMood.NervousSystem))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.NervousSystem))-input"
-                                           min="-1" max="250" step="1" value="@(Model.UserMood.NervousSystem ?? -1)"
-                                           oninput="@(Html.IdFor(_ => Model.UserMood.NervousSystem)).value = this.valueAsNumber < 0 ? '' : this.valueAsNumber" />
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.NervousSystem))-input" class="allow-demo" style="width:100%;" type="range"
+                                           name="@(Html.IdFor(_ => Model.UserMood.NervousSystem))Input" list="hashmarks" value="@(Model.UserMood.NervousSystem ?? -1)"
+                                           min="@(UserGutPillars.Consts.NervousSystemMin - UserGutPillars.Consts.NervousSystemStep)" max="@UserGutPillars.Consts.NervousSystemMax" step="@UserGutPillars.Consts.NervousSystemStep"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.NervousSystem)).value = this.valueAsNumber < @UserGutPillars.Consts.NervousSystemMin ? '' : this.valueAsNumber" />
 
                                     <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
                                         <option value=""></option>
+                                        <option value="25"></option>
                                         <option value="50"></option>
                                         <option value="75"></option>
                                         <option value="100"></option>
-                                        <option value="125"></option>
-                                        <option value="150"></option>
                                     </datalist>
                                 </div>
                             </div>
