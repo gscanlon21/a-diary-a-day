@@ -202,6 +202,12 @@ public class User : IUser
     [JsonIgnore, InverseProperty(nameof(UserCbcWAutoDiff.User))]
     public virtual ICollection<UserCbcWAutoDiff> UserCbcWAutoDiffs { get; private init; } = null!;
 
+    [JsonIgnore, InverseProperty(nameof(Entities.User.UserGutPillars.User))]
+    public virtual ICollection<UserGutPillars> UserGutPillars { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(Entities.User.UserGutFungi.User))]
+    public virtual ICollection<UserGutFungi> UserGutFungi { get; private init; } = null!;
+
     [JsonIgnore, InverseProperty(nameof(UserBloodWork.User))]
     public virtual ICollection<UserBloodWork> UserBloodWorks { get; private init; } = null!;
 

@@ -103,7 +103,8 @@ public class QueryRunner
             }
         }
 
-        return _section switch {
+        return _section switch
+        {
             null => [.. orderedResults.Take(take).OrderBy(vm => vm.Task.Name)],
             not null => [.. orderedResults.Take(take).OrderBy(vm => vm.Task.Order).ThenBy(vm => vm.Task.Name)]
         };

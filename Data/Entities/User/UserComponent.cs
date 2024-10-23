@@ -36,9 +36,6 @@ public class UserComponent
     [Required]
     public int UserId { get; init; }
 
-    /// <summary>
-    /// The token should stop working after this date.
-    /// </summary>
     [Required]
     public DateOnly LastUpload { get; set; } = DateHelpers.Today;
 

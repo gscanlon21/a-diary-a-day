@@ -1,17 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace Data.Entities.User;
 
-
 /// <summary>
-/// https://www.psychiatry.org/getmedia/3345c156-1aac-4e29-ac61-1c6541cb39be/APA-DSM5TR-SeverityMeasureForAgoraphobiaAdult.pdf
+/// https://site-akiajqrf22xmaqzsiz6q.s3.amazonaws.com/DDI+Website/Sample+Reports/Sample+Report+GI360.pdf
 /// </summary>
-[Table("user_cbc_w_auto_diff"), Comment("User variation weight log")]
-public class UserCbcWAutoDiff
+[Table("user_gut_good_bacteria"), Comment("User variation weight log")]
+public class UserGutGoodBacteria
 {
     public class Consts
     {

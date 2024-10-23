@@ -81,9 +81,12 @@ public enum Component
     [Display(Name = "Depression")]
     Depression = 1 << 22, // 4194304
 
+    [Display(Name = "Gut Pillars")]
+    GutPillars = 1 << 23, // 8388608
+
     All = Mood | Sleep | People | Symptom | Emotion | Activity | Medicine
         | AcuteStressSeverity | AgoraphobiaSeverity | DepressionSeverity | DissociativeSeverity
         | GeneralizedAnxietySeverity | PanicSeverity | PTSDSeverity | SocialAnxietySeverity
         | Journal | CompleteMetabolicPanel | Tasks | DryEyes | FeastAllergens | CbcWAutoDiff
-        | BloodWork | Depression
+        | BloodWork | Depression | GutPillars
 }

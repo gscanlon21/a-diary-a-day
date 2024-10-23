@@ -1,7 +1,6 @@
 ﻿using Core.Dtos.Newsletter;
 using Core.Dtos.User;
 using Core.Models.User;
-using Data;
 using Data.Query;
 using Data.Query.Builders;
 using Data.Repos;
@@ -13,7 +12,7 @@ namespace Web.Components.User;
 /// <summary>
 /// Lists all of the user's active tasks.
 /// </summary>
-public class TasksViewComponent(CoreContext context, UserRepo userRepo, IServiceScopeFactory serviceScopeFactory) : ViewComponent
+public class TasksViewComponent(UserRepo userRepo, IServiceScopeFactory serviceScopeFactory) : ViewComponent
 {
     /// <summary>
     /// For routing

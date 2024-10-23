@@ -19,9 +19,6 @@ public class UserDissociativeSeverity : IScore
     [Required]
     public int UserId { get; set; }
 
-    /// <summary>
-    /// The token should stop working after this date.
-    /// </summary>
     [Required]
     public DateOnly Date { get; init; } = DateHelpers.Today;
 
