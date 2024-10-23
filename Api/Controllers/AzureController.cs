@@ -55,12 +55,12 @@ public class AzureController(ILogger<AzureController> logger, CoreContext contex
             return BadRequest();
         }
 
-        foreach (CloudEvent cloudEvent in cloudEvents.Where(e => e.Data != null))
+        foreach (CloudEvent cloudEvent in cloudEvents)
         {
             switch (cloudEvent.Type)
             {
                 case SystemEventNames.AcsEmailDeliveryReportReceived:
-                    await HandleDeliveryReport(cloudEvent.Data!.ToObjectFromJson<AcsEmailDeliveryReportReceivedEventData>());
+                    await HandleDeliveryReport(cloudEvent.Data?.ToObjectFromJson<AcsEmailDeliveryReportReceivedEventData>());
                     break;
             }
         }
@@ -68,9 +68,9 @@ public class AzureController(ILogger<AzureController> logger, CoreContext contex
         return Ok();
     }
 
-    private async Task HandleDeliveryReport(AcsEmailDeliveryReportReceivedEventData deliveryReport)
+    private async Task HandleDeliveryReport(AcsEmailDeliveryReportReceivedEventData? deliveryReport)
     {
-        if (!deliveryReport.Status.HasValue)
+        if (deliveryReport == null || !deliveryReport.Status.HasValue)
         {
             return;
         }
