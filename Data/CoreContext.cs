@@ -45,6 +45,13 @@ public class CoreContext : DbContext
     public DbSet<UserDepressionSeverity> UserDepressionSeverities { get; set; } = null!;
     public DbSet<UserDissociativeSeverity> UserDissociativeSeverities { get; set; } = null!;
     public DbSet<UserGeneralizedAnxietySeverity> UserGeneralizedAnxietySeverities { get; set; } = null!;
+    public DbSet<UserGutShortChainFattyAcids> UserGutShortChainFattyAcids { get; set; } = null!;
+    public DbSet<UserGutPathogens> UserGutPathogens { get; set; } = null!;
+    public DbSet<UserGutProbiotics> UserGutProbiotics { get; set; } = null!;
+    public DbSet<UserGutMicronutrients> UserGutMicronutrients { get; set; } = null!;
+    public DbSet<UserGutConditionalBacteria> UserGutConditionalBacterias { get; set; } = null!;
+    public DbSet<UserGutGoodBacteria> UserGutGoodBacterias { get; set; } = null!;
+    public DbSet<UserGutBadBacteria> UserGutBadBacterias { get; set; } = null!;
     public DbSet<UserGutPillars> UserGutPillars { get; set; } = null!;
     public DbSet<UserGutFungi> UserGutFungi { get; set; } = null!;
     public DbSet<UserMania> UserManias { get; set; } = null!;

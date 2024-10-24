@@ -13,9 +13,49 @@ public class UserGutPathogens
 {
     public class Consts
     {
-        public const int PlatletCountMin = 100;
-        public const int PlatletCountMax = 500;
-        public const int PlatletCountStep = 1;
+        public const int BlastocystisMin = 0;
+        public const int BlastocystisMax = 2;
+        public const int BlastocystisStep = 1;
+
+        public const int CampylobacterMin = 0;
+        public const int CampylobacterMax = 2;
+        public const int CampylobacterStep = 1;
+
+        public const int ClostridioidesDifficileMin = 0;
+        public const int ClostridioidesDifficileMax = 2;
+        public const int ClostridioidesDifficileStep = 1;
+
+        public const int CryptosporidiumMin = 0;
+        public const int CryptosporidiumMax = 2;
+        public const int CryptosporidiumStep = 1;
+
+        public const int DientamoebaFragilisMin = 0;
+        public const int DientamoebaFragilisMax = 2;
+        public const int DientamoebaFragilisStep = 1;
+
+        public const int EntamoebaHistolyticaMin = 0;
+        public const int EntamoebaHistolyticaMax = 2;
+        public const int EntamoebaHistolyticaStep = 1;
+
+        public const int EscherichiaColiO157_H7Min = 0;
+        public const int EscherichiaColiO157_H7Max = 2;
+        public const int EscherichiaColiO157_H7Step = 1;
+
+        public const int GiardiaIntestinalisMin = 0;
+        public const int GiardiaIntestinalisMax = 2;
+        public const int GiardiaIntestinalisStep = 1;
+
+        public const int HelicobacterPyloriMin = 0;
+        public const int HelicobacterPyloriMax = 2;
+        public const int HelicobacterPyloriStep = 1;
+
+        public const int SalmonellaEntericaMin = 0;
+        public const int SalmonellaEntericaMax = 2;
+        public const int SalmonellaEntericaStep = 1;
+
+        public const int VibrioCholeraeMin = 0;
+        public const int VibrioCholeraeMax = 2;
+        public const int VibrioCholeraeStep = 1;
     }
 
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -27,47 +67,47 @@ public class UserGutPathogens
     [Required]
     public DateOnly Date { get; init; } = DateHelpers.Today;
 
-    [Range(40, 240)]
+    [Range(0, 2)]
     [Display(Name = "Blastocystis")]
     public int? Blastocystis { get; set; }
 
-    [Range(40, 240)]
+    [Range(0, 2)]
     [Display(Name = "Campylobacter")]
     public int? Campylobacter { get; set; }
 
-    [Range(40, 240)]
+    [Range(0, 2)]
     [Display(Name = "Clostridioides difficile")]
     public int? ClostridioidesDifficile { get; set; }
 
-    [Range(40, 240)]
+    [Range(0, 2)]
     [Display(Name = "Cryptosporidium")]
     public int? Cryptosporidium { get; set; }
 
-    [Range(40, 240)]
+    [Range(0, 2)]
     [Display(Name = "Dientamoeba fragilis")]
     public int? DientamoebaFragilis { get; set; }
 
-    [Range(40, 240)]
+    [Range(0, 2)]
     [Display(Name = "Entamoeba histolytica")]
     public int? EntamoebaHistolytica { get; set; }
 
-    [Range(40, 240)]
+    [Range(0, 2)]
     [Display(Name = "Escherichia coli O157:H7")]
     public int? EscherichiaColiO157_H7 { get; set; }
 
-    [Range(40, 240)]
+    [Range(0, 2)]
     [Display(Name = "Giardia intestinalis")]
     public int? GiardiaIntestinalis { get; set; }
 
-    [Range(Consts.PlatletCountMin, Consts.PlatletCountMax)]
+    [Range(0, 2)]
     [Display(Name = "Helicobacter pylori")]
     public int? HelicobacterPylori { get; set; }
 
-    [Range(40, 240)]
+    [Range(0, 2)]
     [Display(Name = "Salmonella enterica")]
     public int? SalmonellaEnterica { get; set; }
 
-    [Range(40, 240)]
+    [Range(0, 2)]
     [Display(Name = "Vibrio cholerae")]
     public int? VibrioCholerae { get; set; }
 
@@ -87,6 +127,6 @@ public class UserGutPathogens
         { nameof(VibrioCholerae), VibrioCholerae },
     };
 
-    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserCbcWAutoDiffs))]
+    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserGutPathogens))]
     public virtual User User { get; set; } = null!;
 }

@@ -99,6 +99,34 @@ else if (Model.Component.HasFlag(Core.Models.Components.Component.GutFungi))
 {
     @await Component.InvokeAsync(GutFungiViewComponent.Name, new { Model.User })
 }
+else if (Model.Component.HasFlag(Core.Models.Components.Component.GutMicronutrients))
+{
+    @await Component.InvokeAsync(GutFungiViewComponent.Name, new { Model.User })
+}
+else if (Model.Component.HasFlag(Core.Models.Components.Component.GutShortChainFattyAcids))
+{
+    @await Component.InvokeAsync(GutFungiViewComponent.Name, new { Model.User })
+}
+else if (Model.Component.HasFlag(Core.Models.Components.Component.GutPathogens))
+{
+    @await Component.InvokeAsync(GutFungiViewComponent.Name, new { Model.User })
+}
+else if (Model.Component.HasFlag(Core.Models.Components.Component.GutProbiotics))
+{
+    @await Component.InvokeAsync(GutFungiViewComponent.Name, new { Model.User })
+}
+else if (Model.Component.HasFlag(Core.Models.Components.Component.GutConditionalBacteria))
+{
+    @await Component.InvokeAsync(GutFungiViewComponent.Name, new { Model.User })
+}
+else if (Model.Component.HasFlag(Core.Models.Components.Component.GutBadBacteria))
+{
+    @await Component.InvokeAsync(GutFungiViewComponent.Name, new { Model.User })
+}
+else if (Model.Component.HasFlag(Core.Models.Components.Component.GutGoodBacteria))
+{
+    @await Component.InvokeAsync(GutFungiViewComponent.Name, new { Model.User })
+}
 else if (Model.Component.HasFlag(Core.Models.Components.Component.DryEyes))
 {
     @await Component.InvokeAsync(DryEyesViewComponent.Name, new { Model.User })

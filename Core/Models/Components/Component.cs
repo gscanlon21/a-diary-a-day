@@ -8,7 +8,7 @@ namespace Core.Models.Components;
 /// Controls access to user features.
 /// </summary>
 [Flags]
-public enum Component
+public enum Component : long
 {
     None = 0,
 
@@ -87,9 +87,32 @@ public enum Component
     [Display(Name = "Gut Fungi", Order = 31)]
     GutFungi = 1 << 24, // 16777216
 
+    [Display(Name = "Gut Pathogens", Order = 32)]
+    GutPathogens = 1 << 25, // 33554432
+
+    [Display(Name = "Gut Good Bacteria", Order = 33)]
+    GutGoodBacteria = 1 << 26, // 67108864
+
+    [Display(Name = "Gut Bad Bacteria", Order = 34)]
+    GutBadBacteria = 1 << 27, // 134217728
+
+    [Display(Name = "Gut Conditional Bacteria", Order = 35)]
+    GutConditionalBacteria = 1 << 28, // 268435456
+
+    [Display(Name = "Gut Micronutrients", Order = 36)]
+    GutMicronutrients = 1 << 29, // 536870912
+
+    [Display(Name = "Gut Short Chain Fatty Acids", Order = 37)]
+    GutShortChainFattyAcids = 1L << 30, // 1073741824
+
+    [Display(Name = "Gut Probiotics", Order = 38)]
+    GutProbiotics = 1L << 31, // 2147483648
+
     All = Mood | Sleep | People | Symptom | Emotion | Activity | Medicine
         | AcuteStressSeverity | AgoraphobiaSeverity | DepressionSeverity | DissociativeSeverity
         | GeneralizedAnxietySeverity | PanicSeverity | PTSDSeverity | SocialAnxietySeverity
         | Journal | CompleteMetabolicPanel | Tasks | DryEyes | FeastAllergens | CbcWAutoDiff
-        | BloodWork | Depression | GutPillars | GutFungi
+        | BloodWork | Depression | GutPillars | GutFungi | GutPathogens
+        | GutGoodBacteria | GutBadBacteria | GutConditionalBacteria
+        | GutShortChainFattyAcids | GutMicronutrients | GutProbiotics
 }

@@ -1,0 +1,357 @@
+﻿@model GutGoodBacteriaViewModel
+@using Core.Models.Components
+@using Data.Entities.User
+
+@{
+    bool show = Model.PreviousMood == null || Model.PreviousMood.Date < DateHelpers.Today.AddMonths(-1);
+}
+
+<div class="alert alert-secondary">
+    <div class="row gy-2">
+        @if (show)
+        {
+            <div class="col-lg-6">
+                <h5 class="mb-1">Gut Good Bacteria</h5>
+                <div class="alert alert-light shadow">
+                    <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageGutPillars)" method="post"
+                          asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="form-group mb-3 mt-3">
+                            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.AkkermansiaMuciniphila)</label>
+                            <div><span asp-validation-for="UserMood.AkkermansiaMuciniphila" class="text-danger"></span></div>
+                            <div style="display:flex;column-gap:1ex;">
+                                <input id="@(Html.IdFor(_ => Model.UserMood.AkkermansiaMuciniphila))" asp-for="UserMood.AkkermansiaMuciniphila" style="width:6ch;height:fit-content;" class="allow-demo"
+                                       oninput="@(Html.IdFor(_ => Model.UserMood.AkkermansiaMuciniphila))Input.value = this.valueAsNumber" />
+                                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.AkkermansiaMuciniphila))-input" class="allow-demo" style="width:100%;" type="range"
+                                           name="@(Html.IdFor(_ => Model.UserMood.AkkermansiaMuciniphila))Input" list="hashmarks" value="@(Model.UserMood.AkkermansiaMuciniphila ?? -1)"
+                                           min="@(UserGutGoodBacteria.Consts.AkkermansiaMuciniphilaMin - UserGutGoodBacteria.Consts.AkkermansiaMuciniphilaStep)" max="@UserGutGoodBacteria.Consts.AkkermansiaMuciniphilaMax" step="@UserGutGoodBacteria.Consts.AkkermansiaMuciniphilaStep"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.AkkermansiaMuciniphila)).value = this.valueAsNumber < @UserGutGoodBacteria.Consts.AkkermansiaMuciniphilaMin ? '' : this.valueAsNumber" />
+
+                                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                        <option value=""></option>
+                                        <option value="25"></option>
+                                        <option value="50"></option>
+                                        <option value="75"></option>
+                                        <option value="100"></option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div id="@(Html.IdFor(_ => Model.UserMood.AkkermansiaMuciniphila))-help" class="form-text"></div>
+                        </div>
+
+                        <div class="form-group mb-3 mt-3">
+                            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Alistipes)</label>
+                            <div><span asp-validation-for="UserMood.Alistipes" class="text-danger"></span></div>
+                            <div style="display:flex;column-gap:1ex;">
+                                <input id="@(Html.IdFor(_ => Model.UserMood.Alistipes))" asp-for="UserMood.Alistipes" style="width:6ch;height:fit-content;" class="allow-demo"
+                                       oninput="@(Html.IdFor(_ => Model.UserMood.Alistipes))Input.value = this.valueAsNumber" />
+                                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.Alistipes))-input" class="allow-demo" style="width:100%;" type="range"
+                                           name="@(Html.IdFor(_ => Model.UserMood.Alistipes))Input" list="hashmarks" value="@(Model.UserMood.Alistipes ?? -1)"
+                                           min="@(UserGutGoodBacteria.Consts.AlistipesMin - UserGutGoodBacteria.Consts.AlistipesStep)" max="@UserGutGoodBacteria.Consts.AlistipesMax" step="@UserGutGoodBacteria.Consts.AlistipesStep"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.Alistipes)).value = this.valueAsNumber < @UserGutGoodBacteria.Consts.AlistipesMin ? '' : this.valueAsNumber" />
+
+                                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                        <option value=""></option>
+                                        <option value="25"></option>
+                                        <option value="50"></option>
+                                        <option value="75"></option>
+                                        <option value="100"></option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div id="@(Html.IdFor(_ => Model.UserMood.Alistipes))-help" class="form-text"></div>
+                        </div>
+
+                        <div class="form-group mb-3 mt-3">
+                            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Bifidobacterium)</label>
+                            <div><span asp-validation-for="UserMood.Bifidobacterium" class="text-danger"></span></div>
+                            <div style="display:flex;column-gap:1ex;">
+                                <input id="@(Html.IdFor(_ => Model.UserMood.Bifidobacterium))" asp-for="UserMood.Bifidobacterium" style="width:6ch;height:fit-content;" class="allow-demo"
+                                       oninput="@(Html.IdFor(_ => Model.UserMood.Bifidobacterium))Input.value = this.valueAsNumber" />
+                                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.Bifidobacterium))-input" class="allow-demo" style="width:100%;" type="range"
+                                           name="@(Html.IdFor(_ => Model.UserMood.Bifidobacterium))Input" list="hashmarks" value="@(Model.UserMood.Bifidobacterium ?? -1)"
+                                           min="@(UserGutGoodBacteria.Consts.BifidobacteriumMin - UserGutGoodBacteria.Consts.BifidobacteriumStep)" max="@UserGutGoodBacteria.Consts.BifidobacteriumMax" step="@UserGutGoodBacteria.Consts.BifidobacteriumStep"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.Bifidobacterium)).value = this.valueAsNumber < @UserGutGoodBacteria.Consts.BifidobacteriumMin ? '' : this.valueAsNumber" />
+
+                                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                        <option value=""></option>
+                                        <option value="25"></option>
+                                        <option value="50"></option>
+                                        <option value="75"></option>
+                                        <option value="100"></option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div id="@(Html.IdFor(_ => Model.UserMood.Bifidobacterium))-help" class="form-text"></div>
+                        </div>
+
+                        <div class="form-group mb-3 mt-3">
+                            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Coprococcus)</label>
+                            <div><span asp-validation-for="UserMood.Coprococcus" class="text-danger"></span></div>
+                            <div style="display:flex;column-gap:1ex;">
+                                <input id="@(Html.IdFor(_ => Model.UserMood.Coprococcus))" asp-for="UserMood.Coprococcus" style="width:6ch;height:fit-content;" class="allow-demo"
+                                       oninput="@(Html.IdFor(_ => Model.UserMood.Coprococcus))Input.value = this.valueAsNumber" />
+                                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.Coprococcus))-input" class="allow-demo" style="width:100%;" type="range"
+                                           name="@(Html.IdFor(_ => Model.UserMood.Coprococcus))Input" list="hashmarks" value="@(Model.UserMood.Coprococcus ?? -1)"
+                                           min="@(UserGutGoodBacteria.Consts.CoprococcusMin - UserGutGoodBacteria.Consts.CoprococcusStep)" max="@UserGutGoodBacteria.Consts.CoprococcusMax" step="@UserGutGoodBacteria.Consts.CoprococcusStep"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.Coprococcus)).value = this.valueAsNumber < @UserGutGoodBacteria.Consts.CoprococcusMin ? '' : this.valueAsNumber" />
+
+                                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                        <option value=""></option>
+                                        <option value="25"></option>
+                                        <option value="50"></option>
+                                        <option value="75"></option>
+                                        <option value="100"></option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div id="@(Html.IdFor(_ => Model.UserMood.Coprococcus))-help" class="form-text"></div>
+                        </div>
+
+                        <div class="form-group mb-3 mt-3">
+                            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Eubacterium)</label>
+                            <div><span asp-validation-for="UserMood.Eubacterium" class="text-danger"></span></div>
+                            <div style="display:flex;column-gap:1ex;">
+                                <input id="@(Html.IdFor(_ => Model.UserMood.Eubacterium))" asp-for="UserMood.Eubacterium" style="width:6ch;height:fit-content;" class="allow-demo"
+                                       oninput="@(Html.IdFor(_ => Model.UserMood.Eubacterium))Input.value = this.valueAsNumber" />
+                                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.Eubacterium))-input" class="allow-demo" style="width:100%;" type="range"
+                                           name="@(Html.IdFor(_ => Model.UserMood.Eubacterium))Input" list="hashmarks" value="@(Model.UserMood.Eubacterium ?? -1)"
+                                           min="@(UserGutGoodBacteria.Consts.EubacteriumMin - UserGutGoodBacteria.Consts.EubacteriumStep)" max="@UserGutGoodBacteria.Consts.EubacteriumMax" step="@UserGutGoodBacteria.Consts.EubacteriumStep"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.Eubacterium)).value = this.valueAsNumber < @UserGutGoodBacteria.Consts.EubacteriumMin ? '' : this.valueAsNumber" />
+
+                                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                        <option value=""></option>
+                                        <option value="25"></option>
+                                        <option value="50"></option>
+                                        <option value="75"></option>
+                                        <option value="100"></option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div id="@(Html.IdFor(_ => Model.UserMood.Eubacterium))-help" class="form-text"></div>
+                        </div>
+
+                        <div class="form-group mb-3 mt-3">
+                            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.EubacteriumRectale)</label>
+                            <div><span asp-validation-for="UserMood.EubacteriumRectale" class="text-danger"></span></div>
+                            <div style="display:flex;column-gap:1ex;">
+                                <input id="@(Html.IdFor(_ => Model.UserMood.EubacteriumRectale))" asp-for="UserMood.EubacteriumRectale" style="width:6ch;height:fit-content;" class="allow-demo"
+                                       oninput="@(Html.IdFor(_ => Model.UserMood.EubacteriumRectale))Input.value = this.valueAsNumber" />
+                                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.EubacteriumRectale))-input" class="allow-demo" style="width:100%;" type="range"
+                                           name="@(Html.IdFor(_ => Model.UserMood.EubacteriumRectale))Input" list="hashmarks" value="@(Model.UserMood.EubacteriumRectale ?? -1)"
+                                           min="@(UserGutGoodBacteria.Consts.EubacteriumRectaleMin - UserGutGoodBacteria.Consts.EubacteriumRectaleStep)" max="@UserGutGoodBacteria.Consts.EubacteriumRectaleMax" step="@UserGutGoodBacteria.Consts.EubacteriumRectaleStep"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.EubacteriumRectale)).value = this.valueAsNumber < @UserGutGoodBacteria.Consts.EubacteriumRectaleMin ? '' : this.valueAsNumber" />
+
+                                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                        <option value=""></option>
+                                        <option value="25"></option>
+                                        <option value="50"></option>
+                                        <option value="75"></option>
+                                        <option value="100"></option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div id="@(Html.IdFor(_ => Model.UserMood.EubacteriumRectale))-help" class="form-text"></div>
+                        </div>
+
+                        <div class="form-group mb-3 mt-3">
+                            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.FaecalibacteriumPrausnitzii)</label>
+                            <div><span asp-validation-for="UserMood.FaecalibacteriumPrausnitzii" class="text-danger"></span></div>
+                            <div style="display:flex;column-gap:1ex;">
+                                <input id="@(Html.IdFor(_ => Model.UserMood.FaecalibacteriumPrausnitzii))" asp-for="UserMood.FaecalibacteriumPrausnitzii" style="width:6ch;height:fit-content;" class="allow-demo"
+                                       oninput="@(Html.IdFor(_ => Model.UserMood.FaecalibacteriumPrausnitzii))Input.value = this.valueAsNumber" />
+                                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.FaecalibacteriumPrausnitzii))-input" class="allow-demo" style="width:100%;" type="range"
+                                           name="@(Html.IdFor(_ => Model.UserMood.FaecalibacteriumPrausnitzii))Input" list="hashmarks" value="@(Model.UserMood.FaecalibacteriumPrausnitzii ?? -1)"
+                                           min="@(UserGutGoodBacteria.Consts.FaecalibacteriumPrausnitziiMin - UserGutGoodBacteria.Consts.FaecalibacteriumPrausnitziiStep)" max="@UserGutGoodBacteria.Consts.FaecalibacteriumPrausnitziiMax" step="@UserGutGoodBacteria.Consts.FaecalibacteriumPrausnitziiStep"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.FaecalibacteriumPrausnitzii)).value = this.valueAsNumber < @UserGutGoodBacteria.Consts.FaecalibacteriumPrausnitziiMin ? '' : this.valueAsNumber" />
+
+                                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                        <option value=""></option>
+                                        <option value="25"></option>
+                                        <option value="50"></option>
+                                        <option value="75"></option>
+                                        <option value="100"></option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div id="@(Html.IdFor(_ => Model.UserMood.FaecalibacteriumPrausnitzii))-help" class="form-text"></div>
+                        </div>
+
+                        <div class="form-group mb-3 mt-3">
+                            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.LachnospiraceaeMinusBlautia)</label>
+                            <div><span asp-validation-for="UserMood.LachnospiraceaeMinusBlautia" class="text-danger"></span></div>
+                            <div style="display:flex;column-gap:1ex;">
+                                <input id="@(Html.IdFor(_ => Model.UserMood.LachnospiraceaeMinusBlautia))" asp-for="UserMood.LachnospiraceaeMinusBlautia" style="width:6ch;height:fit-content;" class="allow-demo"
+                                       oninput="@(Html.IdFor(_ => Model.UserMood.LachnospiraceaeMinusBlautia))Input.value = this.valueAsNumber" />
+                                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.LachnospiraceaeMinusBlautia))-input" class="allow-demo" style="width:100%;" type="range"
+                                           name="@(Html.IdFor(_ => Model.UserMood.LachnospiraceaeMinusBlautia))Input" list="hashmarks" value="@(Model.UserMood.LachnospiraceaeMinusBlautia ?? -1)"
+                                           min="@(UserGutGoodBacteria.Consts.LachnospiraceaeMinusBlautiaMin - UserGutGoodBacteria.Consts.LachnospiraceaeMinusBlautiaStep)" max="@UserGutGoodBacteria.Consts.LachnospiraceaeMinusBlautiaMax" step="@UserGutGoodBacteria.Consts.LachnospiraceaeMinusBlautiaStep"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.LachnospiraceaeMinusBlautia)).value = this.valueAsNumber < @UserGutGoodBacteria.Consts.LachnospiraceaeMinusBlautiaMin ? '' : this.valueAsNumber" />
+
+                                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                        <option value=""></option>
+                                        <option value="25"></option>
+                                        <option value="50"></option>
+                                        <option value="75"></option>
+                                        <option value="100"></option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div id="@(Html.IdFor(_ => Model.UserMood.LachnospiraceaeMinusBlautia))-help" class="form-text"></div>
+                        </div>
+
+                        <div class="form-group mb-3 mt-3">
+                            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Oscillospira)</label>
+                            <div><span asp-validation-for="UserMood.Oscillospira" class="text-danger"></span></div>
+                            <div style="display:flex;column-gap:1ex;">
+                                <input id="@(Html.IdFor(_ => Model.UserMood.Oscillospira))" asp-for="UserMood.Oscillospira" style="width:6ch;height:fit-content;" class="allow-demo"
+                                       oninput="@(Html.IdFor(_ => Model.UserMood.Oscillospira))Input.value = this.valueAsNumber" />
+                                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.Oscillospira))-input" class="allow-demo" style="width:100%;" type="range"
+                                           name="@(Html.IdFor(_ => Model.UserMood.Oscillospira))Input" list="hashmarks" value="@(Model.UserMood.Oscillospira ?? -1)"
+                                           min="@(UserGutGoodBacteria.Consts.OscillospiraMin - UserGutGoodBacteria.Consts.OscillospiraStep)" max="@UserGutGoodBacteria.Consts.OscillospiraMax" step="@UserGutGoodBacteria.Consts.OscillospiraStep"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.Oscillospira)).value = this.valueAsNumber < @UserGutGoodBacteria.Consts.OscillospiraMin ? '' : this.valueAsNumber" />
+
+                                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                        <option value=""></option>
+                                        <option value="25"></option>
+                                        <option value="50"></option>
+                                        <option value="75"></option>
+                                        <option value="100"></option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div id="@(Html.IdFor(_ => Model.UserMood.Oscillospira))-help" class="form-text"></div>
+                        </div>
+
+                        <div class="form-group mb-3 mt-3">
+                            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Parabacteroides)</label>
+                            <div><span asp-validation-for="UserMood.Parabacteroides" class="text-danger"></span></div>
+                            <div style="display:flex;column-gap:1ex;">
+                                <input id="@(Html.IdFor(_ => Model.UserMood.Parabacteroides))" asp-for="UserMood.Parabacteroides" style="width:6ch;height:fit-content;" class="allow-demo"
+                                       oninput="@(Html.IdFor(_ => Model.UserMood.Parabacteroides))Input.value = this.valueAsNumber" />
+                                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.Parabacteroides))-input" class="allow-demo" style="width:100%;" type="range"
+                                           name="@(Html.IdFor(_ => Model.UserMood.Parabacteroides))Input" list="hashmarks" value="@(Model.UserMood.Parabacteroides ?? -1)"
+                                           min="@(UserGutGoodBacteria.Consts.ParabacteroidesMin - UserGutGoodBacteria.Consts.ParabacteroidesStep)" max="@UserGutGoodBacteria.Consts.ParabacteroidesMax" step="@UserGutGoodBacteria.Consts.ParabacteroidesStep"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.Parabacteroides)).value = this.valueAsNumber < @UserGutGoodBacteria.Consts.ParabacteroidesMin ? '' : this.valueAsNumber" />
+
+                                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                        <option value=""></option>
+                                        <option value="25"></option>
+                                        <option value="50"></option>
+                                        <option value="75"></option>
+                                        <option value="100"></option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div id="@(Html.IdFor(_ => Model.UserMood.Parabacteroides))-help" class="form-text"></div>
+                        </div>
+
+                        <div class="form-group mb-3 mt-3">
+                            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Roseburia)</label>
+                            <div><span asp-validation-for="UserMood.Roseburia" class="text-danger"></span></div>
+                            <div style="display:flex;column-gap:1ex;">
+                                <input id="@(Html.IdFor(_ => Model.UserMood.Roseburia))" asp-for="UserMood.Roseburia" style="width:6ch;height:fit-content;" class="allow-demo"
+                                       oninput="@(Html.IdFor(_ => Model.UserMood.Roseburia))Input.value = this.valueAsNumber" />
+                                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.Roseburia))-input" class="allow-demo" style="width:100%;" type="range"
+                                           name="@(Html.IdFor(_ => Model.UserMood.Roseburia))Input" list="hashmarks" value="@(Model.UserMood.Roseburia ?? -1)"
+                                           min="@(UserGutGoodBacteria.Consts.RoseburiaMin - UserGutGoodBacteria.Consts.RoseburiaStep)" max="@UserGutGoodBacteria.Consts.RoseburiaMax" step="@UserGutGoodBacteria.Consts.RoseburiaStep"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.Roseburia)).value = this.valueAsNumber < @UserGutGoodBacteria.Consts.RoseburiaMin ? '' : this.valueAsNumber" />
+
+                                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                        <option value=""></option>
+                                        <option value="25"></option>
+                                        <option value="50"></option>
+                                        <option value="75"></option>
+                                        <option value="100"></option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div id="@(Html.IdFor(_ => Model.UserMood.Roseburia))-help" class="form-text"></div>
+                        </div>
+
+                        <div class="form-group mb-3 mt-3">
+                            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.RuminococcusMinusRBromii)</label>
+                            <div><span asp-validation-for="UserMood.RuminococcusMinusRBromii" class="text-danger"></span></div>
+                            <div style="display:flex;column-gap:1ex;">
+                                <input id="@(Html.IdFor(_ => Model.UserMood.RuminococcusMinusRBromii))" asp-for="UserMood.RuminococcusMinusRBromii" style="width:6ch;height:fit-content;" class="allow-demo"
+                                       oninput="@(Html.IdFor(_ => Model.UserMood.RuminococcusMinusRBromii))Input.value = this.valueAsNumber" />
+                                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.RuminococcusMinusRBromii))-input" class="allow-demo" style="width:100%;" type="range"
+                                           name="@(Html.IdFor(_ => Model.UserMood.RuminococcusMinusRBromii))Input" list="hashmarks" value="@(Model.UserMood.RuminococcusMinusRBromii ?? -1)"
+                                           min="@(UserGutGoodBacteria.Consts.RuminococcusMinusRBromiiMin - UserGutGoodBacteria.Consts.RuminococcusMinusRBromiiStep)" max="@UserGutGoodBacteria.Consts.RuminococcusMinusRBromiiMax" step="@UserGutGoodBacteria.Consts.RuminococcusMinusRBromiiStep"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.RuminococcusMinusRBromii)).value = this.valueAsNumber < @UserGutGoodBacteria.Consts.RuminococcusMinusRBromiiMin ? '' : this.valueAsNumber" />
+
+                                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                        <option value=""></option>
+                                        <option value="25"></option>
+                                        <option value="50"></option>
+                                        <option value="75"></option>
+                                        <option value="100"></option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div id="@(Html.IdFor(_ => Model.UserMood.RuminococcusMinusRBromii))-help" class="form-text"></div>
+                        </div>
+
+                        <div class="form-group mb-3 mt-3">
+                            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Ruminococcaceae)</label>
+                            <div><span asp-validation-for="UserMood.Ruminococcaceae" class="text-danger"></span></div>
+                            <div style="display:flex;column-gap:1ex;">
+                                <input id="@(Html.IdFor(_ => Model.UserMood.Ruminococcaceae))" asp-for="UserMood.Ruminococcaceae" style="width:6ch;height:fit-content;" class="allow-demo"
+                                       oninput="@(Html.IdFor(_ => Model.UserMood.Ruminococcaceae))Input.value = this.valueAsNumber" />
+                                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.Ruminococcaceae))-input" class="allow-demo" style="width:100%;" type="range"
+                                           name="@(Html.IdFor(_ => Model.UserMood.Ruminococcaceae))Input" list="hashmarks" value="@(Model.UserMood.Ruminococcaceae ?? -1)"
+                                           min="@(UserGutGoodBacteria.Consts.RuminococcaceaeMin - UserGutGoodBacteria.Consts.RuminococcaceaeStep)" max="@UserGutGoodBacteria.Consts.RuminococcaceaeMax" step="@UserGutGoodBacteria.Consts.RuminococcaceaeStep"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.Ruminococcaceae)).value = this.valueAsNumber < @UserGutGoodBacteria.Consts.RuminococcaceaeMin ? '' : this.valueAsNumber" />
+
+                                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                        <option value=""></option>
+                                        <option value="25"></option>
+                                        <option value="50"></option>
+                                        <option value="75"></option>
+                                        <option value="100"></option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div id="@(Html.IdFor(_ => Model.UserMood.Ruminococcaceae))-help" class="form-text"></div>
+                        </div>
+
+                       
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary allow-demo" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+
+        <div class="col-lg-6">
+            <h6 class="mb-1">Log</h6>
+            <div class="alert alert-light shadow">
+                @{
+                    await Html.RenderPartialAsync("_LineChart", new LineChartViewModel()
+                    {
+                        XysGrouped = Model.XysGrouped,
+                        User = Model.User,
+                        Token = Model.Token,
+                        Type = Core.Models.Components.Component.CbcWAutoDiff
+                    });
+                }
+            </div>
+        </div>
+    </div>
+</div>
