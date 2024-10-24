@@ -16,7 +16,7 @@
 
     if (Title == null)
     {
-        foreach (var exerciseGroup in Images.GroupBy(e => e, new ExerciseSectionComparer()))
+        foreach (var exerciseGroup in Images.GroupBy(e => e, new ComponentSectionComparer()))
         {
             <h2 style="margin-bottom:0;margin-top:1em;color:@titleColor;font-size:revert;">@exerciseGroup.Key.Type.GetSingleDisplayName()</h2>
 
@@ -75,7 +75,7 @@
         public Titles(string header, string description, string footer) : this(new MarkupString(header), new MarkupString(description), new MarkupString(footer)) { }
     };
 
-    private class ExerciseSectionComparer : IEqualityComparer<ComponentImage>
+    private class ComponentSectionComparer : IEqualityComparer<ComponentImage>
     {
         public bool Equals(ComponentImage? a, ComponentImage? b)
             => EqualityComparer<ComponentImage>.Default.Equals(a, b);

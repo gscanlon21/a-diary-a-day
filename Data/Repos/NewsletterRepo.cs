@@ -206,7 +206,10 @@ public partial class NewsletterRepo
     {
         var prefix = $"moods/{user.Uid}";
         var components = EnumExtensions.GetSingleValuesExcludingAny32(Component.Journal | Component.Tasks);
-        foreach (var component in components.Where(c => user.Components.HasFlag(c)))
+        foreach (var component in components
+            .OrderBy(c => c.GetSingleDisplayName(Core.Models.DisplayType.Order).Length)
+            .ThenBy(c => c.GetSingleDisplayName(Core.Models.DisplayType.Order))
+            .Where(c => user.Components.HasFlag(c)))
         {
             var key = $"{prefix}/{component}";
             yield return new ComponentImage()
