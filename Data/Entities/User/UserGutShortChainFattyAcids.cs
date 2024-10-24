@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -8,14 +7,27 @@ namespace Data.Entities.User;
 /// <summary>
 /// https://site-akiajqrf22xmaqzsiz6q.s3.amazonaws.com/DDI+Website/Sample+Reports/Sample+Report+GI360.pdf
 /// </summary>
-[Table("user_gut_short_chain_fatty_acids"), Comment("User variation weight log")]
+[Table("user_gut_short_chain_fatty_acids")]
+[Display(Name = "Short-Chain Fatty Acids", Description = "Short-chain fatty acids have numerous health benefits and are known to have anti-inflammatory effects, improve gut motility, reduce gut permeability, reduce intestinal lumen pH, and provide an important energy source.\r\nLactate is an example of a biochemical byproduct produced by various microbes that, in excess, can negatively impact your health. Lactate at low levels can be normal in healthy individuals and have no significant impact. Still, as lactate begins to accumulate, it can further drive inflammatory and disease processes and lead to further complications of various conditions.")]
 public class UserGutShortChainFattyAcids
 {
     public class Consts
     {
-        public const int PlatletCountMin = 100;
-        public const int PlatletCountMax = 500;
-        public const int PlatletCountStep = 1;
+        public const double ButyrateMin = 0;
+        public const double ButyrateMax = 100;
+        public const double ButyrateStep = .1;
+
+        public const double LactateMin = 0;
+        public const double LactateMax = 100;
+        public const double LactateStep = .1;
+
+        public const double PropionateMin = 0;
+        public const double PropionateMax = 100;
+        public const double PropionateStep = .1;
+
+        public const double ValerateMin = 0;
+        public const double ValerateMax = 100;
+        public const double ValerateStep = .1;
     }
 
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -27,106 +39,31 @@ public class UserGutShortChainFattyAcids
     [Required]
     public DateOnly Date { get; init; } = DateHelpers.Today;
 
-    [Range(40, 240)]
-    [Display(Name = "WBC")]
-    public int? WBC { get; set; }
+    [Range(0, 100)]
+    [Display(Name = "Butyrate", Description = "")]
+    public double? Butyrate { get; set; }
 
-    [Range(40, 240)]
-    [Display(Name = "RBC Count")]
-    public int? RBCCount { get; set; }
+    [Range(0, 100)]
+    [Display(Name = "Lactate", Description = "")]
+    public double? Lactate { get; set; }
 
-    [Range(40, 240)]
-    [Display(Name = "Hemoglobin")]
-    public int? Hemoglobin { get; set; }
+    [Range(0, 100)]
+    [Display(Name = "Propionate", Description = "")]
+    public double? Propionate { get; set; }
 
-    [Range(40, 240)]
-    [Display(Name = "Hematocrit")]
-    public int? Hematocrit { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "MCV")]
-    public int? MCV { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "MCH")]
-    public int? MCH { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "MCHC")]
-    public int? MCHC { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "RDW-CV")]
-    public int? RDW_CV { get; set; }
-
-    [Range(Consts.PlatletCountMin, Consts.PlatletCountMax)]
-    [Display(Name = "PlatletCount")]
-    public int? PlatletCount { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "MPV")]
-    public int? MPV { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "Monocyte %")]
-    public int? MonocytePercent { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "Eosinophi %l")]
-    public int? EosinophilPercent { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "Basophil %")]
-    public int? BasophilPercent { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "Immature Granulocytes %")]
-    public int? ImmatureGranulocytesPercent { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "Neutrophil Absolute")]
-    public int? NeutrophilAbsolute { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "Lymphocyte Absolute")]
-    public int? LymphocyteAbsolute { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "Monocyte Absolute")]
-    public int? MonocyteAbsolute { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "Eosinophil Absolute")]
-    public int? EosinophilAbsolute { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "Basophil Absolute")]
-    public int? BasophilAbsolute { get; set; }
+    [Range(0, 100)]
+    [Display(Name = "Valerate", Description = "")]
+    public double? Valerate { get; set; }
 
     [NotMapped]
-    public Dictionary<string, int?> Items => new()
+    public Dictionary<string, double?> Items => new()
     {
-        { nameof(WBC), WBC },
-        { nameof(RBCCount), RBCCount },
-        { nameof(Hemoglobin), Hemoglobin },
-        { nameof(Hematocrit), Hematocrit },
-        { nameof(MCV), MCV },
-        { nameof(MCH), MCH },
-        { nameof(MCHC), MCHC },
-        { nameof(RDW_CV), RDW_CV },
-        { nameof(PlatletCount), PlatletCount },
-        { nameof(MPV), MPV },
-        { nameof(MonocytePercent), MonocytePercent },
-        { nameof(EosinophilPercent), EosinophilPercent },
-        { nameof(BasophilPercent), BasophilPercent },
-        { nameof(ImmatureGranulocytesPercent), ImmatureGranulocytesPercent },
-        { nameof(NeutrophilAbsolute), NeutrophilAbsolute },
-        { nameof(LymphocyteAbsolute), LymphocyteAbsolute },
-        { nameof(MonocyteAbsolute), MonocyteAbsolute },
-        { nameof(EosinophilAbsolute), EosinophilAbsolute },
-        { nameof(BasophilAbsolute), BasophilAbsolute },
+        { nameof(Butyrate), Butyrate },
+        { nameof(Lactate), Lactate },
+        { nameof(Propionate), Propionate },
+        { nameof(Valerate), Valerate },
     };
 
-    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserCbcWAutoDiffs))]
+    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserGutShortChainFattyAcids))]
     public virtual User User { get; set; } = null!;
 }

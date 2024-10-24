@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -8,14 +7,35 @@ namespace Data.Entities.User;
 /// <summary>
 /// https://site-akiajqrf22xmaqzsiz6q.s3.amazonaws.com/DDI+Website/Sample+Reports/Sample+Report+GI360.pdf
 /// </summary>
-[Table("user_gut_conditional_bacteria"), Comment("User variation weight log")]
+[Table("user_gut_conditional_bacteria")]
+[Display(Name = "Conditional Bacteria", Description = "Conditional Bacteria below have established associations with certain health conditions and are displayed based on the best levels for you. Similarly, your personalized dietary recommendations will help achieve optimal levels for you and the conditions you reported. Your percentile is compared to healthy adults.")]
 public class UserGutConditionalBacteria
 {
     public class Consts
     {
-        public const int PlatletCountMin = 100;
-        public const int PlatletCountMax = 500;
-        public const int PlatletCountStep = 1;
+        public const double BacteroidesMin = 0;
+        public const double BacteroidesMax = 100;
+        public const double BacteroidesStep = .1;
+
+        public const double LactobacillusMin = 0;
+        public const double LactobacillusMax = 100;
+        public const double LactobacillusStep = .1;
+
+        public const double MethanobacteriaMin = 0;
+        public const double MethanobacteriaMax = 100;
+        public const double MethanobacteriaStep = .1;
+
+        public const double OscillibacterMin = 0;
+        public const double OscillibacterMax = 100;
+        public const double OscillibacterStep = .1;
+
+        public const double PrevotellaMin = 0;
+        public const double PrevotellaMax = 100;
+        public const double PrevotellaStep = .1;
+
+        public const double RuminococcusBromiiMin = 0;
+        public const double RuminococcusBromiiMax = 100;
+        public const double RuminococcusBromiiStep = .1;
     }
 
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -27,106 +47,41 @@ public class UserGutConditionalBacteria
     [Required]
     public DateOnly Date { get; init; } = DateHelpers.Today;
 
-    [Range(40, 240)]
-    [Display(Name = "WBC")]
-    public int? WBC { get; set; }
+    [Range(0, 100)]
+    [Display(Name = "Bacteroides", Description = "Bacteroides is a large, gram-negative genus. It's especially abundant in individuals who consume a traditional Western diet, but that doesn't mean its many species are universally bad. The prebiotic inulin allows other bacteria to out-compete Bacteroides, but it responds well to arabinoxylans and pectin.")]
+    public double? Bacteroides { get; set; }
 
-    [Range(40, 240)]
-    [Display(Name = "RBC Count")]
-    public int? RBCCount { get; set; }
+    [Range(0, 100)]
+    [Display(Name = "Lactobacillus", Description = "Although the genus Lactobacillus is commonly consumed in probiotics, it should be considered individually based on one’s health status. It responds well to several different prebiotics. In most cases, the goal is to maximize other healthy bacteria.")]
+    public double? Lactobacillus { get; set; }
 
-    [Range(40, 240)]
-    [Display(Name = "Hemoglobin")]
-    public int? Hemoglobin { get; set; }
+    [Range(0, 100)]
+    [Display(Name = "Methanobacteria", Description = "Methanobacteria is a bit of a misnomer, because they are not bacteria, but archaea. The most representative member of this class is the species <em>Methanobrevibacter smithii</em>.  To date, the only dietary component shown to increase Methanobacteria is dairy products.")]
+    public double? Methanobacteria { get; set; }
 
-    [Range(40, 240)]
-    [Display(Name = "Hematocrit")]
-    public int? Hematocrit { get; set; }
+    [Range(0, 100)]
+    [Display(Name = "Oscillibacter", Description = "This is a relatively small genus with research that supports its levels in specific conditions.")]
+    public double? Oscillibacter { get; set; }
 
-    [Range(40, 240)]
-    [Display(Name = "MCV")]
-    public int? MCV { get; set; }
+    [Range(0, 100)]
+    [Display(Name = "Prevotella", Description = "Prevotella is a large genus, with <em>Prevotella copri</em> being the primary species found in the human gut. It is very high in high-fiber diets and is often associated with good health, except for a few specific conditions.")]
+    public double? Prevotella { get; set; }
 
-    [Range(40, 240)]
-    [Display(Name = "MCH")]
-    public int? MCH { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "MCHC")]
-    public int? MCHC { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "RDW-CV")]
-    public int? RDW_CV { get; set; }
-
-    [Range(Consts.PlatletCountMin, Consts.PlatletCountMax)]
-    [Display(Name = "PlatletCount")]
-    public int? PlatletCount { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "MPV")]
-    public int? MPV { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "Monocyte %")]
-    public int? MonocytePercent { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "Eosinophi %l")]
-    public int? EosinophilPercent { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "Basophil %")]
-    public int? BasophilPercent { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "Immature Granulocytes %")]
-    public int? ImmatureGranulocytesPercent { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "Neutrophil Absolute")]
-    public int? NeutrophilAbsolute { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "Lymphocyte Absolute")]
-    public int? LymphocyteAbsolute { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "Monocyte Absolute")]
-    public int? MonocyteAbsolute { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "Eosinophil Absolute")]
-    public int? EosinophilAbsolute { get; set; }
-
-    [Range(40, 240)]
-    [Display(Name = "Basophil Absolute")]
-    public int? BasophilAbsolute { get; set; }
+    [Range(0, 100)]
+    [Display(Name = "Ruminococcus bromii", Description = "The strain <em>Ruminococcus bromii</em> has a clear role in gastrointestinal motility. This species is the primary degrader of resistant starch but also fuels other healthy species as it does so.")]
+    public double? RuminococcusBromii { get; set; }
 
     [NotMapped]
-    public Dictionary<string, int?> Items => new()
+    public Dictionary<string, double?> Items => new()
     {
-        { nameof(WBC), WBC },
-        { nameof(RBCCount), RBCCount },
-        { nameof(Hemoglobin), Hemoglobin },
-        { nameof(Hematocrit), Hematocrit },
-        { nameof(MCV), MCV },
-        { nameof(MCH), MCH },
-        { nameof(MCHC), MCHC },
-        { nameof(RDW_CV), RDW_CV },
-        { nameof(PlatletCount), PlatletCount },
-        { nameof(MPV), MPV },
-        { nameof(MonocytePercent), MonocytePercent },
-        { nameof(EosinophilPercent), EosinophilPercent },
-        { nameof(BasophilPercent), BasophilPercent },
-        { nameof(ImmatureGranulocytesPercent), ImmatureGranulocytesPercent },
-        { nameof(NeutrophilAbsolute), NeutrophilAbsolute },
-        { nameof(LymphocyteAbsolute), LymphocyteAbsolute },
-        { nameof(MonocyteAbsolute), MonocyteAbsolute },
-        { nameof(EosinophilAbsolute), EosinophilAbsolute },
-        { nameof(BasophilAbsolute), BasophilAbsolute },
+        { nameof(RuminococcusBromii), RuminococcusBromii },
+        { nameof(Prevotella), Prevotella },
+        { nameof(Oscillibacter), Oscillibacter },
+        { nameof(Methanobacteria), Methanobacteria },
+        { nameof(Bacteroides), Bacteroides },
+        { nameof(Lactobacillus), Lactobacillus },
     };
 
-    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserCbcWAutoDiffs))]
+    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserGutConditionalBacteria))]
     public virtual User User { get; set; } = null!;
 }

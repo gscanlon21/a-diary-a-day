@@ -303,8 +303,8 @@ namespace Data.Migrations
                     b.Property<bool>("AcceptedTerms")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("Components")
-                        .HasColumnType("integer");
+                    b.Property<long>("Components")
+                        .HasColumnType("bigint");
 
                     b.Property<DateOnly>("CreatedDate")
                         .HasColumnType("date");
@@ -758,8 +758,8 @@ namespace Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Component")
-                        .HasColumnType("integer");
+                    b.Property<long>("Component")
+                        .HasColumnType("bigint");
 
                     b.Property<DateOnly>("LastUpload")
                         .HasColumnType("date");
@@ -785,8 +785,8 @@ namespace Data.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Component")
-                        .HasColumnType("integer");
+                    b.Property<long>("Component")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("Days")
                         .HasColumnType("integer");
@@ -1164,6 +1164,135 @@ namespace Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Data.Entities.User.UserGutBadBacteria", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<double?>("Blautia")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("CitrobacterFreundii")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("ClostridioidesDifficile")
+                        .HasColumnType("double precision");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<double?>("Eggerthella")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("EggerthellaLenta")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Enterobacteriaceae")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("EnterobacteriaceaeAndPseudomonas")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Enterococcus")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("EnterococcusFaecalis")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("EnterococcusFaecalisAndFaecium")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("EnterococcusFaecium")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Escherichia")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("EscherichiaColi")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Klebsiella")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("RuminococcusGnavus")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("RuminococcusTorques")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Staphylococcus")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("StaphylococcusAureus")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("StreptococcusMinusThermophilusAndSalivarius")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<double?>("Veillonella")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("YersiniaEnterocolitica")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("user_gut_bad_bacteria", t =>
+                        {
+                            t.HasComment("User variation weight log");
+                        });
+                });
+
+            modelBuilder.Entity("Data.Entities.User.UserGutConditionalBacteria", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<double?>("Bacteroides")
+                        .HasColumnType("double precision");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<double?>("Lactobacillus")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Methanobacteria")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Oscillibacter")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Prevotella")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("RuminococcusBromii")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("user_gut_conditional_bacteria", t =>
+                        {
+                            t.HasComment("User variation weight log");
+                        });
+                });
+
             modelBuilder.Entity("Data.Entities.User.UserGutFungi", b =>
                 {
                     b.Property<int>("Id")
@@ -1186,6 +1315,162 @@ namespace Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("user_gut_fungi");
+                });
+
+            modelBuilder.Entity("Data.Entities.User.UserGutGoodBacteria", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<double?>("AkkermansiaMuciniphila")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Alistipes")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Bifidobacterium")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Coprococcus")
+                        .HasColumnType("double precision");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<double?>("Eubacterium")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("EubacteriumRectale")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("FaecalibacteriumPrausnitzii")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("LachnospiraceaeMinusBlautia")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Oscillospira")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Parabacteroides")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Roseburia")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Ruminococcaceae")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("RuminococcusMinusRBromii")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("user_gut_good_bacteria", t =>
+                        {
+                            t.HasComment("User variation weight log");
+                        });
+                });
+
+            modelBuilder.Entity("Data.Entities.User.UserGutMicronutrients", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<double?>("VitaminB12")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("VitaminB3")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("VitaminB6")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("VitaminB9")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("user_gut_micronutrients", t =>
+                        {
+                            t.HasComment("User variation weight log");
+                        });
+                });
+
+            modelBuilder.Entity("Data.Entities.User.UserGutPathogens", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("Blastocystis")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Campylobacter")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ClostridioidesDifficile")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Cryptosporidium")
+                        .HasColumnType("integer");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<int?>("DientamoebaFragilis")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("EntamoebaHistolytica")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("EscherichiaColiO157_H7")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("GiardiaIntestinalis")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("HelicobacterPylori")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("SalmonellaEnterica")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("VibrioCholerae")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("user_gut_pathogens", t =>
+                        {
+                            t.HasComment("User variation weight log");
+                        });
                 });
 
             modelBuilder.Entity("Data.Entities.User.UserGutPillars", b =>
@@ -1228,6 +1513,138 @@ namespace Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("user_gut_pillars", t =>
+                        {
+                            t.HasComment("User variation weight log");
+                        });
+                });
+
+            modelBuilder.Entity("Data.Entities.User.UserGutProbiotics", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<double?>("BacillusCoagulans")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("BifidobacteriumAnimalisSubspAnimalis")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("BifidobacteriumAnimalisSubspLactis")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("BifidobacteriumBifidum")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("BifidobacteriumBreve")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("BifidobacteriumLongumSubspInfantis")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("BifidobacteriumLongumSubspLongum")
+                        .HasColumnType("double precision");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<double?>("LactobacillusAcidophilus")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("LactobacillusBrevis")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("LactobacillusCasei")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("LactobacillusDelbrueckiiSubspBulgaricus")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("LactobacillusDelbrueckiiSubspDelbrueckii")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("LactobacillusFermentum")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("LactobacillusGasseri")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("LactobacillusHelveticus")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("LactobacillusParacasei")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("LactobacillusPlantarum")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("LactobacillusReuteri")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("LactobacillusRhamnosus")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("LactobacillusSalivarius")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("LactococcusLactis")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("PropionibacteriumFreudenreichii")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("StreptococcusSalivarius")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("StreptococcusThermophilus")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("user_gut_probiotics", t =>
+                        {
+                            t.HasComment("User variation weight log");
+                        });
+                });
+
+            modelBuilder.Entity("Data.Entities.User.UserGutShortChainFattyAcids", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<double?>("Butyrate")
+                        .HasColumnType("double precision");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<double?>("Lactate")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Propionate")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<double?>("Valerate")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("user_gut_short_chain_fatty_acids", t =>
                         {
                             t.HasComment("User variation weight log");
                         });
@@ -1965,6 +2382,28 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Data.Entities.User.UserGutBadBacteria", b =>
+                {
+                    b.HasOne("Data.Entities.User.User", "User")
+                        .WithMany("UserGutBadBacteria")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Data.Entities.User.UserGutConditionalBacteria", b =>
+                {
+                    b.HasOne("Data.Entities.User.User", "User")
+                        .WithMany("UserGutConditionalBacteria")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Data.Entities.User.UserGutFungi", b =>
                 {
                     b.HasOne("Data.Entities.User.User", "User")
@@ -1976,10 +2415,65 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Data.Entities.User.UserGutGoodBacteria", b =>
+                {
+                    b.HasOne("Data.Entities.User.User", "User")
+                        .WithMany("UserGutGoodBacteria")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Data.Entities.User.UserGutMicronutrients", b =>
+                {
+                    b.HasOne("Data.Entities.User.User", "User")
+                        .WithMany("UserGutMicronutrients")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Data.Entities.User.UserGutPathogens", b =>
+                {
+                    b.HasOne("Data.Entities.User.User", "User")
+                        .WithMany("UserGutPathogens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Data.Entities.User.UserGutPillars", b =>
                 {
                     b.HasOne("Data.Entities.User.User", "User")
                         .WithMany("UserGutPillars")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Data.Entities.User.UserGutProbiotics", b =>
+                {
+                    b.HasOne("Data.Entities.User.User", "User")
+                        .WithMany("UserGutProbiotics")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Data.Entities.User.UserGutShortChainFattyAcids", b =>
+                {
+                    b.HasOne("Data.Entities.User.User", "User")
+                        .WithMany("UserGutShortChainFattyAcids")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2252,9 +2746,23 @@ namespace Data.Migrations
 
                     b.Navigation("UserGeneralizedAnxietySeverities");
 
+                    b.Navigation("UserGutBadBacteria");
+
+                    b.Navigation("UserGutConditionalBacteria");
+
                     b.Navigation("UserGutFungi");
 
+                    b.Navigation("UserGutGoodBacteria");
+
+                    b.Navigation("UserGutMicronutrients");
+
+                    b.Navigation("UserGutPathogens");
+
                     b.Navigation("UserGutPillars");
+
+                    b.Navigation("UserGutProbiotics");
+
+                    b.Navigation("UserGutShortChainFattyAcids");
 
                     b.Navigation("UserJournals");
 

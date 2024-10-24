@@ -208,6 +208,27 @@ public class User : IUser
     [JsonIgnore, InverseProperty(nameof(Entities.User.UserGutFungi.User))]
     public virtual ICollection<UserGutFungi> UserGutFungi { get; private init; } = null!;
 
+    [JsonIgnore, InverseProperty(nameof(Entities.User.UserGutConditionalBacteria.User))]
+    public virtual ICollection<UserGutConditionalBacteria> UserGutConditionalBacteria { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(Entities.User.UserGutGoodBacteria.User))]
+    public virtual ICollection<UserGutGoodBacteria> UserGutGoodBacteria { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(Entities.User.UserGutBadBacteria.User))]
+    public virtual ICollection<UserGutBadBacteria> UserGutBadBacteria { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(Entities.User.UserGutPathogens.User))]
+    public virtual ICollection<UserGutPathogens> UserGutPathogens { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(Entities.User.UserGutProbiotics.User))]
+    public virtual ICollection<UserGutProbiotics> UserGutProbiotics { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(Entities.User.UserGutMicronutrients.User))]
+    public virtual ICollection<UserGutMicronutrients> UserGutMicronutrients { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(Entities.User.UserGutShortChainFattyAcids.User))]
+    public virtual ICollection<UserGutShortChainFattyAcids> UserGutShortChainFattyAcids { get; private init; } = null!;
+
     [JsonIgnore, InverseProperty(nameof(UserBloodWork.User))]
     public virtual ICollection<UserBloodWork> UserBloodWorks { get; private init; } = null!;
 
