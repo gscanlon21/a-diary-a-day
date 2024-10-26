@@ -46,9 +46,9 @@
                 @{
                     await Html.RenderPartialAsync("_TagChart", new TagChartViewModel()
                     {
-                        XysGrouped = Model.XysGrouped,
                         User = Model.User,
                         Token = Model.Token,
+                        XysGrouped = Model.XysGrouped,
                         Type = Core.Models.Components.Component.Medicine
                     });
                 }

@@ -21,7 +21,8 @@ public class SocialAnxietySeverityViewComponent(CoreContext context, UserRepo us
         var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserSocialAnxietySeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserSocialAnxietySeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
-        var viewModel = new SocialAnxietySeverityViewModel(userMoods)
+
+        return View("SocialAnxietySeverity", new SocialAnxietySeverityViewModel(userMoods)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
@@ -31,8 +32,6 @@ public class SocialAnxietySeverityViewComponent(CoreContext context, UserRepo us
                 UserId = user.Id,
                 User = user
             },
-        };
-
-        return View("SocialAnxietySeverity", viewModel);
+        });
     }
 }

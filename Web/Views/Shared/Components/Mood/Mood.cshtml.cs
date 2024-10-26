@@ -7,7 +7,7 @@ public class MoodViewModel
 {
     public MoodViewModel(Data.Entities.User.User user, IList<UserMood>? userMoods)
     {
-        //Mood = currentWeight.GetValueOrDefault();
+
         if (userMoods != null)
         {
             var daysBack = Enumerable.Range(0, user.GetComponentDaysFor(Component.Mood));

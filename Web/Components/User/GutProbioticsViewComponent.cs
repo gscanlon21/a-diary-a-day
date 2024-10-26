@@ -1,4 +1,4 @@
-﻿using Core.Models.Footnote;
+﻿using Core.Models.User;
 using Data;
 using Data.Entities.User;
 using Data.Repos;

@@ -14,6 +14,31 @@ $("[data-dismiss]").each((i, elem) => elem.addEventListener('click', (e) => {
     grandParent.cleanWhitespace();
 }))
 
+window.wrap = (str, limit) => {
+    if (!str) {
+        return str;
+    }
+
+    const words = str.split(" ");
+    let aux = []
+    let concat = []
+
+    for (let i = 0; i < words.length; i++) {
+        concat.push(words[i])
+        let join = concat.join(' ')
+        if (join.length > limit) {
+            aux.push(join)
+            concat = []
+        }
+    }
+
+    if (concat.length) {
+        aux.push(concat.join(' ').trim())
+    }
+
+    return aux;
+}
+
 window.uploadChart = function uploadChart(chart, width, height, email, token, type, name) {
     const offscreen = new OffscreenCanvas(width, height);
 

@@ -10,6 +10,13 @@ public interface IScore
     public double? AverageScore => Items.All(d => d.HasValue) ? Items.Sum() / (double)Items.Count : null;
 }
 
+public interface IGroup
+{
+    public string Name { get; }
+    public string? Description { get; }
+    public int Order { get; }
+}
+
 public interface ITag
 {
     public List<ICustom> Items { get; }

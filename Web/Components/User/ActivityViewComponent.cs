@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using Core.Models.User;
+using Data;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +26,7 @@ public class ActivityViewComponent(CoreContext context, UserRepo userRepo) : Vie
             .Where(ud => ud.UserId == user.Id)
             .ToListAsync());
         var userCustoms = await context.UserCustoms
-            .Where(c => c.Type == Core.Models.Footnote.CustomType.Activity)
+            .Where(c => c.Type == CustomType.Activity)
             .Where(c => c.UserId == null || c.UserId == user.Id)
             .ToListAsync();
         var viewModel = new ActivityViewModel(userMoods, userCustoms)

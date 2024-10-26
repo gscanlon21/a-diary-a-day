@@ -21,7 +21,8 @@ public class PostTraumaticStressSeverityViewComponent(CoreContext context, UserR
         var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserPostTraumaticStressSeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserPostTraumaticStressSeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
-        var viewModel = new PostTraumaticStressSeverityViewModel(userMoods)
+
+        return View("PostTraumaticStressSeverity", new PostTraumaticStressSeverityViewModel(userMoods)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
@@ -31,8 +32,6 @@ public class PostTraumaticStressSeverityViewComponent(CoreContext context, UserR
                 UserId = user.Id,
                 User = user
             },
-        };
-
-        return View("PostTraumaticStressSeverity", viewModel);
+        });
     }
 }

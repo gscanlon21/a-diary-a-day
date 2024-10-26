@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Core.Models.Footnote;
+namespace Core.Models.User;
 
 [Flags]
 public enum CustomType

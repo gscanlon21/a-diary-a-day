@@ -8,7 +8,7 @@ public class SocialAnxietySeverityViewModel
 {
     public SocialAnxietySeverityViewModel(IList<UserSocialAnxietySeverity>? userMoods)
     {
-        //Mood = currentWeight.GetValueOrDefault();
+
         if (userMoods != null)
         {
             Xys = Enumerable.Range(0, UserConsts.ChartDaysDefault).Select(i =>

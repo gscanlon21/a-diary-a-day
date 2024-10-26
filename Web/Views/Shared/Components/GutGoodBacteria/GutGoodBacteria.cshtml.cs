@@ -1,5 +1,8 @@
-using Core.Models.Footnote;
+using Core.Attributes;
+using Core.Models.User;
 using Data.Entities.User;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using Web.ViewModels;
 
 namespace Web.Views.Shared.Components.GutGoodBacteria;
@@ -8,24 +11,26 @@ public class GutGoodBacteriaViewModel
 {
     public GutGoodBacteriaViewModel(IList<UserGutGoodBacteria>? userMoods, List<UserCustom>? customs)
     {
-        //Mood = currentWeight.GetValueOrDefault();
+        var lowRiskAttributes = typeof(UserGutGoodBacteria).GetProperties().ToDictionary(p => p.Name,
+            p => p.GetCustomAttributes<IdealRangeAttribute>().Where(a => a.RiskType == RiskType.LowRisk));
+
         if (userMoods != null && customs != null)
         {
             var flatMap = userMoods.SelectMany(m =>
             {
-                // Excluding complex allergens from here so the graph has less data points and is easier to follow.
-                return m.Items.Select(c => new UserCustomGroup(m.Date, CustomType.None, 0, c.Key)
+                return m.Items.Select(c => new UserCustomGroup(m.Date, c.Key)
                 {
-                    One = c.Value ?? 0
+                    Value = c.Value ?? 0,
+                    Description = typeof(UserGutGoodBacteria).GetProperty(c.Key)!.GetCustomAttribute<DisplayAttribute>()!.Description
                 });
-            });
+            }).GroupBy(m => m.Name).Where(g => !g.All(i => lowRiskAttributes[g.Key].Any(a => a.IsInRange(i.Value)))).SelectMany(g => g);
 
-            foreach (var custom in customs)
+            foreach (var days in Enumerable.Range(0, UserConsts.ChartDaysDefault))
             {
-                Xys.AddRange(Enumerable.Range(0, UserConsts.ChartDaysDefault).Select(i =>
+                var date = DateHelpers.Today.AddDays(-days);
+                Xys.AddRange(flatMap.Where(f => f.Date == date).Select(item =>
                 {
-                    var date = DateHelpers.Today.AddDays(-i);
-                    return new XCustom(date, flatMap.FirstOrDefault(uw => uw.Date == date && uw.Name == custom.Name), custom);
+                    return new XyGroup(item, date, item.Value);
                 }).Where(xy => xy.Y != null).Reverse());
             }
         }
@@ -37,6 +42,6 @@ public class GutGoodBacteriaViewModel
     public UserGutGoodBacteria UserMood { get; init; } = null!;
     public UserGutGoodBacteria? PreviousMood { get; init; }
 
-    internal List<XCustom> Xys { get; init; } = [];
-    internal List<IGrouping<UserCustom, XCustom>> XysGrouped => Xys.Where(xy => xy.Y?.One > 0).GroupBy(xy => xy.Label).ToList();
+    internal List<XyGroup> Xys { get; init; } = [];
+    internal List<IGrouping<IGroup, XyGroup>> XysGrouped => Xys.Where(xy => xy.Y > 0).GroupBy(xy => xy.Group).ToList();
 }

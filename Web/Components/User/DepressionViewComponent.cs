@@ -21,18 +21,16 @@ public class DepressionViewComponent(CoreContext context, UserRepo userRepo) : V
         var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserDepressions.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserDepressions.Where(ud => ud.UserId == user.Id).ToListAsync();
-        var viewModel = new DepressionViewModel(userMoods)
+
+        return View("Depression", new DepressionViewModel(userMoods)
         {
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
-            //PreviousMood = userMood,
+            Token = await userRepo.AddUserToken(user, durationDays: 1),
             UserDepression = new Data.Entities.User.UserDepression()
             {
                 UserId = user.Id,
                 User = user
             },
-        };
-
-        return View("Depression", viewModel);
+        });
     }
 }

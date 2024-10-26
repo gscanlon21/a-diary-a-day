@@ -21,7 +21,8 @@ public class DryEyesViewComponent(CoreContext context, UserRepo userRepo) : View
         var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserDryEyes.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserDryEyes.Where(ud => ud.UserId == user.Id).ToListAsync();
-        var viewModel = new DryEyesViewModel(userMoods)
+
+        return View("DryEyes", new DryEyesViewModel(userMoods)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
@@ -31,8 +32,6 @@ public class DryEyesViewComponent(CoreContext context, UserRepo userRepo) : View
                 UserId = user.Id,
                 User = user
             },
-        };
-
-        return View("DryEyes", viewModel);
+        });
     }
 }

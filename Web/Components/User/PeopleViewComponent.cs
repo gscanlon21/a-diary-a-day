@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using Core.Models.User;
+using Data;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,15 +21,13 @@ public class PeopleViewComponent(CoreContext context, UserRepo userRepo) : ViewC
     {
         var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserPeoples.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
-        var userMoods = (await context.UserPeoples
-            .Include(ud => ud.UserCustoms)
-            .Where(ud => ud.UserId == user.Id)
-            .ToListAsync());
+        var userMoods = await context.UserPeoples.Include(ud => ud.UserCustoms).Where(ud => ud.UserId == user.Id).ToListAsync();
         var userCustoms = await context.UserCustoms
-            .Where(c => c.Type == Core.Models.Footnote.CustomType.People)
+            .Where(c => c.Type == CustomType.People)
             .Where(c => c.UserId == null || c.UserId == user.Id)
             .ToListAsync();
-        var viewModel = new PeopleViewModel(userMoods, userCustoms)
+
+        return View("People", new PeopleViewModel(userMoods, userCustoms)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
@@ -38,8 +37,6 @@ public class PeopleViewComponent(CoreContext context, UserRepo userRepo) : ViewC
                 UserId = user.Id,
                 User = user
             },
-        };
-
-        return View("People", viewModel);
+        });
     }
 }

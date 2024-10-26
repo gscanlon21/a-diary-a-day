@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Core.Attributes;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -27,6 +28,9 @@ public class UserGutFungi
     [Required]
     public DateOnly Date { get; init; } = DateHelpers.Today;
 
+    [IdealRange(0, 33, RiskType.LowRisk)]
+    [IdealRange(33, 66, RiskType.ModerateRisk)]
+    [IdealRange(66, 100, RiskType.HighRisk)]
     [Range(Consts.TotalFungiMin, Consts.TotalFungiMax)]
     [Display(Name = "Total Fungi", Description = "Your Total Fungi score is a percentile rank comparing the total fungi ‐ both good and bad ‐ in your sample to samples of healthy adults. A low score is desirable.")]
     public double? TotalFungi { get; set; }

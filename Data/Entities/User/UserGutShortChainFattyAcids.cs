@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Core.Attributes;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -39,19 +40,35 @@ public class UserGutShortChainFattyAcids
     [Required]
     public DateOnly Date { get; init; } = DateHelpers.Today;
 
-    [Range(0, 100)]
+    [IdealRange(0, 33, RiskType.HighRisk)]
+    [IdealRange(33, 66, RiskType.ModerateRisk)]
+    [IdealRange(66, 100, RiskType.LowRisk)]
+    [Range(Consts.ButyrateMin, Consts.ButyrateMax)]
     [Display(Name = "Butyrate", Description = "")]
     public double? Butyrate { get; set; }
 
-    [Range(0, 100)]
+    [IdealRange(0, 15, RiskType.HighRisk)]
+    [IdealRange(15, 33, RiskType.ModerateRisk)]
+    [IdealRange(33, 66, RiskType.LowRisk)]
+    [IdealRange(66, 85, RiskType.ModerateRisk)]
+    [IdealRange(85, 100, RiskType.HighRisk)]
+    [Range(Consts.LactateMin, Consts.LactateMax)]
     [Display(Name = "Lactate", Description = "")]
     public double? Lactate { get; set; }
 
-    [Range(0, 100)]
+    [IdealRange(0, 33, RiskType.HighRisk)]
+    [IdealRange(33, 66, RiskType.ModerateRisk)]
+    [IdealRange(66, 100, RiskType.LowRisk)]
+    [Range(Consts.PropionateMin, Consts.PropionateMax)]
     [Display(Name = "Propionate", Description = "")]
     public double? Propionate { get; set; }
 
-    [Range(0, 100)]
+    [IdealRange(0, 15, RiskType.HighRisk)]
+    [IdealRange(15, 33, RiskType.ModerateRisk)]
+    [IdealRange(33, 66, RiskType.LowRisk)]
+    [IdealRange(66, 85, RiskType.ModerateRisk)]
+    [IdealRange(85, 100, RiskType.HighRisk)]
+    [Range(Consts.ValerateMin, Consts.ValerateMax)]
     [Display(Name = "Valerate", Description = "")]
     public double? Valerate { get; set; }
 

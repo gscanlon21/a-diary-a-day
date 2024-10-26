@@ -22,7 +22,7 @@ public class PanicSeverityViewComponent(CoreContext context, UserRepo userRepo) 
         var userMood = await context.UserPanicSeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserPanicSeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
 
-        var viewModel = new PanicSeverityViewModel(user, userMoods)
+        return View("PanicSeverity", new PanicSeverityViewModel(user, userMoods)
         {
             Token = await userRepo.AddUserToken(user, durationDays: 1),
             PreviousMood = userMood,
@@ -31,8 +31,6 @@ public class PanicSeverityViewComponent(CoreContext context, UserRepo userRepo) 
                 UserId = user.Id,
                 User = user
             },
-        };
-
-        return View("PanicSeverity", viewModel);
+        });
     }
 }

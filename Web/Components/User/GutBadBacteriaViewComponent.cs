@@ -1,4 +1,4 @@
-﻿using Core.Models.Footnote;
+﻿using Core.Models.User;
 using Data;
 using Data.Entities.User;
 using Data.Repos;
@@ -32,18 +32,16 @@ public class GutBadBacteriaViewComponent(CoreContext context, UserRepo userRepo)
             Name = a,
         }).ToList();
 
-        var viewModel = new GutBadBacteriaViewModel(userMoods, userCustoms)
+        return View("GutBadBacteria", new GutBadBacteriaViewModel(userMoods, userCustoms)
         {
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
+            Token = await userRepo.AddUserToken(user, durationDays: 1),
             PreviousMood = userMood,
             UserMood = new UserGutBadBacteria()
             {
                 UserId = user.Id,
                 User = user
             },
-        };
-
-        return View("GutBadBacteria", viewModel);
+        });
     }
 }

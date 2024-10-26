@@ -8,7 +8,6 @@ public class SleepViewModel
     public SleepViewModel(IList<UserSleep>? userMoods, List<UserCustom> customs)
     {
         Customs = customs;
-        //Mood = currentWeight.GetValueOrDefault();
         if (userMoods != null && userMoods.Any())
         {
             var todaysDuration = userMoods.FirstOrDefault(um => um.Date == DateHelpers.Today);
@@ -29,16 +28,16 @@ public class SleepViewModel
 
             var flatMap = userMoods.SelectMany(m =>
             {
-                return m.UserCustoms.Select(c => new UserCustomGroup(m.Date, c.Type, c.Id, c.Name));
+                return m.UserCustoms.Select(c => new UserCustomGroup(m.Date, c.Name));
             });
 
             foreach (var custom in Customs)
             {
-                var todaysCustom = flatMap.FirstOrDefault(um => um.Date == DateHelpers.Today && um.Id == custom.Id);
+                var todaysCustom = flatMap.FirstOrDefault(um => um.Date == DateHelpers.Today && um.Name == custom.Name);
                 Xys.AddRange(Enumerable.Range(0, UserConsts.ChartDaysDefault).Select(i =>
                 {
                     var date = DateHelpers.Today.AddDays(-i);
-                    var userCustom = flatMap.FirstOrDefault(uw => uw.Date == date && uw.Id == custom.Id);
+                    var userCustom = flatMap.FirstOrDefault(uw => uw.Date == date && uw.Name == custom.Name);
                     return new XCustom(date, userCustom, custom);
                 }).Where(xy => xy.Y != null).Reverse());
             }

@@ -1,5 +1,4 @@
-﻿using Core.Models.Footnote;
-using Core.Models.User;
+﻿using Core.Models.User;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

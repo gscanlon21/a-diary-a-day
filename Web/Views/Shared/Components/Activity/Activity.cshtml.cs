@@ -8,12 +8,12 @@ public class ActivityViewModel
     public ActivityViewModel(IList<UserActivity>? userMoods, List<UserCustom> customs)
     {
         Customs = customs;
-        //Mood = currentWeight.GetValueOrDefault();
+
         if (userMoods != null)
         {
             var flatMap = userMoods.SelectMany(m =>
             {
-                return m.UserCustoms.Select(c => new UserCustomGroup(m.Date, c.Type, c.Id, c.Name));
+                return m.UserCustoms.Select(c => new UserCustomGroup(m.Date, c.Name));
             });
 
             foreach (var custom in Customs)
@@ -21,7 +21,7 @@ public class ActivityViewModel
                 Xys.AddRange(Enumerable.Range(0, UserConsts.ChartDaysDefault).Select(i =>
                 {
                     var date = DateHelpers.Today.AddDays(-i);
-                    return new XCustom(date, flatMap.FirstOrDefault(uw => uw.Date == date && uw.Id == custom.Id), custom);
+                    return new XCustom(date, flatMap.FirstOrDefault(uw => uw.Date == date && uw.Name == custom.Name), custom);
                 }).Where(xy => xy.Y != null).Reverse());
             }
         }

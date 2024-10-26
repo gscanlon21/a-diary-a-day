@@ -29,7 +29,7 @@
                                 borderColor: '@ChartConsts.Colors[i]',
                                 backgroundColor: '@ChartConsts.Colors[i]',
                                 parsing: {
-                                    yAxisKey: 'y.one'
+                                    yAxisKey: 'y'
                                 },
                             },
                         </text>
@@ -106,10 +106,9 @@
                     },
                     tooltip: {
                         callbacks: {
-                            title: (context) => {
-                                // Pretty-print the x-axis date in the hover tooltip
-                                return new Date(context[0].parsed.x).toDateString();
-                            },
+                            // Pretty-print the x-axis date in the hover tooltip.
+                            title: (context) => new Date(context[0].parsed.x).toDateString(),
+                            footer: (context) => context.flatMap(c => window.wrap(c.raw.group.description, 40)).filter(s => s),
                         },
                     },
                     /*

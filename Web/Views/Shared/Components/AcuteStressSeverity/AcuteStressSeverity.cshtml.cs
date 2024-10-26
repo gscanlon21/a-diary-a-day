@@ -7,7 +7,7 @@ public class AcuteStressSeverityViewModel
 {
     public AcuteStressSeverityViewModel(IList<UserAcuteStressSeverity>? userMoods)
     {
-        //Mood = currentWeight.GetValueOrDefault();
+
         if (userMoods != null)
         {
             Xys = Enumerable.Range(0, UserConsts.ChartDaysDefault).Select(i =>

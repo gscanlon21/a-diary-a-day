@@ -22,18 +22,17 @@ public class AgoraphobiaSeverityViewComponent(CoreContext context, UserRepo user
         var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserAgoraphobiaSeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserAgoraphobiaSeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
-        var viewModel = new AgoraphobiaSeverityViewModel(userMoods)
+
+        return View("AgoraphobiaSeverity", new AgoraphobiaSeverityViewModel(userMoods)
         {
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
+            Token = await userRepo.AddUserToken(user, durationDays: 1),
             PreviousMood = userMood,
             UserMood = new UserAgoraphobiaSeverity()
             {
                 UserId = user.Id,
                 User = user
             },
-        };
-
-        return View("AgoraphobiaSeverity", viewModel);
+        });
     }
 }

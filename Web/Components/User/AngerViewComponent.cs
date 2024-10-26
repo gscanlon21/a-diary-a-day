@@ -21,18 +21,17 @@ public class AngerViewComponent(CoreContext context, UserRepo userRepo) : ViewCo
         var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserAngers.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserAngers.Where(ud => ud.UserId == user.Id).ToListAsync();
-        var viewModel = new AngerViewModel(userMoods)
+
+        return View("Anger", new AngerViewModel(userMoods)
         {
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
+            Token = await userRepo.AddUserToken(user, durationDays: 1),
             PreviousMood = userMood,
             UserMood = new Data.Entities.User.UserAnger()
             {
                 UserId = user.Id,
                 User = user
             },
-        };
-
-        return View("Anger", viewModel);
+        });
     }
 }

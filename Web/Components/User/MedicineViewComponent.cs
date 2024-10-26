@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using Core.Models.User;
+using Data;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +26,7 @@ public class MedicineViewComponent(CoreContext context, UserRepo userRepo) : Vie
             .Where(ud => ud.UserId == user.Id)
             .ToListAsync());
         var userCustoms = await context.UserCustoms
-            .Where(c => c.Type == Core.Models.Footnote.CustomType.Medicine)
+            .Where(c => c.Type == CustomType.Medicine)
             .Where(c => c.UserId == null || c.UserId == user.Id)
             .ToListAsync();
         var viewModel = new MedicineViewModel(userMoods, userCustoms)

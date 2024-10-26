@@ -47,9 +47,9 @@
                 @{
                     await Html.RenderPartialAsync("_RadarChart", new RadarChartViewModel()
                     {
-                        XysGrouped = Model.XysGrouped,
                         User = Model.User,
                         Token = Model.Token,
+                        XysGrouped = Model.XysGrouped,
                         Type = Core.Models.Components.Component.Activity
                     });
                 }
