@@ -1,4 +1,5 @@
 ﻿using Core.Code.Helpers;
+using Core.Models.AFeastADay;
 using Core.Models.Options;
 using Core.Models.User;
 using Data;
@@ -47,7 +48,7 @@ public class FetchFeasts : IJob, IScheduled
                     using var context = scope.ServiceProvider.GetRequiredService<CoreContext>();
 
                     var response = await _httpClient.GetAsync($"{_siteSettings.Value.FeastUri.AbsolutePath}/user/Allergens?weeks={1}&email={Uri.EscapeDataString(userToken.User.FeastEmail!)}&token={Uri.EscapeDataString(userToken.User.FeastToken!)}", cancellationToken);
-                    var allergens = await ApiResult<IDictionary<Allergy, double>>.FromResponse(response);
+                    var allergens = await ApiResult<IDictionary<Allergens, double>>.FromResponse(response);
                     if (!allergens.IsSuccessStatusCode)
                     {
                         _logger.Log(LogLevel.Warning, "Newsletter failed for user {Id} with status {StatusCode}", userToken.User.Id, allergens.StatusCode);

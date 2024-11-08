@@ -1,4 +1,4 @@
-﻿using Core.Models.User;
+﻿using Core.Models.AFeastADay;
 using Data.Entities.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +27,7 @@ public partial class UserController
         }
 
         var response = await _httpClient.GetAsync($"{_siteSettings.Value.FeastUri}/User/Allergens?weeks={1}&email={Uri.EscapeDataString(feastEmail)}&token={Uri.EscapeDataString(feastToken)}");
-        var weeklyFeast = await ApiResult<IDictionary<Allergy, double?>>.FromResponse(response);
+        var weeklyFeast = await ApiResult<IDictionary<Allergens, double?>>.FromResponse(response);
         if (!weeklyFeast.IsSuccessStatusCode)
         {
             TempData[TempData_User.FailureMessage] = "Failed to connect to server.";
@@ -54,7 +54,7 @@ public partial class UserController
             }
 
             var response = await _httpClient.GetAsync($"{_siteSettings.Value.FeastUri.AbsolutePath}/user/Allergens?weeks={1}&email={Uri.EscapeDataString(user.FeastEmail)}&token={Uri.EscapeDataString(user.FeastToken)}");
-            var allergens = await ApiResult<IDictionary<Allergy, double>>.FromResponse(response);
+            var allergens = await ApiResult<IDictionary<Allergens, double>>.FromResponse(response);
             if (!allergens.HasValue)
             {
                 return RedirectToAction(nameof(ManageComponent), new { email, token, WasUpdated = false });

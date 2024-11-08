@@ -1,4 +1,4 @@
-﻿using Core.Models.User;
+﻿using Core.Models.AFeastADay;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,12 +21,12 @@ public class UserFeastAllergens
     [Required]
     public DateOnly Date { get; init; } = DateHelpers.Today.StartOfWeek();
 
-    public IDictionary<Allergy, double> Allergens { get; set; } = new Dictionary<Allergy, double>();
+    public IDictionary<Allergens, double> Allergens { get; set; } = new Dictionary<Allergens, double>();
 
     /// <summary>
     /// Get allergens that are not part of other allergens.
     /// </summary>
-    public IEnumerable<KeyValuePair<Allergy, double>> SimpleAllergens => Allergens.Where(kv => kv.Key.PopCount() == 1);
+    public IEnumerable<KeyValuePair<Allergens, double>> SimpleAllergens => Allergens.Where(kv => kv.Key.PopCount() == 1);
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserFeastAllergens))]
     public virtual User User { get; init; } = null!;

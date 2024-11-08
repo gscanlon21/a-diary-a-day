@@ -85,11 +85,13 @@ public static class EnumExtensions
     }
 
     /// <summary>
-    /// Returns enum values where the value has only 1 bit set
+    /// Returns enum values where the value has only 1 bit set.
     /// </summary>
-    public static T[] GetSingleValues32<T>() where T : struct, Enum
+    public static T[] GetSingleValues64<T>(T excludingAny = default) where T : struct, Enum
     {
-        return Enum.GetValues<T>().Where(e => e.PopCount() == 1).ToArray();
+        var excludeValues = Convert.ToInt64(excludingAny);
+        return Enum.GetValues<T>().Where(e => e.PopCount() == 1)
+            .Where(e => excludeValues == 0 || (excludeValues & Convert.ToInt64(e)) == 0).ToArray();
     }
 
     /// <summary>
@@ -109,18 +111,6 @@ public static class EnumExtensions
     public static T[] GetMultiValues32<T>() where T : struct, Enum
     {
         return Enum.GetValues<T>().Where(e => e.PopCount() > 1).ToArray();
-    }
-
-    /// <summary>
-    /// Returns enum values where the value has 1 or more bits set
-    /// </summary>
-    public static T[] GetSingleValuesExcludingAny32<T>(T excludes) where T : struct, Enum
-    {
-        var excludeValues = Convert.ToInt64(excludes);
-        return Enum.GetValues<T>()
-            .Where(e => e.PopCount() == 1)
-            .Where(e => (excludeValues & Convert.ToInt64(e)) == 0)
-            .ToArray();
     }
 
     /// <summary>

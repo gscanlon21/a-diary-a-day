@@ -141,12 +141,12 @@ public partial class NewsletterRepo
     }
 
     /// <summary>
-    /// The strength training newsletter.
+    /// Builds a new diary entry newsletter.
     /// </summary>
     private async Task<NewsletterDto?> OnDayNewsletter(NewsletterContext context)
     {
         var tasks = new List<QueryResults>(await GetUserTasks(context, Section.None));
-        foreach (var section in EnumExtensions.GetSingleValues32<Section>())
+        foreach (var section in EnumExtensions.GetSingleValues64<Section>())
         {
             tasks.AddRange(await GetUserTasks(context, section));
         }
@@ -205,7 +205,7 @@ public partial class NewsletterRepo
     private IEnumerable<ComponentImage> GetImages(User user)
     {
         var prefix = $"moods/{user.Uid}";
-        var components = EnumExtensions.GetSingleValuesExcludingAny32(Component.Journal | Component.Tasks);
+        var components = EnumExtensions.GetSingleValues64(excludingAny: Component.Journal | Component.Tasks);
         foreach (var component in components
             .OrderBy(c => c.GetSingleDisplayName(Core.Models.DisplayType.Order).Length)
             .ThenBy(c => c.GetSingleDisplayName(Core.Models.DisplayType.Order))

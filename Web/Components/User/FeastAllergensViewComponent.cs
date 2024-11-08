@@ -1,4 +1,5 @@
-﻿using Core.Models.User;
+﻿using Core.Models.AFeastADay;
+using Core.Models.User;
 using Data;
 using Data.Entities.User;
 using Data.Repos;
@@ -26,7 +27,7 @@ public class FeastAllergensViewComponent(CoreContext context, UserRepo userRepo)
             .Where(ud => ud.UserId == user.Id)
             .ToListAsync();
 
-        var userCustoms = EnumExtensions.GetValuesExcluding32(Allergy.None).Select(a => new UserCustom()
+        var userCustoms = EnumExtensions.GetValuesExcluding32(Allergens.None).Select(a => new UserCustom()
         {
             Id = (int)a,
             Count = (int)a,

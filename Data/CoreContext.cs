@@ -1,4 +1,4 @@
-﻿using Core.Models.User;
+﻿using Core.Models.AFeastADay;
 using Data.Entities.Footnote;
 using Data.Entities.Newsletter;
 using Data.Entities.Task;
@@ -11,7 +11,12 @@ namespace Data;
 
 public class CoreContext : DbContext
 {
-    public DbSet<Footnote> Footnotes { get; set; } = null!;
+    private static readonly JsonSerializerOptions JsonSerializerOptions = new();
+
+    [Obsolete("Public parameterless constructor required for EF Core.", error: true)]
+    public CoreContext() : base() { }
+
+    public CoreContext(DbContextOptions<CoreContext> context) : base(context) { }
 
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<UserToken> UserTokens { get; set; } = null!;
@@ -58,30 +63,19 @@ public class CoreContext : DbContext
     public DbSet<UserPanicSeverity> UserPanicSeverities { get; set; } = null!;
     public DbSet<UserPostTraumaticStressSeverity> UserPostTraumaticStressSeverities { get; set; } = null!;
     public DbSet<UserSocialAnxietySeverity> UserSocialAnxietySeverities { get; set; } = null!;
-
-    public CoreContext() : base() { }
-
-    public CoreContext(DbContextOptions<CoreContext> context) : base(context) { }
-
-    private static readonly JsonSerializerOptions JsonSerializerOptions = new();
+    public DbSet<Footnote> Footnotes { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         ////////// Keys //////////
         modelBuilder.Entity<UserComponentSetting>().HasKey(sc => new { sc.UserId, sc.Component });
 
-
-        ////////// Conversions //////////
-        modelBuilder
-            .Entity<UserFeastAllergens>()
-            .Property(e => e.Allergens)
-            .HasConversion(v => JsonSerializer.Serialize(v, JsonSerializerOptions),
-                v => JsonSerializer.Deserialize<Dictionary<Allergy, double>>(v, JsonSerializerOptions) ?? new Dictionary<Allergy, double>(),
-                new ValueComparer<IDictionary<Allergy, double>>((mg, mg2) => mg == mg2, mg => mg.GetHashCode())
-            );
-
-
         ////////// Query Filters //////////
         modelBuilder.Entity<UserToken>().HasQueryFilter(p => p.Expires > DateTime.UtcNow);
+
+        ////////// Conversions //////////
+        modelBuilder.Entity<UserFeastAllergens>().Property(e => e.Allergens).HasConversion(v => JsonSerializer.Serialize(v, JsonSerializerOptions),
+            v => JsonSerializer.Deserialize<Dictionary<string, double>>(v, JsonSerializerOptions)!.Where(kv => Enum.IsDefined(typeof(Allergens), kv.Key)).ToDictionary(kv => Enum.Parse<Allergens>(kv.Key), kv => kv.Value),
+            new ValueComparer<IDictionary<Allergens, double>>((mg, mg2) => mg == mg2, mg => mg.GetHashCode()));
     }
 }
