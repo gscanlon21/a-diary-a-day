@@ -1,5 +1,4 @@
 ﻿using Core.Models.User;
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -10,7 +9,7 @@ namespace Data.Entities.User;
 /// <summary>
 /// https://www.psychiatry.org/getmedia/b1a256c4-1304-4610-8aca-0cc70b46ff53/APA-DSM5TR-SeverityMeasureForGeneralizedAnxietyDisorderAdult.pdf
 /// </summary>
-[Table("user_generalized_anxiety_severity"), Comment("User variation weight log")]
+[Table("user_generalized_anxiety_severity")]
 public class UserGeneralizedAnxietySeverity : IScore
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

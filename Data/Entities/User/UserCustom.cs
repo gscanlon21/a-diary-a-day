@@ -1,5 +1,4 @@
 ﻿using Core.Models.User;
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
@@ -10,7 +9,7 @@ namespace Data.Entities.User;
 /// <summary>
 /// A collection of sage advice.
 /// </summary>
-[Table("user_custom"), Comment("Sage advice")]
+[Table("user_custom")]
 [DebuggerDisplay("{Name} - {Type}")]
 public class UserCustom : ICustom, IComparable<UserCustom>
 {

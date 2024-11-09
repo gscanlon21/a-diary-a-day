@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -8,7 +7,7 @@ namespace Data.Entities.User;
 /// <summary>
 /// Tracks component image upload dates.
 /// </summary>
-[Table("user_component"), Comment("Auth tokens for a user")]
+[Table("user_component")]
 public class UserComponent
 {
     /// <summary>

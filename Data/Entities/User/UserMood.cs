@@ -10,7 +10,7 @@ namespace Data.Entities.User;
 /// <summary>
 /// User's progression level of an exercise.
 /// </summary>
-[Table("user_mood"), Comment("User variation weight log")]
+[Table("user_mood")]
 public class UserMood : IScore
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

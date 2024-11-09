@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -9,7 +8,7 @@ namespace Data.Entities.User;
 /// <summary>
 /// User's progression level of an exercise.
 /// </summary>
-[Table("user_activity"), Comment("User variation weight log")]
+[Table("user_activity")]
 public class UserActivity
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

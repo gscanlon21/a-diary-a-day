@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -8,7 +7,7 @@ namespace Data.Entities.User;
 /// <summary>
 /// https://www.psychiatry.org/getmedia/4326c940-f414-4f2c-acec-bd8299a3cf14/APA-DSM5TR-Level2DepressionAdult.pdf
 /// </summary>
-[Table("user_depression"), Comment("User variation weight log")]
+[Table("user_depression")]
 public class UserDepression
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -1,6 +1,5 @@
 ﻿using Core.Consts;
 using Core.Models.Newsletter;
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -11,7 +10,7 @@ namespace Data.Entities.Task;
 /// <summary>
 /// User's set/rep/sec/weight tracking history of an exercise.
 /// </summary>
-[Table("user_task_log"), Comment("User task log")]
+[Table("user_task_log")]
 public class UserTaskLog
 {
     [Obsolete("Public parameterless constructor required for EF Core .AsSplitQuery()", error: true)]

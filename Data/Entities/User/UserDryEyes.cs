@@ -11,7 +11,7 @@ namespace Data.Entities.User;
 /// 
 /// Also add? TABLEA5-1_Dry_Eye_Severity_Grading_Scheme.pdf for tracking TFBUT and Schirmer scores?
 /// </summary>
-[Table("user_dry_eyes"), Comment("User variation weight log")]
+[Table("user_dry_eyes")]
 public class UserDryEyes : IScore
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

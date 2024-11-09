@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -99,7 +98,7 @@ public enum ManiaQ5
 /// <summary>
 /// https://www.psychiatry.org/getmedia/c1783d55-268a-47b2-9932-a549b21c8d64/APA-DSM5TR-Level2ManiaAdult.pdf
 /// </summary>
-[Table("user_mania"), Comment("User variation weight log")]
+[Table("user_mania")]
 public class UserMania
 {
     public UserMania() { }

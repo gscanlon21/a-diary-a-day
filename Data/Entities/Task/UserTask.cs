@@ -2,7 +2,6 @@
 using Core.Models.Newsletter;
 using Core.Models.User;
 using Data.Entities.Newsletter;
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
@@ -14,7 +13,7 @@ namespace Data.Entities.Task;
 /// <summary>
 /// User's custom todo tasks.
 /// </summary>
-[Table("user_task"), Comment("Tasks listed on the website")]
+[Table("user_task")]
 [DebuggerDisplay("{Name,nq}")]
 public class UserTask
 {

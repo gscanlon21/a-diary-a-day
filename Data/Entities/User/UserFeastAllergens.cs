@@ -1,5 +1,4 @@
 ﻿using Core.Models.AFeastADay;
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -9,7 +8,7 @@ namespace Data.Entities.User;
 /// <summary>
 /// User's progression level of an exercise.
 /// </summary>
-[Table("user_feast_allergens"), Comment("User variation weight log")]
+[Table("user_feast_allergens")]
 public class UserFeastAllergens
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

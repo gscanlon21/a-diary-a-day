@@ -24,8 +24,7 @@ namespace Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_footnote", x => x.Id);
-                },
-                comment: "Sage advice");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user",
@@ -43,7 +42,7 @@ namespace Data.Migrations
                     Verbosity = table.Column<int>(type: "integer", nullable: false),
                     LastActive = table.Column<DateOnly>(type: "date", nullable: true),
                     NewsletterDisabledReason = table.Column<string>(type: "text", nullable: true),
-                    Components = table.Column<int>(type: "integer", nullable: false),
+                    Components = table.Column<long>(type: "bigint", nullable: false),
                     Features = table.Column<int>(type: "integer", nullable: false),
                     FeastEmail = table.Column<string>(type: "text", nullable: true),
                     FeastToken = table.Column<string>(type: "text", nullable: true),
@@ -53,8 +52,7 @@ namespace Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_user", x => x.Id);
-                },
-                comment: "User who signed up for the newsletter");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_diary",
@@ -69,8 +67,7 @@ namespace Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_user_diary", x => x.Id);
-                },
-                comment: "A day's workout routine");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_activity",
@@ -90,8 +87,7 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "User variation weight log");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_acute_stress_severity",
@@ -118,8 +114,7 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "User variation weight log");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_agoraphobia_severity",
@@ -149,8 +144,7 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "User variation weight log");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_anger",
@@ -175,8 +169,7 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "User variation weight log");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_anxiety",
@@ -203,8 +196,68 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_blood_work",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    VitaminA = table.Column<int>(type: "integer", nullable: true),
+                    Homocysteine = table.Column<double>(type: "double precision", nullable: true)
                 },
-                comment: "User variation weight log");
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_blood_work", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_blood_work_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_cbc_w_auto_diff",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    WBC = table.Column<int>(type: "integer", nullable: true),
+                    RBCCount = table.Column<int>(type: "integer", nullable: true),
+                    Hemoglobin = table.Column<int>(type: "integer", nullable: true),
+                    Hematocrit = table.Column<int>(type: "integer", nullable: true),
+                    MCV = table.Column<int>(type: "integer", nullable: true),
+                    MCH = table.Column<int>(type: "integer", nullable: true),
+                    MCHC = table.Column<int>(type: "integer", nullable: true),
+                    RDW_CV = table.Column<int>(type: "integer", nullable: true),
+                    PlatletCount = table.Column<int>(type: "integer", nullable: true),
+                    MPV = table.Column<int>(type: "integer", nullable: true),
+                    MonocytePercent = table.Column<int>(type: "integer", nullable: true),
+                    EosinophilPercent = table.Column<int>(type: "integer", nullable: true),
+                    BasophilPercent = table.Column<int>(type: "integer", nullable: true),
+                    ImmatureGranulocytesPercent = table.Column<int>(type: "integer", nullable: true),
+                    NeutrophilAbsolute = table.Column<int>(type: "integer", nullable: true),
+                    LymphocyteAbsolute = table.Column<int>(type: "integer", nullable: true),
+                    MonocyteAbsolute = table.Column<int>(type: "integer", nullable: true),
+                    EosinophilAbsolute = table.Column<int>(type: "integer", nullable: true),
+                    BasophilAbsolute = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_cbc_w_auto_diff", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_cbc_w_auto_diff_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_complete_metabolic_panel",
@@ -228,7 +281,7 @@ namespace Data.Migrations
                     AST = table.Column<int>(type: "integer", nullable: true),
                     ProteinTotal = table.Column<int>(type: "integer", nullable: true),
                     Albumin = table.Column<int>(type: "integer", nullable: true),
-                    BilirubinTotal = table.Column<int>(type: "integer", nullable: true),
+                    BilirubinTotal = table.Column<double>(type: "double precision", nullable: true),
                     EGFRbyCKDEPI = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
@@ -240,8 +293,7 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "User variation weight log");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_component",
@@ -250,7 +302,7 @@ namespace Data.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: true),
-                    Component = table.Column<int>(type: "integer", nullable: false),
+                    Component = table.Column<long>(type: "bigint", nullable: false),
                     UserId = table.Column<int>(type: "integer", nullable: false),
                     LastUpload = table.Column<DateOnly>(type: "date", nullable: false)
                 },
@@ -263,8 +315,27 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_component_setting",
+                columns: table => new
+                {
+                    Component = table.Column<long>(type: "bigint", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Days = table.Column<int>(type: "integer", nullable: false),
+                    SubComponents = table.Column<int>(type: "integer", nullable: false)
                 },
-                comment: "Auth tokens for a user");
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_component_setting", x => new { x.UserId, x.Component });
+                    table.ForeignKey(
+                        name: "FK_user_component_setting_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_custom",
@@ -286,8 +357,7 @@ namespace Data.Migrations
                         column: x => x.UserId,
                         principalTable: "user",
                         principalColumn: "Id");
-                },
-                comment: "Sage advice");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_depression",
@@ -315,8 +385,7 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "User variation weight log");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_depression_severity",
@@ -345,8 +414,7 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "User variation weight log");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_dissociative_severity",
@@ -374,8 +442,45 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_dry_eyes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    DrynessFrequency = table.Column<int>(type: "integer", nullable: true),
+                    SorenessFrequency = table.Column<int>(type: "integer", nullable: true),
+                    BurningFrequency = table.Column<int>(type: "integer", nullable: true),
+                    FatigueFrequency = table.Column<int>(type: "integer", nullable: true),
+                    DrynessSeverity = table.Column<int>(type: "integer", nullable: true),
+                    SorenessSeverity = table.Column<int>(type: "integer", nullable: true),
+                    BurningSeverity = table.Column<int>(type: "integer", nullable: true),
+                    FatigueSeverity = table.Column<int>(type: "integer", nullable: true),
+                    LastExeriencedSymptoms = table.Column<int>(type: "integer", nullable: true),
+                    EyeDrops = table.Column<bool>(type: "boolean", nullable: false),
+                    DropsLast4Hours = table.Column<bool>(type: "boolean", nullable: false),
+                    GelsLast12Hours = table.Column<bool>(type: "boolean", nullable: false),
+                    DropsUsedToday = table.Column<bool>(type: "boolean", nullable: false),
+                    DropDuration = table.Column<int>(type: "integer", nullable: false),
+                    MoisturizerToday = table.Column<bool>(type: "boolean", nullable: false),
+                    MakeupToday = table.Column<bool>(type: "boolean", nullable: false),
+                    TouchedEyesToday = table.Column<bool>(type: "boolean", nullable: false),
+                    VisualBlinking = table.Column<int>(type: "integer", nullable: true)
                 },
-                comment: "User variation weight log");
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_dry_eyes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_dry_eyes_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_email",
@@ -402,8 +507,7 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "A day's workout routine");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_emotion",
@@ -423,8 +527,28 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_feast_allergens",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Allergens = table.Column<string>(type: "text", nullable: false)
                 },
-                comment: "User variation weight log");
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_feast_allergens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_feast_allergens_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_footnote",
@@ -447,8 +571,7 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "Sage advice");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_generalized_anxiety_severity",
@@ -478,8 +601,278 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_gut_bad_bacteria",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Blautia = table.Column<double>(type: "double precision", nullable: true),
+                    CitrobacterFreundii = table.Column<double>(type: "double precision", nullable: true),
+                    ClostridioidesDifficile = table.Column<double>(type: "double precision", nullable: true),
+                    Eggerthella = table.Column<double>(type: "double precision", nullable: true),
+                    EggerthellaLenta = table.Column<double>(type: "double precision", nullable: true),
+                    Enterobacteriaceae = table.Column<double>(type: "double precision", nullable: true),
+                    EnterobacteriaceaeAndPseudomonas = table.Column<double>(type: "double precision", nullable: true),
+                    Enterococcus = table.Column<double>(type: "double precision", nullable: true),
+                    EnterococcusFaecalis = table.Column<double>(type: "double precision", nullable: true),
+                    EnterococcusFaecium = table.Column<double>(type: "double precision", nullable: true),
+                    EnterococcusFaecalisAndFaecium = table.Column<double>(type: "double precision", nullable: true),
+                    Escherichia = table.Column<double>(type: "double precision", nullable: true),
+                    EscherichiaColi = table.Column<double>(type: "double precision", nullable: true),
+                    Klebsiella = table.Column<double>(type: "double precision", nullable: true),
+                    RuminococcusGnavus = table.Column<double>(type: "double precision", nullable: true),
+                    RuminococcusTorques = table.Column<double>(type: "double precision", nullable: true),
+                    Staphylococcus = table.Column<double>(type: "double precision", nullable: true),
+                    StaphylococcusAureus = table.Column<double>(type: "double precision", nullable: true),
+                    StreptococcusMinusThermophilusAndSalivarius = table.Column<double>(type: "double precision", nullable: true),
+                    Veillonella = table.Column<double>(type: "double precision", nullable: true),
+                    YersiniaEnterocolitica = table.Column<double>(type: "double precision", nullable: true)
                 },
-                comment: "User variation weight log");
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_gut_bad_bacteria", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_gut_bad_bacteria_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_gut_conditional_bacteria",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Bacteroides = table.Column<double>(type: "double precision", nullable: true),
+                    Lactobacillus = table.Column<double>(type: "double precision", nullable: true),
+                    Methanobacteria = table.Column<double>(type: "double precision", nullable: true),
+                    Oscillibacter = table.Column<double>(type: "double precision", nullable: true),
+                    Prevotella = table.Column<double>(type: "double precision", nullable: true),
+                    RuminococcusBromii = table.Column<double>(type: "double precision", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_gut_conditional_bacteria", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_gut_conditional_bacteria_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_gut_fungi",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    TotalFungi = table.Column<double>(type: "double precision", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_gut_fungi", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_gut_fungi_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_gut_good_bacteria",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    AkkermansiaMuciniphila = table.Column<double>(type: "double precision", nullable: true),
+                    Alistipes = table.Column<double>(type: "double precision", nullable: true),
+                    Bifidobacterium = table.Column<double>(type: "double precision", nullable: true),
+                    Coprococcus = table.Column<double>(type: "double precision", nullable: true),
+                    Eubacterium = table.Column<double>(type: "double precision", nullable: true),
+                    EubacteriumRectale = table.Column<double>(type: "double precision", nullable: true),
+                    FaecalibacteriumPrausnitzii = table.Column<double>(type: "double precision", nullable: true),
+                    LachnospiraceaeMinusBlautia = table.Column<double>(type: "double precision", nullable: true),
+                    Oscillospira = table.Column<double>(type: "double precision", nullable: true),
+                    Parabacteroides = table.Column<double>(type: "double precision", nullable: true),
+                    Roseburia = table.Column<double>(type: "double precision", nullable: true),
+                    RuminococcusMinusRBromii = table.Column<double>(type: "double precision", nullable: true),
+                    Ruminococcaceae = table.Column<double>(type: "double precision", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_gut_good_bacteria", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_gut_good_bacteria_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_gut_micronutrients",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    VitaminB3 = table.Column<double>(type: "double precision", nullable: true),
+                    VitaminB6 = table.Column<double>(type: "double precision", nullable: true),
+                    VitaminB9 = table.Column<double>(type: "double precision", nullable: true),
+                    VitaminB12 = table.Column<double>(type: "double precision", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_gut_micronutrients", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_gut_micronutrients_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_gut_pathogens",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Blastocystis = table.Column<int>(type: "integer", nullable: true),
+                    Campylobacter = table.Column<int>(type: "integer", nullable: true),
+                    ClostridioidesDifficile = table.Column<int>(type: "integer", nullable: true),
+                    Cryptosporidium = table.Column<int>(type: "integer", nullable: true),
+                    DientamoebaFragilis = table.Column<int>(type: "integer", nullable: true),
+                    EntamoebaHistolytica = table.Column<int>(type: "integer", nullable: true),
+                    EscherichiaColiO157_H7 = table.Column<int>(type: "integer", nullable: true),
+                    GiardiaIntestinalis = table.Column<int>(type: "integer", nullable: true),
+                    HelicobacterPylori = table.Column<int>(type: "integer", nullable: true),
+                    SalmonellaEnterica = table.Column<int>(type: "integer", nullable: true),
+                    VibrioCholerae = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_gut_pathogens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_gut_pathogens_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_gut_pillars",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Digestion = table.Column<double>(type: "double precision", nullable: true),
+                    Inflammation = table.Column<double>(type: "double precision", nullable: true),
+                    GutDysbiosis = table.Column<double>(type: "double precision", nullable: true),
+                    IntestinalPermeability = table.Column<double>(type: "double precision", nullable: true),
+                    NervousSystem = table.Column<double>(type: "double precision", nullable: true),
+                    DiversityScore = table.Column<int>(type: "integer", nullable: true),
+                    ImmuneReadinessScore = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_gut_pillars", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_gut_pillars_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_gut_probiotics",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    BacillusCoagulans = table.Column<double>(type: "double precision", nullable: true),
+                    BifidobacteriumAnimalisSubspAnimalis = table.Column<double>(type: "double precision", nullable: true),
+                    BifidobacteriumAnimalisSubspLactis = table.Column<double>(type: "double precision", nullable: true),
+                    BifidobacteriumBifidum = table.Column<double>(type: "double precision", nullable: true),
+                    BifidobacteriumBreve = table.Column<double>(type: "double precision", nullable: true),
+                    BifidobacteriumLongumSubspInfantis = table.Column<double>(type: "double precision", nullable: true),
+                    BifidobacteriumLongumSubspLongum = table.Column<double>(type: "double precision", nullable: true),
+                    LactobacillusAcidophilus = table.Column<double>(type: "double precision", nullable: true),
+                    LactobacillusBrevis = table.Column<double>(type: "double precision", nullable: true),
+                    LactobacillusCasei = table.Column<double>(type: "double precision", nullable: true),
+                    LactobacillusDelbrueckiiSubspBulgaricus = table.Column<double>(type: "double precision", nullable: true),
+                    LactobacillusDelbrueckiiSubspDelbrueckii = table.Column<double>(type: "double precision", nullable: true),
+                    LactobacillusFermentum = table.Column<double>(type: "double precision", nullable: true),
+                    LactobacillusGasseri = table.Column<double>(type: "double precision", nullable: true),
+                    LactobacillusHelveticus = table.Column<double>(type: "double precision", nullable: true),
+                    LactobacillusParacasei = table.Column<double>(type: "double precision", nullable: true),
+                    LactobacillusPlantarum = table.Column<double>(type: "double precision", nullable: true),
+                    LactobacillusReuteri = table.Column<double>(type: "double precision", nullable: true),
+                    LactobacillusRhamnosus = table.Column<double>(type: "double precision", nullable: true),
+                    LactobacillusSalivarius = table.Column<double>(type: "double precision", nullable: true),
+                    LactococcusLactis = table.Column<double>(type: "double precision", nullable: true),
+                    PropionibacteriumFreudenreichii = table.Column<double>(type: "double precision", nullable: true),
+                    StreptococcusSalivarius = table.Column<double>(type: "double precision", nullable: true),
+                    StreptococcusThermophilus = table.Column<double>(type: "double precision", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_gut_probiotics", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_gut_probiotics_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_gut_short_chain_fatty_acids",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Butyrate = table.Column<double>(type: "double precision", nullable: true),
+                    Lactate = table.Column<double>(type: "double precision", nullable: true),
+                    Propionate = table.Column<double>(type: "double precision", nullable: true),
+                    Valerate = table.Column<double>(type: "double precision", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_gut_short_chain_fatty_acids", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_gut_short_chain_fatty_acids_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_journal",
@@ -500,8 +893,7 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "User variation weight log");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_mania",
@@ -526,8 +918,7 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "User variation weight log");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_medicine",
@@ -547,8 +938,7 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "User variation weight log");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_mood",
@@ -569,8 +959,7 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "User variation weight log");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_panic_severity",
@@ -600,8 +989,7 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "User variation weight log");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_people",
@@ -621,8 +1009,7 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "User variation weight log");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_posttraumatic_stress_severity",
@@ -651,8 +1038,7 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "User variation weight log");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_sleep",
@@ -674,8 +1060,7 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "User variation weight log");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_social_anxiety_severity",
@@ -705,8 +1090,7 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "User variation weight log");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_symptom",
@@ -726,8 +1110,7 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "User variation weight log");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_task",
@@ -739,12 +1122,20 @@ namespace Data.Migrations
                     UserId = table.Column<int>(type: "integer", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Notes = table.Column<string>(type: "text", nullable: true),
+                    InternalNotes = table.Column<string>(type: "text", nullable: true),
                     Section = table.Column<int>(type: "integer", nullable: false),
+                    Type = table.Column<int>(type: "integer", nullable: false),
+                    Order = table.Column<int>(type: "integer", nullable: false),
+                    ShowLog = table.Column<bool>(type: "boolean", nullable: false),
+                    PersistUntilComplete = table.Column<bool>(type: "boolean", nullable: false),
                     LastSeen = table.Column<DateOnly>(type: "date", nullable: false),
                     LastCompleted = table.Column<DateOnly>(type: "date", nullable: false),
                     RefreshAfter = table.Column<DateOnly>(type: "date", nullable: true),
+                    LastDeload = table.Column<DateOnly>(type: "date", nullable: false),
                     LagRefreshXDays = table.Column<int>(type: "integer", nullable: false),
                     PadRefreshXDays = table.Column<int>(type: "integer", nullable: false),
+                    DeloadAfterXWeeks = table.Column<int>(type: "integer", nullable: false),
+                    DeloadDurationWeeks = table.Column<int>(type: "integer", nullable: false),
                     DisabledReason = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -756,8 +1147,7 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "Tasks listed on the website");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_token",
@@ -778,8 +1168,7 @@ namespace Data.Migrations
                         principalTable: "user",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "Auth tokens for a user");
+                });
 
             migrationBuilder.CreateTable(
                 name: "UserActivityUserCustom",
@@ -951,8 +1340,7 @@ namespace Data.Migrations
                         principalTable: "user_task",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "A day's workout routine");
+                });
 
             migrationBuilder.CreateTable(
                 name: "user_task_log",
@@ -962,8 +1350,8 @@ namespace Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserTaskId = table.Column<int>(type: "integer", nullable: false),
                     Section = table.Column<int>(type: "integer", nullable: false),
-                    Complete = table.Column<int>(type: "integer", nullable: false),
-                    Date = table.Column<DateOnly>(type: "date", nullable: false)
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Complete = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -974,8 +1362,7 @@ namespace Data.Migrations
                         principalTable: "user_task",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "User task log");
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_user_Email",
@@ -1006,6 +1393,16 @@ namespace Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_user_anxiety_UserId",
                 table: "user_anxiety",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_blood_work_UserId",
+                table: "user_blood_work",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_cbc_w_auto_diff_UserId",
+                table: "user_cbc_w_auto_diff",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -1049,6 +1446,11 @@ namespace Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_user_dry_eyes_UserId",
+                table: "user_dry_eyes",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_user_email_UserId",
                 table: "user_email",
                 column: "UserId");
@@ -1059,6 +1461,11 @@ namespace Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_user_feast_allergens_UserId",
+                table: "user_feast_allergens",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_user_footnote_UserId",
                 table: "user_footnote",
                 column: "UserId");
@@ -1066,6 +1473,51 @@ namespace Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_user_generalized_anxiety_severity_UserId",
                 table: "user_generalized_anxiety_severity",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_gut_bad_bacteria_UserId",
+                table: "user_gut_bad_bacteria",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_gut_conditional_bacteria_UserId",
+                table: "user_gut_conditional_bacteria",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_gut_fungi_UserId",
+                table: "user_gut_fungi",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_gut_good_bacteria_UserId",
+                table: "user_gut_good_bacteria",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_gut_micronutrients_UserId",
+                table: "user_gut_micronutrients",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_gut_pathogens_UserId",
+                table: "user_gut_pathogens",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_gut_pillars_UserId",
+                table: "user_gut_pillars",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_gut_probiotics_UserId",
+                table: "user_gut_probiotics",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_gut_short_chain_fatty_acids_UserId",
+                table: "user_gut_short_chain_fatty_acids",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -1183,10 +1635,19 @@ namespace Data.Migrations
                 name: "user_anxiety");
 
             migrationBuilder.DropTable(
+                name: "user_blood_work");
+
+            migrationBuilder.DropTable(
+                name: "user_cbc_w_auto_diff");
+
+            migrationBuilder.DropTable(
                 name: "user_complete_metabolic_panel");
 
             migrationBuilder.DropTable(
                 name: "user_component");
+
+            migrationBuilder.DropTable(
+                name: "user_component_setting");
 
             migrationBuilder.DropTable(
                 name: "user_depression");
@@ -1201,13 +1662,46 @@ namespace Data.Migrations
                 name: "user_dissociative_severity");
 
             migrationBuilder.DropTable(
+                name: "user_dry_eyes");
+
+            migrationBuilder.DropTable(
                 name: "user_email");
+
+            migrationBuilder.DropTable(
+                name: "user_feast_allergens");
 
             migrationBuilder.DropTable(
                 name: "user_footnote");
 
             migrationBuilder.DropTable(
                 name: "user_generalized_anxiety_severity");
+
+            migrationBuilder.DropTable(
+                name: "user_gut_bad_bacteria");
+
+            migrationBuilder.DropTable(
+                name: "user_gut_conditional_bacteria");
+
+            migrationBuilder.DropTable(
+                name: "user_gut_fungi");
+
+            migrationBuilder.DropTable(
+                name: "user_gut_good_bacteria");
+
+            migrationBuilder.DropTable(
+                name: "user_gut_micronutrients");
+
+            migrationBuilder.DropTable(
+                name: "user_gut_pathogens");
+
+            migrationBuilder.DropTable(
+                name: "user_gut_pillars");
+
+            migrationBuilder.DropTable(
+                name: "user_gut_probiotics");
+
+            migrationBuilder.DropTable(
+                name: "user_gut_short_chain_fatty_acids");
 
             migrationBuilder.DropTable(
                 name: "user_journal");

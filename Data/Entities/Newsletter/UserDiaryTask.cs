@@ -1,6 +1,5 @@
 ﻿using Core.Models.Newsletter;
 using Data.Entities.Task;
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -10,7 +9,7 @@ namespace Data.Entities.Newsletter;
 /// <summary>
 /// A day's workout routine.
 /// </summary>
-[Table("user_diary_task"), Comment("A day's workout routine")]
+[Table("user_diary_task")]
 public class UserDiaryTask
 {
     public UserDiaryTask() { }
