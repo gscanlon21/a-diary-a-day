@@ -57,7 +57,7 @@ public partial class UserController
             var allergens = await ApiResult<IDictionary<Allergens, double>>.FromResponse(response);
             if (!allergens.HasValue)
             {
-                return RedirectToAction(nameof(ManageComponent), new { email, token, WasUpdated = false });
+                return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.FeastAllergens, WasUpdated = false });
             }
 
             var startOfWeek = DateHelpers.Today.StartOfWeek();

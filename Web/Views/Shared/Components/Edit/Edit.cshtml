@@ -15,12 +15,16 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Token" />
             <input type="hidden" asp-for="Email" />
-            <div class="form-group mb-3">
-                <label for="disabled-email" class="control-label">@Html.DisplayNameFor(_ => Model.Email)</label>
-                <input id="disabled-email" value="@Model.Email" class="form-control" disabled="disabled" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
 
+            @if (!Model.User.IsDemoUser) 
+            {
+                <div class="form-group mb-3">
+                    <label for="disabled-email" class="control-label">@Html.DisplayNameFor(_ => Model.Email)</label>
+                    <input id="disabled-email" value="@Model.Email" class="form-control" disabled="disabled" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            }
+            
             <div class="form-group mb-3">
                 <label asp-for="SendDaysBinder" class="control-label">@Html.DisplayNameFor(_ => Model.SendDays)</label>
                 <select asp-for="SendDaysBinder" class="form-control overflow-auto" aria-describedby="rest-help" size="@BitOperations.PopCount((ulong)Days.All)"
