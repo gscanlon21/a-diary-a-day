@@ -1,0 +1,206 @@
+﻿@model BloodPressureViewModel
+@using Core.Models.Components
+@using Data.Entities.User
+
+@{
+    bool hide = Model.UserMood.Date == DateHelpers.Today && Model.UserMood.Id != default;
+}
+
+<div class="alert alert-secondary">
+    <div class="row gy-2">
+        @if (!hide)
+        {
+            <div class="col-lg-6">
+                <h6 class="mb-1">Mood</h6>
+                <div class="alert alert-light shadow">
+                    <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageBloodPressure)" method="post"
+                          asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="form-group mb-5">
+                            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.SystolicPressure)</label>
+                            <div><span asp-validation-for="UserMood.SystolicPressure" class="text-danger"></span></div>
+                            <div style="display:flex;column-gap:1ex;">
+                                <input type="hidden" asp-for="UserMood.SystolicPressure" style="width:6ch;height:fit-content;" class="allow-demo"
+                                       oninput="@(Html.IdFor(_ => Model.UserMood.SystolicPressure))Input.value = this.valueAsNumber" id="@(Html.IdFor(_ => Model.UserMood.SystolicPressure))" />
+                                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                    <input type="range" style="width:100%;" class="allow-demo"
+                                           name="@(Html.IdFor(_ => Model.UserMood.SystolicPressure))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.SystolicPressure))-input"
+                                           min="1" max="5" step="1" value="@((int)Model.UserMood.SystolicPressure)"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.SystolicPressure)).value = this.valueAsNumber" />
+
+                                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                        <option value="1"></option>
+                                        <option value="2"></option>
+                                        <option value="3"></option>
+                                        <option value="4"></option>
+                                        <option value="5"></option>
+
+                                        <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
+                                        <div onclick="@(Html.IdFor(_ => Model.UserMood.SystolicPressure)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.SystolicPressure))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(0% - .5ch)">Poor</div>
+                                        <div onclick="@(Html.IdFor(_ => Model.UserMood.SystolicPressure)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.SystolicPressure))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(25% - .5ch)">Okay</div>
+                                        <div onclick="@(Html.IdFor(_ => Model.UserMood.SystolicPressure)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.SystolicPressure))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(50% - .5ch)">Decent</div>
+                                        <div onclick="@(Html.IdFor(_ => Model.UserMood.SystolicPressure)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.SystolicPressure))-input').value = this.dataset.value" data-value="4" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(75% - .5ch)">Good</div>
+                                        <div onclick="@(Html.IdFor(_ => Model.UserMood.SystolicPressure)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.SystolicPressure))-input').value = this.dataset.value" data-value="5" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">Great</div>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div id="pounds-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.SystolicPressure)</div>
+                        </div>
+
+                        <div class="form-group mb-5">
+                            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.DiastolicPressure)</label>
+                            <div><span asp-validation-for="UserMood.DiastolicPressure" class="text-danger"></span></div>
+                            <div style="display:flex;column-gap:1ex;">
+                                <input type="hidden" asp-for="UserMood.DiastolicPressure" style="width:6ch;height:fit-content;" class="allow-demo"
+                                       oninput="@(Html.IdFor(_ => Model.UserMood.DiastolicPressure))Input.value = this.valueAsNumber" id="@(Html.IdFor(_ => Model.UserMood.DiastolicPressure))" />
+                                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                    <input type="range" style="width:100%;" class="allow-demo"
+                                           name="@(Html.IdFor(_ => Model.UserMood.DiastolicPressure))Input" list="hashmarks" id="@(Html.IdFor(_ => Model.UserMood.DiastolicPressure))-input"
+                                           min="1" max="5" step="1" value="@((int)Model.UserMood.DiastolicPressure)"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.DiastolicPressure)).value = this.valueAsNumber" />
+
+                                    <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                        <option value="1"></option>
+                                        <option value="2"></option>
+                                        <option value="3"></option>
+                                        <option value="4"></option>
+                                        <option value="5"></option>
+
+                                        <!-- These need to be separate from the <option> elements because those have their position attribute overriden (from absolute to static) on Firefox -->
+                                        <div onclick="@(Html.IdFor(_ => Model.UserMood.DiastolicPressure)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.DiastolicPressure))-input').value = this.dataset.value" data-value="1" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(0% - .5ch)">Poor</div>
+                                        <div onclick="@(Html.IdFor(_ => Model.UserMood.DiastolicPressure)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.DiastolicPressure))-input').value = this.dataset.value" data-value="2" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(25% - .5ch)">Okay</div>
+                                        <div onclick="@(Html.IdFor(_ => Model.UserMood.DiastolicPressure)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.DiastolicPressure))-input').value = this.dataset.value" data-value="3" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(50% - .5ch)">Decent</div>
+                                        <div onclick="@(Html.IdFor(_ => Model.UserMood.DiastolicPressure)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.DiastolicPressure))-input').value = this.dataset.value" data-value="4" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;left:calc(75% - .5ch)">Good</div>
+                                        <div onclick="@(Html.IdFor(_ => Model.UserMood.DiastolicPressure)).value = document.getElementById('@(Html.IdFor(_ => Model.UserMood.DiastolicPressure))-input').value = this.dataset.value" data-value="5" style="white-space:nowrap;text-decoration:underline;cursor:pointer;position:absolute;right:-2.5ch">Great</div>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div id="pounds-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.DiastolicPressure)</div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <input type="submit" value="Save" class="btn btn-primary allow-demo" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+
+        <div class="col-lg-6">
+            <h6 class="mb-1">Log</h6>
+            <div class="alert alert-light shadow">
+                <div style="height:min(70vw, 300px)">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script type="module">
+    const canvas = document.getElementById('myChart');
+    if (canvas) {
+        Chart.defaults.font.size = 16;
+        const chart = new Chart(canvas, {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'Mood',
+                    data: @Json.Serialize(Model.Xys),
+                    fill: false,
+                    tension: 0.1,
+                    spanGaps: true,
+                    showLine: true,
+                    parsing: {
+                        yAxisKey: 'y'
+                    },
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                elements: {
+                    point: {
+                        // Increase the radius around the point when the tooltip shows
+                        hitRadius: 5,
+                        // Increase the size of the point when the user is withing the bounds of the hitRadius
+                        hoverRadius: 5,
+                    },
+                },
+                parsing: {
+                    xAxisKey: 'x'
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        beginAtZero: false,
+                        // How much blank space to add in above and below y-axis data?
+                        grace: '5%',
+                        title: {
+                            // Display a label for the y-axis
+                            display: false,
+                            text: 'Score',
+                        },
+                        ticks: {
+                            color: 'skyblue',
+                            // No decimal places
+                            precision: 0,
+                            // Customize the y-axis tick name
+                            callback: function (value, index, ticks) {
+                                var enumMap = @(Json.Serialize(Enum.GetNames<Mood>()));
+                                return enumMap[value - 1];
+                            }
+                        },
+                    },
+                    // https://www.chartjs.org/docs/next/axes/cartesian/time.html
+                    x: {
+                        type: 'time',
+                        time: {
+                            minUnit: 'day',
+                        },
+                        ticks: {
+                            color: 'skyblue',
+                            major: {
+                                // Allow displaying June 1st as just June
+                                enabled: true,
+                            },
+                            font: (context) => {
+                                // Bold major data points (June is bolded, June 11th is not)
+                                return { weight: (context.tick && context.tick.major) ? 'bold' : '' };
+                            }
+                        },
+                    },
+                },
+                plugins: {
+                    legend: { display: false, },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => context.raw.extra,
+                            title: (context) => {
+                                // Pretty-print the x-axis date in the hover tooltip
+                                return new Date(context[0].parsed.x).toDateString();
+                            },
+                        },
+                    },
+                    /*
+                    decimation: {
+                        enabled: true,
+                        algorithm: 'lttb',
+                        samples: 12,
+                    },
+                    decimation: {
+                        enabled: true,
+                        algorithm: 'min-max',
+                    },
+                    */
+                },
+            }
+        });
+
+        window.uploadChart(chart, 350, 350, '@Html.Raw(Model.User.Email)', '@Html.Raw(Model.Token)', '@Core.Models.Components.Component.Mood');
+    }
+</script>

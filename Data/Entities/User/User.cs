@@ -232,6 +232,9 @@ public class User : IUser
     [JsonIgnore, InverseProperty(nameof(UserBloodWork.User))]
     public virtual ICollection<UserBloodWork> UserBloodWorks { get; private init; } = null!;
 
+    [JsonIgnore, InverseProperty(nameof(UserBloodPressure.User))]
+    public virtual ICollection<UserBloodPressure> UserBloodPressures { get; private init; } = null!;
+
     [JsonIgnore, InverseProperty(nameof(UserDepression.User))]
     public virtual ICollection<UserAnger> UserAngers { get; private init; } = null!;
 
