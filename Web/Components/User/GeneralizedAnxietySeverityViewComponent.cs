@@ -12,27 +12,26 @@ namespace Web.Components.User;
 public class GeneralizedAnxietySeverityViewComponent(CoreContext context, UserRepo userRepo) : ViewComponent
 {
     /// <summary>
-    /// For routing
+    /// For routing.
     /// </summary>
     public const string Name = "GeneralizedAnxietySeverity";
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
-        var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserGeneralizedAnxietySeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserGeneralizedAnxietySeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
-        var viewModel = new GeneralizedAnxietySeverityViewModel(userMoods)
+
+        var token = await userRepo.AddUserToken(user, durationDays: 1);
+        return View("GeneralizedAnxietySeverity", new GeneralizedAnxietySeverityViewModel(userMoods)
         {
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
+            Token = token,
             PreviousMood = userMood,
             UserMood = new Data.Entities.User.UserGeneralizedAnxietySeverity()
             {
                 UserId = user.Id,
                 User = user
             },
-        };
-
-        return View("GeneralizedAnxietySeverity", viewModel);
+        });
     }
 }

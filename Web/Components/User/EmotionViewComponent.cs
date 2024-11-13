@@ -13,13 +13,12 @@ namespace Web.Components.User;
 public class EmotionViewComponent(CoreContext context, UserRepo userRepo) : ViewComponent
 {
     /// <summary>
-    /// For routing
+    /// For routing.
     /// </summary>
     public const string Name = "Emotion";
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
-        var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserEmotions.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = (await context.UserEmotions
             .Include(ud => ud.UserCustoms)
@@ -29,18 +28,18 @@ public class EmotionViewComponent(CoreContext context, UserRepo userRepo) : View
             .Where(c => c.Type == CustomType.Emotion)
             .Where(c => c.UserId == null || c.UserId == user.Id)
             .ToListAsync();
-        var viewModel = new EmotionViewModel(userMoods, userCustoms)
+
+        var token = await userRepo.AddUserToken(user, durationDays: 1);
+        return View("Emotion", new EmotionViewModel(userMoods, userCustoms)
         {
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
+            Token = token,
             PreviousMood = userMood,
             UserMood = new Data.Entities.User.UserEmotion()
             {
                 UserId = user.Id,
                 User = user
             },
-        };
-
-        return View("Emotion", viewModel);
+        });
     }
 }

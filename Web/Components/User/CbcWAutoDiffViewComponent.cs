@@ -21,7 +21,6 @@ public class CbcWAutoDiffViewComponent(CoreContext context, UserRepo userRepo) :
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var i = 0;
-        var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserCbcWAutoDiffs.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserCbcWAutoDiffs.Where(ud => ud.UserId == user.Id).ToListAsync();
         var userCustoms = userMoods.FirstOrDefault()?.Items.Keys.Select(a => new UserCustom()
@@ -32,18 +31,17 @@ public class CbcWAutoDiffViewComponent(CoreContext context, UserRepo userRepo) :
             Name = a,
         }).ToList();
 
-        var viewModel = new CbcWAutoDiffViewModel(userMoods, userCustoms)
+        var token = await userRepo.AddUserToken(user, durationDays: 1);
+        return View("CbcWAutoDiff", new CbcWAutoDiffViewModel(userMoods, userCustoms)
         {
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
+            Token = token,
             PreviousMood = userMood,
             UserMood = new UserCbcWAutoDiff()
             {
                 UserId = user.Id,
                 User = user
             },
-        };
-
-        return View("CbcWAutoDiff", viewModel);
+        });
     }
 }

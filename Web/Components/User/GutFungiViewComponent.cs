@@ -21,7 +21,6 @@ public class GutFungiViewComponent(CoreContext context, UserRepo userRepo) : Vie
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var i = 0;
-        var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserGutFungi.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserGutFungi.Where(ud => ud.UserId == user.Id).ToListAsync();
         var userCustoms = userMoods.FirstOrDefault()?.Items.Keys.Select(a => new UserCustom()
@@ -32,18 +31,17 @@ public class GutFungiViewComponent(CoreContext context, UserRepo userRepo) : Vie
             Name = a,
         }).ToList();
 
-        var viewModel = new GutFungiViewModel(userMoods, userCustoms)
+        var token = await userRepo.AddUserToken(user, durationDays: 1);
+        return View("GutFungi", new GutFungiViewModel(userMoods, userCustoms)
         {
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
+            Token = token,
             PreviousMood = userMood,
             UserMood = new UserGutFungi()
             {
                 UserId = user.Id,
                 User = user
             },
-        };
-
-        return View("GutFungi", viewModel);
+        });
     }
 }

@@ -21,7 +21,6 @@ public class GutBadBacteriaViewComponent(CoreContext context, UserRepo userRepo)
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var i = 0;
-        var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserGutBadBacterias.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserGutBadBacterias.Where(ud => ud.UserId == user.Id).ToListAsync();
         var userCustoms = userMoods.FirstOrDefault()?.Items.Keys.Select(a => new UserCustom()
@@ -32,10 +31,11 @@ public class GutBadBacteriaViewComponent(CoreContext context, UserRepo userRepo)
             Name = a,
         }).ToList();
 
+        var token = await userRepo.AddUserToken(user, durationDays: 1);
         return View("GutBadBacteria", new GutBadBacteriaViewModel(userMoods, userCustoms)
         {
             User = user,
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
+            Token = token,
             PreviousMood = userMood,
             UserMood = new UserGutBadBacteria()
             {

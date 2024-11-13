@@ -13,13 +13,12 @@ namespace Web.Components.User;
 public class MedicineViewComponent(CoreContext context, UserRepo userRepo) : ViewComponent
 {
     /// <summary>
-    /// For routing
+    /// For routing.
     /// </summary>
     public const string Name = "Medicine";
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
-        var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserMedicines.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = (await context.UserMedicines
             .Include(ud => ud.UserCustoms)
@@ -29,18 +28,18 @@ public class MedicineViewComponent(CoreContext context, UserRepo userRepo) : Vie
             .Where(c => c.Type == CustomType.Medicine)
             .Where(c => c.UserId == null || c.UserId == user.Id)
             .ToListAsync();
-        var viewModel = new MedicineViewModel(userMoods, userCustoms)
+
+        var token = await userRepo.AddUserToken(user, durationDays: 1);
+        return View("Medicine", new MedicineViewModel(userMoods, userCustoms)
         {
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
+            Token = token,
             PreviousMood = userMood,
             UserMood = new Data.Entities.User.UserMedicine()
             {
                 UserId = user.Id,
                 User = user
             },
-        };
-
-        return View("Medicine", viewModel);
+        });
     }
 }

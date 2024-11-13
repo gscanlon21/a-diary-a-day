@@ -13,13 +13,12 @@ namespace Web.Components.User;
 public class SleepViewComponent(CoreContext context, UserRepo userRepo) : ViewComponent
 {
     /// <summary>
-    /// For routing
+    /// For routing.
     /// </summary>
     public const string Name = "Sleep";
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
-        var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserSleeps.FirstOrDefaultAsync(ud => ud.UserId == user.Id && ud.Date == DateHelpers.Today);
         var userMoods = (await context.UserSleeps
             .Include(ud => ud.UserCustoms)
@@ -29,17 +28,17 @@ public class SleepViewComponent(CoreContext context, UserRepo userRepo) : ViewCo
             .Where(c => c.Type == CustomType.Sleep)
             .Where(c => c.UserId == null || c.UserId == user.Id)
             .ToListAsync();
-        var viewModel = new SleepViewModel(userMoods, userCustoms)
+
+        var token = await userRepo.AddUserToken(user, durationDays: 1);
+        return View("Sleep", new SleepViewModel(userMoods, userCustoms)
         {
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
+            Token = token,
             UserMood = userMood ?? new Data.Entities.User.UserSleep()
             {
                 UserId = user.Id,
                 User = user
             },
-        };
-
-        return View("Sleep", viewModel);
+        });
     }
 }

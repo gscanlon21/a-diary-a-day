@@ -19,7 +19,6 @@ public class ActivityViewComponent(CoreContext context, UserRepo userRepo) : Vie
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
-        var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserActivities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = (await context.UserActivities
             .Include(ud => ud.UserCustoms)
@@ -29,18 +28,18 @@ public class ActivityViewComponent(CoreContext context, UserRepo userRepo) : Vie
             .Where(c => c.Type == CustomType.Activity)
             .Where(c => c.UserId == null || c.UserId == user.Id)
             .ToListAsync();
-        var viewModel = new ActivityViewModel(userMoods, userCustoms)
+
+        var token = await userRepo.AddUserToken(user, durationDays: 1);
+        return View("Activity", new ActivityViewModel(userMoods, userCustoms)
         {
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
+            Token = token,
             PreviousMood = userMood,
             UserMood = new Data.Entities.User.UserActivity()
             {
                 UserId = user.Id,
                 User = user
             },
-        };
-
-        return View("Activity", viewModel);
+        });
     }
 }

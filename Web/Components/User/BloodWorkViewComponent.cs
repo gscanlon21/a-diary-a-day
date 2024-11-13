@@ -1,4 +1,5 @@
-﻿using Core.Models.User;
+﻿using Core.Models.Components.SubComponents;
+using Core.Models.User;
 using Data;
 using Data.Entities.User;
 using Data.Repos;
@@ -14,14 +15,13 @@ namespace Web.Components.User;
 public class BloodWorkViewComponent(CoreContext context, UserRepo userRepo) : ViewComponent
 {
     /// <summary>
-    /// For routing
+    /// For routing.
     /// </summary>
     public const string Name = "BloodWork";
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var i = 0;
-        var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserBloodWorks.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserBloodWorks.Where(ud => ud.UserId == user.Id).ToListAsync();
         var userCustoms = userMoods.FirstOrDefault()?.Items.Keys.Select(a => new UserCustom()
@@ -32,20 +32,19 @@ public class BloodWorkViewComponent(CoreContext context, UserRepo userRepo) : Vi
             Name = a,
         }).ToList();
 
-        var subComponents = user.UserComponentSettings.First(s => s.Component == Component.BloodWork).TypedSkills;
-        var viewModel = new BloodWorkViewModel(userMoods, userCustoms)
+        var token = await userRepo.AddUserToken(user, durationDays: 1);
+        var subComponents = (BloodWork)user.UserComponentSettings.First(s => s.Component == Component.BloodWork).TypedSkills!;
+        return View("BloodWork", new BloodWorkViewModel(userMoods, userCustoms)
         {
-            SubComponents = (Core.Models.Components.SubComponents.BloodWork)subComponents!,
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
+            Token = token,
             PreviousMood = userMood,
+            SubComponents = subComponents,
             UserMood = new UserBloodWork()
             {
                 UserId = user.Id,
                 User = user
             },
-        };
-
-        return View("BloodWork", viewModel);
+        });
     }
 }

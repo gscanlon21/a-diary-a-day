@@ -21,7 +21,6 @@ public class GutShortChainFattyAcidsViewComponent(CoreContext context, UserRepo 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var i = 0;
-        var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserGutShortChainFattyAcids.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserGutShortChainFattyAcids.Where(ud => ud.UserId == user.Id).ToListAsync();
         var userCustoms = userMoods.FirstOrDefault()?.Items.Keys.Select(a => new UserCustom()
@@ -32,18 +31,17 @@ public class GutShortChainFattyAcidsViewComponent(CoreContext context, UserRepo 
             Name = a,
         }).ToList();
 
-        var viewModel = new GutShortChainFattyAcidsViewModel(userMoods, userCustoms)
+        var token = await userRepo.AddUserToken(user, durationDays: 1);
+        return View("GutShortChainFattyAcids", new GutShortChainFattyAcidsViewModel(userMoods, userCustoms)
         {
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
+            Token = token,
             PreviousMood = userMood,
             UserMood = new UserGutShortChainFattyAcids()
             {
                 UserId = user.Id,
                 User = user
             },
-        };
-
-        return View("GutShortChainFattyAcids", viewModel);
+        });
     }
 }

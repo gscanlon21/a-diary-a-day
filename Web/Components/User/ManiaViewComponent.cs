@@ -18,21 +18,20 @@ public class ManiaViewComponent(CoreContext context, UserRepo userRepo) : ViewCo
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
-        var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserManias.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserManias.Where(ud => ud.UserId == user.Id).ToListAsync();
-        var viewModel = new ManiaViewModel(userMoods)
+
+        var token = await userRepo.AddUserToken(user, durationDays: 1);
+        return View("Mania", new ManiaViewModel(userMoods)
         {
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
+            Token = token,
             PreviousMood = userMood,
             UserMood = new Data.Entities.User.UserMania()
             {
                 UserId = user.Id,
                 User = user
             },
-        };
-
-        return View("Mania", viewModel);
+        });
     }
 }

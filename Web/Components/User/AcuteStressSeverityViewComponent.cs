@@ -18,14 +18,14 @@ public class AcuteStressSeverityViewComponent(CoreContext context, UserRepo user
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
-        var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserAcuteStressSeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserAcuteStressSeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
 
+        var token = await userRepo.AddUserToken(user, durationDays: 1);
         return View("AcuteStressSeverity", new AcuteStressSeverityViewModel(userMoods)
         {
             User = user,
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
+            Token = token,
             PreviousMood = userMood,
             UserMood = new Data.Entities.User.UserAcuteStressSeverity()
             {

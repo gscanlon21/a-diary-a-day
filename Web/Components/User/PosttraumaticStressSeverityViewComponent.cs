@@ -12,20 +12,20 @@ namespace Web.Components.User;
 public class PostTraumaticStressSeverityViewComponent(CoreContext context, UserRepo userRepo) : ViewComponent
 {
     /// <summary>
-    /// For routing
+    /// For routing.
     /// </summary>
     public const string Name = "PostTraumaticStressSeverity";
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
-        var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserPostTraumaticStressSeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserPostTraumaticStressSeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
 
+        var token = await userRepo.AddUserToken(user, durationDays: 1);
         return View("PostTraumaticStressSeverity", new PostTraumaticStressSeverityViewModel(userMoods)
         {
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
+            Token = token,
             PreviousMood = userMood,
             UserMood = new Data.Entities.User.UserPostTraumaticStressSeverity()
             {

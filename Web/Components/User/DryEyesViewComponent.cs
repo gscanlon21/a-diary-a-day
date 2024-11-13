@@ -18,14 +18,14 @@ public class DryEyesViewComponent(CoreContext context, UserRepo userRepo) : View
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
-        var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserDryEyes.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserDryEyes.Where(ud => ud.UserId == user.Id).ToListAsync();
 
+        var token = await userRepo.AddUserToken(user, durationDays: 1);
         return View("DryEyes", new DryEyesViewModel(userMoods)
         {
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
+            Token = token,
             PreviousMood = userMood,
             UserMood = new Data.Entities.User.UserDryEyes()
             {

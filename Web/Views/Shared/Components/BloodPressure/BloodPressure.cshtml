@@ -1,0 +1,84 @@
+﻿@model BloodPressureViewModel
+@using Core.Models.Components
+@using Data.Entities.User
+
+@{
+    bool hide = Model.UserMood.Date == DateHelpers.Today && Model.UserMood.Id != default;
+}
+
+<div class="alert alert-secondary">
+    <div class="row gy-2">
+        @if (!hide)
+        {
+            <div class="col-lg-6">
+                <h6 class="mb-1">Blood Pressure</h6>
+                <div class="alert alert-light shadow">
+                    <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageBloodPressure)" method="post"
+                          asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="form-group mb-5">
+                            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.SystolicPressure)</label>
+                            <div><span asp-validation-for="UserMood.SystolicPressure" class="text-danger"></span></div>
+                            <div style="display:flex;column-gap:1ex;">
+                                <input asp-for="UserMood.SystolicPressure" style="width:6ch;height:fit-content;" class="allow-demo"
+                                       oninput="@(Html.IdFor(_ => Model.UserMood.SystolicPressure))Input.value = this.valueAsNumber" id="@(Html.IdFor(_ => Model.UserMood.SystolicPressure))" />
+                                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.SystolicPressure))-input" style="width:100%;" class="allow-demo" type="range" step="1"
+                                           name="@(Html.IdFor(_ => Model.UserMood.SystolicPressure))Input" list="@(Html.IdFor(_ => Model.UserMood.SystolicPressure))-hashmarks"
+                                           min="@UserBloodPressure.Consts.SystolicPressureMin" max="@UserBloodPressure.Consts.SystolicPressureMax" value="@((int)Model.UserMood.SystolicPressure)"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.SystolicPressure)).value = this.valueAsNumber" />
+
+                                    <datalist id="@(Html.IdFor(_ => Model.UserMood.SystolicPressure))-hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                        <option value="120"></option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div id="pounds-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.SystolicPressure)</div>
+                        </div>
+
+                        <div class="form-group mb-5">
+                            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.DiastolicPressure)</label>
+                            <div><span asp-validation-for="UserMood.DiastolicPressure" class="text-danger"></span></div>
+                            <div style="display:flex;column-gap:1ex;">
+                                <input asp-for="UserMood.DiastolicPressure" style="width:6ch;height:fit-content;" class="allow-demo"
+                                       oninput="@(Html.IdFor(_ => Model.UserMood.DiastolicPressure))Input.value = this.valueAsNumber" id="@(Html.IdFor(_ => Model.UserMood.DiastolicPressure))" />
+                                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.DiastolicPressure))-input" class="allow-demo" style="width:100%;" type="range" step="1"
+                                           name="@(Html.IdFor(_ => Model.UserMood.DiastolicPressure))Input" list="@(Html.IdFor(_ => Model.UserMood.DiastolicPressure))-hashmarks"
+                                           min="@UserBloodPressure.Consts.DiastolicPressureMin" max="@UserBloodPressure.Consts.DiastolicPressureMax" value="@((int)Model.UserMood.DiastolicPressure)" 
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.DiastolicPressure)).value = this.valueAsNumber" />
+
+                                    <datalist id="@(Html.IdFor(_ => Model.UserMood.DiastolicPressure))-hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                        <option value="80"></option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div id="pounds-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.DiastolicPressure)</div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <input type="submit" value="Save" class="btn btn-primary allow-demo" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+
+        <div class="col-lg-6">
+            <h6 class="mb-1">Log</h6>
+            <div class="alert alert-light shadow">
+                @{
+                    await Html.RenderPartialAsync("_LineChart", new LineChartViewModel()
+                    {
+                        User = Model.User,
+                        Token = Model.Token,
+                        XysGrouped = Model.XysGrouped,
+                        Type = Core.Models.Components.Component.BloodPressure
+                    });
+                }
+            </div>
+        </div>
+    </div>
+</div>

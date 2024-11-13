@@ -15,7 +15,7 @@ namespace Web.Components.User;
 public class TasksViewComponent(UserRepo userRepo, IServiceScopeFactory serviceScopeFactory) : ViewComponent
 {
     /// <summary>
-    /// For routing
+    /// For routing.
     /// </summary>
     public const string Name = "Tasks";
 

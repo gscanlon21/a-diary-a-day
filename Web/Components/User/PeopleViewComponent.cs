@@ -19,7 +19,6 @@ public class PeopleViewComponent(CoreContext context, UserRepo userRepo) : ViewC
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
-        var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserPeoples.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserPeoples.Include(ud => ud.UserCustoms).Where(ud => ud.UserId == user.Id).ToListAsync();
         var userCustoms = await context.UserCustoms
@@ -27,10 +26,11 @@ public class PeopleViewComponent(CoreContext context, UserRepo userRepo) : ViewC
             .Where(c => c.UserId == null || c.UserId == user.Id)
             .ToListAsync();
 
+        var token = await userRepo.AddUserToken(user, durationDays: 1);
         return View("People", new PeopleViewModel(userMoods, userCustoms)
         {
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
+            Token = token,
             PreviousMood = userMood,
             UserMood = new Data.Entities.User.UserPeople()
             {

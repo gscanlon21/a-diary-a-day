@@ -15,13 +15,12 @@ namespace Web.Components.User;
 public class FeastAllergensViewComponent(CoreContext context, UserRepo userRepo) : ViewComponent
 {
     /// <summary>
-    /// For routing
+    /// For routing.
     /// </summary>
     public const string Name = "FeastAllergens";
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
-        var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserFeastAllergens.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserFeastAllergens
             .Where(ud => ud.UserId == user.Id)
@@ -35,10 +34,11 @@ public class FeastAllergensViewComponent(CoreContext context, UserRepo userRepo)
             Name = a.GetSingleDisplayName(),
         }).ToList();
 
+        var token = await userRepo.AddUserToken(user, durationDays: 1);
         return View("FeastAllergens", new FeastAllergensViewModel(userMoods, userCustoms)
         {
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
             User = user,
+            Token = token,
             PreviousMood = userMood,
             UserMood = new UserFeastAllergens()
             {

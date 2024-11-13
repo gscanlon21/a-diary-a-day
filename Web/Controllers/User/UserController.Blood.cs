@@ -6,6 +6,37 @@ namespace Web.Controllers.User;
 
 public partial class UserController
 {
+    [HttpPost, Route(nameof(Component.BloodPressure))]
+    public async Task<IActionResult> ManageBloodPressure(string email, string token, UserBloodPressure userMood)
+    {
+        if (true || ModelState.IsValid)
+        {
+            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Set the new weight on the UserVariation
+            var todaysBloodPressure = await _context.UserBloodPressures.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
+            if (todaysBloodPressure == null)
+            {
+                userMood.User = user;
+                _context.Add(userMood);
+            }
+            else
+            {
+                todaysBloodPressure.DiastolicPressure = userMood.DiastolicPressure;
+                todaysBloodPressure.SystolicPressure = userMood.SystolicPressure;
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.BloodPressure, WasUpdated = true });
+        }
+
+        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.BloodPressure, WasUpdated = false });
+    }
+
     [HttpPost, Route(nameof(Component.CompleteMetabolicPanel))]
     public async Task<IActionResult> ManageCompleteMetabolicPanel(string email, string token, UserCompleteMetabolicPanel userMood)
     {

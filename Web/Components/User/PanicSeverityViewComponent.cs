@@ -18,13 +18,13 @@ public class PanicSeverityViewComponent(CoreContext context, UserRepo userRepo) 
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
-        var token = await userRepo.AddUserToken(user, durationDays: 1);
         var userMood = await context.UserPanicSeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserPanicSeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
 
+        var token = await userRepo.AddUserToken(user, durationDays: 1);
         return View("PanicSeverity", new PanicSeverityViewModel(user, userMoods)
         {
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
+            Token = token,
             PreviousMood = userMood,
             UserMood = new Data.Entities.User.UserPanicSeverity()
             {
