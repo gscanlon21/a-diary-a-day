@@ -172,8 +172,17 @@ public partial class UserController
             // Apply refresh padding immediately.
             if (viewModel.PadRefreshXDays != userTask.PadRefreshXDays && userTask.LastSeen > DateOnly.MinValue)
             {
-                var difference = viewModel.PadRefreshXDays - userTask.PadRefreshXDays; // 11 new - 1 old = 10 weeks.
+                var difference = viewModel.PadRefreshXDays - userTask.PadRefreshXDays; // 9 new - 1 old = 8 days.
                 userTask.LastSeen = userTask.LastSeen.AddDays(difference); // Add 70 days onto the LastSeen date.
+            }
+
+            // Apply refresh lagging immediately.
+            if (viewModel.LagRefreshXDays != userTask.LagRefreshXDays)
+            {
+                var difference = viewModel.LagRefreshXDays - userTask.LagRefreshXDays; // 11 new - 2 old = 9 days.
+                var refreshAfterOrTodayWithLag = (userTask.RefreshAfter ?? DateHelpers.Today).AddDays(difference);
+                userTask.RefreshAfter = refreshAfterOrTodayWithLag > DateHelpers.Today ? refreshAfterOrTodayWithLag : null;
+                // NOTE: Not updating the LastSeen date if RefreshAfter is null, so the user may see this task again tomorrow.
             }
 
             userTask.InternalNotes = user.IsDemoUser ? null : viewModel.InternalNotes;
