@@ -52,19 +52,19 @@ public class ManageTaskViewComponent : ViewComponent
             })
             .Build()
             .Query(_serviceScopeFactory))
-            // May return more than one recipe if the recipe has ingredient recipes.
-            .FirstOrDefault(r => r.Task.Id == task.Id);
+            .FirstOrDefault();
 
-        var userTaskLog = await _context.UserTaskLogs
+        var completedForSection = await _context.UserTaskLogs.AsNoTracking()
             .Where(ut => ut.UserTaskId == userTask.Id)
+            .Where(ut => ut.Date == user.TodayOffset)
             .Where(ut => ut.Section == section)
-            .FirstOrDefaultAsync(ut => ut.Date == user.TodayOffset);
+            .AnyAsync(ut => ut.Complete > 0);
 
         // Edit an existing user task.
         return View("ManageTask", new ManageTaskViewModel(user, userTask, token)
         {
             ManageSection = section,
-            CompletedForSection = userTaskLog?.Complete > 0,
+            CompletedForSection = completedForSection,
             Task = taskDto?.AsType<NewsletterTaskDto, QueryResults>()!,
         });
     }

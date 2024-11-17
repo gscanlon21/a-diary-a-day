@@ -1,19 +1,18 @@
 ﻿using Data;
-using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web.Views.Shared.Components.Custom;
 
 namespace Web.Components.User;
 
-public class CustomViewComponent(CoreContext context, UserRepo userRepo) : ViewComponent
+public class CustomViewComponent(CoreContext context) : ViewComponent
 {
     /// <summary>
-    /// For routing
+    /// For routing.
     /// </summary>
     public const string Name = "Custom";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user, string token)
     {
         var userFootnotes = await context.UserCustoms
             .Where(f => f.UserId == user.Id)
@@ -23,8 +22,8 @@ public class CustomViewComponent(CoreContext context, UserRepo userRepo) : ViewC
         return View("Custom", new CustomViewModel()
         {
             User = user,
+            Token = token,
             Customs = userFootnotes,
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
         });
     }
 }

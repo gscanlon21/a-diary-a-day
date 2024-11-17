@@ -11,7 +11,7 @@ public class PastNewslettersViewComponent(UserRepo userRepo) : ViewComponent
     /// </summary>
     public const string Name = "PastNewsletters";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user, string token)
     {
         var pastNewsletters = await userRepo.GetPastDiaries(user);
         if (!pastNewsletters.Any())
@@ -22,8 +22,8 @@ public class PastNewslettersViewComponent(UserRepo userRepo) : ViewComponent
         return View("PastNewsletters", new PastNewslettersViewModel()
         {
             User = user,
+            Token = token,
             PastNewsletters = pastNewsletters,
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
         });
     }
 }

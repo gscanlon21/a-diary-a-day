@@ -1,6 +1,5 @@
 ﻿using Core.Models.User;
 using Data;
-using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web.Views.Shared.Components.NextNewsletter;
@@ -10,14 +9,14 @@ namespace Web.Components.User;
 /// <summary>
 /// Renders an alert box summary of when the user's next deload week will occur.
 /// </summary>
-public class NextNewsletterViewComponent(CoreContext context, UserRepo userRepo) : ViewComponent
+public class NextNewsletterViewComponent(CoreContext context) : ViewComponent
 {
     /// <summary>
-    /// For routing
+    /// For routing.
     /// </summary>
     public const string Name = "NextNewsletter";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user, string token)
     {
         DateOnly? nextSendDate = null;
         if (user.RestDays < Days.All)
@@ -47,7 +46,7 @@ public class NextNewsletterViewComponent(CoreContext context, UserRepo userRepo)
         return View("NextNewsletter", new NextNewsletterViewModel()
         {
             User = user,
-            Token = await userRepo.AddUserToken(user, durationDays: 1),
+            Token = token,
             TimeUntilNextSend = timeUntilNextSend,
             Today = DaysExtensions.FromDate(user.TodayOffset),
             NextWorkoutSendsToday = timeUntilNextSend.HasValue && DateOnly.FromDateTime(DateTime.UtcNow.Add(timeUntilNextSend.Value)) == user.TodayOffset

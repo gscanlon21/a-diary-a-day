@@ -163,7 +163,7 @@
             </div>
         </form>
 
-        @await Component.InvokeAsync(AdvancedViewComponent.Name, new { Model.User })
+        @await Component.InvokeAsync(AdvancedViewComponent.Name, new { Model.User, Model.Token })
 
         @if (Model.User.Components.HasFlag(Core.Models.Components.Component.Tasks))
         {
@@ -176,18 +176,18 @@
     </div>
 
     <div id="info" class="col">
-        @await Component.InvokeAsync(ConfirmationViewComponent.Name, new { Model.User })
-        @await Component.InvokeAsync(DeletionViewComponent.Name, new { Model.User })
-        @await Component.InvokeAsync(UnsupportedClientViewComponent.Name, new { Model.User })
-        @await Component.InvokeAsync(NewsletterViewComponent.Name, new { Model.User })
-        @await Component.InvokeAsync(NextNewsletterViewComponent.Name, new { Model.User })
-        @await Component.InvokeAsync(PastNewslettersViewComponent.Name, new { Model.User })
-        @await Component.InvokeAsync(LinkFeastsViewComponent.Name, new { Model.User })
-        @await Component.InvokeAsync(TokenViewComponent.Name, new { Model.User })
-        @await Component.InvokeAsync(BackupRestoreViewComponent.Name, new { Model.User })
-        @await Component.InvokeAsync(CustomViewComponent.Name, new { Model.User })
-        @await Component.InvokeAsync(FootnoteViewComponent.Name, new { Model.User })
-        @await Component.InvokeAsync(TasksViewComponent.Name, new { Model.User })
-        @await Component.InvokeAsync(IgnoredTasksViewComponent.Name, new { Model.User })
+        @await Component.InvokeAsync(ConfirmationViewComponent.Name, new { Model.User, Model.Token })
+        @await Component.InvokeAsync(DeletionViewComponent.Name, new { Model.User, Model.Token })
+        @await Component.InvokeAsync(UnsupportedClientViewComponent.Name, new { Model.User, Model.Token })
+        @await Component.InvokeAsync(NewsletterViewComponent.Name, new { Model.User, Model.Token })
+        @await Component.InvokeAsync(NextNewsletterViewComponent.Name, new { Model.User, Model.Token })
+        @await Component.InvokeAsync(PastNewslettersViewComponent.Name, new { Model.User, Model.Token })
+        @await Component.InvokeAsync(LinkFeastsViewComponent.Name, new { Model.User, Model.Token })
+        @await Component.InvokeAsync(TokenViewComponent.Name, new { Model.User, Model.Token })
+        @await Component.InvokeAsync(BackupRestoreViewComponent.Name, new { Model.User, Model.Token })
+        @await Component.InvokeAsync(CustomViewComponent.Name, new { Model.User, Model.Token })
+        @await Component.InvokeAsync(FootnoteViewComponent.Name, new { Model.User, Model.Token })
+        @await Component.InvokeAsync(TasksViewComponent.Name, new { Model.User, Model.Token })
+        @await Component.InvokeAsync(IgnoredTasksViewComponent.Name, new { Model.User, Model.Token })
     </div>
 </div>

@@ -13,7 +13,7 @@ namespace Web.Components.User;
 public class JournalViewComponent(CoreContext context, UserRepo userRepo) : ViewComponent
 {
     /// <summary>
-    /// For routing
+    /// For routing.
     /// </summary>
     public const string Name = "Journal";
 

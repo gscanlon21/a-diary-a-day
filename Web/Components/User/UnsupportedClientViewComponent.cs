@@ -6,13 +6,11 @@ namespace Web.Components.User;
 public class UnsupportedClientViewComponent : ViewComponent
 {
     /// <summary>
-    /// For routing
+    /// For routing.
     /// </summary>
     public const string Name = "UnsupportedClient";
 
-    public UnsupportedClientViewComponent() { }
-
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user, string token)
     {
         var unsupportedCient = GetUnsupportedClient(user);
         if (unsupportedCient == UnsupportedClientViewModel.UnsupportedClient.None)

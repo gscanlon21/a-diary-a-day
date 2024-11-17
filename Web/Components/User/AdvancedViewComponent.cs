@@ -1,22 +1,20 @@
-﻿using Data.Repos;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Web.Views.Shared.Components.Advanced;
 
 namespace Web.Components.User;
 
 /// <summary>
-/// Renders an alert box summary of when the user's next deload week will occur.
+/// User's advanced preferences edit form.
 /// </summary>
-public class AdvancedViewComponent(UserRepo userRepo) : ViewComponent
+public class AdvancedViewComponent : ViewComponent
 {
     /// <summary>
-    /// For routing
+    /// For routing.
     /// </summary>
     public const string Name = "Advanced";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user, string token)
     {
-        var token = await userRepo.AddUserToken(user, durationDays: 1);
         return View("Advanced", new AdvancedViewModel(user, token));
     }
 }
