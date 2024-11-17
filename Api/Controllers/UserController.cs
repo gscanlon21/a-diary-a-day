@@ -4,7 +4,6 @@ using Core.Code.Helpers;
 using Core.Consts;
 using Core.Models.Options;
 using Data;
-using Data.Entities.Newsletter;
 using Data.Entities.User;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
@@ -132,17 +131,17 @@ public class UserController : ControllerBase
     }
 
     /// <summary>
-    /// Get the user's past workouts.
+    /// Log an exception.
     /// </summary>
-    [HttpGet("Workouts")]
-    public async Task<IList<UserDiary>?> GetWorkouts(string email = UserConsts.DemoUser, string token = UserConsts.DemoToken)
+    [HttpPost("LogException")]
+    public async Task LogException([FromForm] string? email, [FromForm] string token, [FromForm] string? message)
     {
         var user = await _userRepo.GetUser(email, token);
-        if (user == null)
+        if (user == null || string.IsNullOrWhiteSpace(message))
         {
-            return null;
+            return;
         }
 
-        return await _userRepo.GetPastDiaries(user);
+        throw new Exception(message);
     }
 }

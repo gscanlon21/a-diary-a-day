@@ -1,8 +1,6 @@
 ﻿using Core.Dtos.User;
 using Core.Models.Options;
 using Microsoft.Extensions.Options;
-using System.Net;
-using System.Net.Http.Json;
 
 namespace Lib.Services;
 
@@ -24,25 +22,20 @@ public class UserService
         }
     }
 
-    public async Task<UserNewsletterDto?> GetUser(string email, string token)
+    public async Task<ApiResult<UserNewsletterDto>> GetUser(string email, string token)
     {
         var response = await _httpClient.GetAsync($"{_siteSettings.Value.ApiUri.AbsolutePath}/User/User?email={Uri.EscapeDataString(email)}&token={Uri.EscapeDataString(token)}");
-
-        if (response.StatusCode == HttpStatusCode.NoContent)
-        {
-            return default;
-        }
-        else if (response.IsSuccessStatusCode)
-        {
-            return await response.Content.ReadFromJsonAsync<UserNewsletterDto>();
-        }
-
-        return null;
+        return await ApiResult<UserNewsletterDto>.FromResponse(response);
     }
 
-    public async Task<IList<UserDiaryDto>?> GetWorkouts(string email, string token)
+    public async Task LogException(string? email, string? token, string? message)
     {
-        return await _httpClient.GetFromJsonAsync<List<UserDiaryDto>>($"{_siteSettings.Value.ApiUri.AbsolutePath}/User/Workouts?email={Uri.EscapeDataString(email)}&token={Uri.EscapeDataString(token)}");
+        await _httpClient.PostAsync($"{_siteSettings.Value.ApiUri.AbsolutePath}/User/LogException", new FormUrlEncodedContent(new Dictionary<string, string?>
+        {
+            { "email", email },
+            { "token", token },
+            { "message", message }
+        }));
     }
 }
 

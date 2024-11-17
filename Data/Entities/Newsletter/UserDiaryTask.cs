@@ -7,11 +7,12 @@ using System.Text.Json.Serialization;
 namespace Data.Entities.Newsletter;
 
 /// <summary>
-/// A day's workout routine.
+/// A day's journal entry task.
 /// </summary>
 [Table("user_diary_task")]
 public class UserDiaryTask
 {
+    [Obsolete("Public parameterless constructor required for EF Core.", error: true)]
     public UserDiaryTask() { }
 
     public UserDiaryTask(UserDiary newsletter, UserTask task)

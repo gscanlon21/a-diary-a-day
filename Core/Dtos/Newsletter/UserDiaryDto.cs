@@ -2,14 +2,12 @@
 
 public class UserDiaryDto
 {
-    public int Id { get; init; }
-
-    public int UserId { get; init; }
-
     /// <summary>
     /// The date the newsletter was sent out on
     /// </summary>
     public DateOnly Date { get; init; }
+
+    public string? Logs { get; init; }
 
     /// <summary>
     /// Title to display for the list item in the app.

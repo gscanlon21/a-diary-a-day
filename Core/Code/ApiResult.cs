@@ -37,7 +37,7 @@ public class ApiResult<T>
     public bool HasValue => _value != null;
 
     public T? GetValueOrDefault() => _value;
-    public T? GetValueOrDefault(T val) => _value ?? val;
+    public T GetValueOrDefault(T val) => _value ?? val;
 
     public StatusCodeRange StatusCode { get; private set; }
 

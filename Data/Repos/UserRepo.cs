@@ -2,6 +2,7 @@
 using Core.Consts;
 using Data.Entities.Newsletter;
 using Data.Entities.User;
+using Data.Models.Newsletter;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 
@@ -91,25 +92,17 @@ public class UserRepo(CoreContext context)
     /// <summary>
     /// Get the last 7 days of newsletters for the user. Excludes the current newsletter.
     /// </summary>
-    public async Task<IList<UserDiary>> GetPastDiaries(User user)
+    public async Task<IList<PastDiary>> GetPastDiaries(User user)
     {
-        return (await _context.UserDiaries
+        return await _context.UserDiaries
             .Where(uw => uw.UserId == user.Id)
             .Where(n => n.Date < user.TodayOffset)
-            // Only select 1 workout per day, the most recent.
-            .GroupBy(n => n.Date)
-            .Select(g => new
-            {
-                g.Key,
-                // For testing/demo. When two newsletters get sent in the same day, I want a different exercise set.
-                // Dummy records that are created when the user advances their workout split may also have the same date.
-                Workout = g.OrderByDescending(n => n.Id).First()
-            })
-            .OrderByDescending(n => n.Key)
-            .Take(7)
-            .ToListAsync())
-            .Select(n => n.Workout)
-            .ToList();
+            // Select the most recent diary per day. Order after grouping.
+            .GroupBy(n => n.Date).OrderByDescending(n => n.Key)
+            // Can't be passed through the constructor or it's slow.
+            .Select(g => new PastDiary() { Date = g.OrderByDescending(n => n.Id).First().Date })
+            .Take(7).IgnoreQueryFilters().AsNoTracking()
+            .ToListAsync();
     }
 }
 

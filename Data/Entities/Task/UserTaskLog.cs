@@ -13,7 +13,7 @@ namespace Data.Entities.Task;
 [Table("user_task_log")]
 public class UserTaskLog
 {
-    [Obsolete("Public parameterless constructor required for EF Core .AsSplitQuery()", error: true)]
+    [Obsolete("Public parameterless constructor required for EF Core.", error: true)]
     public UserTaskLog() { }
 
     public UserTaskLog(User.User user, UserTask userTask)

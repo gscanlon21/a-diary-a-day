@@ -77,7 +77,7 @@ public partial class NewsletterRepo
     }
 
     /// <summary>
-    /// Root route for building out the the workout routine newsletter.
+    /// Root route for building out the workout routine newsletter.
     /// </summary>
     public async Task<NewsletterDto?> Newsletter(string email, string token, DateOnly? date = null)
     {
@@ -151,19 +151,22 @@ public partial class NewsletterRepo
             tasks.AddRange(await GetUserTasks(context, section));
         }
 
-        await UpdateLastSeenDate(tasks.Select(t => t.Task).Where(t => !t.PersistUntilComplete));
-        await CreateAndAddNewsletterToContext(context, tasks);
-
+        var newsletter = await CreateAndAddNewsletterToContext(context, tasks);
         var userViewModel = new UserNewsletterDto(context.User.AsType<UserDto, User>()!, context.Token);
-        return new NewsletterDto(userViewModel)
+        await UpdateLastSeenDate(tasks.Select(t => t.Task).Where(t => !t.PersistUntilComplete));
+
+        return new NewsletterDto()
         {
+            User = userViewModel,
+            Verbosity = context.User.Verbosity,
             Images = GetImages(context.User).ToList(),
+            UserDiary = newsletter.AsType<UserDiaryDto, UserDiary>()!,
             Tasks = tasks.Select(t => t.AsType<NewsletterTaskDto, QueryResults>()!).ToList(),
         };
     }
 
     /// <summary>
-    /// Root route for building out the the workout routine newsletter based on a date.
+    /// Root route for building out the workout routine newsletter based on a date.
     /// </summary>
     private async Task<NewsletterDto?> NewsletterOld(User user, string token, DateOnly date, UserDiary newsletter)
     {
@@ -192,10 +195,13 @@ public partial class NewsletterRepo
 
         var images = GetImages(user).ToList();
         var userViewModel = new UserNewsletterDto(user.AsType<UserDto, User>()!, token);
-        var newsletterViewModel = new NewsletterDto(userViewModel)
+        var newsletterViewModel = new NewsletterDto()
         {
             Today = date,
             Images = images,
+            User = userViewModel,
+            Verbosity = user.Verbosity,
+            UserDiary = newsletter.AsType<UserDiaryDto, UserDiary>()!,
             Tasks = tasks.Select(r => r.AsType<NewsletterTaskDto, QueryResults>()!).ToList()
         };
 

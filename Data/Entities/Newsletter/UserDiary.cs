@@ -6,12 +6,13 @@ using System.Text.Json.Serialization;
 namespace Data.Entities.Newsletter;
 
 /// <summary>
-/// A day's workout routine.
+/// A day's journal entry.
 /// </summary>
 [Table("user_diary")]
+//[Index(nameof(UserId), nameof(Date))]
 public class UserDiary
 {
-    [Obsolete("Public parameterless constructor required for EF Core .AsSplitQuery()", error: true)]
+    [Obsolete("Public parameterless constructor required for EF Core.", error: true)]
     public UserDiary() { }
 
     internal UserDiary(DateOnly date, NewsletterContext context) : this(date, context.User) { }

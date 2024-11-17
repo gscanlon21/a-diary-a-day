@@ -5,14 +5,13 @@ using System.Text.Json.Serialization;
 
 namespace Data.Entities.Newsletter;
 
-
 /// <summary>
-/// A day's workout routine.
+/// A day's journal entry email.
 /// </summary>
 [Table("user_email")]
 public class UserEmail
 {
-    [Obsolete("Public parameterless constructor required for EF Core .AsSplitQuery()", error: true)]
+    [Obsolete("Public parameterless constructor required for EF Core.", error: true)]
     public UserEmail() { }
 
     public UserEmail(User.User user)
