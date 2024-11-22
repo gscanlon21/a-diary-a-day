@@ -10,7 +10,7 @@ namespace Core.Dtos.Newsletter;
 /// </summary>
 public class NewsletterDto
 {
-    public DateOnly Today { get; init; } = DateHelpers.Today;
+    public DateOnly Date { get; init; } = DateHelpers.Today;
 
     public required UserNewsletterDto User { get; init; }
     public required UserDiaryDto UserDiary { get; init; }

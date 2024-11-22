@@ -1,7 +1,6 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
 using Core.Code.Helpers;
-using Core.Consts;
 using Core.Models.Options;
 using Data;
 using Data.Entities.User;
@@ -16,8 +15,7 @@ namespace Api.Controllers;
 /// <summary>
 /// User helpers.
 /// </summary>
-[ApiController]
-[Route("[controller]")]
+[ApiController, Route("[controller]")]
 public class UserController : ControllerBase
 {
     private readonly UserRepo _userRepo;

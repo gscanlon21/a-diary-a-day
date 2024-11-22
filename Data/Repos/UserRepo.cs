@@ -1,5 +1,4 @@
 ﻿using Core.Code.Exceptions;
-using Core.Consts;
 using Data.Entities.Newsletter;
 using Data.Entities.User;
 using Data.Models.Newsletter;

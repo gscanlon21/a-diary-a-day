@@ -1,7 +1,6 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
 using Core.Code.Helpers;
-using Core.Consts;
 using Core.Models.Options;
 using Data;
 using Microsoft.EntityFrameworkCore;

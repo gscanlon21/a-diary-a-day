@@ -1,7 +1,6 @@
 ﻿using Api.Code;
 using Azure;
 using Core.Code.Helpers;
-using Core.Consts;
 using Core.Models.Newsletter;
 using Core.Models.Options;
 using Data;

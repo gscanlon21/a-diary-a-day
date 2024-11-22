@@ -152,7 +152,7 @@ public partial class NewsletterRepo
         }
 
         var newsletter = await CreateAndAddNewsletterToContext(context, tasks);
-        var userViewModel = new UserNewsletterDto(context.User.AsType<UserDto, User>()!, context.Token);
+        var userViewModel = new UserNewsletterDto(context.User.AsType<UserDto>()!, context.Token);
         await UpdateLastSeenDate(tasks.Select(t => t.Task).Where(t => !t.PersistUntilComplete));
 
         return new NewsletterDto()
@@ -160,8 +160,8 @@ public partial class NewsletterRepo
             User = userViewModel,
             Verbosity = context.User.Verbosity,
             Images = GetImages(context.User).ToList(),
-            UserDiary = newsletter.AsType<UserDiaryDto, UserDiary>()!,
-            Tasks = tasks.Select(t => t.AsType<NewsletterTaskDto, QueryResults>()!).ToList(),
+            UserDiary = newsletter.AsType<UserDiaryDto>()!,
+            Tasks = tasks.Select(t => t.AsType<NewsletterTaskDto>()!).ToList(),
         };
     }
 
@@ -194,15 +194,15 @@ public partial class NewsletterRepo
         }
 
         var images = GetImages(user).ToList();
-        var userViewModel = new UserNewsletterDto(user.AsType<UserDto, User>()!, token);
+        var userViewModel = new UserNewsletterDto(user.AsType<UserDto>()!, token);
         var newsletterViewModel = new NewsletterDto()
         {
-            Today = date,
+            Date = date,
             Images = images,
             User = userViewModel,
             Verbosity = user.Verbosity,
-            UserDiary = newsletter.AsType<UserDiaryDto, UserDiary>()!,
-            Tasks = tasks.Select(r => r.AsType<NewsletterTaskDto, QueryResults>()!).ToList()
+            UserDiary = newsletter.AsType<UserDiaryDto>()!,
+            Tasks = tasks.Select(r => r.AsType<NewsletterTaskDto>()!).ToList()
         };
 
         return newsletterViewModel;

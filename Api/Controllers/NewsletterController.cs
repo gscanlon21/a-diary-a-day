@@ -1,12 +1,10 @@
-﻿using Core.Consts;
-using Data.Repos;
+﻿using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
 
-[ApiController]
-[Route("[controller]")]
-public partial class NewsletterController : ControllerBase
+[ApiController, Route("[controller]")]
+public class NewsletterController : ControllerBase
 {
     private readonly UserRepo _userRepo;
     private readonly NewsletterRepo _newsletterRepo;

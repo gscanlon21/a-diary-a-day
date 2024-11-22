@@ -1,5 +1,4 @@
-﻿using Core.Consts;
-using Core.Dtos.Footnote;
+﻿using Core.Dtos.Footnote;
 using Core.Dtos.User;
 using Core.Models.Options;
 using Microsoft.Extensions.Options;

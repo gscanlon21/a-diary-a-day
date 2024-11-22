@@ -1,5 +1,4 @@
-﻿using Core.Consts;
-using Core.Models.Components.SubComponents;
+﻿using Core.Models.Components.SubComponents;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
