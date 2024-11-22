@@ -1,7 +1,6 @@
 ﻿using Core.Dtos.Newsletter;
 using Core.Dtos.User;
 using Core.Models.User;
-using Data.Query;
 using Data.Query.Builders;
 using Microsoft.AspNetCore.Mvc;
 using Web.Views.Shared.Components.Tasks;
@@ -29,7 +28,7 @@ public class TasksViewComponent(IServiceScopeFactory serviceScopeFactory) : View
         var taskType = Enum.TryParse(Request.Query["type"], ignoreCase: true, out UserTaskType typeTmp) ? typeTmp : (UserTaskType?)null;
 
         // Need a user context so the manage link is clickable and the user can un-ignore a task.
-        var userNewsletter = new UserNewsletterDto(user.AsType<UserDto, Data.Entities.User.User>()!, token);
+        var userNewsletter = new UserNewsletterDto(user.AsType<UserDto>()!, token);
 
         var tasks = await new QueryBuilder()
             .WithUser(user, ignored: false)
@@ -41,7 +40,7 @@ public class TasksViewComponent(IServiceScopeFactory serviceScopeFactory) : View
         return View("Tasks", new TasksViewModel()
         {
             UserNewsletter = userNewsletter,
-            Tasks = tasks.Select(r => r.AsType<NewsletterTaskDto, QueryResults>()!).ToList(),
+            Tasks = tasks.Select(r => r.AsType<NewsletterTaskDto>()!).ToList(),
         });
     }
 }

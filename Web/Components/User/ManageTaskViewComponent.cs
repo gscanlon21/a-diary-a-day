@@ -1,7 +1,6 @@
 ﻿using Core.Dtos.Newsletter;
 using Core.Models.Newsletter;
 using Data;
-using Data.Query;
 using Data.Query.Builders;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
@@ -65,7 +64,7 @@ public class ManageTaskViewComponent : ViewComponent
         {
             ManageSection = section,
             CompletedForSection = completedForSection,
-            Task = taskDto?.AsType<NewsletterTaskDto, QueryResults>()!,
+            Task = taskDto?.AsType<NewsletterTaskDto>()!,
         });
     }
 }

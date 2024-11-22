@@ -10,7 +10,7 @@ public static class Mapper
         ReferenceHandler = ReferenceHandler.Preserve
     };
 
-    public static T? AsType<T, F>(this F from) where T : new()
+    public static T? AsType<T>(this object from) where T : new()
     {
         return JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(from, Options), Options);
     }
