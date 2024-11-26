@@ -4,25 +4,25 @@ using Data.Entities.User;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Web.Views.Shared.Components.BloodWork;
+using Web.Views.Shared.Components.SerumStress;
 
 namespace Web.Components.User;
 
 /// <summary>
 /// Renders an alert box summary of when the user's next deload week will occur.
 /// </summary>
-public class BloodWorkViewComponent(CoreContext context, UserRepo userRepo) : ViewComponent
+public class SerumStressViewComponent(CoreContext context, UserRepo userRepo) : ViewComponent
 {
     /// <summary>
     /// For routing.
     /// </summary>
-    public const string Name = "BloodWork";
+    public const string Name = "SerumStress";
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var i = 0;
-        var userMood = await context.UserBloodWorks.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
-        var userMoods = await context.UserBloodWorks.Where(ud => ud.UserId == user.Id).ToListAsync();
+        var userMood = await context.UserSerumStress.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
+        var userMoods = await context.UserSerumStress.Where(ud => ud.UserId == user.Id).ToListAsync();
         var userCustoms = userMoods.FirstOrDefault()?.Items.Keys.Select(a => new UserCustom()
         {
             Id = ++i,
@@ -33,13 +33,13 @@ public class BloodWorkViewComponent(CoreContext context, UserRepo userRepo) : Vi
 
         var token = await userRepo.AddUserToken(user, durationDays: 1);
         var subComponents = (BloodWork)user.UserComponentSettings.First(s => s.Component == Component.BloodWork).TypedSkills!;
-        return View("BloodWork", new BloodWorkViewModel(userMoods, userCustoms)
+        return View("SerumStress", new SerumStressViewModel(userMoods, userCustoms)
         {
             User = user,
             Token = token,
             PreviousMood = userMood,
             SubComponents = subComponents,
-            UserMood = new UserBloodWork()
+            UserMood = new UserSerumStress()
             {
                 UserId = user.Id,
                 User = user

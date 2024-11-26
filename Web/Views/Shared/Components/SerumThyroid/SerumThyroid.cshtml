@@ -1,0 +1,182 @@
+﻿@model SerumThyroidViewModel
+@using Core.Models.Components
+@using Data.Entities.User
+
+@{
+    bool show = Model.PreviousMood == null || Model.PreviousMood.Date < DateHelpers.Today.AddMonths(-1);
+}
+
+<div class="alert alert-secondary">
+    <div class="row gy-2">
+        @if (show)
+        {
+            <div class="col-lg-6">
+                <h6 class="mb-1">Serum Thyroid</h6>
+                <div class="alert alert-light shadow">
+                    <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageSerumThyroid)" method="post"
+                          asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.TgAb)</label>
+                                <div><span asp-validation-for="UserMood.TgAb" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.TgAb))" asp-for="UserMood.TgAb" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.TgAb))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.TgAb))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.TgAb))Input" list="hashmarks" value="@(Model.UserMood.TgAb ?? -1)"
+                                               min="@(UserSerumThyroid.Consts.TgAbMin - UserSerumThyroid.Consts.TgAbStep)" max="@UserSerumThyroid.Consts.TgAbMax" step="@UserSerumThyroid.Consts.TgAbStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.TgAb)).value = this.valueAsNumber < @UserSerumThyroid.Consts.TgAbMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.TgAb))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.TgAb)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.TPO)</label>
+                                <div><span asp-validation-for="UserMood.TPO" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.TPO))" asp-for="UserMood.TPO" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.TPO))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.TPO))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.TPO))Input" list="hashmarks" value="@(Model.UserMood.TPO ?? -1)"
+                                               min="@(UserSerumThyroid.Consts.TPOMin - UserSerumThyroid.Consts.TPOStep)" max="@UserSerumThyroid.Consts.TPOMax" step="@UserSerumThyroid.Consts.TPOStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.TPO)).value = this.valueAsNumber < @UserSerumThyroid.Consts.TPOMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.TPO))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.TPO)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.TSH)</label>
+                                <div><span asp-validation-for="UserMood.TSH" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.TSH))" asp-for="UserMood.TSH" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.TSH))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.TSH))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.TSH))Input" list="hashmarks" value="@(Model.UserMood.TSH ?? -1)"
+                                               min="@(UserSerumThyroid.Consts.TSHMin - UserSerumThyroid.Consts.TSHStep)" max="@UserSerumThyroid.Consts.TSHMax" step="@UserSerumThyroid.Consts.TSHStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.TSH)).value = this.valueAsNumber < @UserSerumThyroid.Consts.TSHMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.TSH))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.TSH)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.T4)</label>
+                                <div><span asp-validation-for="UserMood.T4" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.T4))" asp-for="UserMood.T4" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.T4))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.T4))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.T4))Input" list="hashmarks" value="@(Model.UserMood.T4 ?? -1)"
+                                               min="@(UserSerumThyroid.Consts.T4Min - UserSerumThyroid.Consts.T4Step)" max="@UserSerumThyroid.Consts.T4Max" step="@UserSerumThyroid.Consts.T4Step"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.T4)).value = this.valueAsNumber < @UserSerumThyroid.Consts.T4Min ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.T4))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.T4)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.T3)</label>
+                                <div><span asp-validation-for="UserMood.T3" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.T3))" asp-for="UserMood.T3" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.T3))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.T3))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.T3))Input" list="hashmarks" value="@(Model.UserMood.T3 ?? -1)"
+                                               min="@(UserSerumThyroid.Consts.T3Min - UserSerumThyroid.Consts.T3Step)" max="@UserSerumThyroid.Consts.T3Max" step="@UserSerumThyroid.Consts.T3Step"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.T3)).value = this.valueAsNumber < @UserSerumThyroid.Consts.T3Min ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.T3))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.T3)</div>
+                            </div>
+                        }
+
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary allow-demo" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+
+        <div class="col-lg-6">
+            <h6 class="mb-1">Log</h6>
+            <div class="alert alert-light shadow">
+                @{ await Html.RenderPartialAsync("_LineChart", new LineChartViewModel()
+                {
+                    XysGrouped = Model.XysGrouped,
+                    User = Model.User,
+                    Token = Model.Token,
+                    Type = Core.Models.Components.Component.SerumThyroid
+                }); }
+            </div>
+        </div>
+    </div>
+</div>

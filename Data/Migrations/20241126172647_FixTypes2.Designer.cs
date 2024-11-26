@@ -3,6 +3,7 @@ using System;
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Data.Migrations
 {
     [DbContext(typeof(CoreContext))]
-    partial class CoreContextModelSnapshot : ModelSnapshot
+    [Migration("20241126172647_FixTypes2")]
+    partial class FixTypes2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1926,43 +1929,16 @@ namespace Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<double?>("DHEASulfate")
-                        .HasColumnType("double precision");
-
                     b.Property<DateOnly>("Date")
                         .HasColumnType("date");
 
-                    b.Property<double?>("E2")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("FSH")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("FreePSA")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("FreePSAPercent")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("FreeTestosterone")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("LH")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("Prolactin")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("SHBG")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("TotalPSA")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("TotalTestosterone")
+                    b.Property<double?>("Homocysteine")
                         .HasColumnType("double precision");
 
                     b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("VitaminA")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -2572,40 +2548,16 @@ namespace Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<double?>("Albumin")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("Bilirubin")
-                        .HasColumnType("double precision");
-
                     b.Property<DateOnly>("Date")
                         .HasColumnType("date");
 
-                    b.Property<double?>("Glucose")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("Ketones")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("Leukocyte")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("Nitrate")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("OccultBlood")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("PH")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("Protein")
-                        .HasColumnType("double precision");
-
-                    b.Property<double?>("SpecificGravity")
+                    b.Property<double?>("Homocysteine")
                         .HasColumnType("double precision");
 
                     b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("VitaminA")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");

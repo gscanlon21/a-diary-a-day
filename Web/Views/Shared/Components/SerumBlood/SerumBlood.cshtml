@@ -1,0 +1,294 @@
+﻿@model SerumBloodViewModel
+@using Core.Models.Components
+@using Data.Entities.User
+
+@{
+    bool show = Model.PreviousMood == null || Model.PreviousMood.Date < DateHelpers.Today.AddMonths(-1);
+}
+
+<div class="alert alert-secondary">
+    <div class="row gy-2">
+        @if (show)
+        {
+            <div class="col-lg-6">
+                <h6 class="mb-1">Serum Blood</h6>
+                <div class="alert alert-light shadow">
+                    <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageSerumBlood)" method="post"
+                          asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Hematocrit)</label>
+                                <div><span asp-validation-for="UserMood.Hematocrit" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.Hematocrit))" asp-for="UserMood.Hematocrit" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.Hematocrit))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.Hematocrit))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.Hematocrit))Input" list="hashmarks" value="@(Model.UserMood.Hematocrit ?? -1)"
+                                               min="@(UserSerumBlood.Consts.HematocritMin - UserSerumBlood.Consts.HematocritStep)" max="@UserSerumBlood.Consts.HematocritMax" step="@UserSerumBlood.Consts.HematocritStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.Hematocrit)).value = this.valueAsNumber < @UserSerumBlood.Consts.HematocritMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="50"></option>
+                                            <option value="75"></option>
+                                            <option value="100"></option>
+                                            <option value="125"></option>
+                                            <option value="150"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.Hematocrit))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.Hematocrit)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Hemoglobin)</label>
+                                <div><span asp-validation-for="UserMood.Hemoglobin" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.Hemoglobin))" asp-for="UserMood.Hemoglobin" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.Hemoglobin))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.Hemoglobin))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.Hemoglobin))Input" list="hashmarks" value="@(Model.UserMood.Hemoglobin ?? -1)"
+                                               min="@(UserSerumBlood.Consts.HemoglobinMin - UserSerumBlood.Consts.HemoglobinStep)" max="@UserSerumBlood.Consts.HemoglobinMax" step="@UserSerumBlood.Consts.HemoglobinStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.Hemoglobin)).value = this.valueAsNumber < @UserSerumBlood.Consts.HemoglobinMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="50"></option>
+                                            <option value="75"></option>
+                                            <option value="100"></option>
+                                            <option value="125"></option>
+                                            <option value="150"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.Hemoglobin))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.Hemoglobin)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.MCH)</label>
+                                <div><span asp-validation-for="UserMood.MCH" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.MCH))" asp-for="UserMood.MCH" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.MCH))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.MCH))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.MCH))Input" list="hashmarks" value="@(Model.UserMood.MCH ?? -1)"
+                                               min="@(UserSerumBlood.Consts.MCHMin - UserSerumBlood.Consts.MCHStep)" max="@UserSerumBlood.Consts.MCHMax" step="@UserSerumBlood.Consts.MCHStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.MCH)).value = this.valueAsNumber < @UserSerumBlood.Consts.MCHMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.MCH))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.MCH)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.MCHC)</label>
+                                <div><span asp-validation-for="UserMood.MCHC" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.MCHC))" asp-for="UserMood.MCHC" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.MCHC))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.MCHC))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.MCHC))Input" list="hashmarks" value="@(Model.UserMood.MCHC ?? -1)"
+                                               min="@(UserSerumBlood.Consts.MCHCMin - UserSerumBlood.Consts.MCHCStep)" max="@UserSerumBlood.Consts.MCHCMax" step="@UserSerumBlood.Consts.MCHCStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.MCHC)).value = this.valueAsNumber < @UserSerumBlood.Consts.MCHCMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.MCHC))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.MCHC)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.MCV)</label>
+                                <div><span asp-validation-for="UserMood.MCV" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.MCV))" asp-for="UserMood.MCV" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.MCV))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.MCV))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.MCV))Input" list="hashmarks" value="@(Model.UserMood.MCV ?? -1)"
+                                               min="@(UserSerumBlood.Consts.MCVMin - UserSerumBlood.Consts.MCVStep)" max="@UserSerumBlood.Consts.MCVMax" step="@UserSerumBlood.Consts.MCVStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.MCV)).value = this.valueAsNumber < @UserSerumBlood.Consts.MCVMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.MCV))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.MCV)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.MPV)</label>
+                                <div><span asp-validation-for="UserMood.MPV" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.MPV))" asp-for="UserMood.MPV" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.MPV))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.MPV))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.MPV))Input" list="hashmarks" value="@(Model.UserMood.MPV ?? -1)"
+                                               min="@(UserSerumBlood.Consts.MPVMin - UserSerumBlood.Consts.MPVStep)" max="@UserSerumBlood.Consts.MPVMax" step="@UserSerumBlood.Consts.MPVStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.MPV)).value = this.valueAsNumber < @UserSerumBlood.Consts.MPVMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.MPV))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.MPV)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.PlateletCount)</label>
+                                <div><span asp-validation-for="UserMood.PlateletCount" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.PlateletCount))" asp-for="UserMood.PlateletCount" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.PlateletCount))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.PlateletCount))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.PlateletCount))Input" list="hashmarks" value="@(Model.UserMood.PlateletCount ?? -1)"
+                                               min="@(UserSerumBlood.Consts.PlateletCountMin - UserSerumBlood.Consts.PlateletCountStep)" max="@UserSerumBlood.Consts.PlateletCountMax" step="@UserSerumBlood.Consts.PlateletCountStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.PlateletCount)).value = this.valueAsNumber < @UserSerumBlood.Consts.PlateletCountMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.PlateletCount))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.PlateletCount)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.RBCCount)</label>
+                                <div><span asp-validation-for="UserMood.RBCCount" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.RBCCount))" asp-for="UserMood.RBCCount" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.RBCCount))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.RBCCount))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.RBCCount))Input" list="hashmarks" value="@(Model.UserMood.RBCCount ?? -1)"
+                                               min="@(UserSerumBlood.Consts.RBCCountMin - UserSerumBlood.Consts.RBCCountStep)" max="@UserSerumBlood.Consts.RBCCountMax" step="@UserSerumBlood.Consts.RBCCountStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.RBCCount)).value = this.valueAsNumber < @UserSerumBlood.Consts.RBCCountMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.RBCCount))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.RBCCount)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.RDW)</label>
+                                <div><span asp-validation-for="UserMood.RDW" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.RDW))" asp-for="UserMood.RDW" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.RDW))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.RDW))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.RDW))Input" list="hashmarks" value="@(Model.UserMood.RDW ?? -1)"
+                                               min="@(UserSerumBlood.Consts.RDWMin - UserSerumBlood.Consts.RDWStep)" max="@UserSerumBlood.Consts.RDWMax" step="@UserSerumBlood.Consts.RDWStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.RDW)).value = this.valueAsNumber < @UserSerumBlood.Consts.RDWMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.RDW))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.RDW)</div>
+                            </div>
+                        }
+
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary allow-demo" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+
+        <div class="col-lg-6">
+            <h6 class="mb-1">Log</h6>
+            <div class="alert alert-light shadow">
+                @{ await Html.RenderPartialAsync("_LineChart", new LineChartViewModel()
+                {
+                    XysGrouped = Model.XysGrouped,
+                    User = Model.User,
+                    Token = Model.Token,
+                    Type = Core.Models.Components.Component.SerumBlood
+                }); }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,210 @@
+﻿@model SerumElectrolytesViewModel
+@using Core.Models.Components
+@using Data.Entities.User
+
+@{
+    bool show = Model.PreviousMood == null || Model.PreviousMood.Date < DateHelpers.Today.AddMonths(-1);
+}
+
+<div class="alert alert-secondary">
+    <div class="row gy-2">
+        @if (show)
+        {
+            <div class="col-lg-6">
+                <h6 class="mb-1">Serum Electrolytes</h6>
+                <div class="alert alert-light shadow">
+                    <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageSerumElectrolytes)" method="post"
+                          asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Calcium)</label>
+                                <div><span asp-validation-for="UserMood.Calcium" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.Calcium))" asp-for="UserMood.Calcium" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.Calcium))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.Calcium))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.Calcium))Input" list="hashmarks" value="@(Model.UserMood.Calcium ?? -1)"
+                                               min="@(UserSerumElectrolytes.Consts.CalciumMin - UserSerumElectrolytes.Consts.CalciumStep)" max="@UserSerumElectrolytes.Consts.CalciumMax" step="@UserSerumElectrolytes.Consts.CalciumStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.Calcium)).value = this.valueAsNumber < @UserSerumElectrolytes.Consts.CalciumMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="50"></option>
+                                            <option value="75"></option>
+                                            <option value="100"></option>
+                                            <option value="125"></option>
+                                            <option value="150"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.Calcium))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.Calcium)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.CarbonDioxide)</label>
+                                <div><span asp-validation-for="UserMood.CarbonDioxide" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.CarbonDioxide))" asp-for="UserMood.CarbonDioxide" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.CarbonDioxide))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.CarbonDioxide))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.CarbonDioxide))Input" list="hashmarks" value="@(Model.UserMood.CarbonDioxide ?? -1)"
+                                               min="@(UserSerumElectrolytes.Consts.CarbonDioxideMin - UserSerumElectrolytes.Consts.CarbonDioxideStep)" max="@UserSerumElectrolytes.Consts.CarbonDioxideMax" step="@UserSerumElectrolytes.Consts.CarbonDioxideStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.CarbonDioxide)).value = this.valueAsNumber < @UserSerumElectrolytes.Consts.CarbonDioxideMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="50"></option>
+                                            <option value="75"></option>
+                                            <option value="100"></option>
+                                            <option value="125"></option>
+                                            <option value="150"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.CarbonDioxide))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.CarbonDioxide)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Chloride)</label>
+                                <div><span asp-validation-for="UserMood.Chloride" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.Chloride))" asp-for="UserMood.Chloride" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.Chloride))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.Chloride))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.Chloride))Input" list="hashmarks" value="@(Model.UserMood.Chloride ?? -1)"
+                                               min="@(UserSerumElectrolytes.Consts.ChlorideMin - UserSerumElectrolytes.Consts.ChlorideStep)" max="@UserSerumElectrolytes.Consts.ChlorideMax" step="@UserSerumElectrolytes.Consts.ChlorideStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.Chloride)).value = this.valueAsNumber < @UserSerumElectrolytes.Consts.ChlorideMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="50"></option>
+                                            <option value="75"></option>
+                                            <option value="100"></option>
+                                            <option value="125"></option>
+                                            <option value="150"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.Chloride))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.Chloride)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Magnesium)</label>
+                                <div><span asp-validation-for="UserMood.Magnesium" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.Magnesium))" asp-for="UserMood.Magnesium" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.Magnesium))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.Magnesium))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.Magnesium))Input" list="hashmarks" value="@(Model.UserMood.Magnesium ?? -1)"
+                                               min="@(UserSerumElectrolytes.Consts.MagnesiumMin - UserSerumElectrolytes.Consts.MagnesiumStep)" max="@UserSerumElectrolytes.Consts.MagnesiumMax" step="@UserSerumElectrolytes.Consts.MagnesiumStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.Magnesium)).value = this.valueAsNumber < @UserSerumElectrolytes.Consts.MagnesiumMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="50"></option>
+                                            <option value="75"></option>
+                                            <option value="100"></option>
+                                            <option value="125"></option>
+                                            <option value="150"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.Magnesium))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.Magnesium)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Potassium)</label>
+                                <div><span asp-validation-for="UserMood.Potassium" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.Potassium))" asp-for="UserMood.Potassium" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.Potassium))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.Potassium))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.Potassium))Input" list="hashmarks" value="@(Model.UserMood.Potassium ?? -1)"
+                                               min="@(UserSerumElectrolytes.Consts.PotassiumMin - UserSerumElectrolytes.Consts.PotassiumStep)" max="@UserSerumElectrolytes.Consts.PotassiumMax" step="@UserSerumElectrolytes.Consts.PotassiumStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.Potassium)).value = this.valueAsNumber < @UserSerumElectrolytes.Consts.PotassiumMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="50"></option>
+                                            <option value="75"></option>
+                                            <option value="100"></option>
+                                            <option value="125"></option>
+                                            <option value="150"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.Potassium))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.Potassium)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Sodium)</label>
+                                <div><span asp-validation-for="UserMood.Sodium" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.Sodium))" asp-for="UserMood.Sodium" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.Sodium))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.Sodium))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.Sodium))Input" list="hashmarks" value="@(Model.UserMood.Sodium ?? -1)"
+                                               min="@(UserSerumElectrolytes.Consts.SodiumMin - UserSerumElectrolytes.Consts.SodiumStep)" max="@UserSerumElectrolytes.Consts.SodiumMax" step="@UserSerumElectrolytes.Consts.SodiumStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.Sodium)).value = this.valueAsNumber < @UserSerumElectrolytes.Consts.SodiumMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="50"></option>
+                                            <option value="75"></option>
+                                            <option value="100"></option>
+                                            <option value="125"></option>
+                                            <option value="150"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.Sodium))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.Sodium)</div>
+                            </div>
+                        }
+
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary allow-demo" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+
+        <div class="col-lg-6">
+            <h6 class="mb-1">Log</h6>
+            <div class="alert alert-light shadow">
+                @{ await Html.RenderPartialAsync("_LineChart", new LineChartViewModel()
+                {
+                    XysGrouped = Model.XysGrouped,
+                    User = Model.User,
+                    Token = Model.Token,
+                    Type = Core.Models.Components.Component.SerumElectrolytes
+                }); }
+            </div>
+        </div>
+    </div>
+</div>

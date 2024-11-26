@@ -1,0 +1,182 @@
+﻿@model SerumMetabolicViewModel
+@using Core.Models.Components
+@using Data.Entities.User
+
+@{
+    bool show = Model.PreviousMood == null || Model.PreviousMood.Date < DateHelpers.Today.AddMonths(-1);
+}
+
+<div class="alert alert-secondary">
+    <div class="row gy-2">
+        @if (show)
+        {
+            <div class="col-lg-6">
+                <h6 class="mb-1">Serum Metabolic</h6>
+                <div class="alert alert-light shadow">
+                    <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageSerumMetabolic)" method="post"
+                          asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Glucose)</label>
+                                <div><span asp-validation-for="UserMood.Glucose" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.Glucose))" asp-for="UserMood.Glucose" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.Glucose))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.Glucose))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.Glucose))Input" list="hashmarks" value="@(Model.UserMood.Glucose ?? -1)"
+                                               min="@(UserSerumMetabolic.Consts.GlucoseMin - UserSerumMetabolic.Consts.GlucoseStep)" max="@UserSerumMetabolic.Consts.GlucoseMax" step="@UserSerumMetabolic.Consts.GlucoseStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.Glucose)).value = this.valueAsNumber < @UserSerumMetabolic.Consts.GlucoseMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.Glucose))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.Glucose)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.UricAcid)</label>
+                                <div><span asp-validation-for="UserMood.UricAcid" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.UricAcid))" asp-for="UserMood.UricAcid" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.UricAcid))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.UricAcid))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.UricAcid))Input" list="hashmarks" value="@(Model.UserMood.UricAcid ?? -1)"
+                                               min="@(UserSerumMetabolic.Consts.UricAcidMin - UserSerumMetabolic.Consts.UricAcidStep)" max="@UserSerumMetabolic.Consts.UricAcidMax" step="@UserSerumMetabolic.Consts.UricAcidStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.UricAcid)).value = this.valueAsNumber < @UserSerumMetabolic.Consts.UricAcidMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.UricAcid))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.UricAcid)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.HbA1c)</label>
+                                <div><span asp-validation-for="UserMood.HbA1c" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.HbA1c))" asp-for="UserMood.HbA1c" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.HbA1c))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.HbA1c))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.HbA1c))Input" list="hashmarks" value="@(Model.UserMood.HbA1c ?? -1)"
+                                               min="@(UserSerumMetabolic.Consts.HbA1cMin - UserSerumMetabolic.Consts.HbA1cStep)" max="@UserSerumMetabolic.Consts.HbA1cMax" step="@UserSerumMetabolic.Consts.HbA1cStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.HbA1c)).value = this.valueAsNumber < @UserSerumMetabolic.Consts.HbA1cMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.HbA1c))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.HbA1c)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Insulin)</label>
+                                <div><span asp-validation-for="UserMood.Insulin" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.Insulin))" asp-for="UserMood.Insulin" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.Insulin))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.Insulin))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.Insulin))Input" list="hashmarks" value="@(Model.UserMood.Insulin ?? -1)"
+                                               min="@(UserSerumMetabolic.Consts.InsulinMin - UserSerumMetabolic.Consts.InsulinStep)" max="@UserSerumMetabolic.Consts.InsulinMax" step="@UserSerumMetabolic.Consts.InsulinStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.Insulin)).value = this.valueAsNumber < @UserSerumMetabolic.Consts.InsulinMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.Insulin))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.Insulin)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Leptin)</label>
+                                <div><span asp-validation-for="UserMood.Leptin" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.Leptin))" asp-for="UserMood.Leptin" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.Leptin))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.Leptin))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.Leptin))Input" list="hashmarks" value="@(Model.UserMood.Leptin ?? -1)"
+                                               min="@(UserSerumMetabolic.Consts.LeptinMin - UserSerumMetabolic.Consts.LeptinStep)" max="@UserSerumMetabolic.Consts.LeptinMax" step="@UserSerumMetabolic.Consts.LeptinStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.Leptin)).value = this.valueAsNumber < @UserSerumMetabolic.Consts.LeptinMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.Leptin))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.Leptin)</div>
+                            </div>
+                        }
+
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary allow-demo" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+
+        <div class="col-lg-6">
+            <h6 class="mb-1">Log</h6>
+            <div class="alert alert-light shadow">
+                @{ await Html.RenderPartialAsync("_LineChart", new LineChartViewModel()
+                {
+                    XysGrouped = Model.XysGrouped,
+                    User = Model.User,
+                    Token = Model.Token,
+                    Type = Core.Models.Components.Component.SerumMetabolic
+                }); }
+            </div>
+        </div>
+    </div>
+</div>

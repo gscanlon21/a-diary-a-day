@@ -95,6 +95,70 @@ else if (Model.Component.HasFlag(Core.Models.Components.Component.BloodWork))
 {
     @await Component.InvokeAsync(BloodWorkViewComponent.Name, new { Model.User })
 }
+else if (Model.Component.HasFlag(Core.Models.Components.Component.Urine))
+{
+    @await Component.InvokeAsync(UrineViewComponent.Name, new { Model.User })
+}
+else if (Model.Component.HasFlag(Core.Models.Components.Component.SerumAutoimmunity))
+{
+    @await Component.InvokeAsync(SerumAutoimmunityViewComponent.Name, new { Model.User })
+}
+else if (Model.Component.HasFlag(Core.Models.Components.Component.SerumBlood))
+{
+    @await Component.InvokeAsync(SerumBloodViewComponent.Name, new { Model.User })
+}
+else if (Model.Component.HasFlag(Core.Models.Components.Component.SerumElectrolytes))
+{
+    @await Component.InvokeAsync(SerumElectrolytesViewComponent.Name, new { Model.User })
+}
+else if (Model.Component.HasFlag(Core.Models.Components.Component.SerumFemaleHealth))
+{
+    @await Component.InvokeAsync(SerumFemaleHealthViewComponent.Name, new { Model.User })
+}
+else if (Model.Component.HasFlag(Core.Models.Components.Component.SerumHeart))
+{
+    @await Component.InvokeAsync(SerumHeartViewComponent.Name, new { Model.User })
+}
+else if (Model.Component.HasFlag(Core.Models.Components.Component.SerumHeavyMetals))
+{
+    @await Component.InvokeAsync(SerumHeavyMetalsViewComponent.Name, new { Model.User })
+}
+else if (Model.Component.HasFlag(Core.Models.Components.Component.SerumImmuneRegulation))
+{
+    @await Component.InvokeAsync(SerumImmuneRegulationViewComponent.Name, new { Model.User })
+}
+else if (Model.Component.HasFlag(Core.Models.Components.Component.SerumKidney))
+{
+    @await Component.InvokeAsync(SerumKidneyViewComponent.Name, new { Model.User })
+}
+else if (Model.Component.HasFlag(Core.Models.Components.Component.SerumLiver))
+{
+    @await Component.InvokeAsync(SerumLiverViewComponent.Name, new { Model.User })
+}
+else if (Model.Component.HasFlag(Core.Models.Components.Component.SerumMaleHealth))
+{
+    @await Component.InvokeAsync(SerumMaleHealthViewComponent.Name, new { Model.User })
+}
+else if (Model.Component.HasFlag(Core.Models.Components.Component.SerumMetabolic))
+{
+    @await Component.InvokeAsync(SerumMetabolicViewComponent.Name, new { Model.User })
+}
+else if (Model.Component.HasFlag(Core.Models.Components.Component.SerumNutrients))
+{
+    @await Component.InvokeAsync(SerumNutrientsViewComponent.Name, new { Model.User })
+}
+else if (Model.Component.HasFlag(Core.Models.Components.Component.SerumPancreas))
+{
+    @await Component.InvokeAsync(SerumPancreasViewComponent.Name, new { Model.User })
+}
+else if (Model.Component.HasFlag(Core.Models.Components.Component.SerumStress))
+{
+    @await Component.InvokeAsync(SerumStressViewComponent.Name, new { Model.User })
+}
+else if (Model.Component.HasFlag(Core.Models.Components.Component.SerumThyroid))
+{
+    @await Component.InvokeAsync(SerumThyroidViewComponent.Name, new { Model.User })
+}
 else if (Model.Component.HasFlag(Core.Models.Components.Component.GutPillars))
 {
     @await Component.InvokeAsync(GutPillarsViewComponent.Name, new { Model.User })

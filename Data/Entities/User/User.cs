@@ -286,5 +286,55 @@ public class User : IUser
     [JsonIgnore, InverseProperty(nameof(UserEmotion.User))]
     public virtual ICollection<UserEmotion> UserEmotions { get; private init; } = null!;
 
+
+    [JsonIgnore, InverseProperty(nameof(UserUrine.User))]
+    public virtual ICollection<UserUrine> UserUrines { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserSerumThyroid.User))]
+    public virtual ICollection<UserSerumThyroid> UserSerumThyroids { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(Entities.User.UserSerumStress.User))]
+    public virtual ICollection<UserSerumStress> UserSerumStress { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(Entities.User.UserSerumPancreas.User))]
+    public virtual ICollection<UserSerumPancreas> UserSerumPancreas { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(Entities.User.UserSerumNutrients.User))]
+    public virtual ICollection<UserSerumNutrients> UserSerumNutrients { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserSerumMetabolic.User))]
+    public virtual ICollection<UserSerumMetabolic> UserSerumMetabolics { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserSerumMaleHealth.User))]
+    public virtual ICollection<UserSerumMaleHealth> UserSerumMaleHealths { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserSerumLiver.User))]
+    public virtual ICollection<UserSerumLiver> UserSerumLivers { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserSerumKidney.User))]
+    public virtual ICollection<UserSerumKidney> UserSerumKidneys { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserSerumImmuneRegulation.User))]
+    public virtual ICollection<UserSerumImmuneRegulation> UserSerumImmuneRegulations { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(Entities.User.UserSerumHeavyMetals.User))]
+    public virtual ICollection<UserSerumHeavyMetals> UserSerumHeavyMetals { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserSerumHeart.User))]
+    public virtual ICollection<UserSerumHeart> UserSerumHearts { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserSerumFemaleHealth.User))]
+    public virtual ICollection<UserSerumFemaleHealth> UserSerumFemaleHealths { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(Entities.User.UserSerumElectrolytes.User))]
+    public virtual ICollection<UserSerumElectrolytes> UserSerumElectrolytes { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserSerumBlood.User))]
+    public virtual ICollection<UserSerumBlood> UserSerumBloods { get; private init; } = null!;
+
+    [JsonIgnore, InverseProperty(nameof(UserSerumAutoimmunity.User))]
+    public virtual ICollection<UserSerumAutoimmunity> UserSerumAutoimmunitys { get; private init; } = null!;
+
+
     #endregion
 }

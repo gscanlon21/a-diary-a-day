@@ -1,0 +1,434 @@
+﻿@model SerumHeartViewModel
+@using Core.Models.Components
+@using Data.Entities.User
+
+@{
+    bool show = Model.PreviousMood == null || Model.PreviousMood.Date < DateHelpers.Today.AddMonths(-1);
+}
+
+<div class="alert alert-secondary">
+    <div class="row gy-2">
+        @if (show)
+        {
+            <div class="col-lg-6">
+                <h6 class="mb-1">Serum Heart</h6>
+                <div class="alert alert-light shadow">
+                    <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageSerumHeart)" method="post"
+                          asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.HDLLarge)</label>
+                                <div><span asp-validation-for="UserMood.HDLLarge" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.HDLLarge))" asp-for="UserMood.HDLLarge" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.HDLLarge))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.HDLLarge))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.HDLLarge))Input" list="hashmarks" value="@(Model.UserMood.HDLLarge ?? -1)"
+                                               min="@(UserSerumHeart.Consts.HDLLargeMin - UserSerumHeart.Consts.HDLLargeStep)" max="@UserSerumHeart.Consts.HDLLargeMax" step="@UserSerumHeart.Consts.HDLLargeStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.HDLLarge)).value = this.valueAsNumber < @UserSerumHeart.Consts.HDLLargeMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.HDLLarge))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.HDLLarge)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.LDLMedium)</label>
+                                <div><span asp-validation-for="UserMood.LDLMedium" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.LDLMedium))" asp-for="UserMood.LDLMedium" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.LDLMedium))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.LDLMedium))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.LDLMedium))Input" list="hashmarks" value="@(Model.UserMood.LDLMedium ?? -1)"
+                                               min="@(UserSerumHeart.Consts.LDLMediumMin - UserSerumHeart.Consts.LDLMediumStep)" max="@UserSerumHeart.Consts.LDLMediumMax" step="@UserSerumHeart.Consts.LDLMediumStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.LDLMedium)).value = this.valueAsNumber < @UserSerumHeart.Consts.LDLMediumMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.LDLMedium))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.LDLMedium)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.LDLParticleNumber)</label>
+                                <div><span asp-validation-for="UserMood.LDLParticleNumber" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.LDLParticleNumber))" asp-for="UserMood.LDLParticleNumber" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.LDLParticleNumber))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.LDLParticleNumber))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.LDLParticleNumber))Input" list="hashmarks" value="@(Model.UserMood.LDLParticleNumber ?? -1)"
+                                               min="@(UserSerumHeart.Consts.LDLParticleNumberMin - UserSerumHeart.Consts.LDLParticleNumberStep)" max="@UserSerumHeart.Consts.LDLParticleNumberMax" step="@UserSerumHeart.Consts.LDLParticleNumberStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.LDLParticleNumber)).value = this.valueAsNumber < @UserSerumHeart.Consts.LDLParticleNumberMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.LDLParticleNumber))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.LDLParticleNumber)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.LDLPattern)</label>
+                                <div><span asp-validation-for="UserMood.LDLPattern" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.LDLPattern))" asp-for="UserMood.LDLPattern" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.LDLPattern))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.LDLPattern))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.LDLPattern))Input" list="hashmarks" value="@(Model.UserMood.LDLPattern ?? -1)"
+                                               min="@(UserSerumHeart.Consts.LDLPatternMin - UserSerumHeart.Consts.LDLPatternStep)" max="@UserSerumHeart.Consts.LDLPatternMax" step="@UserSerumHeart.Consts.LDLPatternStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.LDLPattern)).value = this.valueAsNumber < @UserSerumHeart.Consts.LDLPatternMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.LDLPattern))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.LDLPattern)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.LDLPeakSize)</label>
+                                <div><span asp-validation-for="UserMood.LDLPeakSize" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.LDLPeakSize))" asp-for="UserMood.LDLPeakSize" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.LDLPeakSize))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.LDLPeakSize))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.LDLPeakSize))Input" list="hashmarks" value="@(Model.UserMood.LDLPeakSize ?? -1)"
+                                               min="@(UserSerumHeart.Consts.LDLPeakSizeMin - UserSerumHeart.Consts.LDLPeakSizeStep)" max="@UserSerumHeart.Consts.LDLPeakSizeMax" step="@UserSerumHeart.Consts.LDLPeakSizeStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.LDLPeakSize)).value = this.valueAsNumber < @UserSerumHeart.Consts.LDLPeakSizeMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.LDLPeakSize))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.LDLPeakSize)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.LDLSmall)</label>
+                                <div><span asp-validation-for="UserMood.LDLSmall" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.LDLSmall))" asp-for="UserMood.LDLSmall" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.LDLSmall))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.LDLSmall))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.LDLSmall))Input" list="hashmarks" value="@(Model.UserMood.LDLSmall ?? -1)"
+                                               min="@(UserSerumHeart.Consts.LDLSmallMin - UserSerumHeart.Consts.LDLSmallStep)" max="@UserSerumHeart.Consts.LDLSmallMax" step="@UserSerumHeart.Consts.LDLSmallStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.LDLSmall)).value = this.valueAsNumber < @UserSerumHeart.Consts.LDLSmallMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.LDLSmall))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.LDLSmall)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.LDLCholesterol)</label>
+                                <div><span asp-validation-for="UserMood.LDLCholesterol" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.LDLCholesterol))" asp-for="UserMood.LDLCholesterol" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.LDLCholesterol))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.LDLCholesterol))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.LDLCholesterol))Input" list="hashmarks" value="@(Model.UserMood.LDLCholesterol ?? -1)"
+                                               min="@(UserSerumHeart.Consts.LDLCholesterolMin - UserSerumHeart.Consts.LDLCholesterolStep)" max="@UserSerumHeart.Consts.LDLCholesterolMax" step="@UserSerumHeart.Consts.LDLCholesterolStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.LDLCholesterol)).value = this.valueAsNumber < @UserSerumHeart.Consts.LDLCholesterolMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.LDLCholesterol))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.LDLCholesterol)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.NonHDLCholesterol)</label>
+                                <div><span asp-validation-for="UserMood.NonHDLCholesterol" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.NonHDLCholesterol))" asp-for="UserMood.NonHDLCholesterol" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.NonHDLCholesterol))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.NonHDLCholesterol))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.NonHDLCholesterol))Input" list="hashmarks" value="@(Model.UserMood.NonHDLCholesterol ?? -1)"
+                                               min="@(UserSerumHeart.Consts.NonHDLCholesterolMin - UserSerumHeart.Consts.NonHDLCholesterolStep)" max="@UserSerumHeart.Consts.NonHDLCholesterolMax" step="@UserSerumHeart.Consts.NonHDLCholesterolStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.NonHDLCholesterol)).value = this.valueAsNumber < @UserSerumHeart.Consts.NonHDLCholesterolMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.NonHDLCholesterol))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.NonHDLCholesterol)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Triglycerides)</label>
+                                <div><span asp-validation-for="UserMood.Triglycerides" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.Triglycerides))" asp-for="UserMood.Triglycerides" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.Triglycerides))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.Triglycerides))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.Triglycerides))Input" list="hashmarks" value="@(Model.UserMood.Triglycerides ?? -1)"
+                                               min="@(UserSerumHeart.Consts.TriglyceridesMin - UserSerumHeart.Consts.TriglyceridesStep)" max="@UserSerumHeart.Consts.TriglyceridesMax" step="@UserSerumHeart.Consts.TriglyceridesStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.Triglycerides)).value = this.valueAsNumber < @UserSerumHeart.Consts.TriglyceridesMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.Triglycerides))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.Triglycerides)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.HDLCholesterol)</label>
+                                <div><span asp-validation-for="UserMood.HDLCholesterol" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.HDLCholesterol))" asp-for="UserMood.HDLCholesterol" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.HDLCholesterol))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.HDLCholesterol))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.HDLCholesterol))Input" list="hashmarks" value="@(Model.UserMood.HDLCholesterol ?? -1)"
+                                               min="@(UserSerumHeart.Consts.HDLCholesterolMin - UserSerumHeart.Consts.HDLCholesterolStep)" max="@UserSerumHeart.Consts.HDLCholesterolMax" step="@UserSerumHeart.Consts.HDLCholesterolStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.HDLCholesterol)).value = this.valueAsNumber < @UserSerumHeart.Consts.HDLCholesterolMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.HDLCholesterol))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.HDLCholesterol)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.HsCRP)</label>
+                                <div><span asp-validation-for="UserMood.HsCRP" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.HsCRP))" asp-for="UserMood.HsCRP" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.HsCRP))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.HsCRP))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.HsCRP))Input" list="hashmarks" value="@(Model.UserMood.HsCRP ?? -1)"
+                                               min="@(UserSerumHeart.Consts.HsCRPMin - UserSerumHeart.Consts.HsCRPStep)" max="@UserSerumHeart.Consts.HsCRPMax" step="@UserSerumHeart.Consts.HsCRPStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.HsCRP)).value = this.valueAsNumber < @UserSerumHeart.Consts.HsCRPMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.HsCRP))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.HsCRP)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.LipoproteinA)</label>
+                                <div><span asp-validation-for="UserMood.LipoproteinA" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.LipoproteinA))" asp-for="UserMood.LipoproteinA" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.LipoproteinA))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.LipoproteinA))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.LipoproteinA))Input" list="hashmarks" value="@(Model.UserMood.LipoproteinA ?? -1)"
+                                               min="@(UserSerumHeart.Consts.LipoproteinAMin - UserSerumHeart.Consts.LipoproteinAStep)" max="@UserSerumHeart.Consts.LipoproteinAMax" step="@UserSerumHeart.Consts.LipoproteinAStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.LipoproteinA)).value = this.valueAsNumber < @UserSerumHeart.Consts.LipoproteinAMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.LipoproteinA))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.LipoproteinA)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.TotalCholesterol)</label>
+                                <div><span asp-validation-for="UserMood.TotalCholesterol" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.TotalCholesterol))" asp-for="UserMood.TotalCholesterol" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.TotalCholesterol))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.TotalCholesterol))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.TotalCholesterol))Input" list="hashmarks" value="@(Model.UserMood.TotalCholesterol ?? -1)"
+                                               min="@(UserSerumHeart.Consts.TotalCholesterolMin - UserSerumHeart.Consts.TotalCholesterolStep)" max="@UserSerumHeart.Consts.TotalCholesterolMax" step="@UserSerumHeart.Consts.TotalCholesterolStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.TotalCholesterol)).value = this.valueAsNumber < @UserSerumHeart.Consts.TotalCholesterolMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.TotalCholesterol))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.TotalCholesterol)</div>
+                            </div>
+                        }
+
+                        @if (true)
+                        {
+                            <div class="form-group mb-3 mt-3">
+                                <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.TotalCholesterolHDL)</label>
+                                <div><span asp-validation-for="UserMood.TotalCholesterolHDL" class="text-danger"></span></div>
+                                <div style="display:flex;column-gap:1ex;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.TotalCholesterolHDL))" asp-for="UserMood.TotalCholesterolHDL" style="width:6ch;height:fit-content;" class="allow-demo"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.TotalCholesterolHDL))Input.value = this.valueAsNumber" />
+                                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                        <input id="@(Html.IdFor(_ => Model.UserMood.TotalCholesterolHDL))-input" class="allow-demo" style="width:100%;" type="range"
+                                               name="@(Html.IdFor(_ => Model.UserMood.TotalCholesterolHDL))Input" list="hashmarks" value="@(Model.UserMood.TotalCholesterolHDL ?? -1)"
+                                               min="@(UserSerumHeart.Consts.TotalCholesterolHDLMin - UserSerumHeart.Consts.TotalCholesterolHDLStep)" max="@UserSerumHeart.Consts.TotalCholesterolHDLMax" step="@UserSerumHeart.Consts.TotalCholesterolHDLStep"
+                                               oninput="@(Html.IdFor(_ => Model.UserMood.TotalCholesterolHDL)).value = this.valueAsNumber < @UserSerumHeart.Consts.TotalCholesterolHDLMin ? '' : this.valueAsNumber" />
+
+                                        <datalist id="hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                            <option value=""></option>
+                                            <option value="5"></option>
+                                            <option value="10"></option>
+                                            <option value="15"></option>
+                                            <option value="20"></option>
+                                            <option value="25"></option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div id="@(Html.IdFor(_ => Model.UserMood.TotalCholesterolHDL))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.TotalCholesterolHDL)</div>
+                            </div>
+                        }
+
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary allow-demo" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+
+        <div class="col-lg-6">
+            <h6 class="mb-1">Log</h6>
+            <div class="alert alert-light shadow">
+                @{ await Html.RenderPartialAsync("_LineChart", new LineChartViewModel()
+                {
+                    XysGrouped = Model.XysGrouped,
+                    User = Model.User,
+                    Token = Model.Token,
+                    Type = Core.Models.Components.Component.SerumHeart
+                }); }
+            </div>
+        </div>
+    </div>
+</div>

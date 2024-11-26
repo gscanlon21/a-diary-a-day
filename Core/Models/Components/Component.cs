@@ -111,6 +111,55 @@ public enum Component : long
     [Display(Name = "Blood Pressure", Order = 20)]
     BloodPressure = 1L << 32, // 4294967296
 
+    [Display(Name = "Urine", Order = 20)]
+    Urine = 1L << 33, // 8589934592
+
+    [Display(Name = "Serum Autoimmunity", Order = 20)]
+    SerumAutoimmunity = 1L << 34, // 17179869184
+
+    [Display(Name = "Serum Blood", Order = 20)]
+    SerumBlood = 1L << 35, //  34359738368
+
+    [Display(Name = "Serum Electrolytes", Order = 20)]
+    SerumElectrolytes = 1L << 36, // 68719476736
+
+    [Display(Name = "Serum Heart", Order = 20)]
+    SerumHeart = 1L << 37, // 137438953472
+
+    [Display(Name = "Serum Heavy Metals", Order = 20)]
+    SerumHeavyMetals = 1L << 38, // 274877906944
+
+    [Display(Name = "Serum Immune Regulation", Order = 20)]
+    SerumImmuneRegulation = 1L << 39, // 549755813888
+
+    [Display(Name = "Serum Kidney", Order = 20)]
+    SerumKidney = 1L << 40, // 1099511627776
+
+    [Display(Name = "Serum Liver", Order = 20)]
+    SerumLiver = 1L << 41, // 2199023255552
+
+    [Display(Name = "Serum Male Health", Order = 20)]
+    SerumMaleHealth = 1L << 42, // 4398046511104
+
+    [Display(Name = "Serum Female Health", Order = 20)]
+    SerumFemaleHealth = 1L << 43, // 8796093022208
+
+    [Display(Name = "Serum Metabolic", Order = 20)]
+    SerumMetabolic = 1L << 44, // 17592186044416
+
+    [Display(Name = "Serum Nutrients", Order = 20)]
+    SerumNutrients = 1L << 45, // 35184372088832
+
+    [Display(Name = "Serum Pancreas", Order = 20)]
+    SerumPancreas = 1L << 46, // 70368744177664
+
+    [Display(Name = "Serum Stress", Order = 20)]
+    SerumStress = 1L << 47, // 140737488355328
+
+    [Display(Name = "Serum Thyroid", Order = 20)]
+    SerumThyroid = 1L << 48, // 281474976710656
+
+
     All = Mood | Sleep | People | Symptom | Emotion | Activity | Medicine | BloodPressure
         | AcuteStressSeverity | AgoraphobiaSeverity | DepressionSeverity | DissociativeSeverity
         | GeneralizedAnxietySeverity | PanicSeverity | PTSDSeverity | SocialAnxietySeverity
@@ -118,4 +167,8 @@ public enum Component : long
         | BloodWork | Depression | GutPillars | GutFungi | GutPathogens
         | GutGoodBacteria | GutBadBacteria | GutConditionalBacteria
         | GutShortChainFattyAcids | GutMicronutrients | GutProbiotics
+        | Urine | SerumAutoimmunity | SerumBlood | SerumElectrolytes
+        | SerumHeart | SerumHeavyMetals | SerumImmuneRegulation | SerumKidney
+        | SerumLiver | SerumMaleHealth | SerumFemaleHealth | SerumMetabolic
+        | SerumNutrients | SerumPancreas | SerumStress | SerumThyroid
 }
