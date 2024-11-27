@@ -210,7 +210,7 @@ public partial class NewsletterRepo
 
     private IEnumerable<ComponentImage> GetImages(User user)
     {
-        var prefix = $"components/{user.Uid}";
+        var prefix = $"user/{user.Uid}";
         var components = EnumExtensions.GetSingleValues64(excludingAny: Component.Journal);
         foreach (var component in components
             .OrderBy(c => c.GetSingleDisplayName(Core.Models.DisplayType.Order).Length)
