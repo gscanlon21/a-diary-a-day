@@ -169,6 +169,9 @@
             }
         });
 
-        window.uploadChart(chart, 350, 350, '@Html.Raw(Model.User.Email)', '@Html.Raw(Model.Token)', '@Core.Models.Components.Component.Mood');
+        @if (TempData.IsSuccess())
+        {
+            @:window.uploadChart(chart, 350, 350, '@Html.Raw(Model.User.Email)', '@Html.Raw(Model.Token)', '@Core.Models.Components.Component.Mood');
+        }
     }
 </script>

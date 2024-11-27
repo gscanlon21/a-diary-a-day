@@ -44,7 +44,7 @@ window.uploadChart = function uploadChart(chart, width, height, email, token, ty
 
     // Since the original chart was already created we don't need to deep clone.
     chart.config.options.animation = { duration: 0 }; // Disable animation.
-    const chartClone = new Chart(offscreen, chart.config);
+    _ = new Chart(offscreen, chart.config);
 
     // Let the charts finish drawing.
     setTimeout(async () => {

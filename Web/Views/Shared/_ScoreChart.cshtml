@@ -121,6 +121,9 @@
             }
         });
 
-        window.uploadChart(chart, 400, 300, '@Html.Raw(Model.User.Email)', '@Html.Raw(Model.Token)', '@Model.Type');
+        @if (TempData.IsSuccess())
+        {
+            @:window.uploadChart(chart, 400, 300, '@Html.Raw(Model.User.Email)', '@Html.Raw(Model.Token)', '@Model.Type');
+        }
     }
 </script>
