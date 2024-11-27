@@ -45,7 +45,7 @@ else
             <Lib.Pages.Shared.Task.TaskSection User="Model.User" Verbosity="Model.Verbosity" Tasks="Model.Tasks.Where(t => t.Section == section).ToList()" Theme="section.AsTheme()" Title="@(new TaskSection.Titles(section.GetSingleDisplayName()))" />
         }
 
-        <Lib.Pages.Shared.Component.ComponentSection User="Model.User" Verbosity="Model.Verbosity" Images="Model.Images" Theme="Theme.None" Title="@(new ComponentSection.Titles("Moods"))" />
+        <Lib.Pages.Shared.Component.ComponentSection User="Model.User" Verbosity="Model.Verbosity" Images="Model.Images" Theme="Theme.None" Title="@(new ComponentSection.Titles("Components"))" />
     </div>
 
     <Lib.Pages.Shared.Newsletter.Footnote User="Model.User" Verbosity="Model.Verbosity" Type="Shared.Newsletter.Footnote.FootnoteComponentType.System" Count="Model.User.FootnoteCountBottom" />

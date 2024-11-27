@@ -47,23 +47,26 @@ public enum Section
     [Display(Name = "Before Bed")]
     BeforeBed = 1 << 12, // 4096
 
+    [Display(Name = "Other")]
+    Other = 1 << 13, // 8192
+
     All = AfterWakingUp | BeforeBreakfast | WithBreakfast | AfterBreakfast
         | BeforeLunch | WithLunch | AfterLunch
         | BeforeDinner | WithDinner | AfterDinner
-        | PreWorkout | PostWorkout | BeforeBed,
+        | PreWorkout | PostWorkout | BeforeBed
+        | Other,
 }
 
 public static class SectionExtensions
 {
     public static Theme AsTheme(this Section section) => section switch
     {
-        Section.AfterWakingUp => Theme.Warmup,
+        Section.AfterWakingUp or Section.BeforeBed => Theme.Warmup,
         Section.BeforeBreakfast or Section.WithBreakfast or Section.AfterBreakfast => Theme.Other,
         Section.BeforeLunch or Section.WithLunch or Section.AfterLunch => Theme.Extra,
         Section.BeforeDinner or Section.WithDinner or Section.AfterDinner => Theme.Cooldown,
         Section.PreWorkout or Section.PostWorkout => Theme.Main,
-        Section.BeforeBed => Theme.Warmup,
-        Section.None => Theme.None,
+        Section.None or Section.Other => Theme.None,
         _ => Theme.None,
     };
 }

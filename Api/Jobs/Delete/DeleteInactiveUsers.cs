@@ -49,7 +49,7 @@ public class DeleteInactiveUsers : IJob, IScheduled
                 var listResponse = await _amazonS3Client.Value.ListObjectsV2Async(new ListObjectsV2Request()
                 {
                     BucketName = _digitalOceanOptions.Value.CDNBucket,
-                    Prefix = $"moods/{userUidToDelete}/"
+                    Prefix = $"components/{userUidToDelete}/"
                 });
 
                 var deleteResponse = await _amazonS3Client.Value.DeleteObjectsAsync(new DeleteObjectsRequest()

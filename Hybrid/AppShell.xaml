@@ -14,12 +14,12 @@
 
     <ShellContent Title="Daily Diary"
                     Route="NewsletterPage"
-                    Icon="{StaticResource Mood}"
+                    Icon="{StaticResource Diary}"
                     ContentTemplate="{DataTemplate local:NewsletterPage}" />
 
     <ShellContent Title="Diaries"
                     Route="NewslettersPage"
-                    Icon="{StaticResource Moods}"
+                    Icon="{StaticResource Diaries}"
                     ContentTemplate="{DataTemplate local:NewslettersPage}" />
 
     <MenuItem Text="Website"

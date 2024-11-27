@@ -88,15 +88,15 @@
                     annotation: {
                         annotations: [{
                             type: 'line',
-                            borderWidth: 2,
-                            borderColor: 'red',
+                            borderWidth: 1.5,
+                            borderColor: 'orange',
                             yMin: @Model.Task.ReferenceMin.GetValueOrDefault(),
                             yMax: @Model.Task.ReferenceMin.GetValueOrDefault(),
                             display: @Json.Serialize(Model.Task.ReferenceMin.HasValue),
                         }, {
                             type: 'line',
-                            borderWidth: 2,
-                            borderColor: 'orange',
+                            borderWidth: 1.5,
+                            borderColor: 'red',
                             yMin: @Model.Task.ReferenceMax.GetValueOrDefault(),
                             yMax: @Model.Task.ReferenceMax.GetValueOrDefault(),
                             display: @Json.Serialize(Model.Task.ReferenceMax.HasValue),

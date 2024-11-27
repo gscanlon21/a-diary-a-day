@@ -101,7 +101,7 @@ public class UserController : ControllerBase
         // Upload the image.
         var request = new PutObjectRequest()
         {
-            Key = $"moods/{user.Uid}/{type}{name?.Insert(0, "-")}",
+            Key = $"components/{user.Uid}/{type}{name?.Insert(0, "-")}",
             BucketName = _digitalOceanOptions.Value.CDNBucket,
             InputStream = image.OpenReadStream(),
             CannedACL = S3CannedACL.PublicRead,
