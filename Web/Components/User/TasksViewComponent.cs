@@ -19,11 +19,6 @@ public class TasksViewComponent(IServiceScopeFactory serviceScopeFactory) : View
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user, string token)
     {
-        if (!user.Components.HasFlag(Component.Tasks))
-        {
-            return Content("");
-        }
-
         // Filtering options.
         var taskType = Enum.TryParse(Request.Query["type"], ignoreCase: true, out UserTaskType typeTmp) ? typeTmp : (UserTaskType?)null;
 

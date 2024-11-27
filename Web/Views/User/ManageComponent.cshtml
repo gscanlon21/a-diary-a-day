@@ -199,7 +199,7 @@ else if (Model.Component.HasFlag(Core.Models.Components.Component.DryEyes))
 {
     @await Component.InvokeAsync(DryEyesViewComponent.Name, new { Model.User })
 }
-else if (Model.Component.HasFlag(Core.Models.Components.Component.FeastAllergens))
+else if (Model.Component.HasFlag(Core.Models.Components.Component.Allergens))
 {
     @await Component.InvokeAsync(FeastAllergensViewComponent.Name, new { Model.User })
 }

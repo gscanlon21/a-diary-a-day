@@ -37,7 +37,7 @@
             <div class="form-group mb-3">
                 <label asp-for="ComponentsBinder" class="control-label">@Html.DisplayNameFor(_ => Model.Components)</label>
                 <select asp-for="ComponentsBinder" class="form-control overflow-auto" aria-describedby="Components-help" size="5"
-                        asp-items="@(EnumExtensions.GetDisplayValues<Core.Models.Components.Component>().AsSelectListItems32(EnumViewExtensions.EnumOrdering.Text))">
+                        asp-items="@(EnumExtensions.GetDisplayValues<Core.Models.Components.Component>().AsSelectListItems32(EnumViewExtensions.EnumOrdering.Order))">
                 </select>
                 <span asp-validation-for="ComponentsBinder" class="text-danger"></span>
                 <div id="Components-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.Components)</div>
@@ -165,14 +165,11 @@
 
         @await Component.InvokeAsync(AdvancedViewComponent.Name, new { Model.User, Model.Token })
 
-        @if (Model.User.Components.HasFlag(Core.Models.Components.Component.Tasks))
-        {
-            <details class="mb-25">
-                <summary class="mb-1 h5">New Task</summary>
+        <details class="mb-25">
+            <summary class="mb-1 h5">New Task</summary>
 
-                @await Component.InvokeAsync(ManageTaskViewComponent.Name, new { Model.User })
-            </details>
-        }
+            @await Component.InvokeAsync(ManageTaskViewComponent.Name, new { Model.User })
+        </details>
     </div>
 
     <div id="info" class="col">

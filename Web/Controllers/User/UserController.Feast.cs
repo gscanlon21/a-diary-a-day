@@ -42,7 +42,7 @@ public partial class UserController
         return RedirectToAction(nameof(Edit), new { email, token, WasUpdated = true });
     }
 
-    [HttpPost, Route(nameof(Component.FeastAllergens))]
+    [HttpPost, Route(nameof(Component.Allergens))]
     public async Task<IActionResult> ManageAllergens(string email, string token, UserFeastAllergens userMood)
     {
         if (true || ModelState.IsValid)
@@ -57,7 +57,7 @@ public partial class UserController
             var allergens = await ApiResult<IDictionary<Allergens, double>>.FromResponse(response);
             if (!allergens.HasValue)
             {
-                return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.FeastAllergens, WasUpdated = false });
+                return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.Allergens, WasUpdated = false });
             }
 
             var startOfWeek = DateHelpers.Today.StartOfWeek();
@@ -74,9 +74,9 @@ public partial class UserController
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.FeastAllergens, WasUpdated = true });
+            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.Allergens, WasUpdated = true });
         }
 
-        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.FeastAllergens, WasUpdated = false });
+        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.Allergens, WasUpdated = false });
     }
 }

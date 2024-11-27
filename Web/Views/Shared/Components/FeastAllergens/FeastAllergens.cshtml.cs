@@ -6,7 +6,7 @@ namespace Web.Views.Shared.Components.FeastAllergens;
 
 public class FeastAllergensViewModel
 {
-    public FeastAllergensViewModel(IList<UserFeastAllergens>? userMoods, List<UserCustom> customs)
+    public FeastAllergensViewModel(IList<UserFeastAllergens>? userMoods)
     {
         if (userMoods != null)
         {

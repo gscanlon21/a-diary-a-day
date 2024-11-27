@@ -57,6 +57,9 @@ public class UserTask
     /// </summary>
     public UserTaskType Type { get; set; }
 
+    public double? ReferenceMin { get; set; }
+    public double? ReferenceMax { get; set; }
+
     /// <summary>
     /// The order of the task.
     /// </summary>

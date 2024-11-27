@@ -1,4 +1,5 @@
 ﻿using Core.Models.Newsletter;
+using Core.Models.User;
 using Data.Entities.Task;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -53,7 +54,7 @@ public partial class UserController
     }
 
     [HttpPost, Route("{section:section}/{taskId}/complete-task")]
-    public async Task<IActionResult> CompleteTask(string email, string token, Section section, int taskId)
+    public async Task<IActionResult> CompleteTask(string email, string token, Section section, int taskId, double value = 1)
     {
         var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
         if (user == null)
@@ -77,14 +78,14 @@ public partial class UserController
 
         if (todaysUserLog != null)
         {
-            todaysUserLog.Complete += 1;
+            todaysUserLog.Complete += value;
         }
         else
         {
             _context.Add(new UserTaskLog(user, userTask)
             {
                 Section = section,
-                Complete = 1,
+                Complete = value,
             });
         }
 
@@ -185,18 +186,21 @@ public partial class UserController
                 // NOTE: Not updating the LastSeen date if RefreshAfter is null, so the user may see this task again tomorrow.
             }
 
-            userTask.InternalNotes = user.IsDemoUser ? null : viewModel.InternalNotes;
-            userTask.Type = user.IsDemoUser ? userTask.Type : viewModel.Type;
-            userTask.Name = user.IsDemoUser ? userTask.Name : viewModel.Name;
-            userTask.PersistUntilComplete = viewModel.PersistUntilComplete;
-            userTask.DeloadDurationWeeks = viewModel.DeloadDurationWeeks;
-            userTask.Notes = user.IsDemoUser ? null : viewModel.Notes;
-            userTask.DeloadAfterXWeeks = viewModel.DeloadAfterXWeeks;
-            userTask.LagRefreshXDays = viewModel.LagRefreshXDays;
-            userTask.PadRefreshXDays = viewModel.PadRefreshXDays;
+            userTask.Order = viewModel.Order;
             userTask.Section = viewModel.Section;
             userTask.Enabled = viewModel.Enabled;
-            userTask.Order = viewModel.Order;
+            userTask.LagRefreshXDays = viewModel.LagRefreshXDays;
+            userTask.PadRefreshXDays = viewModel.PadRefreshXDays;
+            userTask.DeloadAfterXWeeks = viewModel.DeloadAfterXWeeks;
+            userTask.Notes = user.IsDemoUser ? null : viewModel.Notes;
+            userTask.DeloadDurationWeeks = viewModel.DeloadDurationWeeks;
+            userTask.PersistUntilComplete = viewModel.PersistUntilComplete;
+            userTask.Name = user.IsDemoUser ? userTask.Name : viewModel.Name;
+            userTask.Type = user.IsDemoUser ? userTask.Type : viewModel.Type;
+            userTask.InternalNotes = user.IsDemoUser ? null : viewModel.InternalNotes;
+            // Set these after the type has been updated. So that the demo user can't get these set.
+            userTask.ReferenceMin = userTask.Type == UserTaskType.Log ? viewModel.ReferenceMin : null;
+            userTask.ReferenceMax = userTask.Type == UserTaskType.Log ? viewModel.ReferenceMax : null;
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ManageTask), new { email, token, section, taskId, WasUpdated = true });

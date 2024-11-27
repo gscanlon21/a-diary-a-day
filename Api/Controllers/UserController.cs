@@ -50,11 +50,6 @@ public class UserController : ControllerBase
     [SuppressMessage("Style", "IDE0075:Simplify conditional expression", Justification = "Easier to read unsimplified.")]
     public async Task<IActionResult> UploadImage([FromForm] Component type = Component.None, [FromForm] string email = UserConsts.DemoUser, [FromForm] string token = UserConsts.DemoToken, [FromForm] IFormFile? image = null, [FromForm] string? name = null)
     {
-        if (type == Component.None)
-        {
-            return BadRequest("Invalid Type");
-        }
-
         if (image == null || image.Length == 0)
         {
             return BadRequest("Invalid Image");
@@ -66,10 +61,10 @@ public class UserController : ControllerBase
             return BadRequest("Invalid User");
         }
 
-        if (name != null)
+        if (!string.IsNullOrWhiteSpace(name))
         {
             // Named images are only allowed for the tasks component.
-            if (type != Component.Tasks)
+            if (type != Component.None)
             {
                 return BadRequest("Invalid Name");
             }
@@ -85,6 +80,10 @@ public class UserController : ControllerBase
             {
                 return BadRequest("Invalid Name");
             }
+        }
+        else if (type == Component.None)
+        {
+            return BadRequest("Invalid Type");
         }
 
         var userComponent = await _context.UserComponents

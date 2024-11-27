@@ -10,7 +10,7 @@ public class TaskLogViewModel
         User = user;
         if (userLogs != null)
         {
-            var totalWeeks = Enumerable.Range(0, user.GetComponentDaysFor(Component.Tasks)).Select(i => DateHelpers.Today.AddDays(-i).StartOfWeek()).Distinct();
+            var totalWeeks = Enumerable.Range(0, user.GetComponentDaysFor(Component.None)).Select(i => DateHelpers.Today.AddDays(-i).StartOfWeek()).Distinct();
             var weeklyLogs = totalWeeks.Select(week => new Xy(week, userLogs.Where(uw => uw.Date.StartOfWeek() == week).Sum(l => l.Complete)));
             Xys = weeklyLogs.Where(xy => xy.Y.HasValue).Reverse().SkipWhile(xy => xy.Y.GetValueOrDefault() == default).ToList();
         }
@@ -20,6 +20,8 @@ public class TaskLogViewModel
 
     public required string Token { get; init; }
 
+    public required UserTask Task { get; init; }
+
     /// <summary>
     /// Distinct identifier for task images.
     /// </summary>
@@ -27,5 +29,5 @@ public class TaskLogViewModel
 
     public IList<Xy> Xys { get; init; } = [];
 
-    public Component Type => Component.Tasks;
+    public Component Type => Component.None;
 }

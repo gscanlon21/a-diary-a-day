@@ -12,6 +12,25 @@
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+            @if (Model.UserTask.Type == UserTaskType.Log) 
+            {
+                <div class="form-group mb-3 mt-3">
+                    <label asp-for="Value" class="control-label">@Html.DisplayNameFor(_ => Model.Value)</label>
+                    <div style="display:flex;column-gap:1ex;">
+                        <input id="@(Html.IdFor(_ => Model.Value))" type="number" asp-for="Value" style="width:6ch;height:fit-content;"
+                               oninput="@Html.IdFor(_ => Model.Value)Input.value = this.valueAsNumber" />
+                        <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                            <input type="range" style="width:100%;"
+                                   name="@Html.IdFor(_ => Model.Value)Input" id="@Html.IdFor(_ => Model.Value)-input"
+                                   min="0" max="100" step="1" value="@Model.Value"
+                                   oninput="@(Html.IdFor(_ => Model.Value)).value = this.valueAsNumber" />
+                        </div>
+                    </div>
+                    <span asp-validation-for="Value" class="text-danger"></span>
+                    <div id="delay-functional-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.Value)</div>
+                </div>
+            }
+
             <div class="form-group mb-3">
                 <label for="task-name" class="control-label">@Html.DisplayNameFor(_ => Model.Name)</label>
                 <div class="input-group">
@@ -87,60 +106,6 @@
                 <span asp-validation-for="Order" class="text-danger"></span>
             </div>
         </div>
-
-        @*@if (Model.Type != UserTaskType.None && Model.ComponentsBinder != null)
-        {
-            <div class="form-group mb-3">
-                <details class="mb-3" @(Model.WasUpdated == false ? "open='open'" : "")>
-                    <summary><b>Edit @Html.DisplayNameFor(_ => Model.UserComponentSettings)</b></summary>
-
-                    <div class="mt-1 ps-3">
-                        @for (var i = 0; i < Model.UserComponentSettings.Count; i++)
-                        {
-                            <input type="hidden" asp-for="UserComponentSettings[i].UserId" />
-                            <input type="hidden" asp-for="UserComponentSettings[i].Component" />
-                            <div class="mb-3">
-                                <label asp-for="UserComponentSettings[i].Component" class="control-label mb-1"><b>@Model.UserComponentSettings[i].Component.GetDisplayName322()</b></label>
-
-                                @if (Model.UserComponentSettings[i].Component.GetSubComponent() == null)
-                                {
-                                    <input type="hidden" asp-for="UserComponentSettings[i].SubComponentsBinder" value="0" />
-                                }
-                                else
-                                {
-                                    <div class="mb-2">
-                                        <label asp-for="UserComponentSettings[i].SubComponentsBinder" class="control-label">@Html.DisplayNameFor(_ => Model.UserComponentSettings[i].SubComponents)</label>
-                                        <select asp-for="UserComponentSettings[i].SubComponentsBinder" class="form-control" aria-describedby="skills-help" size="5"
-                                                asp-items='@(Model.UserComponentSettings[i].Component.GetSubComponent()!.SelectList.AsSelectListItems32(EnumViewExtensions.EnumOrdering.GroupText))'>
-                                        </select>
-                                        <span asp-validation-for="UserComponentSettings[i].SubComponents" class="text-danger"></span>
-                                        <div id="skills-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserComponentSettings[i].SubComponents)</div>
-                                    </div>
-                                }
-                                <div class="mb-2" style="display:flex;column-gap:1ch;flex-wrap:wrap;">
-                                    <div style="display:flex;margin-bottom:-.5ex;">@Html.DisplayNameFor(_ => Model.UserComponentSettings[i].Days)</div>
-                                    <div style="display:flex;gap:1ch;align-items:center;flex:1 0 150px;">
-                                        <input id="prehabMusclesOutput@(i)" type="number" asp-for="UserComponentSettings[i].Days" style="width:6ch;height:fit-content;"
-                                               oninput="prehabMusclesOutput@(i)Input.value = this.valueAsNumber" />
-                                        <div style="display:flex;width:100%;">
-                                            <input id="prehabMusclesOutput@(i)Input" asp-for="UserComponentSettings[i].Days" type="range" style="width:100%;"
-                                                   min="@UserConsts.ChartDaysMin" max="@UserConsts.ChartDaysMax" step="1" aria-describedby="component-days-help"
-                                                   oninput="prehabMusclesOutput@(i).value = this.valueAsNumber" />
-                                        </div>
-                                    </div>
-                                    <span asp-validation-for="UserComponentSettings[i]" class="text-danger"></span>
-                                    <div id="component-days-help" class="form-text">
-                                        <p>@Html.DisplayDescriptionFor(_ => Model.UserComponentSettings[i])</p>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-
-                        <span asp-validation-for="UserComponentSettings" class="text-danger"></span>
-                    </div>
-                </details>
-            </div>
-        }*@
 
         <div class="form-group mb-3">
             <label asp-for="SectionBinder" class="control-label">@Html.DisplayNameFor(_ => Model.Section)</label>
@@ -221,6 +186,41 @@
             <span asp-validation-for="DeloadDurationWeeks" class="text-danger"></span>
             <div id="delay-functional-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.DeloadDurationWeeks)</div>
         </div>
+
+        @if (Model.UserTask.Type == UserTaskType.Log) 
+        {
+            <div class="form-group mb-3 mt-3">
+                <label asp-for="ReferenceMin" class="control-label">@Html.DisplayNameFor(_ => Model.ReferenceMin)</label>
+                <div style="display:flex;column-gap:1ex;">
+                    <input id="@(Html.IdFor(_ => Model.ReferenceMin))" type="number" asp-for="ReferenceMin" style="width:6ch;height:fit-content;"
+                           oninput="@Html.IdFor(_ => Model.ReferenceMin)Input.value = this.valueAsNumber" />
+                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                        <input type="range" style="width:100%;"
+                               name="@Html.IdFor(_ => Model.ReferenceMin)Input" id="@Html.IdFor(_ => Model.ReferenceMin)-input"
+                               min="0" max="100" step="1" value="@Model.ReferenceMin"
+                               oninput="@(Html.IdFor(_ => Model.ReferenceMin)).value = this.valueAsNumber" />
+                    </div>
+                </div>
+                <span asp-validation-for="ReferenceMin" class="text-danger"></span>
+                <div id="delay-functional-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.ReferenceMin)</div>
+            </div>
+
+            <div class="form-group mb-3 mt-3">
+                <label asp-for="ReferenceMax" class="control-label">@Html.DisplayNameFor(_ => Model.ReferenceMax)</label>
+                <div style="display:flex;column-gap:1ex;">
+                    <input id="@(Html.IdFor(_ => Model.ReferenceMax))" type="number" asp-for="ReferenceMax" style="width:6ch;height:fit-content;"
+                           oninput="@Html.IdFor(_ => Model.ReferenceMax)Input.value = this.valueAsNumber" />
+                    <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                        <input type="range" style="width:100%;"
+                               name="@Html.IdFor(_ => Model.ReferenceMax)Input" id="@Html.IdFor(_ => Model.ReferenceMax)-input"
+                               min="0" max="100" step="1" value="@Model.ReferenceMax"
+                               oninput="@(Html.IdFor(_ => Model.ReferenceMax)).value = this.valueAsNumber" />
+                    </div>
+                </div>
+                <span asp-validation-for="ReferenceMax" class="text-danger"></span>
+                <div id="delay-functional-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.ReferenceMax)</div>
+            </div>
+        }
 
         <div class="form-group form-check mb-3">
             <label asp-for="PersistUntilComplete" class="control-label">@Html.DisplayNameFor(_ => Model.PersistUntilComplete)</label>

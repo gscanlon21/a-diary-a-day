@@ -18,7 +18,7 @@ public class TaskLogViewComponent : ViewComponent
     }
 
     /// <summary>
-    /// For routing
+    /// For routing/
     /// </summary>
     public const string Name = "TaskLog";
 
@@ -33,6 +33,7 @@ public class TaskLogViewComponent : ViewComponent
 
         return View("TaskLog", new TaskLogViewModel(user, userLogs)
         {
+            Task = task,
             Token = token,
             Name = task.Uid.ToString(),
         });

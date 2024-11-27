@@ -32,13 +32,11 @@ public class SerumHeartViewComponent(CoreContext context, UserRepo userRepo) : V
         }).ToList();
 
         var token = await userRepo.AddUserToken(user, durationDays: 1);
-        var subComponents = (BloodWork)user.UserComponentSettings.First(s => s.Component == Component.BloodWork).TypedSkills!;
         return View("SerumHeart", new SerumHeartViewModel(userMoods, userCustoms)
         {
             User = user,
             Token = token,
             PreviousMood = userMood,
-            SubComponents = subComponents,
             UserMood = new UserSerumHeart()
             {
                 UserId = user.Id,

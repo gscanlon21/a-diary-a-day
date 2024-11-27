@@ -32,13 +32,11 @@ public class SerumImmuneRegulationViewComponent(CoreContext context, UserRepo us
         }).ToList();
 
         var token = await userRepo.AddUserToken(user, durationDays: 1);
-        var subComponents = (BloodWork)user.UserComponentSettings.First(s => s.Component == Component.BloodWork).TypedSkills!;
         return View("SerumImmuneRegulation", new SerumImmuneRegulationViewModel(userMoods, userCustoms)
         {
             User = user,
             Token = token,
             PreviousMood = userMood,
-            SubComponents = subComponents,
             UserMood = new UserSerumImmuneRegulation()
             {
                 UserId = user.Id,

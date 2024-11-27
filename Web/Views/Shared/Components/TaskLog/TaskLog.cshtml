@@ -10,6 +10,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation/dist/chartjs-plugin-annotation.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <script type="module">
     const canvas = document.getElementById('myChart');
@@ -84,24 +85,30 @@
                             },
                         },
                     },
-                    /*
-                    decimation: {
-                        enabled: true,
-                        algorithm: 'lttb',
-                        samples: 12,
+                    annotation: {
+                        annotations: [{
+                            type: 'line',
+                            borderWidth: 2,
+                            borderColor: 'red',
+                            yMin: @Model.Task.ReferenceMin.GetValueOrDefault(),
+                            yMax: @Model.Task.ReferenceMin.GetValueOrDefault(),
+                            display: @Json.Serialize(Model.Task.ReferenceMin.HasValue),
+                        }, {
+                            type: 'line',
+                            borderWidth: 2,
+                            borderColor: 'orange',
+                            yMin: @Model.Task.ReferenceMax.GetValueOrDefault(),
+                            yMax: @Model.Task.ReferenceMax.GetValueOrDefault(),
+                            display: @Json.Serialize(Model.Task.ReferenceMax.HasValue),
+                        }]
                     },
-                    decimation: {
-                        enabled: true,
-                        algorithm: 'min-max',
-                    },
-                    */
                 },
             }
         });
 
         @if (TempData.IsSuccess())
         {
-            @:window.uploadChart(chart, 400, 225, '@Html.Raw(Model.User.Email)', '@Html.Raw(Model.Token)', '@Model.Type', '@Model.Name');
+            @:window.uploadChart(chart, 420, 180, '@Html.Raw(Model.User.Email)', '@Html.Raw(Model.Token)', '@Model.Type', '@Model.Name');
         }
     }
 </script>

@@ -32,13 +32,11 @@ public class SerumThyroidViewComponent(CoreContext context, UserRepo userRepo) :
         }).ToList();
 
         var token = await userRepo.AddUserToken(user, durationDays: 1);
-        var subComponents = (BloodWork)user.UserComponentSettings.First(s => s.Component == Component.BloodWork).TypedSkills!;
         return View("SerumThyroid", new SerumThyroidViewModel(userMoods, userCustoms)
         {
             User = user,
             Token = token,
             PreviousMood = userMood,
-            SubComponents = subComponents,
             UserMood = new UserSerumThyroid()
             {
                 UserId = user.Id,

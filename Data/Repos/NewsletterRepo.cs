@@ -211,7 +211,7 @@ public partial class NewsletterRepo
     private IEnumerable<ComponentImage> GetImages(User user)
     {
         var prefix = $"moods/{user.Uid}";
-        var components = EnumExtensions.GetSingleValues64(excludingAny: Component.Journal | Component.Tasks);
+        var components = EnumExtensions.GetSingleValues64(excludingAny: Component.Journal);
         foreach (var component in components
             .OrderBy(c => c.GetSingleDisplayName(Core.Models.DisplayType.Order).Length)
             .ThenBy(c => c.GetSingleDisplayName(Core.Models.DisplayType.Order))
@@ -228,11 +228,6 @@ public partial class NewsletterRepo
 
     internal async Task<IList<QueryResults>> GetUserTasks(NewsletterContext newsletterContext, Section section, IEnumerable<QueryResults>? exclude = null)
     {
-        if (!newsletterContext.User.Components.HasFlag(Component.Tasks))
-        {
-            return [];
-        }
-
         return await new QueryBuilder(section)
             .WithUser(newsletterContext.User, ignored: false)
             .WithExcludeTasks(x =>

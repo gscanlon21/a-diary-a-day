@@ -1,6 +1,4 @@
-﻿using Core.Models.AFeastADay;
-using Core.Models.User;
-using Data;
+﻿using Data;
 using Data.Entities.User;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
@@ -12,8 +10,17 @@ namespace Web.Components.User;
 /// <summary>
 /// Renders an alert box summary of when the user's next deload week will occur.
 /// </summary>
-public class FeastAllergensViewComponent(CoreContext context, UserRepo userRepo) : ViewComponent
+public class FeastAllergensViewComponent : ViewComponent
 {
+    private readonly UserRepo _userRepo;
+    private readonly CoreContext _context;
+
+    public FeastAllergensViewComponent(CoreContext context, UserRepo userRepo)
+    {
+        _context = context;
+        _userRepo = userRepo;
+    }
+
     /// <summary>
     /// For routing.
     /// </summary>
@@ -21,21 +28,13 @@ public class FeastAllergensViewComponent(CoreContext context, UserRepo userRepo)
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
-        var userMood = await context.UserFeastAllergens.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
-        var userMoods = await context.UserFeastAllergens
+        var userMood = await _context.UserFeastAllergens.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
+        var userMoods = await _context.UserFeastAllergens
             .Where(ud => ud.UserId == user.Id)
             .ToListAsync();
 
-        var userCustoms = EnumExtensions.GetValuesExcluding32(Allergens.None).Select(a => new UserCustom()
-        {
-            Id = (int)a,
-            Count = (int)a,
-            Type = CustomType.None,
-            Name = a.GetSingleDisplayName(),
-        }).ToList();
-
-        var token = await userRepo.AddUserToken(user, durationDays: 1);
-        return View("FeastAllergens", new FeastAllergensViewModel(userMoods, userCustoms)
+        var token = await _userRepo.AddUserToken(user, durationDays: 1);
+        return View("FeastAllergens", new FeastAllergensViewModel(userMoods)
         {
             User = user,
             Token = token,

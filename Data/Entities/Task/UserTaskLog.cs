@@ -5,7 +5,6 @@ using System.Text.Json.Serialization;
 
 namespace Data.Entities.Task;
 
-
 /// <summary>
 /// User's set/rep/sec/weight tracking history of an exercise.
 /// </summary>
@@ -37,7 +36,7 @@ public class UserTaskLog
     public DateOnly Date { get; private init; }
 
     [Range(UserConsts.UserTaskCompleteMin, UserConsts.UserTaskCompleteMax)]
-    public int Complete { get; set; } = UserConsts.UserTaskCompleteDefault;
+    public double Complete { get; set; } = UserConsts.UserTaskCompleteDefault;
 
     [JsonIgnore, InverseProperty(nameof(UserTask.UserTaskLogs))]
     public virtual UserTask UserTask { get; private init; } = null!;

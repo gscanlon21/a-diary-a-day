@@ -25,6 +25,8 @@ public class ManageTaskViewModel
         Order = userTask.Order;
         ShowLog = userTask.ShowLog;
         Section = userTask.Section;
+        ReferenceMin = userTask.ReferenceMin;
+        ReferenceMax = userTask.ReferenceMax;
         InternalNotes = userTask.InternalNotes;
         DisabledReason = userTask.DisabledReason;
         LagRefreshXDays = userTask.LagRefreshXDays;
@@ -94,6 +96,19 @@ public class ManageTaskViewModel
     [Required, Range(UserConsts.DeloadDurationMin, UserConsts.DeloadDurationMax)]
     [Display(Name = "Deload Duration (Weeks)", Description = "How long should deloads last?")]
     public int DeloadDurationWeeks { get; set; } = UserConsts.DeloadDurationDefault;
+
+    [ValidateNever]
+    [Display(Name = "Reference Range (Min)", Description = "")]
+    public double? ReferenceMin { get; init; }
+
+    [ValidateNever]
+    [Display(Name = "Reference Range (Max)", Description = "")]
+    public double? ReferenceMax { get; set; }
+
+    [ValidateNever]
+    [Display(Name = "Value", Description = "")]
+    public double Value { get; set; }
+
 
     /// <summary>
     /// This should be bound from the section binder, not the current section in query string.

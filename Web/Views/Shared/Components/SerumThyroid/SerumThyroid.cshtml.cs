@@ -32,8 +32,6 @@ public class SerumThyroidViewModel
         }
     }
 
-    public Core.Models.Components.SubComponents.BloodWork SubComponents { get; init; }
-
     public string Token { get; init; } = null!;
     public Data.Entities.User.User User { get; init; } = null!;
 
