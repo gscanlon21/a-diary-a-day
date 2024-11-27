@@ -14,10 +14,12 @@ public class UserBloodPressure
     public class Consts
     {
         public const int SystolicPressureMin = 80;
+        public const int SystolicPressureDefault = 120;
         public const int SystolicPressureMax = 160;
 
-        public const int DiastolicPressureMin = 50;
-        public const int DiastolicPressureMax = 100;
+        public const int DiastolicPressureMin = 40;
+        public const int DiastolicPressureDefault = 80;
+        public const int DiastolicPressureMax = 120;
     }
 
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -34,17 +36,14 @@ public class UserBloodPressure
     /// </summary>
     [Required, Range(Consts.SystolicPressureMin, Consts.SystolicPressureMax)]
     [Display(Name = "Systolic Pressure")]
-    public int SystolicPressure { get; set; }
+    public int SystolicPressure { get; set; } = Consts.SystolicPressureDefault;
 
     /// <summary>
     /// The bottom number. It refers to the pressure in the blood vessels between heartbeats.
     /// </summary>
     [Required, Range(Consts.DiastolicPressureMin, Consts.DiastolicPressureMax)]
     [Display(Name = "Diastolic Pressure")]
-    public int DiastolicPressure { get; set; }
-
-    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserBloodPressures))]
-    public virtual User User { get; set; } = null!;
+    public int DiastolicPressure { get; set; } = Consts.DiastolicPressureDefault;
 
     [NotMapped]
     public Dictionary<string, int> Items => new()
@@ -52,6 +51,9 @@ public class UserBloodPressure
         { nameof(SystolicPressure), SystolicPressure },
         { nameof(DiastolicPressure), DiastolicPressure },
     };
+
+    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserBloodPressures))]
+    public virtual User User { get; set; } = null!;
 
     public override int GetHashCode() => HashCode.Combine(Id);
     public override bool Equals(object? obj) => obj is UserBloodPressure other
