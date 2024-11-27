@@ -59,10 +59,17 @@ public class ManageTaskViewComponent : ViewComponent
             .Where(ut => ut.Section == section)
             .AnyAsync(ut => ut.Complete > 0);
 
+        var lastValue = await _context.UserTaskLogs.AsNoTracking()
+            .Where(ut => ut.UserTaskId == userTask.Id)
+            .Where(ut => ut.Section == section)
+            .OrderByDescending(ut => ut.Date)
+            .LastOrDefaultAsync();
+
         // Edit an existing user task.
         return View("ManageTask", new ManageTaskViewModel(user, userTask, token)
         {
             ManageSection = section,
+            Value = lastValue?.Complete ?? default,
             CompletedForSection = completedForSection,
             Task = taskDto?.AsType<NewsletterTaskDto>()!,
         });
