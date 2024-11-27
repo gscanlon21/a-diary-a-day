@@ -14,7 +14,7 @@
 
             @if (Model.UserTask.Type == UserTaskType.Log) 
             {
-                <div class="form-group mb-3 mt-3">
+                <div class="form-group mb-3">
                     <label asp-for="Value" class="control-label">@Html.DisplayNameFor(_ => Model.Value)</label>
                     <div style="display:flex;column-gap:1ex;">
                         <input id="@(Html.IdFor(_ => Model.Value))" type="number" asp-for="Value" style="width:6ch;height:fit-content;"

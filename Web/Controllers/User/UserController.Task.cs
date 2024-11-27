@@ -78,7 +78,14 @@ public partial class UserController
 
         if (todaysUserLog != null)
         {
-            todaysUserLog.Complete += value;
+            if (userTask.Type == UserTaskType.Log)
+            {
+                todaysUserLog.Complete = value;
+            }
+            else
+            {
+                todaysUserLog.Complete += value;
+            }
         }
         else
         {

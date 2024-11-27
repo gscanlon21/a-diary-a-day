@@ -18,7 +18,7 @@ public class TaskLogViewComponent : ViewComponent
     }
 
     /// <summary>
-    /// For routing/
+    /// For routing.
     /// </summary>
     public const string Name = "TaskLog";
 
@@ -31,9 +31,8 @@ public class TaskLogViewComponent : ViewComponent
             .Where(uw => uw.UserTaskId == task.Id)
             .ToListAsync();
 
-        return View("TaskLog", new TaskLogViewModel(user, userLogs)
+        return View("TaskLog", new TaskLogViewModel(user, task, userLogs)
         {
-            Task = task,
             Token = token,
             Name = task.Uid.ToString(),
         });
