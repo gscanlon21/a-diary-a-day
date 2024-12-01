@@ -69,5 +69,5 @@ window.uploadChart = function uploadChart(chart, width, height, email, token, ty
         //    console.debug({ reader.result })
         //}
         //reader.readAsDataURL(blob) 
-    }, 10); // Minimum time required?
+    }, 0); // Minimum time required?
 }
