@@ -75,9 +75,8 @@
         @if (Verbosity.HasFlag(Verbosity.Images) && User != null && Model.Task.LastCompleted > DateOnly.MinValue)
         {
             <div style="display:flex;flex-direction:column;flex:1 1 auto;">
-                @* If we want to reduce layout shift with aspect-ratio, that really needs to be included on the table with the image because our images don't have consistent aspect ratios. *@
-                @* Setting min-height (200 / (25/14)) gets us close though. 25/14 is, for the most part, our widest aspect-ratio. *@
-                <img style="display:block;margin-top:1ex;height:auto;max-height:225px;max-width:100%;object-fit:contain;object-position:left top;@(Model.Task.ShowLog ? "min-height:112px;" : "min-height:0;flex:1 1 0;")"
+                @* The aspect-ratio for task images is 21/9. Setting that helps prevent layout shift. *@
+                <img style="display:block;margin-top:1ex;height:auto;max-height:180px;max-width:100%;object-fit:contain;object-position:left top;@(Model.Task.ShowLog ? "aspect-ratio:21/9;" : "min-height:0;flex:1 1 0;")"
                      src="@($"{SiteSettings.Value.CdnLink}/user/{User.Uid}/{Component.None}-{Model.Task.Uid}")" loading="lazy" />
             </div>
         }
