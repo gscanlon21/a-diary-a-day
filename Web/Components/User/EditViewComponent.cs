@@ -1,5 +1,4 @@
-﻿using Core.Models;
-using Data.Repos;
+﻿using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Web.Views.Shared.Components.Edit;
 
