@@ -201,7 +201,7 @@ else if (Model.Component.HasFlag(Core.Models.Components.Component.DryEyes))
 }
 else if (Model.Component.HasFlag(Core.Models.Components.Component.Allergens))
 {
-    @await Component.InvokeAsync(FeastAllergensViewComponent.Name, new { Model.User })
+    @await Component.InvokeAsync(AllergensViewComponent.Name, new { Model.User })
 }
 else if (Model.Component.HasFlag(Core.Models.Components.Component.Journal))
 {

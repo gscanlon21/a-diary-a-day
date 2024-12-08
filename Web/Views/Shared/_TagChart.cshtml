@@ -101,7 +101,7 @@
             }
         });
 
-        @if (TempData.IsSuccess())
+        @if (TempData.IsSuccess() || Model.AutoUpload)
         {
             @:window.uploadChart(chart, 400, 300, '@Html.Raw(Model.User.Email)', '@Html.Raw(Model.Token)', '@Model.Type');
         }

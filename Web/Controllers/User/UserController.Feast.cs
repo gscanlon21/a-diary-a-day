@@ -43,7 +43,7 @@ public partial class UserController
     }
 
     [HttpPost, Route(nameof(Component.Allergens))]
-    public async Task<IActionResult> ManageAllergens(string email, string token, UserFeastAllergens userMood)
+    public async Task<IActionResult> ManageAllergens(string email, string token, UserAllergens userMood)
     {
         if (true || ModelState.IsValid)
         {
@@ -61,7 +61,7 @@ public partial class UserController
             }
 
             var startOfWeek = DateHelpers.Today.StartOfWeek();
-            var todaysMood = await _context.UserFeastAllergens.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == startOfWeek);
+            var todaysMood = await _context.UserAllergens.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == startOfWeek);
             if (todaysMood == null)
             {
                 userMood.UserId = user.Id;
