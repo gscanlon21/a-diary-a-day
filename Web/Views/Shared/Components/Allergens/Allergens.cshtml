@@ -1,9 +1,17 @@
-﻿@model FeastAllergensViewModel
+﻿@model AllergensViewModel
 @using Core.Models.Components
 @using Data.Entities.User
 
 @{
     bool hide = Model.PreviousMood?.Date == DateHelpers.Today.StartOfWeek();
+    var chartViewModel = new LineChartViewModel()
+    {
+        AutoUpload = hide,
+        User = Model.User,
+        Token = Model.Token,
+        XysGrouped = Model.XysGrouped,
+        Type = Core.Models.Components.Component.Allergens
+    };
 }
 
 <div class="alert alert-secondary">
@@ -29,15 +37,7 @@
         <div class="col-lg-6">
             <h6 class="mb-1">Log</h6>
             <div class="alert alert-light shadow">
-                @{
-                    await Html.RenderPartialAsync("_LineChart", new LineChartViewModel()
-                    {
-                        User = Model.User,
-                        Token = Model.Token,
-                        XysGrouped = Model.XysGrouped,
-                        Type = Core.Models.Components.Component.Allergens
-                    });
-                }
+                <partial name="_LineChart" model="chartViewModel" />
             </div>
         </div>
     </div>

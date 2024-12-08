@@ -40,7 +40,7 @@ public class CoreContext : DbContext
     public DbSet<UserSleep> UserSleeps { get; set; } = null!;
     public DbSet<UserActivity> UserActivities { get; set; } = null!;
     public DbSet<UserDryEyes> UserDryEyes { get; set; } = null!;
-    public DbSet<UserFeastAllergens> UserFeastAllergens { get; set; } = null!;
+    public DbSet<UserAllergens> UserAllergens { get; set; } = null!;
     public DbSet<UserAgoraphobiaSeverity> UserAgoraphobiaSeverities { get; set; } = null!;
     public DbSet<UserBloodPressure> UserBloodPressures { get; set; } = null!;
     public DbSet<UserCompleteMetabolicPanel> UserCompleteMetabolicPanels { get; set; } = null!;
@@ -91,7 +91,7 @@ public class CoreContext : DbContext
         modelBuilder.Entity<UserToken>().HasQueryFilter(p => p.Expires > DateTime.UtcNow);
 
         ////////// Conversions //////////
-        modelBuilder.Entity<UserFeastAllergens>().Property(e => e.Allergens).HasConversion(v => JsonSerializer.Serialize(v, JsonSerializerOptions),
+        modelBuilder.Entity<UserAllergens>().Property(e => e.Allergens).HasConversion(v => JsonSerializer.Serialize(v, JsonSerializerOptions),
             v => JsonSerializer.Deserialize<Dictionary<string, double>>(v, JsonSerializerOptions)!.Where(kv => Enum.IsDefined(typeof(Allergens), kv.Key)).ToDictionary(kv => Enum.Parse<Allergens>(kv.Key), kv => kv.Value),
             new ValueComparer<IDictionary<Allergens, double>>((mg, mg2) => mg == mg2, mg => mg.GetHashCode()));
     }

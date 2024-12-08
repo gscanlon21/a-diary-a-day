@@ -271,8 +271,8 @@ public class User : IUser
     [JsonIgnore, InverseProperty(nameof(Entities.User.UserDryEyes.User))]
     public virtual ICollection<UserDryEyes> UserDryEyes { get; private init; } = null!;
 
-    [JsonIgnore, InverseProperty(nameof(Entities.User.UserFeastAllergens.User))]
-    public virtual ICollection<UserFeastAllergens> UserFeastAllergens { get; private init; } = null!;
+    [JsonIgnore, InverseProperty(nameof(Entities.User.UserAllergens.User))]
+    public virtual ICollection<UserAllergens> UserAllergens { get; private init; } = null!;
 
     [JsonIgnore, InverseProperty(nameof(UserPeople.User))]
     public virtual ICollection<UserPeople> UserPeoples { get; private init; } = null!;

@@ -3,17 +3,9 @@ using Web.ViewModels;
 
 namespace Web.Views.Shared;
 
-public class LineChartViewModel
+public class LineChartViewModel : ChartViewModel
 {
     public const int Height = 350;
-
-    public string Id { get; } = $"S{Guid.NewGuid():N}";
-
-    public required Component Type { get; init; }
-
-    public required Data.Entities.User.User User { get; init; }
-
-    public required string Token { get; init; }
 
     public List<IGrouping<IGroup, XyGroup>> XysGrouped { get; init; } = null!;
 

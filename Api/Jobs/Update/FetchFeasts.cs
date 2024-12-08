@@ -55,10 +55,10 @@ public class FetchFeasts : IJob, IScheduled
                     }
 
                     var startOfWeek = DateHelpers.Today.StartOfWeek();
-                    var todaysMood = await context.UserFeastAllergens.Where(p => p.UserId == userToken.User.Id && p.Date == startOfWeek).FirstOrDefaultAsync(cancellationToken);
+                    var todaysMood = await context.UserAllergens.Where(p => p.UserId == userToken.User.Id && p.Date == startOfWeek).FirstOrDefaultAsync(cancellationToken);
                     if (todaysMood == null)
                     {
-                        context.Add(new UserFeastAllergens()
+                        context.Add(new UserAllergens()
                         {
                             Date = startOfWeek,
                             UserId = userToken.User.Id,
@@ -98,7 +98,7 @@ public class FetchFeasts : IJob, IScheduled
             // User has confirmed their account.
             .Where(u => u.LastActive.HasValue)
             // User has not updated their feast allergens yet this week.
-            .Where(u => !u.UserFeastAllergens.Any(un => un.Date == startOfWeek))
+            .Where(u => !u.UserAllergens.Any(un => un.Date == startOfWeek))
             // User has entered feast email and token.
             .Where(u => !string.IsNullOrWhiteSpace(u.FeastEmail) && !string.IsNullOrWhiteSpace(u.FeastToken))
             // User is not a test or demo user.

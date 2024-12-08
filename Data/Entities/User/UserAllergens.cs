@@ -6,10 +6,10 @@ using System.Text.Json.Serialization;
 namespace Data.Entities.User;
 
 /// <summary>
-/// User's progression level of an exercise.
+/// User's allergens.
 /// </summary>
-[Table("user_feast_allergens")]
-public class UserFeastAllergens
+[Table("user_allergens")]
+public class UserAllergens
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; private init; }
@@ -27,6 +27,6 @@ public class UserFeastAllergens
     /// </summary>
     public IEnumerable<KeyValuePair<Allergens, double>> SimpleAllergens => Allergens.Where(kv => kv.Key.PopCount() == 1);
 
-    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserFeastAllergens))]
+    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserAllergens))]
     public virtual User User { get; init; } = null!;
 }
