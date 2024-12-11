@@ -16,6 +16,7 @@ public class UserRepo(CoreContext context)
 
     /// <summary>
     /// Grab a user from the db with a specific token.
+    /// Throws an exception if the user cannot be found.
     /// </summary>
     public async Task<User> GetUserStrict(string? email, string? token, bool includeSettings = false, bool allowDemoUser = false)
     {
@@ -70,6 +71,14 @@ public class UserRepo(CoreContext context)
         await _context.SaveChangesAsync();
         return token;
     }
+
+    /// <summary>
+    /// Get the user's persistent access token.
+    /// </summary>
+    public async Task<string?> GetPersistentToken(User user) => (await _context.UserTokens
+        .Where(ut => ut.Expires == DateTime.MaxValue)
+        .Where(ut => ut.UserId == user.Id)
+        .FirstOrDefaultAsync())?.Token;
 
     /// <summary>
     /// Get the user's current feast.

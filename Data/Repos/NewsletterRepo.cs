@@ -82,7 +82,7 @@ public partial class NewsletterRepo
     public async Task<NewsletterDto?> Newsletter(string email, string token, DateOnly? date = null)
     {
         var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
-        if (user == null)
+        if (user == null || !user.LastActive.HasValue)
         {
             return null;
         }

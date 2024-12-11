@@ -177,7 +177,7 @@ public partial class UserController : ViewController
     [HttpGet]
     [Route("r", Order = 1)]
     [Route("redirect", Order = 2)]
-    public async Task<IActionResult> IAmStillHere(string email, string token, string? to = null, string? redirectTo = null)
+    public async Task<IActionResult> IAmStillHere(string email, string token, string? to = null)
     {
         var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
         if (user == null)
@@ -194,15 +194,10 @@ public partial class UserController : ViewController
             return Redirect(to);
         }
 
-        if (!string.IsNullOrWhiteSpace(redirectTo))
-        {
-            return Redirect(redirectTo);
-        }
-
         // User is enabling their account or preventing it from being disabled for inactivity.
         TempData[TempData_User.SuccessMessage] = userIsConfirmingAccount
-            ? "Thank you! Your first diary entry is on its way."
-            : "Thank you! Take a moment to update your Workout Intensity to avoid adaptions.";
+            ? "Thank you! Your first diary is on its way."
+            : "Thank you!";
         return RedirectToAction(nameof(UserController.Edit), new { email, token });
     }
 
@@ -219,7 +214,7 @@ public partial class UserController : ViewController
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
         }
 
-        // Delete old app tokens
+        // Delete old app tokens.
         await _context.UserTokens
             .Where(ut => ut.UserId == user.Id)
             .Where(ut => ut.Expires == DateTime.MaxValue)
