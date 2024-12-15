@@ -96,7 +96,7 @@ public class QueryRunner
             // Don't re-order the list on each read.
             .ToList())
         {
-            var queryResult = new QueryResults(_section ?? Section.None, recipe.Task);
+            var queryResult = new QueryResults(_section ?? Section.Anytime, recipe.Task);
             if (!orderedResults.Contains(queryResult))
             {
                 orderedResults.Add(queryResult);

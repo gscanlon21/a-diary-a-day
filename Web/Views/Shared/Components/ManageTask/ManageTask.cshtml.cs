@@ -1,5 +1,4 @@
-﻿using Core.Dtos.Newsletter;
-using Core.Models.Newsletter;
+﻿using Core.Models.Newsletter;
 using Core.Models.User;
 using Data.Entities.Task;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -47,10 +46,6 @@ public class ManageTaskViewModel
 
     [ValidateNever]
     public bool CompletedForSection { get; init; }
-
-    [ValidateNever]
-    [Display(Name = "Task", Description = "Ignore this task.")]
-    public NewsletterTaskDto? Task { get; init; }
 
     [ValidateNever]
     [Display(Name = "Refreshes After", Description = "Refresh this task and try to select a new task if available.")]
@@ -120,7 +115,7 @@ public class ManageTaskViewModel
     public Section[]? SectionBinder
     {
         get => Enum.GetValues<Section>().Where(e => Section.HasFlag(e)).ToArray();
-        set => Section = value?.Aggregate(Section.None, (a, e) => a | e) ?? Section.None;
+        set => Section = value?.Aggregate(Section.Anytime, (a, e) => a | e) ?? Section.Anytime;
     }
 
     public string? DisabledReason { get; set; } = null;

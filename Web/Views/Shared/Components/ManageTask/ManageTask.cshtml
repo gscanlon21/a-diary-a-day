@@ -94,7 +94,7 @@
             <div class="col">
                 <label asp-for="Type" class="control-label">@Html.DisplayNameFor(_ => Model.Type)</label>
                 <select asp-for="Type" class="form-control overflow-auto" aria-describedby="type-help"
-                        asp-items="@(EnumExtensions.GetDisplayValues<UserTaskType>().AsSelectListItems32(EnumViewExtensions.EnumOrdering.Order))">
+                        asp-items="@(EnumExtensions.GetDisplayValues<UserTaskType>().AsSelectListItems(EnumViewExtensions.EnumOrdering.Order))">
                 </select>
                 <span asp-validation-for="Type" class="text-danger"></span>
                 <div id="type-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.Type)</div>
@@ -110,7 +110,7 @@
         <div class="form-group mb-3">
             <label asp-for="SectionBinder" class="control-label">@Html.DisplayNameFor(_ => Model.Section)</label>
             <select asp-for="SectionBinder" class="form-control overflow-auto" aria-describedby="verbosity-help" size="5"
-                    asp-items="@(EnumExtensions.GetValuesExcluding32(Section.None, Section.All).AsSelectListItems32(EnumViewExtensions.EnumOrdering.Order))">
+                    asp-items="@(EnumExtensions.GetValuesExcluding(Section.Anytime, Section.All).AsSelectListItems(EnumViewExtensions.EnumOrdering.Order))">
             </select>
             <span asp-validation-for="SectionBinder" class="text-danger"></span>
             <div id="verbosity-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.Section)</div>

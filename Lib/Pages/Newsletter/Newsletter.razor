@@ -40,7 +40,7 @@ else
     <Lib.Pages.Shared.Newsletter.Footnote User="Model.User" Verbosity="Model.Verbosity" Type="Shared.Newsletter.Footnote.FootnoteComponentType.User" Count="Model.User.FootnoteCountTop" />
     
     <div style="margin-block:1rem;">
-        @foreach (var section in Enum.GetValues<Section>().OrderBy(s => s.GetDisplayName32(DisplayType.Order).Length).ThenBy(s => s.GetDisplayName32(DisplayType.Order)))
+        @foreach (var section in Enum.GetValues<Section>().OrderBy(s => s.GetDisplayName(DisplayType.Order).Length).ThenBy(s => s.GetDisplayName(DisplayType.Order)))
         {
             <Lib.Pages.Shared.Task.TaskSection User="Model.User" Verbosity="Model.Verbosity" Tasks="Model.Tasks.Where(t => t.Section == section).ToList()" Theme="section.AsTheme()" Title="@(new TaskSection.Titles(section.GetSingleDisplayName()))" />
         }

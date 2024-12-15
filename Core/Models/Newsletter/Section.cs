@@ -6,7 +6,7 @@ namespace Core.Models.Newsletter;
 public enum Section
 {
     [Display(Name = "Anytime")]
-    None = 0,
+    Anytime = 0,
 
     [Display(Name = "After Waking Up")]
     AfterWakingUp = 1 << 0, // 1
@@ -47,14 +47,14 @@ public enum Section
     [Display(Name = "Before Bed")]
     BeforeBed = 1 << 12, // 4096
 
-    [Display(Name = "Other")]
-    Other = 1 << 13, // 8192
+    [Display(Name = "Anyday")]
+    Anyday = 1 << 13, // 8192
 
     All = AfterWakingUp | BeforeBreakfast | WithBreakfast | AfterBreakfast
         | BeforeLunch | WithLunch | AfterLunch
         | BeforeDinner | WithDinner | AfterDinner
         | PreWorkout | PostWorkout | BeforeBed
-        | Other,
+        | Anyday,
 }
 
 public static class SectionExtensions
@@ -66,7 +66,7 @@ public static class SectionExtensions
         Section.BeforeLunch or Section.WithLunch or Section.AfterLunch => Theme.Extra,
         Section.BeforeDinner or Section.WithDinner or Section.AfterDinner => Theme.Cooldown,
         Section.PreWorkout or Section.PostWorkout => Theme.Main,
-        Section.None or Section.Other => Theme.None,
+        Section.Anytime or Section.Anyday => Theme.None,
         _ => Theme.None,
     };
 }

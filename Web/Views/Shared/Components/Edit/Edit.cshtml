@@ -28,7 +28,7 @@
             <div class="form-group mb-3">
                 <label asp-for="SendDaysBinder" class="control-label">@Html.DisplayNameFor(_ => Model.SendDays)</label>
                 <select asp-for="SendDaysBinder" class="form-control overflow-auto" aria-describedby="rest-help" size="@BitOperations.PopCount((ulong)Days.All)"
-                        asp-items="@(EnumExtensions.GetSingleValues64<Days>().AsSelectListItems32())">
+                        asp-items="@(EnumExtensions.GetSingleValues<Days>().AsSelectListItems())">
                 </select>
                 <span asp-validation-for="SendDaysBinder" class="text-danger"></span>
                 <div id="rest-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.SendDays)</div>
@@ -37,7 +37,7 @@
             <div class="form-group mb-3">
                 <label asp-for="ComponentsBinder" class="control-label">@Html.DisplayNameFor(_ => Model.Components)</label>
                 <select asp-for="ComponentsBinder" class="form-control overflow-auto" aria-describedby="Components-help" size="5"
-                        asp-items="@(EnumExtensions.GetDisplayValues<Core.Models.Components.Component>().AsSelectListItems32(EnumViewExtensions.EnumOrdering.Order))">
+                        asp-items="@(EnumExtensions.GetDisplayValues<Core.Models.Components.Component>().AsSelectListItems(EnumViewExtensions.EnumOrdering.Order))">
                 </select>
                 <span asp-validation-for="ComponentsBinder" class="text-danger"></span>
                 <div id="Components-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.Components)</div>
@@ -54,7 +54,7 @@
                                 <input type="hidden" asp-for="UserComponentSettings[i].UserId" />
                                 <input type="hidden" asp-for="UserComponentSettings[i].Component" />
                                 <div class="mb-3">
-                                    <label asp-for="UserComponentSettings[i].Component" class="control-label mb-1"><b>@Model.UserComponentSettings[i].Component.GetDisplayName322()</b></label>
+                                    <label asp-for="UserComponentSettings[i].Component" class="control-label mb-1"><b>@Model.UserComponentSettings[i].Component.GetDisplayName2()</b></label>
 
                                     @if (Model.UserComponentSettings[i].Component.GetSubComponent() == null)
                                     {
@@ -65,7 +65,7 @@
                                         <div class="mb-2">
                                             <label asp-for="UserComponentSettings[i].SubComponentsBinder" class="control-label">@Html.DisplayNameFor(_ => Model.UserComponentSettings[i].SubComponents)</label>
                                             <select asp-for="UserComponentSettings[i].SubComponentsBinder" class="form-control" aria-describedby="skills-help" size="5"
-                                                    asp-items='@(Model.UserComponentSettings[i].Component.GetSubComponent()!.SelectList.AsSelectListItems32(EnumViewExtensions.EnumOrdering.GroupText))'>
+                                                    asp-items='@(Model.UserComponentSettings[i].Component.GetSubComponent()!.SelectList.AsSelectListItems(EnumViewExtensions.EnumOrdering.GroupText))'>
                                             </select>
                                             <span asp-validation-for="UserComponentSettings[i].SubComponents" class="text-danger"></span>
                                             <div id="skills-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserComponentSettings[i].SubComponents)</div>
@@ -106,7 +106,7 @@
             <div class="form-group mb-3">
                 <label asp-for="FootnoteTypeBinder" class="control-label">@Html.DisplayNameFor(_ => Model.FootnoteType)</label>
                 <select asp-for="FootnoteTypeBinder" class="form-control overflow-auto" aria-describedby="footnote-help" size="5"
-                        asp-items='@(EnumExtensions.GetSingleValues64<FootnoteType>().AsSelectListItems32(EnumViewExtensions.EnumOrdering.Text))'>
+                        asp-items='@(EnumExtensions.GetSingleValues<FootnoteType>().AsSelectListItems(EnumViewExtensions.EnumOrdering.Text))'>
                 </select>
                 <span asp-validation-for="FootnoteTypeBinder" class="text-danger"></span>
                 <div id="footnote-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.FootnoteType)</div>
@@ -114,7 +114,7 @@
             <div class="form-group mb-3">
                 <label asp-for="VerbosityBinder" class="control-label">@Html.DisplayNameFor(_ => Model.Verbosity)</label>
                 <select asp-for="VerbosityBinder" class="form-control overflow-auto" aria-describedby="verbosity-help" size="2"
-                        asp-items="@(EnumExtensions.GetDisplayValues<Verbosity>().AsSelectListItems32(EnumViewExtensions.EnumOrdering.Text))">
+                        asp-items="@(EnumExtensions.GetDisplayValues<Verbosity>().AsSelectListItems(EnumViewExtensions.EnumOrdering.Text))">
                 </select>
                 <span asp-validation-for="VerbosityBinder" class="text-danger"></span>
                 <div id="verbosity-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.Verbosity)</div>

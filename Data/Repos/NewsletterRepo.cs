@@ -145,8 +145,8 @@ public partial class NewsletterRepo
     /// </summary>
     private async Task<NewsletterDto?> OnDayNewsletter(NewsletterContext context)
     {
-        var tasks = new List<QueryResults>(await GetUserTasks(context, Section.None));
-        foreach (var section in EnumExtensions.GetSingleValues64<Section>())
+        var tasks = new List<QueryResults>(await GetUserTasks(context, Section.Anytime));
+        foreach (var section in EnumExtensions.GetSingleValues<Section>())
         {
             tasks.AddRange(await GetUserTasks(context, section));
         }
@@ -171,7 +171,7 @@ public partial class NewsletterRepo
     private async Task<NewsletterDto?> NewsletterOld(User user, string token, DateOnly date, UserDiary newsletter)
     {
         var tasks = new List<QueryResults>();
-        foreach (var section in EnumExtensions.GetValuesExcluding32(Section.All))
+        foreach (var section in EnumExtensions.GetValuesExcluding(Section.All))
         {
             tasks.AddRange((await new QueryBuilder(section)
                 .WithUser(user, ignored: false)
@@ -211,7 +211,7 @@ public partial class NewsletterRepo
     private IEnumerable<ComponentImage> GetImages(User user)
     {
         var prefix = $"user/{user.Uid}";
-        var components = EnumExtensions.GetSingleValues64(excludingAny: Component.Journal);
+        var components = EnumExtensions.GetSingleValues(excludingAny: Component.Journal);
         foreach (var component in components
             .OrderBy(c => c.GetSingleDisplayName(Core.Models.DisplayType.Order).Length)
             .ThenBy(c => c.GetSingleDisplayName(Core.Models.DisplayType.Order))

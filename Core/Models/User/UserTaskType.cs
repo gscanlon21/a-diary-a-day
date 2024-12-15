@@ -7,7 +7,7 @@ namespace Core.Models.User;
 /// </summary>
 public enum UserTaskType
 {
-    [Display(Name = "Other")]
+    [Display(Name = "None")]
     None = 0,
 
     [Display(Name = "Supplement")]
