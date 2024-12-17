@@ -47,14 +47,14 @@ public enum Section
     [Display(Name = "Before Bed")]
     BeforeBed = 1 << 12, // 4096
 
-    [Display(Name = "Anyday")]
-    Anyday = 1 << 13, // 8192
+    [Display(Name = "Any Day")]
+    AnyDay = 1 << 13, // 8192
 
     All = AfterWakingUp | BeforeBreakfast | WithBreakfast | AfterBreakfast
         | BeforeLunch | WithLunch | AfterLunch
         | BeforeDinner | WithDinner | AfterDinner
         | PreWorkout | PostWorkout | BeforeBed
-        | Anyday,
+        | AnyDay,
 }
 
 public static class SectionExtensions
@@ -66,7 +66,7 @@ public static class SectionExtensions
         Section.BeforeLunch or Section.WithLunch or Section.AfterLunch => Theme.Extra,
         Section.BeforeDinner or Section.WithDinner or Section.AfterDinner => Theme.Cooldown,
         Section.PreWorkout or Section.PostWorkout => Theme.Main,
-        Section.Anytime or Section.Anyday => Theme.None,
+        Section.Anytime or Section.AnyDay => Theme.None,
         _ => Theme.None,
     };
 }
