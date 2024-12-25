@@ -128,7 +128,7 @@ window.tdb = function(dbName, dbVersion, storeName) {
 
     this.get = function(storeName, key, callback = (() => { })) {
         if (this.db && key) {
-            let request = this.db.transaction([storeName]).objectStore().get(key)
+            let request = this.db.transaction([storeName]).objectStore(storeName).get(key)
             request.onerror = e => callback(e.target.error);
             request.onsuccess = e => callback(e.target.result);
         }
