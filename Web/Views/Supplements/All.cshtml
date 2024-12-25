@@ -1,0 +1,40 @@
+﻿@model SupplementsViewModel
+@using System.Numerics
+@using Web.Code.Extensions
+@using Core.Models.User
+@using Core.Models
+@using Web.Controllers.Supplements
+
+@{
+    ViewData[ViewData_Blank.Title] = "Supplements";
+}
+
+<details class="alert alert-secondary mb-0" style="position:fixed;top:0;right:0;z-index:1;overflow:auto;max-height:100vh;">
+    <summary class="cursor--pointer">@(Model.FormHasData ? "*" : "")Filter Supplements</summary>
+
+    <form asp-controller="@SupplementsController.Name" asp-action="@nameof(SupplementsController.All)" method="get" style="margin-top:1rem"
+          onsubmit="submitButton.disabled=true;">
+        <div style="margin-bottom:1ex;">
+            <label asp-for="Name" class="control-label">@Html.DisplayNameFor(_ => Model.Name)</label>
+            <input asp-for="Name" type="text" class="form-control" />
+        </div>
+        <div style="margin-bottom:1ex;">
+            <label asp-for="Section" class="control-label">@Html.DisplayNameFor(_ => Model.Section)</label>
+            <select asp-for="Section" class="form-control"
+                    asp-items='@(Enum.GetValues<Section>().AsSelectListItems(EnumViewExtensions.EnumOrdering.Text).Prepend(new SelectListItem() { Text = "" }))'>
+            </select>
+        </div>
+        <div class="row pt-1">
+            <div class="col">
+                <input type="submit" value="Apply" class="btn btn-secondary" name="submitButton" />
+            </div>
+            <div class="col-auto">
+                <a class="btn btn-outline-secondary" asp-controller="@SupplementsController.Name" asp-action="@nameof(SupplementsController.All)">Clear</a>
+            </div>
+        </div>
+    </form>
+</details>
+
+<component type="typeof(Lib.Pages.Shared.Task.TaskSection)" render-mode="Static" param-Tasks='Model.Supplements' param-Theme='Theme.None' param-Verbosity="Verbosity.Debug" />
+
+<component type="typeof(Lib.Pages.Shared.Newsletter.Footnote)" render-mode="Static" param-Count='int.MaxValue' param-Verbosity='Verbosity.Debug' />

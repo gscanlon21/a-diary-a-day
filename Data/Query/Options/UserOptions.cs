@@ -2,9 +2,8 @@
 
 public class UserOptions : IOptions
 {
+    public int? Id { get; }
     public bool NoUser { get; } = true;
-
-    public int Id { get; }
     public DateOnly CreatedDate { get; }
 
     public bool? Ignored { get; set; } = null;
@@ -13,8 +12,8 @@ public class UserOptions : IOptions
 
     public UserOptions(Entities.User.User user)
     {
-        NoUser = false;
         Id = user.Id;
+        NoUser = false;
         CreatedDate = user.CreatedDate;
     }
 }

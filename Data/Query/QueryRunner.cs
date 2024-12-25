@@ -21,13 +21,13 @@ public class QueryRunner
     }
 
     [DebuggerDisplay("{Task}")]
-    public class RecipesQueryResults : ITaskCombo
+    public class TasksQueryResults : ITaskCombo
     {
         public UserTask Task { get; init; } = null!;
     }
 
     [DebuggerDisplay("{Task}")]
-    private class InProgressQueryResults(RecipesQueryResults queryResult) : ITaskCombo
+    private class InProgressQueryResults(TasksQueryResults queryResult) : ITaskCombo
     {
         public UserTask Task { get; } = queryResult.Task;
 
@@ -42,15 +42,15 @@ public class QueryRunner
     public required TaskOptions TaskOptions { get; init; }
     public required ExclusionOptions ExclusionOptions { get; init; }
 
-    private IQueryable<RecipesQueryResults> CreateFilteredTasksQuery(CoreContext context)
+    private IQueryable<TasksQueryResults> CreateFilteredTasksQuery(CoreContext context)
     {
         return context.UserTasks.IgnoreQueryFilters().TagWith(nameof(CreateFilteredTasksQuery))
             .Where(ev => ev.DisabledReason == null || UserOptions.Ignored != false)
             .Where(ev => ev.DisabledReason != null || UserOptions.Ignored != true)
             .Where(t => t.UserId == UserOptions.Id)
-            // Don't grab recipes that we want to ignore.
+            // Don't grab tasks that we want to ignore.
             .Where(vm => !ExclusionOptions.TaskIds.Contains(vm.Id))
-            .Select(r => new RecipesQueryResults()
+            .Select(r => new TasksQueryResults()
             {
                 Task = r,
             });

@@ -28,8 +28,7 @@ public class UserTask
 
     public Guid Uid { get; init; } = Guid.NewGuid();
 
-    [Required]
-    public int UserId { get; init; }
+    public int? UserId { get; init; }
 
     /// <summary>
     /// Friendly name.
@@ -140,7 +139,7 @@ public class UserTask
 
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserTasks))]
-    public virtual User.User User { get; set; } = null!;
+    public virtual User.User? User { get; set; }
 
     [JsonIgnore, InverseProperty(nameof(UserDiaryTask.UserTask))]
     public virtual ICollection<UserDiaryTask> UserDiaryTasks { get; private init; } = null!;
