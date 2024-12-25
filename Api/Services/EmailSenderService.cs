@@ -44,8 +44,8 @@ public class EmailSenderService(ILogger<EmailSenderService> logger, IOptions<Sit
                     }
                     else
                     {
-                        // There is no mail to send, wait a half-minute before retrying.
-                        await Task.Delay(30000, stoppingToken);
+                        // There is no mail to send, wait 10s before retrying.
+                        await Task.Delay(10000, stoppingToken);
                     }
                 }
                 catch (Exception e) when (nextNewsletter != null)
@@ -76,7 +76,7 @@ public class EmailSenderService(ILogger<EmailSenderService> logger, IOptions<Sit
                 finally
                 {
                     // Don't want to spam the email sending server.
-                    await Task.Delay(2000, stoppingToken);
+                    await Task.Delay(3000, stoppingToken);
                 }
             }
 

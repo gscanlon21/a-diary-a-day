@@ -83,7 +83,7 @@ public class UserEditViewModel
 
     public Component[]? ComponentsBinder
     {
-        get => EnumExtensions.GetValuesExcluding32(Component.None).Where(e => Components.HasFlag(e)).ToArray();
+        get => EnumExtensions.GetValuesExcluding(Component.None).Where(e => Components.HasFlag(e)).ToArray();
         set => Components = value?.Aggregate(Component.None, (a, e) => a | e) ?? Component.None;
     }
 

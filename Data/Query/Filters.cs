@@ -31,7 +31,7 @@ public static class Filters
     {
         if (value.HasValue)
         {
-            if (value == Section.None)
+            if (value == Section.Anytime)
             {
                 query = query.Where(vm => vm.Task.Section == value.Value);
             }

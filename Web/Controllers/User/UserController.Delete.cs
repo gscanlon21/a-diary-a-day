@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Web.Controllers.Index;
 using Web.Views.Shared.Components.Edit;
-using Web.Views.User;
 
 namespace Web.Controllers.User;
 

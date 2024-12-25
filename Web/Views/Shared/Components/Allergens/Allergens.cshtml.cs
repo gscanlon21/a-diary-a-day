@@ -2,11 +2,11 @@
 using Data.Entities.User;
 using Web.ViewModels;
 
-namespace Web.Views.Shared.Components.FeastAllergens;
+namespace Web.Views.Shared.Components.Allergens;
 
-public class FeastAllergensViewModel
+public class AllergensViewModel
 {
-    public FeastAllergensViewModel(IList<UserFeastAllergens>? userMoods)
+    public AllergensViewModel(IList<UserAllergens>? userMoods)
     {
         if (userMoods != null)
         {
@@ -33,8 +33,8 @@ public class FeastAllergensViewModel
     public string Token { get; init; } = null!;
     public Data.Entities.User.User User { get; init; } = null!;
 
-    public UserFeastAllergens UserMood { get; init; } = null!;
-    public UserFeastAllergens? PreviousMood { get; init; }
+    public UserAllergens UserMood { get; init; } = null!;
+    public UserAllergens? PreviousMood { get; init; }
 
     internal List<XyGroup> Xys { get; init; } = [];
     internal List<IGrouping<IGroup, XyGroup>> XysGrouped => Xys.Where(xy => xy.Y > 0).GroupBy(xy => xy.Group).ToList();
