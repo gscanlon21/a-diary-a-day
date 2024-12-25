@@ -1,5 +1,6 @@
 ﻿using Core.Models.AFeastADay;
 using Data.Entities.Footnote;
+using Data.Entities.Genetics;
 using Data.Entities.Newsletter;
 using Data.Entities.Task;
 using Data.Entities.User;
@@ -85,6 +86,7 @@ public class CoreContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         ////////// Keys //////////
+        modelBuilder.Entity<StudySupplement>().HasKey(sc => new { sc.StudyId, sc.UserTaskId });
         modelBuilder.Entity<UserComponentSetting>().HasKey(sc => new { sc.UserId, sc.Component });
 
         ////////// Query Filters //////////

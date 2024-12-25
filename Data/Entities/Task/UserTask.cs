@@ -1,5 +1,6 @@
 ﻿using Core.Models.Newsletter;
 using Core.Models.User;
+using Data.Entities.Genetics;
 using Data.Entities.Newsletter;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -147,6 +148,8 @@ public class UserTask
     [JsonIgnore, InverseProperty(nameof(UserTaskLog.UserTask))]
     public virtual ICollection<UserTaskLog> UserTaskLogs { get; private init; } = [];
 
+    [JsonIgnore, InverseProperty(nameof(StudySupplement.UserTask))]
+    public virtual ICollection<StudySupplement> StudySupplements { get; private init; } = null!;
 
     public override int GetHashCode() => HashCode.Combine(Id);
     public override bool Equals(object? obj) => obj is UserTask other
