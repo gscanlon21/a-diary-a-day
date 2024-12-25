@@ -9,10 +9,10 @@
                     <div>Upload Genetics</div>
                 </div>
                 <div class="col-auto pe-0">
+                    <input id="g-upload" type="file" class="btn btn-outline-secondary d-none" />
                     <div class="input-group">
-                        <label for="upload" class="btn btn-outline-secondary">Choose File</label>
-                        <input id="filename" type="text" class="form-control" value="No file choosen" readonly="readonly">
-                        <input id="upload" type="file" class="btn btn-outline-secondary d-none" />
+                        <label for="g-upload" class="btn btn-outline-secondary">Choose File</label>
+                        <input id="g-filename" type="text" class="form-control border-secondary text-secondary" value="No file choosen" disabled="disabled">
                     </div>
                 </div>
             </div>
@@ -35,17 +35,17 @@
         // Set the filename if the file exists.
         db.get(storeName, 'name', (filename) => {
             if (filename) {
-                document.getElementById('filename').value = filename;
+                document.getElementById('g-filename').value = filename;
             }
         });
     }, 1000);
 
-    document.getElementById('upload').addEventListener('change', (e) => {
+    document.getElementById('g-upload').addEventListener('change', (e) => {
         const file = e.target.files[0];
         const fileReader = new FileReader();
 
         fileReader.onload = function (evt) {
-            document.getElementById('filename').value = file.name;
+            document.getElementById('g-filename').value = file.name;
             db.upsert(storeName, 'name', file.name);
 
             const map = new Map();
