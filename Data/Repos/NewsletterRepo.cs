@@ -129,15 +129,38 @@ public partial class NewsletterRepo
             return await NewsletterOld(user, token, currentFeast.Date, currentFeast);
         }
 
-        // User is a debug user. They should see the DebugNewsletter instead.
         if (user.Features.HasFlag(Features.Debug))
         {
+            // User is a debug user. They should see the DebugNewsletter instead.
             _logger.Log(LogLevel.Information, "Returning debug newsletter for user {Id}", user.Id);
-            return null;//await Debug(newsletterContext);
+            Logs.AppendLog(user, $"{date}: Returning debug newsletter");
+            return await Debug(newsletterContext);
         }
 
         _logger.Log(LogLevel.Information, "Returning on day newsletter for user {Id}", user.Id);
         return await OnDayNewsletter(newsletterContext);
+    }
+
+
+    /// <summary>
+    /// A newsletter with loads of debug information used for checking data validity.
+    /// </summary>
+    internal async Task<NewsletterDto?> Debug(NewsletterContext context)
+    {
+        context.User.Verbosity = Verbosity.Debug;
+        var debugTasks = await GetDebugTasks(context.User);
+        var newsletter = await CreateAndAddNewsletterToContext(context, tasks: debugTasks);
+        var userViewModel = new UserNewsletterDto(context.User.AsType<UserDto>()!, context.Token);
+
+        await UpdateLastSeenDate(debugTasks.Select(t => t.Task));
+        return new NewsletterDto
+        {
+            Images = [],
+            User = userViewModel,
+            Verbosity = context.User.Verbosity,
+            UserDiary = newsletter.AsType<UserDiaryDto>()!,
+            Tasks = debugTasks.Select(r => r.AsType<NewsletterTaskDto>()!).ToList(),
+        };
     }
 
     /// <summary>
@@ -236,5 +259,17 @@ public partial class NewsletterRepo
             })
             .Build()
             .Query(_serviceScopeFactory);
+    }
+
+    private async Task<IList<QueryResults>> GetDebugTasks(User user)
+    {
+        return await new QueryBuilder(Section.All)
+            .WithUser(user)
+            .WithTasks(options =>
+            {
+                options.All = true;
+            })
+            .Build()
+            .Query(_serviceScopeFactory, take: 1);
     }
 }

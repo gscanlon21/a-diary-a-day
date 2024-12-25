@@ -28,8 +28,7 @@ public class SupplementsController : ViewController
     {
         viewModel ??= new SupplementsViewModel();
 
-        var queryBuilder = new QueryBuilder(viewModel.Section ?? Section.Anytime);
-
+        var queryBuilder = new QueryBuilder(viewModel.Section);
 
         viewModel.Supplements = (await queryBuilder
             .WithTasks((options) =>

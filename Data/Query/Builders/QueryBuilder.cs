@@ -22,7 +22,7 @@ public class QueryBuilder
         Section = null;
     }
 
-    public QueryBuilder(Section section)
+    public QueryBuilder(Section? section)
     {
         Section = section;
     }
