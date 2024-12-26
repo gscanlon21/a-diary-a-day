@@ -1,0 +1,6 @@
+﻿@model AddViewModel
+@using Web.Controllers.Studies
+
+<form asp-controller="@StudyController.Name" asp-action="@nameof(StudyController.AddPost)">
+    <button class="btn-caps btn-primary" type="submit">Submit</button>
+</form>

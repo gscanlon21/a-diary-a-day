@@ -268,6 +268,7 @@ public partial class NewsletterRepo
             .WithTasks(options =>
             {
                 options.All = true;
+                options.System = true;
             })
             .Build()
             .Query(_serviceScopeFactory, take: 1);

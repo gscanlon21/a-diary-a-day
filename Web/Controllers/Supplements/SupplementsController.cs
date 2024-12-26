@@ -1,5 +1,4 @@
 ﻿using Core.Dtos.Newsletter;
-using Core.Models.Newsletter;
 using Data.Query.Builders;
 using Microsoft.AspNetCore.Mvc;
 using Web.Code.Attributes;

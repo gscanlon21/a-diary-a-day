@@ -32,22 +32,21 @@ public class QueryRunner
         public UserTask Task { get; } = queryResult.Task;
 
         public override int GetHashCode() => HashCode.Combine(Task.Id);
-
         public override bool Equals(object? obj) => obj is InProgressQueryResults other
             && other.Task.Id == Task.Id;
     }
 
     public required UserOptions UserOptions { get; init; }
-    public required SelectionOptions SelectionOptions { get; init; }
     public required TaskOptions TaskOptions { get; init; }
+    public required SelectionOptions SelectionOptions { get; init; }
     public required ExclusionOptions ExclusionOptions { get; init; }
 
     private IQueryable<TasksQueryResults> CreateFilteredTasksQuery(CoreContext context)
     {
         return context.UserTasks.IgnoreQueryFilters().TagWith(nameof(CreateFilteredTasksQuery))
-            .Where(ev => ev.DisabledReason == null || UserOptions.Ignored != false)
             .Where(ev => ev.DisabledReason != null || UserOptions.Ignored != true)
-            .Where(t => t.UserId == UserOptions.Id)
+            .Where(ev => ev.DisabledReason == null || UserOptions.Ignored != false)
+            .Where(t => t.UserId == UserOptions.Id || t.UserId == null && SelectionOptions.System)
             // Don't grab tasks that we want to ignore.
             .Where(vm => !ExclusionOptions.TaskIds.Contains(vm.Id))
             .Select(r => new TasksQueryResults()

@@ -1,0 +1,17 @@
+﻿@model SupplementStudiesViewModel
+@using System.Numerics
+@using Core.Models.Components
+@using Core.Consts
+@using Web.Controllers.Studies
+
+<div class="alert alert-light shadow">
+    <a asp-controller="@StudyController.Name" asp-action="@nameof(StudyController.Add)" asp-route-supplementId="@Model.Supplement.Id">Add Study</a>
+    <form asp-controller="@StudyController.Name" asp-action="@nameof(StudyController.AddPost)">
+        <button class="btn-caps btn-primary" type="submit">Submit</button>
+    </form>
+
+    @foreach (var study in Model.Studies) 
+    {
+        <div>@Json.Serialize(study)</div>
+    }
+</div>

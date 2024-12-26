@@ -13,8 +13,8 @@ namespace Data.Entities.Genetics;
 [DebuggerDisplay("{Exercise} needs {PrerequisiteExercise}")]
 public class StudySupplement
 {
-    public virtual int StudyId { get; private init; }
-    public virtual int UserTaskId { get; private init; }
+    public virtual int StudyId { get; init; }
+    public virtual int UserTaskId { get; init; }
 
 
     [InverseProperty(nameof(Genetics.Study.StudySupplements))]

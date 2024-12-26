@@ -43,7 +43,9 @@
                     </form>
                 </div>
             </div>
+
             @await Component.InvokeAsync(TaskLogViewComponent.Name, new { Model.User, Model.Task })
+            @await Component.InvokeAsync(SupplementStudiesViewComponent.Name, new { Model.User, Model.Task })
         </div>
     </div>
 </div>

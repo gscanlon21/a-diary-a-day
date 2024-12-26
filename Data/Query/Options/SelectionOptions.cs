@@ -15,6 +15,8 @@ public class SelectionOptions : IOptions
         _section = section;
     }
 
+    public bool System { get; set; } = false;
+
     public bool All { get; set; } = false;
 
     /// <summary>
