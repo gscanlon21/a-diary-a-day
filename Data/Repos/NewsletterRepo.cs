@@ -263,7 +263,7 @@ public partial class NewsletterRepo
 
     private async Task<IList<QueryResults>> GetDebugTasks(User user)
     {
-        return await new QueryBuilder(Section.All)
+        return await new QueryBuilder()
             .WithUser(user)
             .WithTasks(options =>
             {
