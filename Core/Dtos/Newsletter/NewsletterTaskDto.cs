@@ -7,7 +7,6 @@ namespace Core.Dtos.Newsletter;
 public class NewsletterTaskDto
 {
     public Section Section { get; init; }
-
     public TaskDto Task { get; init; } = null!;
 
     public override int GetHashCode() => HashCode.Combine(Task);

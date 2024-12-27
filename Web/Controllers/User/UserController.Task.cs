@@ -22,8 +22,11 @@ public partial class UserController
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
         }
 
-        var task = await _context.UserTasks.AsNoTracking()
-            .FirstOrDefaultAsync(ut => ut.UserId == user.Id && ut.Id == taskId);
+        var admin = user.Features.HasFlag(Features.Admin);
+        var task = await _context.UserTasks.AsNoTracking().IgnoreQueryFilters()
+            .Where(ut => ut.UserId == user.Id || (ut.UserId == null && admin))
+            .Where(ut => ut.Id == taskId)
+            .FirstOrDefaultAsync();
 
         if (task == null) { return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage)); }
         return View(new UserManageTaskViewModel()
