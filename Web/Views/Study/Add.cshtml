@@ -3,12 +3,12 @@
 
 <form asp-controller="@StudyController.Name" asp-action="@nameof(StudyController.AddStudyPost)" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" method="post" class="alert alert-light shadow">
     <div class="form-group mb-3">
-        <label asp-for="Source" class="control-label">Source</label>
-        <input asp-for="Source" type="text" class="form-control" required="required" />
+        <label asp-for="Name" class="control-label">Name</label>
+        <input asp-for="Name" type="text" class="form-control" />
     </div>
     <div class="form-group mb-3">
-        <label for="Source" class="control-label">Source</label>
-        <input type="text" name="Source" class="form-control" />
+        <label asp-for="Source" class="control-label">Source</label>
+        <input asp-for="Source" type="text" class="form-control" required="required" />
     </div>
     <div class="form-group">
         <input type="submit" value="Add" class="btn btn-secondary" />

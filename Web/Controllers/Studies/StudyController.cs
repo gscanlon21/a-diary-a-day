@@ -29,11 +29,19 @@ public class StudyController : ViewController
     public const string Name = "Study";
 
     [HttpGet, Route("[action]")]
-    public async Task<IActionResult> AddStudy([FromQuery] int supplementId)
+    public async Task<IActionResult> AddStudy(string email, string token, [FromQuery] int supplementId)
     {
+        var user = await _userRepo.GetUser(email, token);
+        if (user == null)
+        {
+            return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
+        }
+
         return View("Add", new AddViewModel()
         {
-            SupplementId = supplementId
+            User = user,
+            Token = token,
+            SupplementId = supplementId,
         });
     }
 
