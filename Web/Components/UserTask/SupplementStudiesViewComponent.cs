@@ -26,7 +26,7 @@ public class SupplementStudiesViewComponent : ViewComponent
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user, Data.Entities.Task.UserTask task)
     {
-        if (task == null || !user.Features.HasFlag(Features.Admin))
+        if (task?.Type != UserTaskType.Supplement || !user.Features.HasFlag(Features.Admin))
         {
             return Content("");
         }

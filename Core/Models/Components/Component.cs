@@ -99,6 +99,9 @@ public enum Component : long
     [Display(Name = "Gut Fungi", Order = 28)]
     GutFungi = 1L << 28, // 268435456
 
+    [Display(Name = "Saliva Stress", Order = 29)]
+    SalivaStress = 1L << 29, // 536870912
+
 
     #region Disabled Components
 
@@ -141,4 +144,5 @@ public enum Component : long
         | SerumHeart | SerumHeavyMetals | SerumImmuneRegulation | SerumKidney
         | SerumLiver | SerumMaleHealth | SerumFemaleHealth | SerumMetabolic
         | SerumNutrients | SerumPancreas | SerumStress | SerumThyroid
+        | SalivaStress
 }

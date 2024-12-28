@@ -290,6 +290,9 @@ public class User : IUser
     [JsonIgnore, InverseProperty(nameof(UserUrine.User))]
     public virtual ICollection<UserUrine> UserUrines { get; private init; } = null!;
 
+    [JsonIgnore, InverseProperty(nameof(Entities.User.UserSalivaStress.User))]
+    public virtual ICollection<UserSalivaStress> UserSalivaStress { get; private init; } = null!;
+
     [JsonIgnore, InverseProperty(nameof(UserSerumThyroid.User))]
     public virtual ICollection<UserSerumThyroid> UserSerumThyroids { get; private init; } = null!;
 

@@ -195,6 +195,10 @@ else if (Model.Component.HasFlag(Core.Models.Components.Component.GutGoodBacteri
 {
     @await Component.InvokeAsync(GutGoodBacteriaViewComponent.Name, new { Model.User })
 }
+else if (Model.Component.HasFlag(Core.Models.Components.Component.SalivaStress))
+{
+    @await Component.InvokeAsync(SalivaStressViewComponent.Name, new { Model.User })
+}
 else if (Model.Component.HasFlag(Core.Models.Components.Component.DryEyes))
 {
     @await Component.InvokeAsync(DryEyesViewComponent.Name, new { Model.User })
