@@ -4,58 +4,49 @@
 @using Core.Consts
 @using Web.Controllers.Studies
 
-<div class="alert alert-light shadow">
-    <div class="alert alert-secondary" role="alert">
-        <div class="mb-4">
-            <h6 class="mb-1">New Supplement Study</h6>
-            <form asp-controller="@StudyController.Name" asp-action="@nameof(StudyController.AddSupplementStudy)" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" method="post" class="alert alert-light shadow">
-                <div class="form-group mb-3">
-                    <label asp-for="StudyId" class="control-label">Study</label>
-                    <select asp-for="StudyId" asp-items="Model.Studies" class="form-control"></select>
-                    <a asp-controller="@StudyController.Name" asp-action="@nameof(StudyController.AddStudy)" class="form-text"
-                       asp-route-supplementId="@Model.Supplement.Id" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
-                        Add Study
-                    </a>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Add" class="btn btn-secondary" />
-                </div>
-            </form>
+<div class="my-4">
+    <h6 class="mb-1">Supplement Studies</h6>
+    <form asp-controller="@StudyController.Name" asp-action="@nameof(StudyController.AddSupplementStudy)" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" method="post" class="alert alert-light shadow">
+        <div class="form-group mb-3">
+            <label asp-for="StudyId" class="control-label">Study</label>
+            <select asp-for="StudyId" asp-items="Model.Studies" class="form-control"></select>
+            <a asp-controller="@StudyController.Name" asp-action="@nameof(StudyController.AddStudy)" class="form-text"
+                asp-route-supplementId="@Model.Supplement.Id" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
+                Add Study
+            </a>
         </div>
+        <div class="form-group">
+            <input type="submit" value="Add" class="btn btn-secondary" />
+        </div>
+    </form>
+</div>
 
-        @foreach (var studySupplement in Model.StudySupplements)
-        {
-            <form asp-controller="@StudyController.Name" asp-action="@nameof(StudyController.RemoveStudy)" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" method="post">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" name="StudyId" asp-for="@studySupplement.Study.Id" />
+@foreach (var studySupplement in Model.StudySupplements)
+{
+    <form asp-controller="@StudyController.Name" asp-action="@nameof(StudyController.RemoveStudy)" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" name="StudyId" asp-for="@studySupplement.Study.Id" />
 
-                <div class="form-group mt-3">
-                    <div class="input-group">
-                        <textarea class="form-control" disabled="disabled" aria-describedby="exercise-help" rows="2">@studySupplement.Study.Name</textarea>
-                        <input type="submit" value="-" class="btn btn-outline-secondary" />
-                    </div>
-                    <span for="FootnoteId" class="text-danger"></span>
-                    @if (!string.IsNullOrWhiteSpace(studySupplement.Study.Source))
+        <div class="form-group mt-3">
+            <div class="input-group">
+                <textarea class="form-control" disabled="disabled" aria-describedby="exercise-help" rows="2">@studySupplement.Study.Name</textarea>
+                <input type="submit" value="-" class="btn btn-outline-secondary" />
+            </div>
+            <span for="FootnoteId" class="text-danger"></span>
+            @if (!string.IsNullOrWhiteSpace(studySupplement.Study.Source))
+            {
+                var sourceIsLink = Uri.IsWellFormedUriString(studySupplement.Study.Source, UriKind.Absolute);
+                <div class="form-text font-size--smaller">
+                    @if (sourceIsLink)
                     {
-                        var sourceIsLink = Uri.IsWellFormedUriString(studySupplement.Study.Source, UriKind.Absolute);
-                        <div class="form-text font-size--smaller">
-                            @if (sourceIsLink)
-                            {
-                                <a target="_blank" href="@studySupplement.Study.Source">@studySupplement.Study.Source</a>
-                            }
-                            else
-                            {
-                                @studySupplement.Study.Source
-                            }
-                        </div>
+                        <a target="_blank" href="@studySupplement.Study.Source">@studySupplement.Study.Source</a>
+                    }
+                    else
+                    {
+                        @studySupplement.Study.Source
                     }
                 </div>
-            </form>
-        }
-    </div>
-
-    @foreach (var study in Model.StudySupplements) 
-    {
-        <div>@Json.Serialize(study)</div>
-    }
-</div>
+            }
+        </div>
+    </form>
+}
