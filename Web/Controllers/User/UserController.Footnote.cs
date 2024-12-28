@@ -32,8 +32,7 @@ public partial class UserController
         return RedirectToAction(nameof(UserController.Edit), new { email, token });
     }
 
-    [HttpPost]
-    [Route("footnote/remove")]
+    [HttpPost, Route("footnote/remove")]
     public async Task<IActionResult> RemoveFootnote(string email, string token, [FromForm] int footnoteId)
     {
         var user = await _userRepo.GetUser(email, token);

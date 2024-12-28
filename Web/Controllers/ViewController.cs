@@ -4,5 +4,8 @@ namespace Web.Controllers;
 
 public class ViewController : Controller
 {
-    public ViewController() { }
+    /// <summary>
+    /// Message to show to the user when a link has expired.
+    /// </summary>
+    public const string LinkExpiredMessage = "This link has expired.";
 }

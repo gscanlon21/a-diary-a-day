@@ -5,12 +5,53 @@
 @using Web.Controllers.Studies
 
 <div class="alert alert-light shadow">
-    <a asp-controller="@StudyController.Name" asp-action="@nameof(StudyController.Add)" asp-route-supplementId="@Model.Supplement.Id">Add Study</a>
-    <form asp-controller="@StudyController.Name" asp-action="@nameof(StudyController.AddPost)">
-        <button class="btn-caps btn-primary" type="submit">Submit</button>
-    </form>
+    <div class="alert alert-secondary" role="alert">
+        <div class="mb-4">
+            <h6 class="mb-1">New Supplement Study</h6>
+            <form asp-controller="@StudyController.Name" asp-action="@nameof(StudyController.AddSupplementStudy)" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" method="post" class="alert alert-light shadow">
+                <div class="form-group mb-3">
+                    <label asp-for="StudyId" class="control-label">Study</label>
+                    <select asp-for="StudyId" asp-items="Model.Studies" class="form-control" />
+                    <a asp-controller="@StudyController.Name" asp-action="@nameof(StudyController.AddStudy)" asp-route-supplementId="@Model.Supplement.Id" class="form-text">Add Study</a>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Add" class="btn btn-secondary" />
+                </div>
+            </form>
+        </div>
 
-    @foreach (var study in Model.Studies) 
+        @foreach (var studySupplement in Model.StudySupplements)
+        {
+            <form asp-controller="@StudyController.Name" asp-action="@nameof(StudyController.RemoveStudy)" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" name="StudyId" asp-for="@studySupplement.Study.Id" />
+
+                <div class="form-group mt-3">
+                    <div class="input-group">
+                        <textarea class="form-control" disabled="disabled" aria-describedby="exercise-help" rows="2">@studySupplement.Study.Name</textarea>
+                        <input type="submit" value="-" class="btn btn-outline-secondary" />
+                    </div>
+                    <span for="FootnoteId" class="text-danger"></span>
+                    @if (!string.IsNullOrWhiteSpace(studySupplement.Study.Source))
+                    {
+                        var sourceIsLink = Uri.IsWellFormedUriString(studySupplement.Study.Source, UriKind.Absolute);
+                        <div class="form-text font-size--smaller">
+                            @if (sourceIsLink)
+                            {
+                                <a target="_blank" href="@studySupplement.Study.Source">@studySupplement.Study.Source</a>
+                            }
+                            else
+                            {
+                                @studySupplement.Study.Source
+                            }
+                        </div>
+                    }
+                </div>
+            </form>
+        }
+    </div>
+
+    @foreach (var study in Model.StudySupplements) 
     {
         <div>@Json.Serialize(study)</div>
     }

@@ -2,6 +2,7 @@
 using Data;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Web.Views.Shared.Components.SupplementStudies;
 
@@ -31,16 +32,22 @@ public class SupplementStudiesViewComponent : ViewComponent
         }
 
         var token = await _userRepo.AddUserToken(user, durationDays: 1);
-        var userLogs = await _context.StudySupplements
+        var studySupplements = await _context.StudySupplements
             .Where(s => s.UserTaskId == task.Id)
             .ToListAsync();
 
+        var studies = await _context.Studies.ToListAsync();
         return View("SupplementStudies", new SupplementStudiesViewModel()
         {
             User = user,
             Token = token,
             Supplement = task,
-            Studies = userLogs,
+            StudySupplements = studySupplements,
+            Studies = studies.Select(s => new SelectListItem()
+            {
+                Text = s.Source,
+                Value = s.Id.ToString()
+            }).ToList(),
         });
     }
 }

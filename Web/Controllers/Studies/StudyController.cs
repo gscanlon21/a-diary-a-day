@@ -1,8 +1,10 @@
 ﻿using Data;
 using Data.Entities.Genetics;
+using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web.Controllers.User;
+using Web.Views.Shared.Components.SupplementStudies;
 using Web.Views.Study;
 
 namespace Web.Controllers.Studies;
@@ -10,12 +12,14 @@ namespace Web.Controllers.Studies;
 [Route($"{Name}")]
 public class StudyController : ViewController
 {
+    private readonly UserRepo _userRepo;
     private readonly CoreContext _context;
     private readonly IServiceScopeFactory _serviceScopeFactory;
 
-    public StudyController(CoreContext context, IServiceScopeFactory serviceScopeFactory)
+    public StudyController(CoreContext context, UserRepo userRepo, IServiceScopeFactory serviceScopeFactory)
     {
         _context = context;
+        _userRepo = userRepo;
         _serviceScopeFactory = serviceScopeFactory;
     }
 
@@ -24,26 +28,53 @@ public class StudyController : ViewController
     /// </summary>
     public const string Name = "Study";
 
-    [HttpGet, Route("add")]
-    public async Task<IActionResult> Add([FromQuery] int supplementId)
+    [HttpGet, Route("[action]")]
+    public async Task<IActionResult> AddStudy([FromQuery] int supplementId)
     {
-        return View(new AddViewModel()
+        return View("Add", new AddViewModel()
         {
             SupplementId = supplementId
         });
     }
 
-    [HttpPost, Route("add")]
-    public async Task<IActionResult> AddPost(AddViewModel viewModel)
+    [HttpPost, Route("[action]")]
+    public async Task<IActionResult> AddStudyPost(AddViewModel viewModel)
     {
         var task = await _context.UserTasks.FirstOrDefaultAsync(t => t.Id == viewModel.SupplementId);
-        var existingStudy = await _context.StudySupplements.FirstOrDefaultAsync(s => s.UserTaskId == viewModel.SupplementId);
+        var existingStudy = await _context.Studies.FirstOrDefaultAsync(s => s.Source == viewModel.Source);
         if (existingStudy == null)
+        {
+            var newStudy = new Study()
+            {
+                Source = viewModel.Source,
+            };
+
+            _context.Studies.Add(newStudy);
+        }
+        else
+        {
+            existingStudy.Name = viewModel.Name;
+        }
+
+        await _context.SaveChangesAsync();
+        return RedirectToAction(UserController.Name, nameof(UserController.ManageTask), new
+        {
+            TaskId = viewModel.SupplementId,
+        });
+    }
+
+    [HttpPost, Route("[action]")]
+    public async Task<IActionResult> AddSupplementStudy(SupplementStudiesViewModel viewModel)
+    {
+        var task = await _context.UserTasks.FirstOrDefaultAsync(t => t.Id == viewModel.Supplement.Id);
+        var existingStudySupplement = await _context.StudySupplements.FirstOrDefaultAsync(s => s.UserTaskId == viewModel.Supplement.Id);
+        if (existingStudySupplement == null)
         {
             var newStudy = new StudySupplement()
             {
-                UserTaskId = viewModel.SupplementId,
+                UserTaskId = viewModel.Supplement.Id,
             };
+
             _context.StudySupplements.Add(newStudy);
         }
         else
@@ -52,9 +83,32 @@ public class StudyController : ViewController
         }
 
         await _context.SaveChangesAsync();
-        return RedirectToAction(UserController.Name, nameof(UserController.ManageTask), new 
-        { 
-            TaskId = viewModel.SupplementId,
+        return RedirectToAction(UserController.Name, nameof(UserController.ManageTask), new
+        {
+            TaskId = viewModel.Supplement.Id,
         });
+    }
+
+    [HttpPost, Route("remove")]
+    public async Task<IActionResult> RemoveStudy(string email, string token, [FromForm] int studyId)
+    {
+        var user = await _userRepo.GetUser(email, token);
+        if (user == null)
+        {
+            return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
+        }
+
+        /*
+        await _context.UserFootnotes
+            // The user has control of this footnote and is not a built-in footnote.
+            .Where(f => f.UserId == user.Id)
+            .Where(f => f.Id == footnoteId)
+            .ExecuteDeleteAsync();
+
+        await _context.SaveChangesAsync();
+        */
+
+        TempData[TempData_User.SuccessMessage] = "The studies have been updated!";
+        return RedirectToAction(nameof(UserController.Edit), new { email, token });
     }
 }

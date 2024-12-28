@@ -44,11 +44,6 @@ public partial class UserController : ViewController
     /// </summary>
     public const string UserDisabledByUserReason = "Disabled by user.";
 
-    /// <summary>
-    /// Message to show to the user when a link has expired.
-    /// </summary>
-    public const string LinkExpiredMessage = "This link has expired.";
-
     #region Edit User
 
     /// <summary>
