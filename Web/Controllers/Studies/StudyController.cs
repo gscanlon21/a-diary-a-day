@@ -62,6 +62,7 @@ public class StudyController : ViewController
         {
             var newStudy = new Study()
             {
+                Name = viewModel.Name,
                 Source = viewModel.Source,
             };
 
