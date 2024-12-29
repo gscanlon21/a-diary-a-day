@@ -37,8 +37,8 @@ public class SNP
     [JsonIgnore, InverseProperty(nameof(Genetics.Gene.SNPs))]
     public virtual Gene Gene { get; set; } = null!;
 
-    [JsonIgnore, InverseProperty(nameof(Study.SNP))]
-    public virtual ICollection<Study> Studies { get; private init; } = null!;
+    [JsonIgnore, InverseProperty(nameof(StudySNP.SNP))]
+    public virtual ICollection<StudySNP> StudySNPs { get; private init; } = null!;
 
 
     public override int GetHashCode() => HashCode.Combine(Id);

@@ -91,6 +91,7 @@ public class CoreContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         ////////// Keys //////////
+        //modelBuilder.Entity<StudySNP>().HasKey(sc => new { sc.StudyId, sc.SNPId });
         modelBuilder.Entity<StudySupplement>().HasKey(sc => new { sc.StudyId, sc.UserTaskId });
         modelBuilder.Entity<UserComponentSetting>().HasKey(sc => new { sc.UserId, sc.Component });
 

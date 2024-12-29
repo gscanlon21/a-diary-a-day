@@ -43,8 +43,8 @@ public class Study
     }
 
 
-    [JsonIgnore, InverseProperty(nameof(Genetics.SNP.Studies))]
-    public virtual SNP SNP { get; set; } = null!;
+    [JsonIgnore, InverseProperty(nameof(StudySNP.Study))]
+    public virtual ICollection<StudySNP> StudySNPs { get; set; } = null!;
 
     [JsonIgnore, InverseProperty(nameof(StudySupplement.Study))]
     public virtual ICollection<StudySupplement> StudySupplements { get; private init; } = null!;

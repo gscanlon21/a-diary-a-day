@@ -13,6 +13,103 @@
         <label asp-for="Source" class="control-label">Source</label>
         <input asp-for="Source" type="text" class="form-control" required="required" />
     </div>
+
+    <div class="mb-3">
+        <div><b>Edit SNPs</b></div>
+        <span asp-validation-for="SNPs" class="text-danger"></span>
+        <div class="mt-1 ps-3">
+            @for (int id = 0; id < Model.SNPs.Count; id++)
+            {
+                var userIngredient = Model.SNPs[id];
+                <div id="custom-ingredient-@id" class="mb-4 custom-ingredient @(userIngredient.Hide ? "d-none" : "")" data-day="@id">
+                    <input id="hide-ingredient-input-@id" type="hidden" asp-for="SNPs[id].Hide" />
+                    <input type="hidden" asp-for="SNPs[id].Order" value="@id" />
+                    <input type="hidden" asp-for="SNPs[id].Id" />
+
+                    <div class="form-group row">
+                        <div class="col">
+                            <label asp-for="SNPs[id].GeneId" class="control-label">@Html.DisplayNameFor(_ => Model.SNPs[id].GeneId)</label>
+                            <select asp-for="SNPs[id].GeneId" class="form-control searchable" aria-describedby="ingredient-help"
+                                    asp-items="@Model.SNPSelectList">
+                            </select>
+                            <span asp-validation-for="SNPs[id].GeneId" class="text-danger"></span>
+                            <span id="ingredient-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.SNPs[id].GeneId)</span>
+                        </div>
+
+                        <div class="col">
+                            <label asp-for="SNPs[id].SNPId" class="control-label">@Html.DisplayNameFor(_ => Model.SNPs[id].SNPId)</label>
+                            <select asp-for="SNPs[id].SNPId" class="form-control searchable" aria-describedby="ingredient-recipe-help"
+                                    asp-items="@Model.SNPSelectList">
+                            </select>
+                            <span asp-validation-for="SNPs[id].SNPId" class="text-danger"></span>
+                            <span id="ingredient-recipe-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.SNPs[id].SNPId)</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="SNPs[id].EffectAllele" class="control-label">@Html.DisplayNameFor(_ => Model.SNPs[id].EffectAllele)</label>
+                        <input asp-for="SNPs[id].EffectAllele" type="text" class="form-control" aria-describedby="measure-help" />
+                        <span asp-validation-for="SNPs[id].EffectAllele" class="text-danger"></span>
+                        <span id="measure-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.SNPs[id].EffectAllele)</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="SNPs[id].Notes" class="control-label">@Html.DisplayNameFor(_ => Model.SNPs[id].Notes)</label>
+                        <input asp-for="SNPs[id].Notes" type="text" class="form-control" aria-describedby="notes-help" />
+                        <span asp-validation-for="SNPs[id].Notes" class="text-danger"></span>
+                        <span id="notes-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.SNPs[id].Notes)</span>
+                    </div>
+                </div>
+            }
+            <div class="btn-group">
+                <button id="custom-ingredient-add-button" type="button" class="btn btn-outline-primary">Add</button>
+                <button id="custom-ingredient-remove-button" type="button" class="btn btn-outline-secondary @(Model.SNPs.Count(i => !i.Hide) == 1 ? "d-none" : "")">Remove</button>
+            </div>
+        </div>
+
+        <script defer="defer">
+            document.getElementById('custom-ingredient-add-button').addEventListener('click', (e) => {
+                const ingredients = Array.from(document.getElementsByClassName('custom-ingredient'));
+                for (const ingredient of ingredients) {
+                    if (ingredient.classList.contains('d-none')) {
+                        // Unhide the ingredient
+                        ingredient.classList.remove('d-none');
+                        document.getElementById('hide-ingredient-input-' + ingredient.dataset.day).value = 'False';
+                        break;
+                    }
+                }
+
+                // Always show the remove button after adding a ingredient
+                document.getElementById('custom-ingredient-remove-button').classList.remove('d-none');
+
+                // Hide the add button if we have already shown all ingredients
+                if (ingredients.every(f => !f.classList.contains('d-none'))) {
+                    e.currentTarget.classList.add('d-none');
+                }
+            });
+
+            document.getElementById('custom-ingredient-remove-button').addEventListener('click', (e) => {
+                const ingredients = Array.from(document.getElementsByClassName('custom-ingredient'));
+                for (const ingredient of ingredients.reverse()) {
+                    if (!ingredient.classList.contains('d-none')) {
+                        // Hide the ingredient
+                        ingredient.classList.add('d-none');
+                        document.getElementById('hide-ingredient-input-' + ingredient.dataset.day).value = 'True';
+                        break;
+                    }
+                }
+
+                // Always show the add button after removing a ingredient
+                document.getElementById('custom-ingredient-add-button').classList.remove('d-none');
+
+                // Hide the remove button when there is one remaining ingredient
+                if (ingredients.filter(f => !f.classList.contains('d-none')).length === 1) {
+                    e.currentTarget.classList.add('d-none');
+                }
+            });
+        </script>
+    </div>
+
     <div class="form-group">
         <input type="submit" value="Add" class="btn btn-secondary" />
     </div>

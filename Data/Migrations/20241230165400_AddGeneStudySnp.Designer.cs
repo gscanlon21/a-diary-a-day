@@ -3,6 +3,7 @@ using System;
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Data.Migrations
 {
     [DbContext(typeof(CoreContext))]
-    partial class CoreContextModelSnapshot : ModelSnapshot
+    [Migration("20241230165400_AddGeneStudySnp")]
+    partial class AddGeneStudySnp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -162,18 +165,25 @@ namespace Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("EffectAllele")
-                        .IsRequired()
+                    b.Property<string>("Attributes")
                         .HasColumnType("text");
 
                     b.Property<int?>("GeneId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Notes")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Measure")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("Optional")
+                        .HasColumnType("boolean");
 
                     b.Property<int>("Order")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("QuantityDenominator")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("QuantityNumerator")
                         .HasColumnType("integer");
 
                     b.Property<int?>("SNPId")

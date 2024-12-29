@@ -3,6 +3,7 @@ using Data;
 using Data.Entities.Genetics;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Web.Controllers.User;
 using Web.Views.Shared.Components.SupplementStudies;
@@ -38,12 +39,38 @@ public class StudyController : ViewController
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
         }
 
+        var snps = new List<StudySNP>(10);
+        while (snps.Count < 10)
+        {
+            snps.Add(new StudySNP
+            {
+                Hide = snps.Count > 0
+            });
+        }
+
+        var geneSelectList = (await _context.Genes.ToListAsync())
+            .Select(s => new SelectListItem()
+            {
+                Text = s.Name,
+                Value = s.Id.ToString()
+            }).ToList();
+
+        var snpSelectList = (await _context.SNPs.ToListAsync())
+            .Select(s => new SelectListItem()
+            {
+                Text = s.Name,
+                Value = s.Id.ToString()
+            }).ToList();
+
         return View("Add", new AddViewModel()
         {
             User = user,
+            SNPs = snps,
             Token = token,
             Section = section,
             SupplementId = supplementId,
+            SNPSelectList = snpSelectList,
+            GeneSelectList = geneSelectList,
         });
     }
 
@@ -64,6 +91,7 @@ public class StudyController : ViewController
             {
                 Name = viewModel.Name,
                 Source = viewModel.Source,
+                StudySNPs = viewModel.SNPs.Where(i => !i.Hide).ToList()
             };
 
             _context.Studies.Add(newStudy);
@@ -71,6 +99,7 @@ public class StudyController : ViewController
         else
         {
             existingStudy.Name = viewModel.Name;
+            existingStudy.StudySNPs = viewModel.SNPs.Where(i => !i.Hide).ToList();
         }
 
         await _context.SaveChangesAsync();

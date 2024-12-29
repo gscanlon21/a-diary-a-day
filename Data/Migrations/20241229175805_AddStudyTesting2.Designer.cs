@@ -3,6 +3,7 @@ using System;
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Data.Migrations
 {
     [DbContext(typeof(CoreContext))]
-    partial class CoreContextModelSnapshot : ModelSnapshot
+    [Migration("20241229175805_AddStudyTesting2")]
+    partial class AddStudyTesting2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -162,18 +165,22 @@ namespace Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("EffectAllele")
-                        .IsRequired()
+                    b.Property<string>("Attributes")
                         .HasColumnType("text");
 
-                    b.Property<int?>("GeneId")
+                    b.Property<int>("Measure")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Notes")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<bool>("Optional")
+                        .HasColumnType("boolean");
 
                     b.Property<int>("Order")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("QuantityDenominator")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("QuantityNumerator")
                         .HasColumnType("integer");
 
                     b.Property<int?>("SNPId")
@@ -183,8 +190,6 @@ namespace Data.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GeneId");
 
                     b.HasIndex("SNPId");
 
@@ -2903,10 +2908,6 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Entities.Genetics.StudySNP", b =>
                 {
-                    b.HasOne("Data.Entities.Genetics.Gene", "Gene")
-                        .WithMany("StudySNPs")
-                        .HasForeignKey("GeneId");
-
                     b.HasOne("Data.Entities.Genetics.SNP", "SNP")
                         .WithMany("StudySNPs")
                         .HasForeignKey("SNPId");
@@ -2916,8 +2917,6 @@ namespace Data.Migrations
                         .HasForeignKey("StudyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Gene");
 
                     b.Navigation("SNP");
 
@@ -3700,8 +3699,6 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Entities.Genetics.Gene", b =>
                 {
                     b.Navigation("SNPs");
-
-                    b.Navigation("StudySNPs");
                 });
 
             modelBuilder.Entity("Data.Entities.Genetics.SNP", b =>
