@@ -44,8 +44,8 @@
                 </div>
             </div>
 
-            @await Component.InvokeAsync(TaskLogViewComponent.Name, new { Model.User, Model.Task })
-            @await Component.InvokeAsync(SupplementStudiesViewComponent.Name, new { Model.User, Model.Task })
+            @await Component.InvokeAsync(TaskLogViewComponent.Name, new { Model.User, Model.Task, Model.Section })
+            @await Component.InvokeAsync(SupplementStudiesViewComponent.Name, new { Model.User, Model.Task, Model.Section })
         </div>
     </div>
 </div>

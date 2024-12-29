@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using Core.Models.Newsletter;
+using Data;
 using Data.Entities.Genetics;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +30,7 @@ public class StudyController : ViewController
     public const string Name = "Study";
 
     [HttpGet, Route("[action]")]
-    public async Task<IActionResult> AddStudy(string email, string token, [FromQuery] int supplementId)
+    public async Task<IActionResult> AddStudy(string email, string token, [FromQuery] int supplementId, [FromQuery] Section section)
     {
         var user = await _userRepo.GetUser(email, token);
         if (user == null)
@@ -41,13 +42,20 @@ public class StudyController : ViewController
         {
             User = user,
             Token = token,
+            Section = section,
             SupplementId = supplementId,
         });
     }
 
     [HttpPost, Route("[action]")]
-    public async Task<IActionResult> AddStudyPost(AddViewModel viewModel)
+    public async Task<IActionResult> AddStudyPost(string email, string token, AddViewModel viewModel)
     {
+        var user = await _userRepo.GetUser(email, token);
+        if (user == null)
+        {
+            return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
+        }
+
         var task = await _context.UserTasks.FirstOrDefaultAsync(t => t.Id == viewModel.SupplementId);
         var existingStudy = await _context.Studies.FirstOrDefaultAsync(s => s.Source == viewModel.Source);
         if (existingStudy == null)
@@ -67,6 +75,7 @@ public class StudyController : ViewController
         await _context.SaveChangesAsync();
         return RedirectToAction(UserController.Name, nameof(UserController.ManageTask), new
         {
+            viewModel.Section,
             TaskId = viewModel.SupplementId,
         });
     }

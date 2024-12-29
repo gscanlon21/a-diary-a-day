@@ -1,4 +1,5 @@
-﻿using Data.Entities.Genetics;
+﻿using Core.Models.Newsletter;
+using Data.Entities.Genetics;
 using Data.Entities.Task;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -7,7 +8,7 @@ namespace Web.Views.Shared.Components.SupplementStudies;
 public class SupplementStudiesViewModel
 {
     public required Data.Entities.User.User User { get; init; }
-
+    public required Section Section { get; init; }
     public required string Token { get; init; }
 
     public required IList<SelectListItem> Studies { get; init; }

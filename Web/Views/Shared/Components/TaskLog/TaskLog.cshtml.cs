@@ -1,4 +1,5 @@
-﻿using Data.Entities.Task;
+﻿using Core.Models.Newsletter;
+using Data.Entities.Task;
 using Web.ViewModels;
 
 namespace Web.Views.Shared.Components.TaskLog;
@@ -27,7 +28,7 @@ public class TaskLogViewModel
     }
 
     public Data.Entities.User.User User { get; }
-
+    public required Section Section { get; init; }
     public required string Token { get; init; }
 
     public UserTask Task { get; }

@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using Core.Models.Newsletter;
+using Data;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +23,7 @@ public class TaskLogViewComponent : ViewComponent
     /// </summary>
     public const string Name = "TaskLog";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user, Data.Entities.Task.UserTask task)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user, Data.Entities.Task.UserTask task, Section section)
     {
         if (task == null) { return Content(""); }
 
@@ -34,6 +35,7 @@ public class TaskLogViewComponent : ViewComponent
         return View("TaskLog", new TaskLogViewModel(user, task, userLogs)
         {
             Token = token,
+            Section = section,
             Name = task.Uid.ToString(),
         });
     }

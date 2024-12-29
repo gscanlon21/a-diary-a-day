@@ -1,4 +1,5 @@
-﻿using Core.Models.User;
+﻿using Core.Models.Newsletter;
+using Core.Models.User;
 using Data;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +25,7 @@ public class SupplementStudiesViewComponent : ViewComponent
     /// </summary>
     public const string Name = "SupplementStudies";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user, Data.Entities.Task.UserTask task)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user, Data.Entities.Task.UserTask task, Section section)
     {
         if (task?.Type != UserTaskType.Supplement || !user.Features.HasFlag(Features.Admin))
         {
@@ -41,6 +42,7 @@ public class SupplementStudiesViewComponent : ViewComponent
         {
             User = user,
             Token = token,
+            Section = section,
             Supplement = task,
             StudySupplements = studySupplements,
             Studies = studies.Select(s => new SelectListItem()

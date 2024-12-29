@@ -2,6 +2,9 @@
 @using Web.Controllers.Studies
 
 <form asp-controller="@StudyController.Name" asp-action="@nameof(StudyController.AddStudyPost)" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" method="post" class="alert alert-light shadow">
+    <input type="hidden" asp-for="Section" />
+    <input type="hidden" asp-for="SupplementId" />
+
     <div class="form-group mb-3">
         <label asp-for="Name" class="control-label">Name</label>
         <input asp-for="Name" type="text" class="form-control" />

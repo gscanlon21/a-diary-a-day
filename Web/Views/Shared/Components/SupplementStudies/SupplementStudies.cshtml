@@ -11,7 +11,7 @@
             <label asp-for="StudyId" class="control-label">Study</label>
             <select asp-for="StudyId" asp-items="Model.Studies" class="form-control"></select>
             <a asp-controller="@StudyController.Name" asp-action="@nameof(StudyController.AddStudy)" class="form-text"
-                asp-route-supplementId="@Model.Supplement.Id" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
+                asp-route-supplementId="@Model.Supplement.Id" asp-route-section="@Model.Section" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
                 Add Study
             </a>
         </div>
