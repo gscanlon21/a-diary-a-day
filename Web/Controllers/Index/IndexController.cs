@@ -12,8 +12,20 @@ using Web.Views.Index;
 
 namespace Web.Controllers.Index;
 
-public class IndexController(CoreContext context, UserRepo userRepo, CaptchaService captchaService, IOptions<SiteSettings> siteSettings) : ViewController()
+public class IndexController : ViewController
 {
+    private readonly UserRepo _userRepo;
+    private readonly CoreContext _context;
+    private readonly CaptchaService _captchaService;
+    private readonly IOptions<SiteSettings> _siteSettings;
+
+    public IndexController(CoreContext context, UserRepo userRepo, CaptchaService captchaService, IOptions<SiteSettings> siteSettings)
+    {
+        _context = context;
+        _userRepo = userRepo;
+        _siteSettings = siteSettings;
+        _captchaService = captchaService;
+    }
 
     /// <summary>
     /// The name of the controller for routing purposes
@@ -43,18 +55,19 @@ public class IndexController(CoreContext context, UserRepo userRepo, CaptchaServ
 
     [Route(""), HttpPost]
     public async Task<IActionResult> Create(
-        [Bind("Email,AcceptedTerms,IsNewToFitness,IExist", Prefix = nameof(UserCreateViewModel))] UserCreateViewModel viewModel,
+        [Bind("Email,AcceptedTerms,IExist", Prefix = nameof(UserCreateViewModel))] UserCreateViewModel viewModel,
         [FromForm(Name = "frc-captcha-solution")] string frcCaptchaSolution)
     {
-        if (ModelState.IsValid && captchaService.VerifyCaptcha(frcCaptchaSolution).Result?.Success != false)
+        // Need to look up PHI regulations.
+        if (false && ModelState.IsValid && _captchaService.VerifyCaptcha(frcCaptchaSolution).Result?.Success != false)
         {
             var newUser = new Data.Entities.User.User(viewModel.Email, viewModel.AcceptedTerms);
 
             try
             {
                 // This will set the Id prop on newUser when changes are saved.
-                context.Add(newUser);
-                await context.SaveChangesAsync();
+                _context.Add(newUser);
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateException e) when (e.InnerException != null && e.InnerException.Message.Contains("duplicate key"))
             {
@@ -66,7 +79,7 @@ public class IndexController(CoreContext context, UserRepo userRepo, CaptchaServ
             await SendConfirmationEmail(newUser);
 
             // Need a token for if the user chooses to manage their preferences after signup.
-            var token = await userRepo.AddUserToken(newUser, durationDays: 1);
+            var token = await _userRepo.AddUserToken(newUser, durationDays: 1);
             TempData[TempData_User.SuccessMessage] = "Thank you! Please accept the account confirmation email in your inbox to begin receiving workouts.";
             return RedirectToAction(nameof(UserController.Edit), UserController.Name, new { newUser.Email, token });
         }
@@ -83,10 +96,10 @@ public class IndexController(CoreContext context, UserRepo userRepo, CaptchaServ
         [Bind("Email,IExist", Prefix = "UserLoginViewModel")] UserLoginViewModel viewModel,
         [FromForm(Name = "frc-captcha-solution")] string frcCaptchaSolution)
     {
-        if (ModelState.IsValid && captchaService.VerifyCaptcha(frcCaptchaSolution).Result?.Success != false)
+        if (ModelState.IsValid && _captchaService.VerifyCaptcha(frcCaptchaSolution).Result?.Success != false)
         {
             // Not going through the normal GetUser route, we don't have a token.
-            var unauthenticatedUser = await context.Users
+            var unauthenticatedUser = await _context.Users
                 // TODO email type for transactional or marketing workouts.
                 // User has not been sent an email today. Disabling this, we have a captcha now and it's possible someone's email bounces and they need a second email to send.
                 //.Where(u => u.LastActive.HasValue || !u.UserEmails.Where(un => un.Subject == NewsletterConsts.SubjectConfirm).Any(d => d.Date == Today))
@@ -120,12 +133,12 @@ public class IndexController(CoreContext context, UserRepo userRepo, CaptchaServ
 
     private async Task SendConfirmationEmail(Data.Entities.User.User unauthenticatedUser)
     {
-        var token = await userRepo.AddUserToken(unauthenticatedUser, durationDays: 100); // Needs to last at least 3 months by law for unsubscribe link.
+        var token = await _userRepo.AddUserToken(unauthenticatedUser, durationDays: 100); // Needs to last at least 3 months by law for unsubscribe link.
         var userNewsletter = new UserEmail(unauthenticatedUser)
         {
             Subject = EmailConsts.SubjectConfirm,
             Body = $@"
-This is an account confirmation email for your newly created <a href='{siteSettings.Value.WebLink}'>{siteSettings.Value.Name}</a> account. If this was not you, you can safely ignore this email.
+This is an account confirmation email for your newly created <a href='{_siteSettings.Value.WebLink}'>{_siteSettings.Value.Name}</a> account. If this was not you, you can safely ignore this email.
 <br><br>
 <a rel='noopener noreferrer' target='_blank' href='{Url.ActionLink(nameof(UserController.IAmStillHere), UserController.Name, new { unauthenticatedUser.Email, token })}'>Confirm my account</a>
 <br><br>
@@ -134,22 +147,22 @@ This is an account confirmation email for your newly created <a href='{siteSetti
 <hr style='margin-block:1ex;'>
 <span><a href='{Url.PageLink("/Terms")}' rel='noopener noreferrer' target='_blank'>Terms of Use</a> | <a href='{Url.PageLink("/Privacy")}' rel='noopener noreferrer' target='_blank'>Privacy</a></span>
 <hr style='margin-block:1ex;'>
-<span><a href='mailto:help@{siteSettings.Value.Domain}' rel='noopener noreferrer' target='_blank'>Contact Us</a> | <a href='{siteSettings.Value.Source}' rel='noopener noreferrer' target='_blank'>Source</a></span>
+<span><a href='mailto:help@{_siteSettings.Value.Domain}' rel='noopener noreferrer' target='_blank'>Contact Us</a> | <a href='{_siteSettings.Value.Source}' rel='noopener noreferrer' target='_blank'>Source</a></span>
 ",
         };
 
-        context.UserEmails.Add(userNewsletter);
-        await context.SaveChangesAsync();
+        _context.UserEmails.Add(userNewsletter);
+        await _context.SaveChangesAsync();
     }
 
     private async Task SendLoginEmail(Data.Entities.User.User unauthenticatedUser)
     {
-        var token = await userRepo.AddUserToken(unauthenticatedUser, durationDays: 100); // Needs to last at least 3 months by law for unsubscribe link.
+        var token = await _userRepo.AddUserToken(unauthenticatedUser, durationDays: 100); // Needs to last at least 3 months by law for unsubscribe link.
         var userNewsletter = new UserEmail(unauthenticatedUser)
         {
             Subject = EmailConsts.SubjectLogin,
             Body = $@"
-Access to login to your <a href='{siteSettings.Value.WebLink}'>{siteSettings.Value.Name}</a> account was recently requested. If this was not you, you can safely ignore this email.
+Access to login to your <a href='{_siteSettings.Value.WebLink}'>{_siteSettings.Value.Name}</a> account was recently requested. If this was not you, you can safely ignore this email.
 <br><br>
 <a rel='noopener noreferrer' target='_blank' href='{Url.ActionLink(nameof(UserController.IAmStillHere), UserController.Name, new { unauthenticatedUser.Email, token })}'>Login to my account</a>
 <br><br>
@@ -158,12 +171,12 @@ Access to login to your <a href='{siteSettings.Value.WebLink}'>{siteSettings.Val
 <hr style='margin-block:1ex;'>
 <span><a href='{Url.PageLink("/Terms")}' rel='noopener noreferrer' target='_blank'>Terms of Use</a> | <a href='{Url.PageLink("/Privacy")}' rel='noopener noreferrer' target='_blank'>Privacy</a></span>
 <hr style='margin-block:1ex;'>
-<span><a href='mailto:help@{siteSettings.Value.Domain}' rel='noopener noreferrer' target='_blank'>Contact Us</a> | <a href='{siteSettings.Value.Source}' rel='noopener noreferrer' target='_blank'>Source</a></span>
+<span><a href='mailto:help@{_siteSettings.Value.Domain}' rel='noopener noreferrer' target='_blank'>Contact Us</a> | <a href='{_siteSettings.Value.Source}' rel='noopener noreferrer' target='_blank'>Source</a></span>
 ",
         };
 
-        context.UserEmails.Add(userNewsletter);
-        await context.SaveChangesAsync();
+        _context.UserEmails.Add(userNewsletter);
+        await _context.SaveChangesAsync();
     }
 
     #endregion
@@ -178,13 +191,13 @@ Access to login to your <a href='{siteSettings.Value.WebLink}'>{siteSettings.Val
         var email = viewModel.Email.Trim();
 
         // Don't let users signup as our domain.
-        if (email.Contains(siteSettings.Value.Domain, StringComparison.OrdinalIgnoreCase))
+        if (email.Contains(_siteSettings.Value.Domain, StringComparison.OrdinalIgnoreCase))
         {
             return new JsonResult("Invalid email.");
         }
 
         // The same user is already signed up.
-        if (await context.Users.AnyAsync(u => EF.Functions.ILike(u.Email, email)))
+        if (await _context.Users.AnyAsync(u => EF.Functions.ILike(u.Email, email)))
         {
             return new JsonResult("Invalid email.");
         }
