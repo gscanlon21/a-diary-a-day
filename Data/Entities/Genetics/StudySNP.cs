@@ -25,7 +25,7 @@ public class StudySNP
 
     [Display(Name = "Gene")]
     public virtual int? GeneId { get; init; }
-    
+
     [Display(Name = "SNP")]
     public virtual int? SNPId { get; init; }
 

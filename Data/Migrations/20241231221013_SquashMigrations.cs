@@ -27,6 +27,37 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "gene",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Notes = table.Column<string>(type: "text", nullable: true),
+                    DisabledReason = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_gene", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "study",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Notes = table.Column<string>(type: "text", nullable: true),
+                    Source = table.Column<string>(type: "text", nullable: false),
+                    DisabledReason = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_study", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "user",
                 columns: table => new
                 {
@@ -67,6 +98,28 @@ namespace Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_user_diary", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "snp",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Notes = table.Column<string>(type: "text", nullable: true),
+                    DisabledReason = table.Column<string>(type: "text", nullable: true),
+                    GeneId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_snp", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_snp_gene_GeneId",
+                        column: x => x.GeneId,
+                        principalTable: "gene",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -147,6 +200,27 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "user_allergens",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Allergens = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_allergens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_allergens_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "user_anger",
                 columns: table => new
                 {
@@ -192,6 +266,28 @@ namespace Data.Migrations
                     table.PrimaryKey("PK_user_anxiety", x => x.Id);
                     table.ForeignKey(
                         name: "FK_user_anxiety_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_blood_pressure",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    SystolicPressure = table.Column<int>(type: "integer", nullable: false),
+                    DiastolicPressure = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_blood_pressure", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_blood_pressure_user_UserId",
                         column: x => x.UserId,
                         principalTable: "user",
                         principalColumn: "Id",
@@ -523,27 +619,6 @@ namespace Data.Migrations
                     table.PrimaryKey("PK_user_emotion", x => x.Id);
                     table.ForeignKey(
                         name: "FK_user_emotion_user_UserId",
-                        column: x => x.UserId,
-                        principalTable: "user",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "user_feast_allergens",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserId = table.Column<int>(type: "integer", nullable: false),
-                    Date = table.Column<DateOnly>(type: "date", nullable: false),
-                    Allergens = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_user_feast_allergens", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_user_feast_allergens_user_UserId",
                         column: x => x.UserId,
                         principalTable: "user",
                         principalColumn: "Id",
@@ -1041,6 +1116,438 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "user_saliva_stress",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    MorningCortisol = table.Column<double>(type: "double precision", nullable: true),
+                    DaytimeCortisol = table.Column<double>(type: "double precision", nullable: true),
+                    EveningCortisol = table.Column<double>(type: "double precision", nullable: true),
+                    NightCortisol = table.Column<double>(type: "double precision", nullable: true),
+                    DHEA = table.Column<double>(type: "double precision", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_saliva_stress", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_saliva_stress_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_serum_autoimmunity",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    AntinuclearAntibodies = table.Column<int>(type: "integer", nullable: true),
+                    RheumatoidFactor = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_serum_autoimmunity", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_serum_autoimmunity_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_serum_blood",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Hematocrit = table.Column<double>(type: "double precision", nullable: true),
+                    Hemoglobin = table.Column<double>(type: "double precision", nullable: true),
+                    MCH = table.Column<double>(type: "double precision", nullable: true),
+                    MCHC = table.Column<double>(type: "double precision", nullable: true),
+                    MCV = table.Column<double>(type: "double precision", nullable: true),
+                    MPV = table.Column<double>(type: "double precision", nullable: true),
+                    PlateletCount = table.Column<double>(type: "double precision", nullable: true),
+                    RBCCount = table.Column<double>(type: "double precision", nullable: true),
+                    RDW = table.Column<double>(type: "double precision", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_serum_blood", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_serum_blood_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_serum_electolytes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Calcium = table.Column<double>(type: "double precision", nullable: true),
+                    CarbonDioxide = table.Column<double>(type: "double precision", nullable: true),
+                    Chloride = table.Column<double>(type: "double precision", nullable: true),
+                    Magnesium = table.Column<double>(type: "double precision", nullable: true),
+                    Potassium = table.Column<double>(type: "double precision", nullable: true),
+                    Sodium = table.Column<double>(type: "double precision", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_serum_electolytes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_serum_electolytes_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_serum_female_health",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    SHBG = table.Column<double>(type: "double precision", nullable: true),
+                    FreePSA = table.Column<double>(type: "double precision", nullable: true),
+                    DHEASulfate = table.Column<double>(type: "double precision", nullable: true),
+                    E2 = table.Column<double>(type: "double precision", nullable: true),
+                    FSH = table.Column<double>(type: "double precision", nullable: true),
+                    LH = table.Column<double>(type: "double precision", nullable: true),
+                    Prolactin = table.Column<double>(type: "double precision", nullable: true),
+                    TotalPSA = table.Column<double>(type: "double precision", nullable: true),
+                    FreePSAPercent = table.Column<double>(type: "double precision", nullable: true),
+                    FreeTestosterone = table.Column<double>(type: "double precision", nullable: true),
+                    TotalTestosterone = table.Column<double>(type: "double precision", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_serum_female_health", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_serum_female_health_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_serum_heart",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    HDLLarge = table.Column<double>(type: "double precision", nullable: true),
+                    LDLMedium = table.Column<double>(type: "double precision", nullable: true),
+                    LDLParticleNumber = table.Column<double>(type: "double precision", nullable: true),
+                    LDLPattern = table.Column<double>(type: "double precision", nullable: true),
+                    LDLPeakSize = table.Column<double>(type: "double precision", nullable: true),
+                    LDLSmall = table.Column<double>(type: "double precision", nullable: true),
+                    LDLCholesterol = table.Column<double>(type: "double precision", nullable: true),
+                    NonHDLCholesterol = table.Column<double>(type: "double precision", nullable: true),
+                    HsCRP = table.Column<double>(type: "double precision", nullable: true),
+                    LipoproteinA = table.Column<double>(type: "double precision", nullable: true),
+                    TotalCholesterol = table.Column<double>(type: "double precision", nullable: true),
+                    TotalCholesterolHDL = table.Column<double>(type: "double precision", nullable: true),
+                    HDLCholesterol = table.Column<double>(type: "double precision", nullable: true),
+                    Triglycerides = table.Column<double>(type: "double precision", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_serum_heart", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_serum_heart_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_serum_heavy_metals",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Lead = table.Column<double>(type: "double precision", nullable: true),
+                    Mercury = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_serum_heavy_metals", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_serum_heavy_metals_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_serum_immune_regulation",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    BasophilisPercent = table.Column<double>(type: "double precision", nullable: true),
+                    EosinophilisPercent = table.Column<double>(type: "double precision", nullable: true),
+                    LymphocytesPercent = table.Column<double>(type: "double precision", nullable: true),
+                    MonocytesPercent = table.Column<double>(type: "double precision", nullable: true),
+                    NeutrophilisPercent = table.Column<double>(type: "double precision", nullable: true),
+                    Basophilis = table.Column<double>(type: "double precision", nullable: true),
+                    Eosinophilis = table.Column<double>(type: "double precision", nullable: true),
+                    Lymphocytes = table.Column<double>(type: "double precision", nullable: true),
+                    Monocytes = table.Column<double>(type: "double precision", nullable: true),
+                    Neutrophilis = table.Column<double>(type: "double precision", nullable: true),
+                    HsCRP = table.Column<double>(type: "double precision", nullable: true),
+                    WBCCount = table.Column<double>(type: "double precision", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_serum_immune_regulation", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_serum_immune_regulation_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_serum_kidney",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    AlbuminUrine = table.Column<double>(type: "double precision", nullable: true),
+                    BUN = table.Column<double>(type: "double precision", nullable: true),
+                    Calcium = table.Column<double>(type: "double precision", nullable: true),
+                    Chloride = table.Column<double>(type: "double precision", nullable: true),
+                    Creatinine = table.Column<double>(type: "double precision", nullable: true),
+                    EGFR = table.Column<double>(type: "double precision", nullable: true),
+                    Potassium = table.Column<double>(type: "double precision", nullable: true),
+                    Sodium = table.Column<double>(type: "double precision", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_serum_kidney", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_serum_kidney_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_serum_liver",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    ALT = table.Column<double>(type: "double precision", nullable: true),
+                    Albumin = table.Column<double>(type: "double precision", nullable: true),
+                    AlbuminGlobulin = table.Column<double>(type: "double precision", nullable: true),
+                    ALP = table.Column<double>(type: "double precision", nullable: true),
+                    AST = table.Column<double>(type: "double precision", nullable: true),
+                    GGT = table.Column<double>(type: "double precision", nullable: true),
+                    Globulin = table.Column<double>(type: "double precision", nullable: true),
+                    Bilirubin = table.Column<double>(type: "double precision", nullable: true),
+                    Protein = table.Column<double>(type: "double precision", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_serum_liver", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_serum_liver_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_serum_male_health",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    SHBG = table.Column<double>(type: "double precision", nullable: true),
+                    FreePSA = table.Column<double>(type: "double precision", nullable: true),
+                    DHEASulfate = table.Column<double>(type: "double precision", nullable: true),
+                    E2 = table.Column<double>(type: "double precision", nullable: true),
+                    FSH = table.Column<double>(type: "double precision", nullable: true),
+                    LH = table.Column<double>(type: "double precision", nullable: true),
+                    Prolactin = table.Column<double>(type: "double precision", nullable: true),
+                    TotalPSA = table.Column<double>(type: "double precision", nullable: true),
+                    FreePSAPercent = table.Column<double>(type: "double precision", nullable: true),
+                    FreeTestosterone = table.Column<double>(type: "double precision", nullable: true),
+                    TotalTestosterone = table.Column<double>(type: "double precision", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_serum_male_health", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_serum_male_health_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_serum_metabolic",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Glucose = table.Column<double>(type: "double precision", nullable: true),
+                    UricAcid = table.Column<double>(type: "double precision", nullable: true),
+                    HbA1c = table.Column<double>(type: "double precision", nullable: true),
+                    Insulin = table.Column<double>(type: "double precision", nullable: true),
+                    Leptin = table.Column<double>(type: "double precision", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_serum_metabolic", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_serum_metabolic_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_serum_nutrients",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Ferritin = table.Column<double>(type: "double precision", nullable: true),
+                    Homocysteine = table.Column<double>(type: "double precision", nullable: true),
+                    Calcium = table.Column<double>(type: "double precision", nullable: true),
+                    Iron = table.Column<double>(type: "double precision", nullable: true),
+                    IronSat = table.Column<double>(type: "double precision", nullable: true),
+                    IronBindingCapacity = table.Column<double>(type: "double precision", nullable: true),
+                    Magnesium = table.Column<double>(type: "double precision", nullable: true),
+                    MMA = table.Column<double>(type: "double precision", nullable: true),
+                    VitaminD = table.Column<double>(type: "double precision", nullable: true),
+                    Zinc = table.Column<double>(type: "double precision", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_serum_nutrients", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_serum_nutrients_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_serum_pancreas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Amylase = table.Column<int>(type: "integer", nullable: true),
+                    Lipase = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_serum_pancreas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_serum_pancreas_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_serum_stress",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    DHEASulfate = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_serum_stress", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_serum_stress_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_serum_thyroid",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    TgAb = table.Column<double>(type: "double precision", nullable: true),
+                    TPO = table.Column<double>(type: "double precision", nullable: true),
+                    TSH = table.Column<double>(type: "double precision", nullable: true),
+                    T4 = table.Column<double>(type: "double precision", nullable: true),
+                    T3 = table.Column<double>(type: "double precision", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_serum_thyroid", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_serum_thyroid_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "user_sleep",
                 columns: table => new
                 {
@@ -1119,12 +1626,14 @@ namespace Data.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Uid = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: true),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Notes = table.Column<string>(type: "text", nullable: true),
                     InternalNotes = table.Column<string>(type: "text", nullable: true),
                     Section = table.Column<int>(type: "integer", nullable: false),
                     Type = table.Column<int>(type: "integer", nullable: false),
+                    ReferenceMin = table.Column<double>(type: "double precision", nullable: true),
+                    ReferenceMax = table.Column<double>(type: "double precision", nullable: true),
                     Order = table.Column<int>(type: "integer", nullable: false),
                     ShowLog = table.Column<bool>(type: "boolean", nullable: false),
                     PersistUntilComplete = table.Column<bool>(type: "boolean", nullable: false),
@@ -1145,8 +1654,7 @@ namespace Data.Migrations
                         name: "FK_user_task_user_UserId",
                         column: x => x.UserId,
                         principalTable: "user",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -1166,6 +1674,70 @@ namespace Data.Migrations
                         name: "FK_user_token_user_UserId",
                         column: x => x.UserId,
                         principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_urine",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Albumin = table.Column<double>(type: "double precision", nullable: true),
+                    Bilirubin = table.Column<double>(type: "double precision", nullable: true),
+                    Glucose = table.Column<double>(type: "double precision", nullable: true),
+                    Ketones = table.Column<double>(type: "double precision", nullable: true),
+                    Leukocyte = table.Column<double>(type: "double precision", nullable: true),
+                    Nitrate = table.Column<double>(type: "double precision", nullable: true),
+                    OccultBlood = table.Column<double>(type: "double precision", nullable: true),
+                    Protein = table.Column<double>(type: "double precision", nullable: true),
+                    SpecificGravity = table.Column<double>(type: "double precision", nullable: true),
+                    PH = table.Column<double>(type: "double precision", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_urine", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_urine_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "study_snp",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Order = table.Column<int>(type: "integer", nullable: false),
+                    Notes = table.Column<string>(type: "text", nullable: false),
+                    StudyId = table.Column<int>(type: "integer", nullable: false),
+                    GeneId = table.Column<int>(type: "integer", nullable: true),
+                    SNPId = table.Column<int>(type: "integer", nullable: true),
+                    EffectAllele = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_study_snp", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_study_snp_gene_GeneId",
+                        column: x => x.GeneId,
+                        principalTable: "gene",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_study_snp_snp_SNPId",
+                        column: x => x.SNPId,
+                        principalTable: "snp",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_study_snp_study_StudyId",
+                        column: x => x.StudyId,
+                        principalTable: "study",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1315,6 +1887,30 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "study_supplement",
+                columns: table => new
+                {
+                    StudyId = table.Column<int>(type: "integer", nullable: false),
+                    UserTaskId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_study_supplement", x => new { x.StudyId, x.UserTaskId });
+                    table.ForeignKey(
+                        name: "FK_study_supplement_study_StudyId",
+                        column: x => x.StudyId,
+                        principalTable: "study",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_study_supplement_user_task_UserTaskId",
+                        column: x => x.UserTaskId,
+                        principalTable: "user_task",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "user_diary_task",
                 columns: table => new
                 {
@@ -1351,7 +1947,7 @@ namespace Data.Migrations
                     UserTaskId = table.Column<int>(type: "integer", nullable: false),
                     Section = table.Column<int>(type: "integer", nullable: false),
                     Date = table.Column<DateOnly>(type: "date", nullable: false),
-                    Complete = table.Column<int>(type: "integer", nullable: false)
+                    Complete = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1363,6 +1959,31 @@ namespace Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_snp_GeneId",
+                table: "snp",
+                column: "GeneId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_study_snp_GeneId",
+                table: "study_snp",
+                column: "GeneId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_study_snp_SNPId",
+                table: "study_snp",
+                column: "SNPId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_study_snp_StudyId",
+                table: "study_snp",
+                column: "StudyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_study_supplement_UserTaskId",
+                table: "study_supplement",
+                column: "UserTaskId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_user_Email",
@@ -1386,6 +2007,11 @@ namespace Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_user_allergens_UserId",
+                table: "user_allergens",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_user_anger_UserId",
                 table: "user_anger",
                 column: "UserId");
@@ -1393,6 +2019,11 @@ namespace Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_user_anxiety_UserId",
                 table: "user_anxiety",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_blood_pressure_UserId",
+                table: "user_blood_pressure",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -1458,11 +2089,6 @@ namespace Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_user_emotion_UserId",
                 table: "user_emotion",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_user_feast_allergens_UserId",
-                table: "user_feast_allergens",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -1556,6 +2182,86 @@ namespace Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_user_saliva_stress_UserId",
+                table: "user_saliva_stress",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_serum_autoimmunity_UserId",
+                table: "user_serum_autoimmunity",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_serum_blood_UserId",
+                table: "user_serum_blood",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_serum_electolytes_UserId",
+                table: "user_serum_electolytes",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_serum_female_health_UserId",
+                table: "user_serum_female_health",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_serum_heart_UserId",
+                table: "user_serum_heart",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_serum_heavy_metals_UserId",
+                table: "user_serum_heavy_metals",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_serum_immune_regulation_UserId",
+                table: "user_serum_immune_regulation",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_serum_kidney_UserId",
+                table: "user_serum_kidney",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_serum_liver_UserId",
+                table: "user_serum_liver",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_serum_male_health_UserId",
+                table: "user_serum_male_health",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_serum_metabolic_UserId",
+                table: "user_serum_metabolic",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_serum_nutrients_UserId",
+                table: "user_serum_nutrients",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_serum_pancreas_UserId",
+                table: "user_serum_pancreas",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_serum_stress_UserId",
+                table: "user_serum_stress",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_serum_thyroid_UserId",
+                table: "user_serum_thyroid",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_user_sleep_UserId",
                 table: "user_sleep",
                 column: "UserId");
@@ -1584,6 +2290,11 @@ namespace Data.Migrations
                 name: "IX_user_token_UserId_Token",
                 table: "user_token",
                 columns: new[] { "UserId", "Token" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_urine_UserId",
+                table: "user_urine",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserActivityUserCustom_UserCustomsId",
@@ -1623,16 +2334,28 @@ namespace Data.Migrations
                 name: "footnote");
 
             migrationBuilder.DropTable(
+                name: "study_snp");
+
+            migrationBuilder.DropTable(
+                name: "study_supplement");
+
+            migrationBuilder.DropTable(
                 name: "user_acute_stress_severity");
 
             migrationBuilder.DropTable(
                 name: "user_agoraphobia_severity");
 
             migrationBuilder.DropTable(
+                name: "user_allergens");
+
+            migrationBuilder.DropTable(
                 name: "user_anger");
 
             migrationBuilder.DropTable(
                 name: "user_anxiety");
+
+            migrationBuilder.DropTable(
+                name: "user_blood_pressure");
 
             migrationBuilder.DropTable(
                 name: "user_blood_work");
@@ -1666,9 +2389,6 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "user_email");
-
-            migrationBuilder.DropTable(
-                name: "user_feast_allergens");
 
             migrationBuilder.DropTable(
                 name: "user_footnote");
@@ -1719,6 +2439,54 @@ namespace Data.Migrations
                 name: "user_posttraumatic_stress_severity");
 
             migrationBuilder.DropTable(
+                name: "user_saliva_stress");
+
+            migrationBuilder.DropTable(
+                name: "user_serum_autoimmunity");
+
+            migrationBuilder.DropTable(
+                name: "user_serum_blood");
+
+            migrationBuilder.DropTable(
+                name: "user_serum_electolytes");
+
+            migrationBuilder.DropTable(
+                name: "user_serum_female_health");
+
+            migrationBuilder.DropTable(
+                name: "user_serum_heart");
+
+            migrationBuilder.DropTable(
+                name: "user_serum_heavy_metals");
+
+            migrationBuilder.DropTable(
+                name: "user_serum_immune_regulation");
+
+            migrationBuilder.DropTable(
+                name: "user_serum_kidney");
+
+            migrationBuilder.DropTable(
+                name: "user_serum_liver");
+
+            migrationBuilder.DropTable(
+                name: "user_serum_male_health");
+
+            migrationBuilder.DropTable(
+                name: "user_serum_metabolic");
+
+            migrationBuilder.DropTable(
+                name: "user_serum_nutrients");
+
+            migrationBuilder.DropTable(
+                name: "user_serum_pancreas");
+
+            migrationBuilder.DropTable(
+                name: "user_serum_stress");
+
+            migrationBuilder.DropTable(
+                name: "user_serum_thyroid");
+
+            migrationBuilder.DropTable(
                 name: "user_social_anxiety_severity");
 
             migrationBuilder.DropTable(
@@ -1726,6 +2494,9 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "user_token");
+
+            migrationBuilder.DropTable(
+                name: "user_urine");
 
             migrationBuilder.DropTable(
                 name: "UserActivityUserCustom");
@@ -1744,6 +2515,12 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserCustomUserSymptom");
+
+            migrationBuilder.DropTable(
+                name: "snp");
+
+            migrationBuilder.DropTable(
+                name: "study");
 
             migrationBuilder.DropTable(
                 name: "user_diary");
@@ -1771,6 +2548,9 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "user_symptom");
+
+            migrationBuilder.DropTable(
+                name: "gene");
 
             migrationBuilder.DropTable(
                 name: "user");

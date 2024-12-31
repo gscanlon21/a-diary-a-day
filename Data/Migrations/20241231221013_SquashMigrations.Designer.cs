@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Data.Migrations
 {
     [DbContext(typeof(CoreContext))]
-    [Migration("20241126172647_FixTypes2")]
-    partial class FixTypes2
+    [Migration("20241231221013_SquashMigrations")]
+    partial class SquashMigrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,6 +77,138 @@ namespace Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("user_footnote");
+                });
+
+            modelBuilder.Entity("Data.Entities.Genetics.Gene", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("DisabledReason")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("gene");
+                });
+
+            modelBuilder.Entity("Data.Entities.Genetics.SNP", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("DisabledReason")
+                        .HasColumnType("text");
+
+                    b.Property<int>("GeneId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GeneId");
+
+                    b.ToTable("snp");
+                });
+
+            modelBuilder.Entity("Data.Entities.Genetics.Study", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("DisabledReason")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("study");
+                });
+
+            modelBuilder.Entity("Data.Entities.Genetics.StudySNP", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("EffectAllele")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("GeneId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("SNPId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StudyId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GeneId");
+
+                    b.HasIndex("SNPId");
+
+                    b.HasIndex("StudyId");
+
+                    b.ToTable("study_snp");
+                });
+
+            modelBuilder.Entity("Data.Entities.Genetics.StudySupplement", b =>
+                {
+                    b.Property<int>("StudyId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserTaskId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("StudyId", "UserTaskId");
+
+                    b.HasIndex("UserTaskId");
+
+                    b.ToTable("study_supplement");
                 });
 
             modelBuilder.Entity("Data.Entities.Newsletter.UserDiary", b =>
@@ -222,6 +354,12 @@ namespace Data.Migrations
                     b.Property<bool>("PersistUntilComplete")
                         .HasColumnType("boolean");
 
+                    b.Property<double?>("ReferenceMax")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("ReferenceMin")
+                        .HasColumnType("double precision");
+
                     b.Property<DateOnly?>("RefreshAfter")
                         .HasColumnType("date");
 
@@ -237,7 +375,7 @@ namespace Data.Migrations
                     b.Property<Guid>("Uid")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -255,8 +393,8 @@ namespace Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Complete")
-                        .HasColumnType("integer");
+                    b.Property<double>("Complete")
+                        .HasColumnType("double precision");
 
                     b.Property<DateOnly>("Date")
                         .HasColumnType("date");
@@ -451,6 +589,31 @@ namespace Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("user_agoraphobia_severity");
+                });
+
+            modelBuilder.Entity("Data.Entities.User.UserAllergens", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Allergens")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("user_allergens");
                 });
 
             modelBuilder.Entity("Data.Entities.User.UserAnger", b =>
@@ -1041,31 +1204,6 @@ namespace Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("user_emotion");
-                });
-
-            modelBuilder.Entity("Data.Entities.User.UserFeastAllergens", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Allergens")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateOnly>("Date")
-                        .HasColumnType("date");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("user_feast_allergens");
                 });
 
             modelBuilder.Entity("Data.Entities.User.UserGeneralizedAnxietySeverity", b =>
@@ -1807,6 +1945,42 @@ namespace Data.Migrations
                     b.ToTable("user_posttraumatic_stress_severity");
                 });
 
+            modelBuilder.Entity("Data.Entities.User.UserSalivaStress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<double?>("DHEA")
+                        .HasColumnType("double precision");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<double?>("DaytimeCortisol")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("EveningCortisol")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("MorningCortisol")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("NightCortisol")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("user_saliva_stress");
+                });
+
             modelBuilder.Entity("Data.Entities.User.UserSerumAutoimmunity", b =>
                 {
                     b.Property<int>("Id")
@@ -1929,16 +2103,43 @@ namespace Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<double?>("DHEASulfate")
+                        .HasColumnType("double precision");
+
                     b.Property<DateOnly>("Date")
                         .HasColumnType("date");
 
-                    b.Property<double?>("Homocysteine")
+                    b.Property<double?>("E2")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("FSH")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("FreePSA")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("FreePSAPercent")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("FreeTestosterone")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("LH")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Prolactin")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("SHBG")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("TotalPSA")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("TotalTestosterone")
                         .HasColumnType("double precision");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("VitaminA")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -2548,16 +2749,40 @@ namespace Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<double?>("Albumin")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Bilirubin")
+                        .HasColumnType("double precision");
+
                     b.Property<DateOnly>("Date")
                         .HasColumnType("date");
 
-                    b.Property<double?>("Homocysteine")
+                    b.Property<double?>("Glucose")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Ketones")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Leukocyte")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Nitrate")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("OccultBlood")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("PH")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Protein")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("SpecificGravity")
                         .HasColumnType("double precision");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("VitaminA")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -2668,6 +2893,59 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Data.Entities.Genetics.SNP", b =>
+                {
+                    b.HasOne("Data.Entities.Genetics.Gene", "Gene")
+                        .WithMany("SNPs")
+                        .HasForeignKey("GeneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Gene");
+                });
+
+            modelBuilder.Entity("Data.Entities.Genetics.StudySNP", b =>
+                {
+                    b.HasOne("Data.Entities.Genetics.Gene", "Gene")
+                        .WithMany("StudySNPs")
+                        .HasForeignKey("GeneId");
+
+                    b.HasOne("Data.Entities.Genetics.SNP", "SNP")
+                        .WithMany("StudySNPs")
+                        .HasForeignKey("SNPId");
+
+                    b.HasOne("Data.Entities.Genetics.Study", "Study")
+                        .WithMany("StudySNPs")
+                        .HasForeignKey("StudyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Gene");
+
+                    b.Navigation("SNP");
+
+                    b.Navigation("Study");
+                });
+
+            modelBuilder.Entity("Data.Entities.Genetics.StudySupplement", b =>
+                {
+                    b.HasOne("Data.Entities.Genetics.Study", "Study")
+                        .WithMany("StudySupplements")
+                        .HasForeignKey("StudyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Entities.Task.UserTask", "UserTask")
+                        .WithMany("StudySupplements")
+                        .HasForeignKey("UserTaskId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Study");
+
+                    b.Navigation("UserTask");
+                });
+
             modelBuilder.Entity("Data.Entities.Newsletter.UserDiaryTask", b =>
                 {
                     b.HasOne("Data.Entities.Newsletter.UserDiary", "UserDiary")
@@ -2702,9 +2980,7 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Entities.User.User", "User")
                         .WithMany("UserTasks")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
@@ -2746,6 +3022,17 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Entities.User.User", "User")
                         .WithMany("UserAgoraphobiaSeverities")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Data.Entities.User.UserAllergens", b =>
+                {
+                    b.HasOne("Data.Entities.User.User", "User")
+                        .WithMany("UserAllergens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2898,17 +3185,6 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Entities.User.User", "User")
                         .WithMany("UserEmotions")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Data.Entities.User.UserFeastAllergens", b =>
-                {
-                    b.HasOne("Data.Entities.User.User", "User")
-                        .WithMany("UserFeastAllergens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -3096,6 +3372,17 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Entities.User.User", "User")
                         .WithMany("UserPostTraumaticStressSeverities")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Data.Entities.User.UserSalivaStress", b =>
+                {
+                    b.HasOne("Data.Entities.User.User", "User")
+                        .WithMany("UserSalivaStress")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -3413,6 +3700,25 @@ namespace Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Data.Entities.Genetics.Gene", b =>
+                {
+                    b.Navigation("SNPs");
+
+                    b.Navigation("StudySNPs");
+                });
+
+            modelBuilder.Entity("Data.Entities.Genetics.SNP", b =>
+                {
+                    b.Navigation("StudySNPs");
+                });
+
+            modelBuilder.Entity("Data.Entities.Genetics.Study", b =>
+                {
+                    b.Navigation("StudySNPs");
+
+                    b.Navigation("StudySupplements");
+                });
+
             modelBuilder.Entity("Data.Entities.Newsletter.UserDiary", b =>
                 {
                     b.Navigation("UserDiaryTasks");
@@ -3420,6 +3726,8 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Entities.Task.UserTask", b =>
                 {
+                    b.Navigation("StudySupplements");
+
                     b.Navigation("UserDiaryTasks");
 
                     b.Navigation("UserTaskLogs");
@@ -3432,6 +3740,8 @@ namespace Data.Migrations
                     b.Navigation("UserAcuteStressSeverities");
 
                     b.Navigation("UserAgoraphobiaSeverities");
+
+                    b.Navigation("UserAllergens");
 
                     b.Navigation("UserAngers");
 
@@ -3462,8 +3772,6 @@ namespace Data.Migrations
                     b.Navigation("UserEmails");
 
                     b.Navigation("UserEmotions");
-
-                    b.Navigation("UserFeastAllergens");
 
                     b.Navigation("UserFootnotes");
 
@@ -3500,6 +3808,8 @@ namespace Data.Migrations
                     b.Navigation("UserPeoples");
 
                     b.Navigation("UserPostTraumaticStressSeverities");
+
+                    b.Navigation("UserSalivaStress");
 
                     b.Navigation("UserSerumAutoimmunitys");
 
