@@ -17,7 +17,7 @@ public class SalivaStressViewModel
                 return m.Items.Select(c => new UserCustomGroup(m.Date, c.Key)
                 {
                     Value = c.Value ?? 0,
-                    Description = typeof(UserSerumStress).GetProperty(c.Key)!.GetCustomAttribute<DisplayAttribute>()!.Description
+                    Description = typeof(UserSalivaStress).GetProperty(c.Key)!.GetCustomAttribute<DisplayAttribute>()!.Description
                 });
             });
 
