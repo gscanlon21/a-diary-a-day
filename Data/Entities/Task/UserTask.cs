@@ -45,7 +45,7 @@ public class UserTask
     /// <summary>
     /// User's notes. (externally shown).
     /// </summary>
-    public string? InternalNotes { get; set; } = null;
+    public string? Source { get; set; } = null;
 
     /// <summary>
     /// What sections this task will show for.
