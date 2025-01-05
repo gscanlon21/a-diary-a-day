@@ -161,9 +161,9 @@ public partial class UserController
                 Name = viewModel.Name,
                 Notes = viewModel.Notes,
                 Order = viewModel.Order,
+                Source = viewModel.Source,
                 Section = viewModel.Section,
                 Enabled = viewModel.Enabled,
-                InternalNotes = viewModel.InternalNotes,
                 PadRefreshXDays = viewModel.PadRefreshXDays,
                 LagRefreshXDays = viewModel.LagRefreshXDays,
                 DeloadAfterXWeeks = viewModel.DeloadAfterXWeeks,
@@ -203,11 +203,11 @@ public partial class UserController
             userTask.PadRefreshXDays = viewModel.PadRefreshXDays;
             userTask.DeloadAfterXWeeks = viewModel.DeloadAfterXWeeks;
             userTask.Notes = user.IsDemoUser ? null : viewModel.Notes;
+            userTask.Source = user.IsDemoUser ? null : viewModel.Source;
             userTask.DeloadDurationWeeks = viewModel.DeloadDurationWeeks;
             userTask.PersistUntilComplete = viewModel.PersistUntilComplete;
             userTask.Name = user.IsDemoUser ? userTask.Name : viewModel.Name;
             userTask.Type = user.IsDemoUser ? userTask.Type : viewModel.Type;
-            userTask.InternalNotes = user.IsDemoUser ? null : viewModel.InternalNotes;
             // Set these after the type has been updated. So that the demo user can't get these set.
             userTask.ReferenceMin = userTask.Type == UserTaskType.Log ? viewModel.ReferenceMin : null;
             userTask.ReferenceMax = userTask.Type == UserTaskType.Log ? viewModel.ReferenceMax : null;

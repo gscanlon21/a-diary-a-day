@@ -12,21 +12,19 @@ public class TaskDto
 
     public Guid Uid { get; init; }
 
-    public int? UserId { get; init; }
-
-    public bool ShowLog { get; init; }
-
     public string Name { get; init; } = null!;
 
     public string? Notes { get; init; } = null;
 
-    public DateOnly LastCompleted { get; init; }
+    public string? Source { get; init; } = null;
 
-    public DateOnly LastSeen { get; init; }
+    public DateOnly LastCompleted { get; init; }
 
     public int LagRefreshXDays { get; init; }
 
     public int PadRefreshXDays { get; init; }
+
+    public bool ShowLog { get; init; }
 
 
     public string? DisabledReason { get; init; }

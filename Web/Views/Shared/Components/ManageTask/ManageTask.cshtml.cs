@@ -22,11 +22,11 @@ public class ManageTaskViewModel
         Name = userTask.Name;
         Notes = userTask.Notes;
         Order = userTask.Order;
+        Source = userTask.Source;
         ShowLog = userTask.ShowLog;
         Section = userTask.Section;
         ReferenceMin = userTask.ReferenceMin;
         ReferenceMax = userTask.ReferenceMax;
-        InternalNotes = userTask.InternalNotes;
         DisabledReason = userTask.DisabledReason;
         LagRefreshXDays = userTask.LagRefreshXDays;
         PadRefreshXDays = userTask.PadRefreshXDays;
@@ -63,8 +63,8 @@ public class ManageTaskViewModel
     [Display(Name = "Notes")]
     public string? Notes { get; init; }
 
-    [Display(Name = "Internal Notes")]
-    public string? InternalNotes { get; init; }
+    [Display(Name = "Source")]
+    public string? Source { get; init; }
 
     [Display(Name = "Order")]
     [Range(UserTask.Consts.OrderMin, UserTask.Consts.OrderMax)]
