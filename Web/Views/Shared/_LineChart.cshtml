@@ -105,6 +105,8 @@
                         },
                     },
                     tooltip: {
+                        // Include all items that intersect with this point.
+                        mode: 'point',
                         callbacks: {
                             // Pretty-print the x-axis date in the hover tooltip.
                             title: (context) => new Date(context[0].parsed.x).toDateString(),

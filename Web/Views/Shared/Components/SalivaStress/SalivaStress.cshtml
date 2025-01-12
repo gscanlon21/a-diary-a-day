@@ -171,10 +171,10 @@
             <div class="alert alert-light shadow">
                 @{ await Html.RenderPartialAsync("_LineChart", new LineChartViewModel()
                 {
+                    Type = Core.Models.Components.Component.SalivaStress,
                     XysGrouped = Model.XysGrouped,
-                    User = Model.User,
                     Token = Model.Token,
-                    Type = Core.Models.Components.Component.SalivaStress
+                    User = Model.User,
                 }); }
             </div>
         </div>
