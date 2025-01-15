@@ -1,0 +1,64 @@
+﻿@model BodyTempViewModel
+@using Core.Models.Components
+@using Data.Entities.User
+
+@{
+    bool hide = Model.UserMood.Date == DateHelpers.Today && Model.UserMood.Id != default;
+}
+
+<div class="alert alert-secondary">
+    <div class="row gy-2">
+        @if (!hide)
+        {
+            <div class="col-lg-6">
+                <h6 class="mb-1">Blood Pressure</h6>
+                <div class="alert alert-light shadow">
+                    <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageBloodPressure)" method="post"
+                          asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="form-group mb-5">
+                            <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.BodyTemp)</label>
+                            <div><span asp-validation-for="UserMood.BodyTemp" class="text-danger"></span></div>
+                            <div style="display:flex;column-gap:1ex;">
+                                <input asp-for="UserMood.BodyTemp" style="width:6ch;height:fit-content;" class="allow-demo"
+                                       oninput="@(Html.IdFor(_ => Model.UserMood.BodyTemp))Input.value = this.valueAsNumber" id="@(Html.IdFor(_ => Model.UserMood.BodyTemp))" />
+                                <div style="width:100%;display:flex;flex-direction:column;justify-content:center;">
+                                    <input id="@(Html.IdFor(_ => Model.UserMood.BodyTemp))-input" class="allow-demo" style="width:100%;" type="range" step="1"
+                                           name="@(Html.IdFor(_ => Model.UserMood.BodyTemp))Input" list="@(Html.IdFor(_ => Model.UserMood.BodyTemp))-hashmarks"
+                                           min="@UserBodyTemp.Consts.BodyTempMin" max="@UserBodyTemp.Consts.BodyTempMax" value="@((int)Model.UserMood.BodyTemp)"
+                                           oninput="@(Html.IdFor(_ => Model.UserMood.BodyTemp)).value = this.valueAsNumber" />
+
+                                    <datalist id="@(Html.IdFor(_ => Model.UserMood.BodyTemp))-hashmarks" style="display:flex;flex-direction:column;writing-mode:vertical-lr;width:calc(100% - 2ch);position:relative;">
+                                        <option value="80"></option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div id="pounds-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.BodyTemp)</div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <input type="submit" value="Save" class="btn btn-primary allow-demo" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+
+        <div class="col-lg-6">
+            <h6 class="mb-1">Log</h6>
+            <div class="alert alert-light shadow">
+                @{
+                    await Html.RenderPartialAsync("_LineChart", new LineChartViewModel()
+                    {
+                        User = Model.User,
+                        Token = Model.Token,
+                        XysGrouped = Model.XysGrouped,
+                        Type = Core.Models.Components.Component.BodyTemp
+                    });
+                }
+            </div>
+        </div>
+    </div>
+</div>

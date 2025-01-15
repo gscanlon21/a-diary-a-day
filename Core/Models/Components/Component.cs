@@ -102,6 +102,9 @@ public enum Component : long
     [Display(Name = "Saliva Stress", Order = 29)]
     SalivaStress = 1L << 29, // 536870912
 
+    [Display(Name = "Body Temp", Order = 30)]
+    BodyTemp = 1L << 30, // 1073741824
+
 
     #region Disabled Components
 
@@ -144,5 +147,5 @@ public enum Component : long
         | SerumHeart | SerumHeavyMetals | SerumImmuneRegulation | SerumKidney
         | SerumLiver | SerumMaleHealth | SerumFemaleHealth | SerumMetabolic
         | SerumNutrients | SerumPancreas | SerumStress | SerumThyroid
-        | SalivaStress
+        | SalivaStress | BodyTemp
 }

@@ -83,6 +83,10 @@ else if (Model.Component.HasFlag(Core.Models.Components.Component.BloodPressure)
 {
     @await Component.InvokeAsync(BloodPressureViewComponent.Name, new { Model.User })
 }
+else if (Model.Component.HasFlag(Core.Models.Components.Component.BodyTemp))
+{
+    @await Component.InvokeAsync(BodyTempViewComponent.Name, new { Model.User })
+}
 else if (Model.Component.HasFlag(Core.Models.Components.Component.CompleteMetabolicPanel))
 {
     @await Component.InvokeAsync(CompleteMetabolicPanelViewComponent.Name, new { Model.User })
