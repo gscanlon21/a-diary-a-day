@@ -44,6 +44,7 @@ public class CoreContext : DbContext
     public DbSet<UserAllergens> UserAllergens { get; set; } = null!;
     public DbSet<UserAgoraphobiaSeverity> UserAgoraphobiaSeverities { get; set; } = null!;
     public DbSet<UserBloodPressure> UserBloodPressures { get; set; } = null!;
+    public DbSet<UserBodyTemp> UserBodyTemps { get; set; } = null!;
     public DbSet<UserCompleteMetabolicPanel> UserCompleteMetabolicPanels { get; set; } = null!;
     public DbSet<UserCbcWAutoDiff> UserCbcWAutoDiffs { get; set; } = null!;
     public DbSet<UserBloodWork> UserBloodWorks { get; set; } = null!;
