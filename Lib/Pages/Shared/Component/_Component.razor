@@ -31,39 +31,29 @@
     };
 }
 
-@*
-    Use `em` for spacing and font sizes--it's more consistent across fonts/mediums.
-*@
-<div style="flex:1 0 min(calc(100% - 20px), 300px);padding:10px;position:relative;display:flex;flex-direction:column;justify-content:space-between;
+@* Use `em` for spacing and font sizes--it's more consistent across fonts/mediums. *@
+<div style="flex:1 0 min(calc(100% - 20px), 300px);padding:10px;position:relative;display:flex;flex-direction:column;
             border-bottom:4px solid @borderColor;border-image-slice:1;outline:1px solid @borderColor;background-color:@backgroundColor;">
-    
-    @if (User != null)
-    {
-        @* Check min and max progression ranges so they don't ignore an exercise outside of their progression range. *@
-        <small style="position:absolute;right:0;top:0;padding-inline:1ch;writing-mode:vertical-lr;">
-            <a class="allow-demo" target="_blank" href="@DH.UserLink(User, $"{Model.Type}")">Manage</a>
-        </small>
-    }
 
-    @* div for margin-collapse between text content and image. *@
-    <div>
-        @* min-height so the Manage link doesn't overlap the image. *@
-        <div style="min-height:5ch;">
-            @* padding-inline-end so title and instruction text doesn't overlap with the Manage link. *@
-            <div style="padding-inline-end:1.1ch">
-                <h3 style="margin-block-start:0;margin-block-end:.4em;font-size:1.2em;">
-                    <span style="text-decoration:underline;">@(Model.Type.GetSingleDisplayName())</span>
-                </h3>
-            </div>
-        </div>
+    <div> @* For margin collapse. *@
+        <h3 style="margin-block-start:0;margin-block-end:.4em;font-size:1.2em;line-height:1.2;display:flex;gap:1ch;">
+            <span style="flex:1 1 auto;">
+                <span style="text-decoration:underline;">@(Model.Type.GetSingleDisplayName())</span>
+            </span>
 
-        @if (Verbosity.HasFlag(Verbosity.Images))
-        {
-            // If we want to reduce layout shift with aspect-ratio, that really needs to be included on the table with the image because our images don't have consistent aspect ratios.
-            // Setting min-height (200 / (25/14)) gets us close though. 25/14 is, for the most part, our widest aspect-ratio.
-            <img style="display:block;margin-top:1ex;height:auto;min-height:112px;max-height:350px;max-width:100%;object-fit:contain;object-position:left top;" loading="lazy" src="@Model.Image" />
-        }
+            @if (User != null)
+            {
+                <a class="allow-demo" style="text-decoration:none;margin:-10px -10px 0 0;padding:10px 10px 0 0;" target="_blank" href="@DH.UserLink(User, $"{Model.Type}")">&#127760;</a>
+            }
+        </h3>
     </div>
+
+    @if (Verbosity.HasFlag(Verbosity.Images))
+    {
+        // If we want to reduce layout shift with aspect-ratio, that really needs to be included on the table with the image because our images don't have consistent aspect ratios.
+        // Setting min-height (200 / (25/14)) gets us close though. 25/14 is, for the most part, our widest aspect-ratio.
+        <img style="display:block;height:auto;min-height:112px;max-height:350px;max-width:100%;object-fit:contain;object-position:left top;" loading="lazy" src="@Model.Image" />
+    }
 </div>
 
 @code {

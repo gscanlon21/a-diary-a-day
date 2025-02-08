@@ -34,7 +34,7 @@ public class UserBodyTemp
     [Display(Name = "Body Temp")]
     public double BodyTemp { get; set; } = Consts.BodyTempDefault;
 
-  
+
     [NotMapped]
     public Dictionary<string, double> Items => new()
     {

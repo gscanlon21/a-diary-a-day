@@ -30,60 +30,52 @@
     };
 }
 
-@*
-    Use `em` for spacing and font sizes--it's more consistent across fonts/mediums.
-*@
-<div style="flex:1 0 min(calc(100% - 20px), 300px);padding:10px;position:relative;display:flex;flex-direction:column;justify-content:space-between;
+@* Use `em` for spacing and font sizes--it's more consistent across fonts/mediums. *@
+<div style="flex:1 0 min(calc(100% - 20px), 300px);padding:10px;position:relative;display:flex;flex-direction:column;
             border-bottom:4px solid @borderColor;border-image-slice:1;outline:1px solid @borderColor;background-color:@backgroundColor;">
-
-    @if (User != null)
-    {
-        <small style="position:absolute;right:0;top:0;padding-inline:1ch;writing-mode:vertical-lr;">
-            <a class="allow-demo" target="_blank" href="@DH.UserLink(User, $"{Model.Section}/{Model.Task.Id}")">Manage</a>
-        </small>
-    }
 
     @* div for margin-collapse between text content and image. *@
     <div style="@(!Model.Task.ShowLog ? "display:flex;flex-direction:column;height:100%;" : "")">
-        @* min-height so the Manage link doesn't overlap the image. *@
-        <div style="min-height:5.5ch;">
-            @* padding-inline-end so title and instruction text doesn't overlap with the Manage link. *@
-            <div style="padding-inline-end:1.1ch">
-                <h3 style="margin-block-start:0;margin-block-end:.4em;font-size:1.2em;">
-                    @if (string.IsNullOrWhiteSpace(Model.Task.Source))
-                    {
-                        <span style="text-decoration:underline;">@Model.Task.Name</span>
-                    }
-                    else
-                    {
-                        <a class="allow-demo" target="_blank" href="@Model.Task.Source">@Model.Task.Name</a>
-                    }
-                </h3>
-
-                @if (Verbosity.HasFlag(Verbosity.Notes) && !string.IsNullOrWhiteSpace(Model.Task.Notes))
+        <h3 style="margin-block-start:0;margin-block-end:.4em;font-size:1.2em;line-height:1.2;display:flex;gap:1ch;">
+            <span style="flex:1 1 auto;">
+                @if (string.IsNullOrWhiteSpace(Model.Task.Source))
                 {
-                    <div style="margin-block:.5em;">
-                        <small style="word-break:break-word;">@Model.Task.Notes</small>
-                    </div>
+                    <span style="text-decoration:underline;">@Model.Task.Name</span>
                 }
+                else
+                {
+                    <a class="allow-demo" target="_blank" href="@Model.Task.Source">@Model.Task.Name</a>
+                }
+            </span>
+
+            @if (User != null)
+            {
+                <a class="allow-demo" style="text-decoration:none;margin:-10px -10px 0 0;padding:10px 10px 0 0;" target="_blank" href="@DH.UserLink(User, $"{Model.Section}/{Model.Task.Id}")">&#127760;</a>
+            }
+        </h3>
+
+        @if (Verbosity.HasFlag(Verbosity.Notes) && !string.IsNullOrWhiteSpace(Model.Task.Notes))
+        {
+            <div style="margin-block:.5em;">
+                <small style="word-break:break-word;">@Model.Task.Notes</small>
             </div>
+        }
 
-            @if (Verbosity.HasFlag(Verbosity.LagRefresh))
-            {
-                <div style="margin-block:.5em;font-size:x-small;"><b>Lag Refresh (days)</b>: @Model.Task.LagRefreshXDays</div>
-            }
+        @if (Verbosity.HasFlag(Verbosity.LagRefresh))
+        {
+            <div style="margin-block:.5em;font-size:x-small;"><b>Lag Refresh (days)</b>: @Model.Task.LagRefreshXDays</div>
+        }
 
-            @if (Verbosity.HasFlag(Verbosity.PadRefresh))
-            {
-                <div style="margin-block:.5em;font-size:x-small;"><b>Pad Refresh (days)</b>: @Model.Task.PadRefreshXDays</div>
-            }
-        </div>
+        @if (Verbosity.HasFlag(Verbosity.PadRefresh))
+        {
+            <div style="margin-block:.5em;font-size:x-small;"><b>Pad Refresh (days)</b>: @Model.Task.PadRefreshXDays</div>
+        }
 
         @if (Verbosity.HasFlag(Verbosity.Images) && User != null && Model.Task.LastCompleted > DateOnly.MinValue)
         {
             <div style="display:flex;flex-direction:column;flex:1 1 auto;">
                 @* The aspect-ratio for task images is 21/9. Setting that helps prevent layout shift. *@
-                <img style="display:block;margin-top:1ex;height:auto;max-height:180px;max-width:100%;object-fit:contain;object-position:left top;@(Model.Task.ShowLog ? "aspect-ratio:21/9;" : "min-height:0;flex:1 1 0;")"
+                <img style="display:block;height:auto;max-height:180px;max-width:100%;object-fit:contain;object-position:left top;@(Model.Task.ShowLog ? "aspect-ratio:21/9;" : "min-height:0;flex:1 1 0;")"
                      src="@($"{SiteSettings.Value.CdnLink}/user/{User.Uid}/{Component.None}-{Model.Task.Uid}")" loading="lazy" />
             </div>
         }
