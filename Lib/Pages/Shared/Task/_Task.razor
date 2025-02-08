@@ -36,7 +36,7 @@
 
     @* div for margin-collapse between text content and image. *@
     <div style="@(!Model.Task.ShowLog ? "display:flex;flex-direction:column;height:100%;" : "")">
-        <h3 style="margin-block-start:0;margin-block-end:.4em;font-size:1.2em;line-height:1.2;display:flex;gap:1ch;">
+        <h3 style="margin-block-start:0;margin-block-end:.4em;font-size:1.2em;line-height:1.2;display:flex;gap:.8ch;">
             <span style="flex:1 1 auto;">
                 @if (string.IsNullOrWhiteSpace(Model.Task.Source))
                 {
