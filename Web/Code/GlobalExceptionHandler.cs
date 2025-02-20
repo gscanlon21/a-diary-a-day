@@ -7,15 +7,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Web.Code;
 
+/// <summary>
+/// Logging config:
+/// Logging__LogLevel__Default=Information
+/// Logging__LogLevel__System___Net=Warning
+/// Logging__LogLevel__Microsoft___AspNetCore=Warning
+/// Logging__LogLevel__Microsoft___AspNetCore___Diagnostics=Critical
+/// Logging__LogLevel__Microsoft___EntityFrameworkCore=Warning
+/// Logging__LogLevel__Microsoft___EntityFrameworkCore___Update=Critical
+/// Logging__LogLevel__Microsoft___EntityFrameworkCore___Database___Command=Critical
+/// </summary>
 public class GlobalExceptionHandler(IServiceScopeFactory serviceScopeFactory) : IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
         try
         {
+            // Don't send exception emails when debugging.
             if (!DebugConsts.IsDebug
-                // Demo user is not allowed.
-                && exception is not UserException)
+                // Don't send exception emails for user access errors.
+                && exception is not UserException
+                // Don't send exception emails for transient exceptions.
+                && !exception.Message.Contains("transient failure", StringComparison.OrdinalIgnoreCase))
             {
                 await SendExceptionEmails(exception, cancellationToken);
             }
@@ -44,7 +57,7 @@ public class GlobalExceptionHandler(IServiceScopeFactory serviceScopeFactory) : 
                     context.UserEmails.Add(new UserEmail(debugUser)
                     {
                         Subject = EmailConsts.SubjectException,
-                        Body = exception.ToString(),
+                        Body = $"<pre>{exception}</pre>",
                     });
                 }
 
