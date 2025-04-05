@@ -45,7 +45,7 @@ public class ManageTaskViewComponent : ViewComponent
             .Where(ut => ut.UserTaskId == task.Id)
             .Where(ut => ut.Section == section)
             .OrderByDescending(ut => ut.Date)
-            .LastOrDefaultAsync();
+            .FirstOrDefaultAsync();
 
         // Edit an existing user task.
         return View("ManageTask", new ManageTaskViewModel(user, task, token)
