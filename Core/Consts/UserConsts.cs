@@ -18,6 +18,7 @@ public class UserConsts
     public const int MaxTasks = 256;
 
     public const int ChartDaysMin = 30;
+    public const int ChartDaysStep = 30;
     public const int ChartDaysDefault = 360;
     public const int ChartDaysMax = 720;
 

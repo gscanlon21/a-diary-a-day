@@ -50,6 +50,7 @@ public partial class UserController
 
         // Set the last completed date on the UserTask.
         var userTask = await _context.UserTasks.FirstAsync(ut => ut.UserId == user.Id && ut.Id == taskId);
+        userTask.ChartDays = task.ChartDays;
         userTask.ShowLog = task.ShowLog;
 
         await _context.SaveChangesAsync();

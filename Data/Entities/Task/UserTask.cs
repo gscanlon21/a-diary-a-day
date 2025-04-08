@@ -71,6 +71,9 @@ public class UserTask
     /// </summary>
     public bool ShowLog { get; set; } = true;
 
+    [Range(UserConsts.ChartDaysMin, UserConsts.ChartDaysMax)]
+    public int ChartDays { get; set; } = UserConsts.ChartDaysDefault;
+
     /// <summary>
     /// Keep the task in the newsletter if it was left uncompleted.
     /// </summary>
