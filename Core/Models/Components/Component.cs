@@ -10,6 +10,7 @@ namespace Core.Models.Components;
 [Flags]
 public enum Component : long
 {
+    [Display(Name = "Other", Order = 0)]
     None = 0,
 
     [Display(Name = "Allergens")]

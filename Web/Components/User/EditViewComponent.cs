@@ -30,7 +30,7 @@ public class EditViewComponent(UserRepo userRepo) : ViewComponent
     {
         if (viewModel.ComponentsBinder != null)
         {
-            foreach (var component in viewModel.ComponentsBinder
+            foreach (var component in new List<Component>(viewModel.ComponentsBinder) { Component.None }
                 .OrderBy(mg => mg.GetSingleDisplayName(DisplayType.GroupName))
                 .ThenBy(mg => mg.GetSingleDisplayName()))
             {
