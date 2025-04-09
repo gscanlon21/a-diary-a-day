@@ -11,53 +11,22 @@
 <div class="row gy-2 mb-2 mt-1 justify-content-between align-items-end">
     <div class="col-auto mb-3">
         <h1 class="primary-heading">Task</h1>
+        @if (Model.Section != Section.Anytime)
+        {
+            <h2 class="sub-heading ps-1">@Model.Section.GetSingleDisplayName(DisplayType.ShortName)</h2>
+        }
     </div>
     <partial name="_ValidationMessagePartial" model='new ValidationMessagePartialModel() { WasUpdated = Model.WasUpdated, GoBackOnSave = true }' />
 </div>
 
-<div class="alert alert-secondary">
-    <div class="row gy-2">
-        <div class="col-lg-6">
-            @if (Model.Section == Section.Anytime) 
-            {
-                <h6 class="mb-1">Task</h6>
-            }
-            else 
-            {
-                <h6 class="mb-1">Task - @Model.Section.GetSingleDisplayName(DisplayType.ShortName)</h6>
-            }
-            @await Component.InvokeAsync(ManageTaskViewComponent.Name, new { Model.User, Model.Task, Model.Section })
-        </div>
+<div class="row gy-2">
+    <div class="col-lg-6">
+        @await Component.InvokeAsync(ManageTaskViewComponent.Name, new { Model.User, Model.Task, Model.Section })
+    </div>
 
-        <div class="col-lg-6">
-            <div class="row align-items-center mb-1">
-                <div class="col-auto">
-                    <h6 class="mb-0">Log</h6>
-                </div>
-                <div class="col">
-                    <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ShowLog)" method="post" class="form-check-reverse row"
-                          asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" asp-route-section="@Model.Section" asp-route-taskId="@Model.Task.Id">
-                        <div class="col">
-                            <div class="row gx-3">
-                                <label class="col-auto"><output name="chartDaysOutput">@Model.Task.ChartDays</output> days</label>
-                                <input asp-for="Task.ChartDays" type="range" class="col p-0" style="width:100%;" aria-describedby="refresh-functional-help"
-                                       min="@UserConsts.ChartDaysMin" max="@UserConsts.ChartDaysMax" step="@UserConsts.ChartDaysStep"
-                                       onchange="document.getElementById('task-log-submit').click();"
-                                       oninput="chartDaysOutput.value = this.valueAsNumber;" />
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <input asp-for="Task.ShowLog" class="form-check-input" type="checkbox" onchange="document.getElementById('task-log-submit').click();" />
-                            <label asp-for="Task.ShowLog" class="form-check-label">Show Log</label>
-                        </div>
-                        <button id="task-log-submit" type="submit" class="d-none"></button>
-                    </form>
-                </div>
-            </div>
-
-            @await Component.InvokeAsync(TaskLogViewComponent.Name, new { Model.User, Model.Task, Model.Section })
-            @await Component.InvokeAsync(SupplementStudiesViewComponent.Name, new { Model.User, Model.Task, Model.Section })
-        </div>
+    <div class="col-lg-6">
+        @await Component.InvokeAsync(TaskLogViewComponent.Name, new { Model.User, Model.Task, Model.Section })
+        @await Component.InvokeAsync(SupplementStudiesViewComponent.Name, new { Model.User, Model.Task, Model.Section })
     </div>
 </div>
 

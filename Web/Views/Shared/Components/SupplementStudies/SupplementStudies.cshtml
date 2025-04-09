@@ -5,7 +5,7 @@
 @using Web.Controllers.Studies
 
 <div class="my-4">
-    <h6 class="mb-1">Supplement Studies</h6>
+    <h5 class="mb-1">Supplement Studies</h5>
     <form asp-controller="@StudyController.Name" asp-action="@nameof(StudyController.AddSupplementStudy)" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" method="post" class="alert alert-light shadow">
         <div class="form-group mb-3">
             <label asp-for="StudyId" class="control-label">Study</label>
