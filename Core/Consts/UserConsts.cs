@@ -20,7 +20,7 @@ public class UserConsts
     public const int ChartDaysMin = 30;
     public const int ChartDaysStep = 30;
     public const int ChartDaysDefault = 360;
-    public const int ChartDaysMax = 720;
+    public const int ChartDaysMax = 990;
 
     public const int SendHourMin = 0;
     public const int SendHourDefault = 0;

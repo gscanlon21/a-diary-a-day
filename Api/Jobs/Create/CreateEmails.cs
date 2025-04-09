@@ -54,7 +54,7 @@ public class CreateEmails : IJob, IScheduled
                         // Insert newsletter record.
                         context.UserEmails.Add(new UserEmail(userToken.User)
                         {
-                            Subject = EmailConsts.SubjectWorkout,
+                            Subject = EmailConsts.SubjectDiary,
                             Body = await html.Content.ReadAsStringAsync(cancellationToken),
                         });
 
@@ -98,7 +98,7 @@ public class CreateEmails : IJob, IScheduled
             // User's send day is now.
             .Where(u => u.SendDays.HasFlag(currentDay))
             // User has not received a workout email today.
-            .Where(u => !u.UserEmails.Where(un => un.Subject == EmailConsts.SubjectWorkout).Any(un => un.Date == DateHelpers.Today))
+            .Where(u => !u.UserEmails.Where(un => un.Subject == EmailConsts.SubjectDiary).Any(un => un.Date == DateHelpers.Today))
             // User is not a test or demo user.
             .Where(u => !u.Email.EndsWith(_siteSettings.Value.Domain) || u.Features.HasFlag(Features.Test) || u.Features.HasFlag(Features.Debug))
             .ToListAsync())

@@ -152,7 +152,14 @@ public class User : IUser
     #endregion
     #region Advanced Preferences
 
+    /// <summary>
+    /// User footnotes.
+    /// </summary>
     public int FootnoteCountTop { get; set; } = Consts.FootnoteCountTopDefault;
+
+    /// <summary>
+    /// System footnotes.
+    /// </summary>
     public int FootnoteCountBottom { get; set; } = Consts.FootnoteCountBottomDefault;
 
     #endregion

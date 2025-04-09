@@ -3,7 +3,27 @@
 @using Core.Models.Components
 @using Core.Consts
 
-<div class="alert alert-light shadow">
+<h5 class="mb-0">Task Log</h5>
+<h6 class="mb-1 font-weight--normal col">
+    <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ShowLog)" method="post" class="form-check-reverse row"
+          asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" asp-route-section="@Model.Section" asp-route-taskId="@Model.Task.Id">
+        <div class="col">
+            <div class="row gx-3">
+                <label class="col-auto"><output name="chartDaysOutput">@Model.Task.ChartDays</output> days</label>
+                <input asp-for="Task.ChartDays" type="range" class="col p-0 align-self-end" style="width:100%;" aria-describedby="chart-days-help"
+                       min="@UserConsts.ChartDaysMin" max="@UserConsts.ChartDaysMax" step="@UserConsts.ChartDaysStep"
+                       onchange="document.getElementById('task-log-submit').click();"
+                       oninput="chartDaysOutput.value = this.valueAsNumber;" />
+            </div>
+        </div>
+        <div class="col-auto">
+            <input asp-for="Task.ShowLog" class="form-check-input" type="checkbox" onchange="document.getElementById('task-log-submit').click();" />
+            <label asp-for="Task.ShowLog" class="form-check-label">Show Log</label>
+        </div>
+        <button id="task-log-submit" type="submit" class="d-none"></button>
+    </form>
+</h6>
+<div class="alert alert-secondary shadow">
     <div style="height:min(70vw, 300px)">
         <canvas id="myChart"></canvas>
     </div>

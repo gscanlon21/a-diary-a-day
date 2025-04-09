@@ -99,7 +99,7 @@ public class AzureController(ILogger<AzureController> logger, CoreContext contex
                 email.EmailStatus = EmailStatus.Pending;
             }
             // If the newsletter failed, disable it.
-            else if (email.Subject == EmailConsts.SubjectWorkout)
+            else if (email.Subject == EmailConsts.SubjectDiary)
             {
                 email.User.NewsletterDisabledReason = $"Email failed with status: {deliveryReport.Status}.";
             }

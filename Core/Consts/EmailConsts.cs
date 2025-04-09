@@ -10,7 +10,7 @@ public class EmailConsts
 
     public const string SubjectConfirm = "Account Confirmation";
 
-    public const string SubjectWorkout = "Daily Diary";
+    public const string SubjectDiary = "Daily Diary";
 
     public const string SubjectException = "Unhandled Exception";
 
