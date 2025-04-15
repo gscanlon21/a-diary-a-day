@@ -6,6 +6,8 @@ using Data.Entities.Task;
 using Data.Entities.User;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.ComponentModel;
+using System.Reflection;
 using System.Text.Json;
 
 namespace Data;
@@ -103,5 +105,20 @@ public class CoreContext : DbContext
         modelBuilder.Entity<UserAllergens>().Property(e => e.Allergens).HasConversion(v => JsonSerializer.Serialize(v, JsonSerializerOptions),
             v => JsonSerializer.Deserialize<Dictionary<string, double>>(v, JsonSerializerOptions)!.Where(kv => Enum.IsDefined(typeof(Allergens), kv.Key)).ToDictionary(kv => Enum.Parse<Allergens>(kv.Key), kv => kv.Value),
             new ValueComparer<IDictionary<Allergens, double>>((mg, mg2) => mg == mg2, mg => mg.GetHashCode()));
+
+        // Set the default value of the db columns be attributes.
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        {
+            foreach (var property in entityType.GetProperties())
+            {
+                if (((MemberInfo?)property.PropertyInfo ?? property.FieldInfo) is MemberInfo memberInfo)
+                {
+                    if (Attribute.GetCustomAttribute(memberInfo, typeof(DefaultValueAttribute)) is DefaultValueAttribute defaultValue)
+                    {
+                        property.SetDefaultValue(defaultValue.Value);
+                    }
+                }
+            }
+        }
     }
 }
