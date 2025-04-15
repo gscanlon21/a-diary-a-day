@@ -22,9 +22,9 @@ public class AdvancedViewModel
     public string Token { get; init; } = null!;
     public string Email { get; init; } = null!;
 
-    [Display(Name = "Number of User Footnotes")]
+    [Display(Name = "Number of User Footnotes", Description = "User footnotes are shown above each diary.")]
     public int FootnoteCountTop { get; set; }
 
-    [Display(Name = "Number of System Footnotes")]
+    [Display(Name = "Number of System Footnotes", Description = "System footnotes are shown below each diary.")]
     public int FootnoteCountBottom { get; set; }
 }
