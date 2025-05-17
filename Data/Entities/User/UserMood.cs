@@ -23,7 +23,7 @@ public class UserMood : IScore
     public DateOnly Date { get; init; } = DateHelpers.Today;
 
     [Required]
-    public Mood Mood { get; set; } = Mood.Decent;
+    public Mood Mood { get; set; } = Mood.Fine;
 
     [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserMoods))]
     public virtual User User { get; init; } = null!;

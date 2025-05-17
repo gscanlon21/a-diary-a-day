@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -310,6 +311,27 @@ namespace Data.Migrations
                     table.PrimaryKey("PK_user_blood_work", x => x.Id);
                     table.ForeignKey(
                         name: "FK_user_blood_work_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user_body_temp",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    BodyTemp = table.Column<double>(type: "double precision", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_body_temp", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_body_temp_user_UserId",
                         column: x => x.UserId,
                         principalTable: "user",
                         principalColumn: "Id",
@@ -1629,13 +1651,14 @@ namespace Data.Migrations
                     UserId = table.Column<int>(type: "integer", nullable: true),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Notes = table.Column<string>(type: "text", nullable: true),
-                    InternalNotes = table.Column<string>(type: "text", nullable: true),
+                    Source = table.Column<string>(type: "text", nullable: true),
                     Section = table.Column<int>(type: "integer", nullable: false),
                     Type = table.Column<int>(type: "integer", nullable: false),
                     ReferenceMin = table.Column<double>(type: "double precision", nullable: true),
                     ReferenceMax = table.Column<double>(type: "double precision", nullable: true),
                     Order = table.Column<int>(type: "integer", nullable: false),
                     ShowLog = table.Column<bool>(type: "boolean", nullable: false),
+                    ChartDays = table.Column<int>(type: "integer", nullable: false),
                     PersistUntilComplete = table.Column<bool>(type: "boolean", nullable: false),
                     LastSeen = table.Column<DateOnly>(type: "date", nullable: false),
                     LastCompleted = table.Column<DateOnly>(type: "date", nullable: false),
@@ -2032,6 +2055,11 @@ namespace Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_user_body_temp_UserId",
+                table: "user_body_temp",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_user_cbc_w_auto_diff_UserId",
                 table: "user_cbc_w_auto_diff",
                 column: "UserId");
@@ -2359,6 +2387,9 @@ namespace Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "user_blood_work");
+
+            migrationBuilder.DropTable(
+                name: "user_body_temp");
 
             migrationBuilder.DropTable(
                 name: "user_cbc_w_auto_diff");

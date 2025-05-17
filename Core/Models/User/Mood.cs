@@ -4,7 +4,7 @@ public enum Mood
 {
     Poor = 1,
     Okay = 2,
-    Decent = 3,
+    Fine = 3,
     Good = 4,
     Great = 5
 }
