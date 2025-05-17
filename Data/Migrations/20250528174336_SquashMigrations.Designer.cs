@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Data.Migrations
 {
     [DbContext(typeof(CoreContext))]
-    [Migration("20241231221013_SquashMigrations")]
+    [Migration("20250528174336_SquashMigrations")]
     partial class SquashMigrations
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0")
+                .HasAnnotation("ProductVersion", "9.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -314,6 +314,9 @@ namespace Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("ChartDays")
+                        .HasColumnType("integer");
+
                     b.Property<int>("DeloadAfterXWeeks")
                         .HasColumnType("integer");
 
@@ -321,9 +324,6 @@ namespace Data.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("DisabledReason")
-                        .HasColumnType("text");
-
-                    b.Property<string>("InternalNotes")
                         .HasColumnType("text");
 
                     b.Property<int>("LagRefreshXDays")
@@ -368,6 +368,9 @@ namespace Data.Migrations
 
                     b.Property<bool>("ShowLog")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("Source")
+                        .HasColumnType("text");
 
                     b.Property<int>("Type")
                         .HasColumnType("integer");
@@ -746,6 +749,30 @@ namespace Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("user_blood_work");
+                });
+
+            modelBuilder.Entity("Data.Entities.User.UserBodyTemp", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("BodyTemp")
+                        .HasColumnType("double precision");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("user_body_temp");
                 });
 
             modelBuilder.Entity("Data.Entities.User.UserCbcWAutoDiff", b =>
@@ -3084,6 +3111,17 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Data.Entities.User.UserBodyTemp", b =>
+                {
+                    b.HasOne("Data.Entities.User.User", "User")
+                        .WithMany("UserBodyTemps")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Data.Entities.User.UserCbcWAutoDiff", b =>
                 {
                     b.HasOne("Data.Entities.User.User", "User")
@@ -3750,6 +3788,8 @@ namespace Data.Migrations
                     b.Navigation("UserBloodPressures");
 
                     b.Navigation("UserBloodWorks");
+
+                    b.Navigation("UserBodyTemps");
 
                     b.Navigation("UserCbcWAutoDiffs");
 

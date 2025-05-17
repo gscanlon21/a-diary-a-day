@@ -12,12 +12,12 @@ public class AllergensViewModel
         {
             var flatMap = userMoods.SelectMany(m =>
             {
-                // Excluding complex allergens from here so the graph has less data points and is easier to follow.
+                // Excluding complex allergens here so the graph has less data points and is easier to follow.
                 return m.SimpleAllergens.Select(c => new UserCustomGroup(m.Date, c.Key.GetSingleDisplayName())
                 {
                     Value = (int)c.Value
-                });
-            }).ToList();
+                }); // Only select allergens where there user has seen at least 1 over the duration.
+            }).GroupBy(m => m.Name).Where(g => g.Any(m => m.Value > 0)).SelectMany(g => g).ToList();
 
             foreach (var days in Enumerable.Range(0, UserConsts.ChartDaysDefault))
             {
@@ -37,5 +37,5 @@ public class AllergensViewModel
     public UserAllergens? PreviousMood { get; init; }
 
     internal List<XyGroup> Xys { get; init; } = [];
-    internal List<IGrouping<IGroup, XyGroup>> XysGrouped => Xys.Where(xy => xy.Y > 0).GroupBy(xy => xy.Group).ToList();
+    internal List<IGrouping<IGroup, XyGroup>> XysGrouped => Xys.Where(xy => xy.Y.HasValue).GroupBy(xy => xy.Group).ToList();
 }
