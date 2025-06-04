@@ -13,8 +13,8 @@ public class CreateViewModel
     public const string EmailRegex = @"\s*\S+@\S+\.\S+\s*";
     public const string EmailRegexError = "Please enter a valid email address.";
 
-    public UserCreateViewModel UserCreateViewModel { get; set; } = new UserCreateViewModel();
     public UserLoginViewModel UserLoginViewModel { get; set; } = new UserLoginViewModel();
+    public UserCreateViewModel UserCreateViewModel { get; set; } = new UserCreateViewModel();
 
     /// <summary>
     /// If null, user has not yet tried to subscribe.

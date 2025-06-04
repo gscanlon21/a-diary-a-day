@@ -57,10 +57,6 @@
     <EditorConfigFiles Remove="C:\code\gscanlon\finer-fettle\.editorconfig" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="C:\code\gscanlon\finer-fettle\.editorconfig" />
-  </ItemGroup>
-
 
 
 </Project>
