@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -654,7 +653,7 @@ namespace Data.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<int>(type: "integer", nullable: false),
-                    UserLastSeen = table.Column<DateOnly>(type: "date", nullable: false),
+                    LastSeen = table.Column<DateOnly>(type: "date", nullable: true),
                     Note = table.Column<string>(type: "text", nullable: false),
                     Source = table.Column<string>(type: "text", nullable: true),
                     Type = table.Column<int>(type: "integer", nullable: false)
@@ -1660,7 +1659,7 @@ namespace Data.Migrations
                     ShowLog = table.Column<bool>(type: "boolean", nullable: false),
                     ChartDays = table.Column<int>(type: "integer", nullable: false),
                     PersistUntilComplete = table.Column<bool>(type: "boolean", nullable: false),
-                    LastSeen = table.Column<DateOnly>(type: "date", nullable: false),
+                    LastSeen = table.Column<DateOnly>(type: "date", nullable: true),
                     LastCompleted = table.Column<DateOnly>(type: "date", nullable: false),
                     RefreshAfter = table.Column<DateOnly>(type: "date", nullable: true),
                     LastDeload = table.Column<DateOnly>(type: "date", nullable: false),

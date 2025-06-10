@@ -82,14 +82,13 @@ public class UserTask
     /// <summary>
     /// When was this task last seen in the user's newsletter.
     /// </summary>
-    [Required]
-    public DateOnly LastSeen { get; set; }
+    public DateOnly? LastSeen { get; set; }
 
     /// <summary>
     /// When was this task last marked as completed by the user.
     /// </summary>
     [Required]
-    public DateOnly LastCompleted { get; set; }
+    public DateOnly? LastCompleted { get; set; }
 
     [NotMapped]
     public bool LastCompletedToday => LastCompleted == DateHelpers.Today;

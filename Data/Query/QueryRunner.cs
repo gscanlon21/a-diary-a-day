@@ -89,7 +89,7 @@ public class QueryRunner
             // NOTE: When the two recipe's LastSeen dates are the same:
             // ... The LagRefreshXDays will prevent the LastSeen date from updating
             // ... and we may see two randomly alternating recipes for the LagRefreshXDays duration.
-            .ThenBy(a => a.Task?.LastSeen.DayNumber)
+            .ThenBy(a => a.Task?.LastSeen?.DayNumber)
             // Mostly for the demo, show mostly random tasks.
             .ThenBy(_ => RandomNumberGenerator.GetInt32(Int32.MaxValue))
             // Don't re-order the list on each read.

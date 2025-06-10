@@ -18,7 +18,7 @@ public class TaskDto
 
     public string? Source { get; init; } = null;
 
-    public DateOnly LastCompleted { get; init; }
+    public DateOnly? LastCompleted { get; init; }
 
     public int LagRefreshXDays { get; init; }
 

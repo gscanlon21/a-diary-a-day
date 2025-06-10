@@ -83,7 +83,7 @@ public partial class NewsletterRepo
                     if (task.DeloadAfterXWeeks > 0 && task.NeedsDeload)
                     {
                         // Add the refresh padding onto the deload week. 
-                        task.LastDeload = task.LastSeen;
+                        task.LastDeload = task.LastSeen.GetValueOrDefault();
                     }
                 }
 

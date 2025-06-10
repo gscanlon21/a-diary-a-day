@@ -39,7 +39,10 @@
                     <input type="submit" value="@(Model.CompletedForSection ? "Completed" : "Complete")" class="btn btn-outline-secondary @(Model.CompletedForSection ? "" : "allow-demo")" />
                 </div>
                 <span asp-validation-for="Name" class="text-danger"></span>
-                <div id="name-help" class="form-text">Last Completed: @Model.UserTask.LastCompleted.ToShortDateString()</div>
+                @if (Model.UserTask.LastCompleted.HasValue) 
+                {
+                    <div id="name-help" class="form-text">Last Completed: @Model.UserTask.LastCompleted?.ToShortDateString()</div>
+                }
             </div>
         </form>
 
@@ -51,7 +54,8 @@
             <div class="form-group">
                 <label for="task-date" class="control-label">@Html.DisplayNameFor(_ => Model.UserTask)</label>
                 <div class="input-group">
-                    <input type="text" id="task-date" class="form-control" disabled="disabled" aria-describedby="date-help" rows="1" value="@((Model.UserTask.RefreshAfter ?? Model.UserTask.LastSeen).ToString("O"))" />
+                    <input type="text" id="task-date" class="form-control" disabled="disabled" aria-describedby="date-help" rows="1" 
+                           value="@((Model.UserTask.RefreshAfter ?? Model.UserTask.LastSeen ?? DateHelpers.Today).ToString("O"))" />
                     <input type="submit" value="Refresh" class="btn btn-outline-secondary allow-demo" />
                 </div>
                 <span asp-validation-for="UserTask" class="text-danger"></span>
