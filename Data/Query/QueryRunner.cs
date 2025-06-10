@@ -60,6 +60,8 @@ public class QueryRunner
     /// </summary>
     public async Task<IList<QueryResults>> Query(IServiceScopeFactory factory, int take = int.MaxValue)
     {
+        // When you perform comparisons with nullable types, if the value of one of the nullable types
+        // ... is null and the other is not, all comparisons evaluate to false except for != (not equal).
         using var scope = factory.CreateScope();
         using var context = scope.ServiceProvider.GetRequiredService<CoreContext>();
 
