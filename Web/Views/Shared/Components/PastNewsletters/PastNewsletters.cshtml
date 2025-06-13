@@ -9,7 +9,7 @@
     <div class="list-group mb-3">
         @foreach (var pastNewsletter in Model.PastNewsletters)
         {
-            <a href="@Url.ActionLink(nameof(NewsletterController.Newsletter), NewsletterController.Name, new { Model.User.Email, Model.Token, Date = pastNewsletter.Date.ToString("O") })"
+            <a href="@Url.ActionLink(nameof(NewsletterController.Newsletter), NewsletterController.Name, new { Model.User.Email, Model.Token, Date = pastNewsletter.Date.ToString("O") }, Uri.UriSchemeHttps)"
                class="list-group-item list-group-item-dark list-group-item-action allow-demo">
                 <div class="row gx-3 gy-1">
                     <h6 class="mb-1 font-weight--normal">@pastNewsletter.Date.ToLongDateString()</h6>
