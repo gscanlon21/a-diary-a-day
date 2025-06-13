@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics;
 using System.Security.Cryptography;
+using static Core.Code.Extensions.EnumerableExtensions;
 
 namespace Data.Query;
 
@@ -84,20 +85,19 @@ public class QueryRunner
 
         // OrderBy must come after the query or you get cartesian explosion.
         var orderedResults = new List<QueryResults>();
-        foreach (var recipe in queryResults
-            // Order by recipes that are still pending refresh.
-            .OrderByDescending(a => a.Task?.RefreshAfter.HasValue)
-            // Show recipes that the user has rarely seen.
-            // NOTE: When the two recipe's LastSeen dates are the same:
+        // Order by tasks that are still pending refresh.
+        foreach (var result in queryResults.OrderByDescending(a => a.Task?.RefreshAfter.HasValue, NullOrder.NullsLast)
+            // Show tasks that the user has rarely seen.
+            // NOTE: When the two task's LastSeen dates are the same:
             // ... The LagRefreshXDays will prevent the LastSeen date from updating
-            // ... and we may see two randomly alternating recipes for the LagRefreshXDays duration.
-            .ThenBy(a => a.Task?.LastSeen?.DayNumber)
+            // ... and we may see two randomly alternating tasks for the LagRefreshXDays duration.
+            .ThenBy(a => a.Task?.LastSeen?.DayNumber, NullOrder.NullsFirst)
             // Mostly for the demo, show mostly random tasks.
             .ThenBy(_ => RandomNumberGenerator.GetInt32(Int32.MaxValue))
             // Don't re-order the list on each read.
             .ToList())
         {
-            var queryResult = new QueryResults(_section ?? Section.Anytime, recipe.Task);
+            var queryResult = new QueryResults(_section ?? Section.Anytime, result.Task);
             if (!orderedResults.Contains(queryResult))
             {
                 orderedResults.Add(queryResult);
