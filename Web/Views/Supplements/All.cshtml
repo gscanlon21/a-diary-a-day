@@ -9,7 +9,7 @@
     ViewData[ViewData_Blank.Title] = "Supplements";
 }
 
-<details class="alert alert-secondary mb-0" style="position:fixed;top:0;right:0;z-index:1;overflow:auto;max-height:100vh;">
+<details class="alert alert-secondary mb-0" style="position:fixed;top:0;right:0;z-index:1;overflow:auto;max-height:100vh;" @(Model.FormOpen ? "open" : "")>
     <summary class="cursor--pointer">@(Model.FormHasData ? "*" : "")Filter Supplements</summary>
 
     <form asp-controller="@SupplementsController.Name" asp-action="@nameof(SupplementsController.All)" method="get" style="margin-top:1rem"
@@ -29,7 +29,7 @@
                 <input type="submit" value="Apply" class="btn btn-secondary" name="submitButton" />
             </div>
             <div class="col-auto">
-                <a class="btn btn-outline-secondary" asp-controller="@SupplementsController.Name" asp-action="@nameof(SupplementsController.All)">Clear</a>
+                <a class="btn btn-outline-secondary" asp-controller="@SupplementsController.Name" asp-action="@nameof(SupplementsController.All)" asp-route-formOpen="true">Clear</a>
             </div>
         </div>
     </form>
