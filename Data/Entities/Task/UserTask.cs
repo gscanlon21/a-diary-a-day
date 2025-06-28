@@ -87,7 +87,6 @@ public class UserTask
     /// <summary>
     /// When was this task last marked as completed by the user.
     /// </summary>
-    [Required]
     public DateOnly? LastCompleted { get; set; }
 
     [NotMapped]
