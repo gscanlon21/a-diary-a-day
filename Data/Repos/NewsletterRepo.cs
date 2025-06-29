@@ -100,7 +100,7 @@ public partial class NewsletterRepo
         if (oldNewsletter != null)
         {
             _logger.Log(LogLevel.Information, "Returning old newsletter for user {Id}", user.Id);
-            return await NewsletterOld(user, token, date.Value, oldNewsletter);
+            return await NewsletterOld(user, token, oldNewsletter);
         }
         // A newsletter was not found and the date is not one we want to render a new newsletter for.
         else if (date != user.TodayOffset)
@@ -122,7 +122,7 @@ public partial class NewsletterRepo
             }
 
             _logger.Log(LogLevel.Information, "Returning current newsletter for user {Id}", user.Id);
-            return await NewsletterOld(user, token, currentFeast.Date, currentFeast);
+            return await NewsletterOld(user, token, currentFeast);
         }
 
         if (user.Features.HasFlag(Features.Debug))
@@ -187,7 +187,7 @@ public partial class NewsletterRepo
     /// <summary>
     /// Root route for building out the workout routine newsletter based on a date.
     /// </summary>
-    private async Task<NewsletterDto?> NewsletterOld(User user, string token, DateOnly date, UserDiary newsletter)
+    private async Task<NewsletterDto?> NewsletterOld(User user, string token, UserDiary newsletter)
     {
         var tasks = new List<QueryResults>();
         foreach (var section in EnumExtensions.GetValuesExcluding(Section.All))
@@ -205,10 +205,10 @@ public partial class NewsletterRepo
         }
 
         // Only hide tasks for the current diary.
-        if (date == user.TodayOffset)
+        if (newsletter.Date == user.TodayOffset)
         {
             // Hide tasks that we have already completed today.
-            var taskLogs = await _context.UserTaskLogs.Where(utl => utl.Date == date).Where(utl => tasks.Select(t => t.Task.Id).Contains(utl.UserTaskId)).ToListAsync();
+            var taskLogs = await _context.UserTaskLogs.Where(utl => utl.Date == newsletter.Date).Where(utl => tasks.Select(t => t.Task.Id).Contains(utl.UserTaskId)).ToListAsync();
             tasks = tasks.Where(t => (taskLogs.FirstOrDefault(tl => tl.Section == t.Section && tl.UserTaskId == t.Task.Id)?.Complete ?? 0) == 0).ToList();
         }
 
@@ -216,9 +216,9 @@ public partial class NewsletterRepo
         var userViewModel = new UserNewsletterDto(user.AsType<UserDto>()!, token);
         var newsletterViewModel = new NewsletterDto()
         {
-            Date = date,
             Images = images,
             User = userViewModel,
+            Date = newsletter.Date,
             Verbosity = user.Verbosity,
             UserDiary = newsletter.AsType<UserDiaryDto>()!,
             Tasks = tasks.Select(r => r.AsType<NewsletterTaskDto>()!).ToList()
