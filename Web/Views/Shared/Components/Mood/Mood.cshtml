@@ -18,7 +18,7 @@
 
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                        <div class="form-group mb-5">
+                        <div class="mb-5">
                             <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Mood)</label>
                             <div><span asp-validation-for="UserMood.Mood" class="text-danger"></span></div>
                             <div style="display:flex;column-gap:1ex;">
@@ -48,7 +48,7 @@
                             </div>
                             <div id="pounds-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.Mood)</div>
                         </div>
-                        <div class="form-group mb-3">
+                        <div class="mb-3">
                             <input type="submit" value="Save" class="btn btn-primary allow-demo" />
                         </div>
                     </form>

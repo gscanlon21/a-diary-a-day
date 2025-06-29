@@ -7,7 +7,7 @@
 <div class="my-4">
     <h5 class="mb-1">Supplement Studies</h5>
     <form asp-controller="@StudyController.Name" asp-action="@nameof(StudyController.AddSupplementStudy)" asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" method="post" class="alert alert-light shadow">
-        <div class="form-group mb-3">
+        <div class="mb-3">
             <label asp-for="StudyId" class="control-label">Study</label>
             <select asp-for="StudyId" asp-items="Model.Studies" class="form-control"></select>
             <a asp-controller="@StudyController.Name" asp-action="@nameof(StudyController.AddStudy)" class="form-text"
@@ -15,7 +15,7 @@
                 Add Study
             </a>
         </div>
-        <div class="form-group">
+        <div>
             <input type="submit" value="Add" class="btn btn-secondary" />
         </div>
     </form>
@@ -27,7 +27,7 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" name="StudyId" asp-for="@studySupplement.Study.Id" />
 
-        <div class="form-group mt-3">
+        <div class="mt-3">
             <div class="input-group">
                 <textarea class="form-control" disabled="disabled" aria-describedby="exercise-help" rows="2">@studySupplement.Study.Name</textarea>
                 <input type="submit" value="-" class="btn btn-outline-secondary" />

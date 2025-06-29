@@ -18,7 +18,7 @@
 
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                        <div class="form-group mb-5">
+                        <div class="mb-5">
                             <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.SystolicPressure)</label>
                             <div><span asp-validation-for="UserMood.SystolicPressure" class="text-danger"></span></div>
                             <div style="display:flex;column-gap:1ex;">
@@ -38,7 +38,7 @@
                             <div id="pounds-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.SystolicPressure)</div>
                         </div>
 
-                        <div class="form-group mb-5">
+                        <div class="mb-5">
                             <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.DiastolicPressure)</label>
                             <div><span asp-validation-for="UserMood.DiastolicPressure" class="text-danger"></span></div>
                             <div style="display:flex;column-gap:1ex;">
@@ -58,7 +58,7 @@
                             <div id="pounds-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.DiastolicPressure)</div>
                         </div>
 
-                        <div class="form-group mb-3">
+                        <div class="mb-3">
                             <input type="submit" value="Save" class="btn btn-primary allow-demo" />
                         </div>
                     </form>

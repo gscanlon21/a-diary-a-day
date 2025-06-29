@@ -14,7 +14,7 @@
 
             @if (Model.UserTask.Type == UserTaskType.Log) 
             {
-                <div class="form-group mb-3">
+                <div class="mb-3">
                     <label asp-for="Value" class="control-label">@Html.DisplayNameFor(_ => Model.Value)</label>
                     <div style="display:flex;column-gap:1ex;">
                         <input id="@(Html.IdFor(_ => Model.Value))" type="number" asp-for="Value" style="width:6ch;height:fit-content;"
@@ -31,7 +31,7 @@
                 </div>
             }
 
-            <div class="form-group mb-3">
+            <div class="mb-3">
                 <label for="task-name" class="control-label">@Html.DisplayNameFor(_ => Model.Name)</label>
                 <div class="input-group">
                     <textarea id="task-name" class="form-control" aria-describedby="name-help" rows="1"
@@ -51,7 +51,7 @@
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
+            <div>
                 <label for="task-date" class="control-label">@Html.DisplayNameFor(_ => Model.UserTask)</label>
                 <div class="input-group">
                     <input type="text" id="task-date" class="form-control" disabled="disabled" aria-describedby="date-help" rows="1" 
@@ -71,7 +71,7 @@
 
         @if (Model.UserTask.Id == default)
         {
-            <div class="form-group mb-3">
+            <div class="mb-3">
                 <label asp-for="Name" class="control-label">@Html.DisplayNameFor(_ => Model.Name)</label>
                 <input asp-for="Name" type="text" class="form-control" aria-describedby="name-help" rows="1" value="@Model.Name" />
                 <span asp-validation-for="Name" class="text-danger"></span>
@@ -82,19 +82,19 @@
             <input type="hidden" name="Name" asp-for="@Model.UserTask.Name" />
         }
 
-        <div class="form-group mb-3 mt-3">
+        <div class="mb-3 mt-3">
             <label asp-for="Notes" class="control-label">@Html.DisplayNameFor(_ => Model.Notes)</label>
             <input asp-for="Notes" type="text" class="form-control" aria-describedby="notes-help" rows="1" value="@Model.Notes" />
             <span asp-validation-for="Notes" class="text-danger"></span>
         </div>
 
-        <div class="form-group mb-3 mt-3">
+        <div class="mb-3 mt-3">
             <label asp-for="Source" class="control-label">@Html.DisplayNameFor(_ => Model.Source)</label>
             <input asp-for="Source" type="text" class="form-control" aria-describedby="internal-notes-help" rows="1" value="@Model.Source" />
             <span asp-validation-for="Source" class="text-danger"></span>
         </div>
 
-        <div class="form-group mb-3 row">
+        <div class="mb-3 row">
             <div class="col">
                 <label asp-for="Type" class="control-label">@Html.DisplayNameFor(_ => Model.Type)</label>
                 <select asp-for="Type" class="form-control overflow-auto" aria-describedby="type-help"
@@ -111,7 +111,7 @@
             </div>
         </div>
 
-        <div class="form-group mb-3">
+        <div class="mb-3">
             <label asp-for="SectionBinder" class="control-label">@Html.DisplayNameFor(_ => Model.Section)</label>
             <select asp-for="SectionBinder" class="form-control overflow-auto" aria-describedby="section-help" size="5"
                     asp-items="@(EnumExtensions.GetValuesExcluding(Section.Anytime, Section.All).AsSelectListItems(EnumViewExtensions.EnumOrdering.Order))">
@@ -127,7 +127,7 @@
             </div>
         }
 
-        <div class="form-group mb-3 mt-3">
+        <div class="mb-3 mt-3">
             <label asp-for="LagRefreshXDays" class="control-label">@Html.DisplayNameFor(_ => Model.LagRefreshXDays)</label>
             <div style="display:flex;column-gap:1ex;">
                 <input id="@(Html.IdFor(_ => Model.LagRefreshXDays))" type="number" asp-for="LagRefreshXDays" style="width:6ch;height:fit-content;"
@@ -143,7 +143,7 @@
             <div id="lag-refresh-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.LagRefreshXDays)</div>
         </div>
 
-        <div class="form-group mb-3 mt-3">
+        <div class="mb-3 mt-3">
             <label asp-for="PadRefreshXDays" class="control-label">@Html.DisplayNameFor(_ => Model.PadRefreshXDays)</label>
             <div style="display:flex;column-gap:1ex;">
                 <input id="@(Html.IdFor(_ => Model.PadRefreshXDays))" type="number" asp-for="PadRefreshXDays" style="width:6ch;height:fit-content;"
@@ -159,7 +159,7 @@
             <div id="pad-refresh-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.PadRefreshXDays)</div>
         </div>
 
-        <div class="form-group mb-3 mt-3">
+        <div class="mb-3 mt-3">
             <label asp-for="DeloadAfterXWeeks" class="control-label">@Html.DisplayNameFor(_ => Model.DeloadAfterXWeeks)</label>
             <div style="display:flex;column-gap:1ex;">
                 <input id="@(Html.IdFor(_ => Model.DeloadAfterXWeeks))" type="number" asp-for="DeloadAfterXWeeks" style="width:6ch;height:fit-content;"
@@ -177,7 +177,7 @@
 
         @if (Model.DeloadAfterXWeeks > 0) 
         {
-            <div class="form-group mb-3 mt-3">
+            <div class="mb-3 mt-3">
                 <label asp-for="DeloadDurationWeeks" class="control-label">@Html.DisplayNameFor(_ => Model.DeloadDurationWeeks)</label>
                 <div style="display:flex;column-gap:1ex;">
                     <input id="@(Html.IdFor(_ => Model.DeloadDurationWeeks))" type="number" asp-for="DeloadDurationWeeks" style="width:6ch;height:fit-content;"
@@ -200,7 +200,7 @@
         
         @if (Model.UserTask.Type == UserTaskType.Log) 
         {
-            <div class="form-group mb-3 mt-3">
+            <div class="mb-3 mt-3">
                 <label asp-for="ReferenceMin" class="control-label">@Html.DisplayNameFor(_ => Model.ReferenceMin)</label>
                 <div style="display:flex;column-gap:1ex;">
                     <input id="@(Html.IdFor(_ => Model.ReferenceMin))" type="number" asp-for="ReferenceMin" style="width:6ch;height:fit-content;"
@@ -216,7 +216,7 @@
                 <div id="reference-min-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.ReferenceMin)</div>
             </div>
 
-            <div class="form-group mb-3 mt-3">
+            <div class="mb-3 mt-3">
                 <label asp-for="ReferenceMax" class="control-label">@Html.DisplayNameFor(_ => Model.ReferenceMax)</label>
                 <div style="display:flex;column-gap:1ex;">
                     <input id="@(Html.IdFor(_ => Model.ReferenceMax))" type="number" asp-for="ReferenceMax" style="width:6ch;height:fit-content;"
@@ -233,14 +233,14 @@
             </div>
         }
 
-        <div class="form-group form-check mb-3">
+        <div class="form-check mb-3">
             <label asp-for="PersistUntilComplete" class="control-label">@Html.DisplayNameFor(_ => Model.PersistUntilComplete)</label>
             <input class="form-check-input" asp-for="PersistUntilComplete" aria-describedby="persist-help" />
             <span asp-validation-for="PersistUntilComplete" class="text-danger"></span>
             <div id="persist-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.PersistUntilComplete)</div>
         </div>
 
-        <div class="form-group form-check mb-3">
+        <div class="form-check mb-3">
             <label asp-for="Enabled" class="control-label">@Html.DisplayNameFor(_ => Model.Enabled)</label>
             <input class="form-check-input" asp-for="Enabled" aria-describedby="disabled-help" />
             <span asp-validation-for="Enabled" class="text-danger"></span>
@@ -254,7 +254,7 @@
         </div>
     </form>
 
-    <div class="row form-group justify-content-end gy-2">
+    <div class="row justify-content-end gy-2">
         <div class="col">
             <input type="submit" value="Save" class="btn btn-primary" form="task-form" />
         </div>

@@ -18,7 +18,7 @@
 
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                        <div class="form-group mb-3 mt-3">
+                        <div class="mb-3 mt-3">
                             <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Butyrate)</label>
                             <div><span asp-validation-for="UserMood.Butyrate" class="text-danger"></span></div>
                             <div style="display:flex;column-gap:1ex;">
@@ -42,7 +42,7 @@
                             <div id="@(Html.IdFor(_ => Model.UserMood.Butyrate))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.Butyrate)</div>
                         </div>
 
-                        <div class="form-group mb-3 mt-3">
+                        <div class="mb-3 mt-3">
                             <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Valerate)</label>
                             <div><span asp-validation-for="UserMood.Valerate" class="text-danger"></span></div>
                             <div style="display:flex;column-gap:1ex;">
@@ -66,7 +66,7 @@
                             <div id="@(Html.IdFor(_ => Model.UserMood.Valerate))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.Valerate)</div>
                         </div>
 
-                        <div class="form-group mb-3 mt-3">
+                        <div class="mb-3 mt-3">
                             <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Lactate)</label>
                             <div><span asp-validation-for="UserMood.Lactate" class="text-danger"></span></div>
                             <div style="display:flex;column-gap:1ex;">
@@ -90,7 +90,7 @@
                             <div id="@(Html.IdFor(_ => Model.UserMood.Lactate))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.Lactate)</div>
                         </div>
 
-                        <div class="form-group mb-3 mt-3">
+                        <div class="mb-3 mt-3">
                             <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Propionate)</label>
                             <div><span asp-validation-for="UserMood.Propionate" class="text-danger"></span></div>
                             <div style="display:flex;column-gap:1ex;">
@@ -114,7 +114,7 @@
                             <div id="@(Html.IdFor(_ => Model.UserMood.Propionate))-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.UserMood.Propionate)</div>
                         </div>
 
-                        <div class="form-group">
+                        <div>
                             <input type="submit" value="Save" class="btn btn-primary allow-demo" />
                         </div>
                     </form>

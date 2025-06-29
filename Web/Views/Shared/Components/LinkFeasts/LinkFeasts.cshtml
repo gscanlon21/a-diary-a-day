@@ -5,7 +5,7 @@
           asp-route-email="@Model.Email" asp-route-token="@Model.Token"
           class="alert alert-secondary">
 
-        <div class="form-group mb-3 row">
+        <div class="mb-3 row">
             <div class="col-6">
                 <label asp-for="FeastEmail" class="control-label">@Html.DisplayNameFor(_ => Model.FeastEmail)</label>
                 <input asp-for="FeastEmail" class="form-control" type="email" aria-describedby="refresh-functional-help" />
@@ -20,7 +20,7 @@
             </div>
         </div>
 
-        <div class="row form-group">
+        <div class="row ">
             <div class="col">
                 <input type="submit" value="Save" class="btn btn-secondary" />
             </div>

@@ -18,14 +18,14 @@
 
             @if (!Model.User.IsDemoUser) 
             {
-                <div class="form-group mb-3">
+                <div class="mb-3">
                     <label for="disabled-email" class="control-label">@Html.DisplayNameFor(_ => Model.Email)</label>
                     <input id="disabled-email" value="@Model.Email" class="form-control" disabled="disabled" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
             }
             
-            <div class="form-group mb-3">
+            <div class="mb-3">
                 <label asp-for="SendDaysBinder" class="control-label">@Html.DisplayNameFor(_ => Model.SendDays)</label>
                 <select asp-for="SendDaysBinder" class="form-control overflow-auto" aria-describedby="rest-help" size="@BitOperations.PopCount((ulong)Days.All)"
                         asp-items="@(EnumExtensions.GetSingleValues<Days>().AsSelectListItems())">
@@ -34,7 +34,7 @@
                 <div id="rest-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.SendDays)</div>
             </div>
 
-            <div class="form-group mb-3">
+            <div class="mb-3">
                 <label asp-for="ComponentsBinder" class="control-label">@Html.DisplayNameFor(_ => Model.Components)</label>
                 <select asp-for="ComponentsBinder" class="form-control overflow-auto" aria-describedby="Components-help" size="5"
                         asp-items="@(EnumExtensions.GetDisplayValues<Core.Models.Components.Component>().AsSelectListItems(EnumViewExtensions.EnumOrdering.Order))">
@@ -44,7 +44,7 @@
             </div>
             @if (Model.Components != Core.Models.Components.Component.None && Model.ComponentsBinder != null)
             {
-                <div class="form-group mb-3">
+                <div class="mb-3">
                     <details class="mb-3" @(Model.WasUpdated == false ? "open='open'" : "")>
                         <summary><b>Edit @Html.DisplayNameFor(_ => Model.UserComponentSettings)</b></summary>
 
@@ -103,7 +103,7 @@
                 </div>
             }
 
-            <div class="form-group mb-3">
+            <div class="mb-3">
                 <label asp-for="FootnoteTypeBinder" class="control-label">@Html.DisplayNameFor(_ => Model.FootnoteType)</label>
                 <select asp-for="FootnoteTypeBinder" class="form-control overflow-auto" aria-describedby="footnote-help" size="5"
                         asp-items='@(EnumExtensions.GetSingleValues<FootnoteType>().AsSelectListItems(EnumViewExtensions.EnumOrdering.Text))'>
@@ -111,7 +111,7 @@
                 <span asp-validation-for="FootnoteTypeBinder" class="text-danger"></span>
                 <div id="footnote-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.FootnoteType)</div>
             </div>
-            <div class="form-group mb-3">
+            <div class="mb-3">
                 <label asp-for="VerbosityBinder" class="control-label">@Html.DisplayNameFor(_ => Model.Verbosity)</label>
                 <select asp-for="VerbosityBinder" class="form-control overflow-auto" aria-describedby="verbosity-help" size="2"
                         asp-items="@(EnumExtensions.GetDisplayValues<Verbosity>().AsSelectListItems(EnumViewExtensions.EnumOrdering.Text))">
@@ -120,7 +120,7 @@
                 <div id="verbosity-help" class="form-text">@Html.DisplayDescriptionFor(_ => Model.Verbosity)</div>
             </div>
 
-            <div class="form-group mb-3">
+            <div class="mb-3">
                 <label asp-for="SendHour" class="control-label">@Html.DisplayNameFor(_ => Model.SendHour)</label>
                 <select asp-for="SendHour" class="form-control" aria-describedby="time-help"
                         asp-items="@(Enumerable.Range(0, 24).Select(h => new SelectListItem() { Text = $"{h}", Value = $"{h}" }))">
@@ -140,7 +140,7 @@
                 </details>
             </div>
 
-            <div class="form-group form-check mb-3">
+            <div class="form-check mb-3">
                 <label asp-for="NewsletterEnabled" class="control-label">@Html.DisplayNameFor(_ => Model.NewsletterEnabled)</label>
                 <input class="form-check-input" asp-for="NewsletterEnabled" aria-describedby="disabled-help" />
                 <span asp-validation-for="NewsletterEnabled" class="text-danger"></span>
@@ -153,7 +153,7 @@
                 </div>
             </div>
 
-            <div class="row form-group">
+            <div class="row ">
                 <div class="col">
                     <input type="submit" value="Save" class="btn btn-primary" />
                 </div>

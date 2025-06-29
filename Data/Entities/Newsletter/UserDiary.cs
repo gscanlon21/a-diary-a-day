@@ -21,7 +21,7 @@ public class UserDiary
     {
         Date = date;
         UserId = user.Id;
-        Logs = Core.Code.Logs.WriteLogs(user);
+        Logs = UserLogs.WriteLogs(user);
     }
 
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

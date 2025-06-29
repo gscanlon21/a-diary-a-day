@@ -20,7 +20,7 @@
 
                         @if (Model.SubComponents.HasFlag(Core.Models.Components.SubComponents.BloodWork.VitaminA))
                         {
-                            <div class="form-group mb-3 mt-3">
+                            <div class="mb-3 mt-3">
                                 <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.VitaminA)</label>
                                 <div><span asp-validation-for="UserMood.VitaminA" class="text-danger"></span></div>
                                 <div style="display:flex;column-gap:1ex;">
@@ -48,7 +48,7 @@
 
                         @if (Model.SubComponents.HasFlag(Core.Models.Components.SubComponents.BloodWork.Homocysteine))
                         {
-                            <div class="form-group mb-3 mt-3">
+                            <div class="mb-3 mt-3">
                                 <label class="control-label">@Html.DisplayNameFor(_ => Model.UserMood.Homocysteine)</label>
                                 <div><span asp-validation-for="UserMood.Homocysteine" class="text-danger"></span></div>
                                 <div style="display:flex;column-gap:1ex;">
@@ -74,7 +74,7 @@
                             </div>
                         }
 
-                        <div class="form-group">
+                        <div>
                             <input type="submit" value="Save" class="btn btn-primary allow-demo" />
                         </div>
                     </form>
