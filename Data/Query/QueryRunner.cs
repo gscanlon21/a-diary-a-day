@@ -76,7 +76,7 @@ public class QueryRunner
 
             if (!SelectionOptions.All)
             {
-                filteredQuery = filteredQuery.Where(vm => vm.Task.LastSeen <= DateHelpers.Today);
+                filteredQuery = filteredQuery.Where(vm => vm.Task.LastSeen == null || vm.Task.LastSeen <= DateHelpers.Today); // Check null.
                 filteredQuery = filteredQuery.Where(vm => vm.Task.LastDeload.AddDays(7 * vm.Task.DeloadDurationWeeks) <= DateHelpers.Today);
             }
         }
