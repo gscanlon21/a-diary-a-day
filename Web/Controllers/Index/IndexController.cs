@@ -80,7 +80,7 @@ public class IndexController : ViewController
 
             // Need a token for if the user chooses to manage their preferences after signup.
             var token = await _userRepo.AddUserToken(newUser, durationDays: 1);
-            TempData[TempData_User.SuccessMessage] = "Thank you! Please accept the account confirmation email in your inbox to begin receiving workouts.";
+            TempData[TempData_User.SuccessMessage] = "Thank you! Please accept the account confirmation email in your inbox.";
             return RedirectToAction(nameof(UserController.Edit), UserController.Name, new { newUser.Email, token });
         }
 
