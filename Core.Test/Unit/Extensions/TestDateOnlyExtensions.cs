@@ -1,5 +1,4 @@
 ﻿using Core.Code.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Globalization;
 
 namespace Core.Test.Unit.Extensions;

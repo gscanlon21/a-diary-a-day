@@ -14,31 +14,29 @@
     };
 }
 
-<div class="alert alert-secondary">
-    <div class="row gy-2">
-        @if (!hide)
-        {
-            <div class="col-lg-6">
-                <h6 class="mb-1">Allergens</h6>
-                <div class="alert alert-light shadow">
-                    <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageAllergens)" method="post"
-                          asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
-
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                        <div>
-                            <input type="submit" value="Save" class="btn btn-primary allow-demo" />
-                        </div>
-                    </form>
-                </div>
-            </div>
-        }
-
+<div class="row gy-4">
+    @if (!hide)
+    {
         <div class="col-lg-6">
-            <h6 class="mb-1">Log</h6>
+            <h6 class="mb-1">Allergens</h6>
             <div class="alert alert-light shadow">
-                <partial name="_LineChart" model="chartViewModel" />
+                <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageAllergens)" method="post"
+                        asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div>
+                        <input type="submit" value="Save" class="btn btn-primary allow-demo" />
+                    </div>
+                </form>
             </div>
+        </div>
+    }
+
+    <div class="col-lg-6">
+        <h6 class="mb-1">Log</h6>
+        <div class="alert alert-light shadow">
+            <partial name="_LineChart" model="chartViewModel" />
         </div>
     </div>
 </div>
