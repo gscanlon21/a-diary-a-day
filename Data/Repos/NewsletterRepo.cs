@@ -218,10 +218,9 @@ public partial class NewsletterRepo
         {
             Images = images,
             User = userViewModel,
-            Date = newsletter.Date,
             Verbosity = user.Verbosity,
             UserDiary = newsletter.AsType<UserDiaryDto>()!,
-            Tasks = tasks.Select(r => r.AsType<NewsletterTaskDto>()!).ToList()
+            Tasks = tasks.Select(r => r.AsType<NewsletterTaskDto>()!).ToList(),
         };
 
         return newsletterViewModel;
