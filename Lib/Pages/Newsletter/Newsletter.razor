@@ -46,7 +46,7 @@ else
         <Lib.Pages.Shared.Component.ComponentSection User="Model.User" Verbosity="Model.Verbosity" Images="Model.Images" Theme="Theme.None" Title="@(new ComponentSection.Titles("Components"))" />
     </div>
 
-    <Lib.Pages.Shared.Newsletter.Footnote User="Model.User" Verbosity="Model.Verbosity" Type="Shared.Newsletter.Footnote.FootnoteComponentType.System" Count="Model.User.FootnoteCountBottom" />
+    <Lib.Pages.Shared.Newsletter.Footnote User="Model.User" Verbosity="Model.Verbosity" Type="Shared.Newsletter.Footnote.FootnoteComponentType.System" Count="Model.User.FootnoteCountBottom" HideFooter="Model.HideFooter" />
 
     @if (!Model.HideFooter)
     {
