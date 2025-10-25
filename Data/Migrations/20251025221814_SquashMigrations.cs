@@ -1660,7 +1660,7 @@ namespace Data.Migrations
                     ChartDays = table.Column<int>(type: "integer", nullable: false),
                     PersistUntilComplete = table.Column<bool>(type: "boolean", nullable: false),
                     LastSeen = table.Column<DateOnly>(type: "date", nullable: true),
-                    LastCompleted = table.Column<DateOnly>(type: "date", nullable: false),
+                    LastCompleted = table.Column<DateOnly>(type: "date", nullable: true),
                     RefreshAfter = table.Column<DateOnly>(type: "date", nullable: true),
                     LastDeload = table.Column<DateOnly>(type: "date", nullable: false),
                     LagRefreshXDays = table.Column<int>(type: "integer", nullable: false),
