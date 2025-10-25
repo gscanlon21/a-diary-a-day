@@ -16,6 +16,8 @@ public class CoreContext : DbContext
 {
     private static readonly JsonSerializerOptions JsonSerializerOptions = new();
 
+    //private const string DISABLED_REASON_IS_NULL = "\"DisabledReason\" IS NULL";
+
     [Obsolete("Public parameterless constructor required for EF Core.", error: true)]
     public CoreContext() : base() { }
 
@@ -99,7 +101,11 @@ public class CoreContext : DbContext
         modelBuilder.Entity<UserComponentSetting>().HasKey(sc => new { sc.UserId, sc.Component });
 
         ////////// Query Filters //////////
+        //modelBuilder.Entity<UserTask>().HasQueryFilter(p => p.DisabledReason == null);
         modelBuilder.Entity<UserToken>().HasQueryFilter(p => p.Expires > DateTime.UtcNow);
+
+        ////////// Partial Indexes ////////// Clone existing indexes to have a DisabledReason filter. Only filter out DisabledReason if there's a global query filter set for it.
+        //modelBuilder.Entity<UserTask>().Metadata.GetIndexes().Where(index => index.GetFilter() == null).ToList().ForEach(index => modelBuilder.Entity<UserTask>().Metadata.AddIndex(index.Properties, $"{index.GetDatabaseName()}_DisabledReason").SetFilter(DISABLED_REASON_IS_NULL));
 
         ////////// Conversions //////////
         modelBuilder.Entity<UserAllergens>().Property(e => e.Allergens).HasConversion(v => JsonSerializer.Serialize(v, JsonSerializerOptions),
