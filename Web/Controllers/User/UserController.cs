@@ -92,11 +92,12 @@ public partial class UserController : ViewController
                     SubComponents = umm.SubComponents,
                 }));
 
+                viewModel.User.SendDays = viewModel.SendDays;
+                viewModel.User.SendHour = viewModel.SendHour;
                 viewModel.User.Verbosity = viewModel.Verbosity;
                 viewModel.User.Components = viewModel.Components;
                 viewModel.User.FootnoteType = viewModel.FootnoteType;
-                viewModel.User.SendDays = viewModel.SendDays;
-                viewModel.User.SendHour = viewModel.SendHour;
+                viewModel.User.FontSizeAdjust = viewModel.FontSizeAdjust;
 
                 if (viewModel.User.NewsletterEnabled != viewModel.NewsletterEnabled)
                 {

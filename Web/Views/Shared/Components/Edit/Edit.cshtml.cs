@@ -20,15 +20,16 @@ public class UserEditViewModel
     public UserEditViewModel(Data.Entities.User.User user, string token)
     {
         User = user;
+        Token = token;
         Email = user.Email;
         SendDays = user.SendDays;
+        SendHour = user.SendHour;
+        Verbosity = user.Verbosity;
+        Components = user.Components;
+        FootnoteType = user.FootnoteType;
+        FontSizeAdjust = user.FontSizeAdjust;
         NewsletterEnabled = user.NewsletterEnabled;
         NewsletterDisabledReason = user.NewsletterDisabledReason;
-        Verbosity = user.Verbosity;
-        FootnoteType = user.FootnoteType;
-        SendHour = user.SendHour;
-        Components = user.Components;
-        Token = token;
     }
 
     [ValidateNever]
@@ -73,6 +74,10 @@ public class UserEditViewModel
     [Required, Range(UserConsts.SendHourMin, UserConsts.SendHourMax)]
     [Display(Name = "Send Time (UTC)", Description = "What hour of the day (UTC) do you want to receive new emails?")]
     public int SendHour { get; init; }
+
+    [Required, Range(UserConsts.FontSizeAdjustMin, UserConsts.FontSizeAdjustMax)]
+    [Display(Name = "Font Size Adjust", Description = "Font size adjustment.")]
+    public int FontSizeAdjust { get; init; }
 
     [Display(Name = "Component Settings")]
     public IList<UserEditComponentSkillViewModel> UserComponentSettings { get; set; } = [];
