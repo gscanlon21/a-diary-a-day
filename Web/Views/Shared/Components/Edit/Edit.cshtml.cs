@@ -76,7 +76,7 @@ public class UserEditViewModel
     public int SendHour { get; init; }
 
     [Required, Range(UserConsts.FontSizeAdjustMin, UserConsts.FontSizeAdjustMax)]
-    [Display(Name = "Font Size Adjust", Description = "Font size adjustment.")]
+    [Display(Name = "Font Size Adjust", Description = "How much to inflate the font size.")]
     public int FontSizeAdjust { get; init; }
 
     [Display(Name = "Component Settings")]

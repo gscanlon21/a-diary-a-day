@@ -18,11 +18,12 @@ public class UserNewsletterDto
         Id = user.Id;
         Uid = user.Uid;
         Email = user.Email;
-        Features = user.Features;
-        FootnoteType = user.FootnoteType;
-        LastActive = user.LastActive;
         SendDays = user.SendDays;
+        Features = user.Features;
         Verbosity = user.Verbosity;
+        LastActive = user.LastActive;
+        FootnoteType = user.FootnoteType;
+        FontSizeAdjust = user.FontSizeAdjust;
         FootnoteCountTop = user.FootnoteCountTop;
         FootnoteCountBottom = user.FootnoteCountBottom;
         Token = token;
@@ -52,6 +53,8 @@ public class UserNewsletterDto
     public int FootnoteCountTop { get; init; }
 
     public int FootnoteCountBottom { get; init; }
+
+    public int FontSizeAdjust { get; init; }
 
     public bool IsAlmostInactive => LastActive.HasValue && LastActive.Value < DateHelpers.Today.AddMonths(-1 * (UserConsts.DisableAfterXMonths - 1));
 }
