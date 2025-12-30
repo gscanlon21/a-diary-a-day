@@ -25,8 +25,8 @@ public class TasksViewComponent(IServiceScopeFactory serviceScopeFactory) : View
         // Need a user context so the manage link is clickable and the user can un-ignore a task.
         var userNewsletter = new UserNewsletterDto(user.AsType<UserDto>()!, token);
 
-        var tasks = await new QueryBuilder()
-            .WithUser(user, ignored: false)
+        var tasks = await new UserQueryBuilder(user, section: null)
+            .WithUser(ignored: false)
             .WithTasks(options => options.All = true)
             .WithTaskType(taskType)
             .Build()

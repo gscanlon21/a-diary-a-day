@@ -192,8 +192,8 @@ public partial class NewsletterRepo
         var tasks = new List<QueryResults>();
         foreach (var section in EnumExtensions.GetValuesExcluding(Section.All))
         {
-            tasks.AddRange((await new QueryBuilder(section)
-                .WithUser(user, ignored: false)
+            tasks.AddRange((await new UserQueryBuilder(user, section)
+                .WithUser(ignored: false)
                 .WithTasks(options =>
                 {
                     options.AddTasks(newsletter.UserDiaryTasks);
@@ -246,8 +246,8 @@ public partial class NewsletterRepo
 
     internal async Task<IList<QueryResults>> GetUserTasks(NewsletterContext newsletterContext, Section section, IEnumerable<QueryResults>? exclude = null)
     {
-        return await new QueryBuilder(section)
-            .WithUser(newsletterContext.User, ignored: false)
+        return await new UserQueryBuilder(newsletterContext.User, section)
+            .WithUser(ignored: false)
             .WithExcludeTasks(x =>
             {
                 x.AddExcludeTasks(exclude?.Select(r => r.Task));
@@ -258,8 +258,7 @@ public partial class NewsletterRepo
 
     private async Task<IList<QueryResults>> GetDebugTasks(User user)
     {
-        return await new QueryBuilder()
-            .WithUser(user)
+        return await new UserQueryBuilder(user, section: null)
             .WithTasks(options =>
             {
                 options.All = true;
