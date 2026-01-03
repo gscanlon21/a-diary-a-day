@@ -1,4 +1,6 @@
-﻿using Core.Models.User;
+﻿using Core.Models.Newsletter;
+using Core.Models.User;
+using Data.Entities.Task;
 using Data.Entities.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +26,23 @@ public partial class UserController
             Parameters = parameters,
             WasUpdated = wasUpdated,
         });
+    }
+
+    [HttpPost, Route("{component:component}/show-log")]
+    public async Task<IActionResult> ShowLog(string email, string token, Component component, UserComponentSetting setting)
+    {
+        var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        // Set the last completed date on the UserTask.
+        var userTask = await _context.UserComponentSettings.FirstAsync(ut => ut.UserId == user.Id && ut.Component == component);
+        userTask.Days = setting.Days;
+
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(ManageComponent), new { email, token, component, WasUpdated = true });
     }
 
     [HttpPost, Route("custom/add")]

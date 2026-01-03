@@ -19,7 +19,7 @@ public class UserComponentSetting
     public virtual User User { get; private init; } = null!;
 
     [Range(UserConsts.ChartDaysMin, UserConsts.ChartDaysMax)]
-    public int Days { get; init; } = UserConsts.ChartDaysDefault;
+    public int Days { get; set; } = UserConsts.ChartDaysDefault;
 
     public int SubComponents { get; set; }
 

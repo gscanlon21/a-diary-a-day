@@ -1,4 +1,5 @@
-﻿using Core.Models.User;
+﻿using Core.Models.Newsletter;
+using Core.Models.User;
 using Data.Entities.User;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
@@ -8,7 +9,7 @@ namespace Web.Views.Shared.Components.BloodPressure;
 
 public class BloodPressureViewModel
 {
-    public BloodPressureViewModel(IList<UserBloodPressure>? userMoods, List<UserCustom>? customs)
+    public BloodPressureViewModel(IList<UserBloodPressure>? userMoods, List<UserCustom>? customs, int chartDays = UserConsts.ChartDaysDefault)
     {
         if (userMoods != null && customs != null)
         {
@@ -21,7 +22,7 @@ public class BloodPressureViewModel
                 });
             });
 
-            foreach (var days in Enumerable.Range(0, UserConsts.ChartDaysDefault))
+            foreach (var days in Enumerable.Range(0, chartDays))
             {
                 var date = DateHelpers.Today.AddDays(-days);
                 Xys.AddRange(flatMap.Where(f => f.Date == date).Select(item =>
@@ -35,6 +36,7 @@ public class BloodPressureViewModel
     public string Token { get; init; } = null!;
     public Data.Entities.User.User User { get; init; } = null!;
 
+    public required UserComponentSetting Setting { get; init; } = null!;
     public UserBloodPressure UserMood { get; init; } = null!;
     public UserBloodPressure? PreviousMood { get; init; }
 

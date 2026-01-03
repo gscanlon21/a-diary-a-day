@@ -39,8 +39,8 @@ public partial class UserController
         });
     }
 
-    [HttpPost, Route("{section:section}/{taskId}/show-log")]
-    public async Task<IActionResult> ShowLog(string email, string token, Section section, int taskId, UserTask task)
+    [HttpPost, Route("{section:section}/{taskId}/show-task-log")]
+    public async Task<IActionResult> ShowTaskLog(string email, string token, Section section, int taskId, UserTask task)
     {
         var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
         if (user == null)
