@@ -84,7 +84,7 @@
 
         <div class="mb-3 mt-3">
             <label asp-for="Notes" class="control-label">@Html.DisplayNameFor(_ => Model.Notes)</label>
-            <input asp-for="Notes" type="text" class="form-control" aria-describedby="notes-help" rows="1" value="@Model.Notes" />
+            <textarea asp-for="Notes" type="text" class="form-control" aria-describedby="notes-help" rows="2">@Model.Notes</textarea>
             <span asp-validation-for="Notes" class="text-danger"></span>
         </div>
 
