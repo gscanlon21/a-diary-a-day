@@ -30,7 +30,6 @@ public class BloodPressureViewComponent : ViewComponent
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
         var i = 0;
-        var setting = await _context.UserComponentSettings.FirstAsync(s => s.UserId == user.Id && s.Component == Component.BloodPressure);
         var userMood = await _context.UserBloodPressures.FirstOrDefaultAsync(ud => ud.UserId == user.Id && ud.Date == DateHelpers.Today);
         var userMoods = await _context.UserBloodPressures.Where(ud => ud.UserId == user.Id).ToListAsync();
         var userCustoms = userMoods.FirstOrDefault()?.Items.Keys.Select(a => new UserCustom()
@@ -40,6 +39,16 @@ public class BloodPressureViewComponent : ViewComponent
             Type = CustomType.None,
             Name = a,
         }).ToList();
+
+        var setting = await _context.UserComponentSettings
+            .Where(s => s.UserId == user.Id).AsNoTracking()
+            .Where(s => s.Component == Component.BloodPressure)
+            .FirstOrDefaultAsync() ?? new UserComponentSetting() 
+        { 
+            Component = Component.BloodPressure, 
+            Days = UserConsts.ChartDaysDefault, 
+            UserId = user.Id ,
+        };
 
         var token = await _userRepo.AddUserToken(user, durationDays: 1);
         return View("BloodPressure", new BloodPressureViewModel(userMoods, userCustoms, setting.Days)
