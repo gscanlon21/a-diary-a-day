@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -69,6 +70,7 @@ namespace Data.Migrations
                     FootnoteType = table.Column<int>(type: "integer", nullable: false),
                     SendDays = table.Column<int>(type: "integer", nullable: false),
                     SendHour = table.Column<int>(type: "integer", nullable: false),
+                    FontSizeAdjust = table.Column<int>(type: "integer", nullable: false),
                     CreatedDate = table.Column<DateOnly>(type: "date", nullable: false),
                     Verbosity = table.Column<int>(type: "integer", nullable: false),
                     LastActive = table.Column<DateOnly>(type: "date", nullable: true),
@@ -577,7 +579,7 @@ namespace Data.Migrations
                     SorenessSeverity = table.Column<int>(type: "integer", nullable: true),
                     BurningSeverity = table.Column<int>(type: "integer", nullable: true),
                     FatigueSeverity = table.Column<int>(type: "integer", nullable: true),
-                    LastExeriencedSymptoms = table.Column<int>(type: "integer", nullable: true),
+                    LastExperiencedSymptoms = table.Column<int>(type: "integer", nullable: true),
                     EyeDrops = table.Column<bool>(type: "boolean", nullable: false),
                     DropsLast4Hours = table.Column<bool>(type: "boolean", nullable: false),
                     GelsLast12Hours = table.Column<bool>(type: "boolean", nullable: false),

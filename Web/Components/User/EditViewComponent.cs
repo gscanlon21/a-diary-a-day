@@ -35,11 +35,11 @@ public class EditViewComponent(UserRepo userRepo) : ViewComponent
                 .ThenBy(mg => mg.GetSingleDisplayName()))
             {
                 var userComponentSetting = viewModel.User.UserComponentSettings.SingleOrDefault(umm => umm.Component == component);
-                viewModel.UserComponentSettings.Add(userComponentSetting != null ? new UserEditViewModel.UserEditComponentSkillViewModel(userComponentSetting) : new UserEditViewModel.UserEditComponentSkillViewModel()
+                viewModel.UserComponentSettings.Add(userComponentSetting != null ? new UserEditViewModel.UserComponentSettingViewModel(userComponentSetting) : new UserEditViewModel.UserComponentSettingViewModel()
                 {
+                    Days = UserConsts.ChartDaysDefault,
                     UserId = viewModel.User.Id,
                     Component = component,
-                    Days = 180,
                 });
             }
         }

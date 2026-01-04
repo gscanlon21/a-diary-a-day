@@ -8,7 +8,7 @@ using Web.Views.Shared.Components.Allergens;
 namespace Web.Components.User;
 
 /// <summary>
-/// Renders an alert box summary of when the user's next deload week will occur.
+/// Component for tracking the user's A Feast a Day allergens over time.
 /// </summary>
 public class AllergensViewComponent : ViewComponent
 {
@@ -33,11 +33,22 @@ public class AllergensViewComponent : ViewComponent
             .Where(ud => ud.UserId == user.Id)
             .ToListAsync();
 
+        var setting = await _context.UserComponentSettings
+            .Where(s => s.UserId == user.Id).AsNoTracking()
+            .Where(s => s.Component == Component.Allergens)
+            .FirstOrDefaultAsync() ?? new UserComponentSetting()
+            {
+                Days = UserConsts.ChartDaysDefault,
+                Component = Component.Allergens,
+                UserId = user.Id,
+            };
+
         var token = await _userRepo.AddUserToken(user, durationDays: 1);
-        return View("Allergens", new AllergensViewModel(userMoods)
+        return View("Allergens", new AllergensViewModel(userMoods, setting.Days)
         {
             User = user,
             Token = token,
+            Setting = setting,
             PreviousMood = userMood,
             UserMood = new UserAllergens()
             {

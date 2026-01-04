@@ -1,5 +1,4 @@
-﻿using Core.Models.Newsletter;
-using Core.Models.User;
+﻿using Core.Models.User;
 using Data.Entities.User;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;

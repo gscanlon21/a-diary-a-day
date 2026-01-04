@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.Entities.User;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,10 +8,19 @@ using Web.Views.Shared.Components.DryEyes;
 namespace Web.Components.User;
 
 /// <summary>
-/// Renders an alert box summary of when the user's next deload week will occur.
+/// Component for tracking dry eye changes over time.
 /// </summary>
-public class DryEyesViewComponent(CoreContext context, UserRepo userRepo) : ViewComponent
+public class DryEyesViewComponent : ViewComponent
 {
+    private readonly CoreContext _context;
+    private readonly UserRepo _userRepo;
+
+    public DryEyesViewComponent(CoreContext context, UserRepo userRepo)
+    {
+        _context = context;
+        _userRepo = userRepo;
+    }
+
     /// <summary>
     /// For routing
     /// </summary>
@@ -18,16 +28,27 @@ public class DryEyesViewComponent(CoreContext context, UserRepo userRepo) : View
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
     {
-        var userMood = await context.UserDryEyes.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
-        var userMoods = await context.UserDryEyes.Where(ud => ud.UserId == user.Id).ToListAsync();
+        var userMood = await _context.UserDryEyes.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
+        var userMoods = await _context.UserDryEyes.Where(ud => ud.UserId == user.Id).ToListAsync();
 
-        var token = await userRepo.AddUserToken(user, durationDays: 1);
+        var setting = await _context.UserComponentSettings
+            .Where(s => s.UserId == user.Id).AsNoTracking()
+            .Where(s => s.Component == Component.DryEyes)
+            .FirstOrDefaultAsync() ?? new UserComponentSetting()
+            {
+                Days = UserConsts.ChartDaysDefault,
+                Component = Component.DryEyes,
+                UserId = user.Id,
+            };
+
+        var token = await _userRepo.AddUserToken(user, durationDays: 1);
         return View("DryEyes", new DryEyesViewModel(userMoods)
         {
             User = user,
             Token = token,
+            Setting = setting,
             PreviousMood = userMood,
-            UserMood = new Data.Entities.User.UserDryEyes()
+            UserMood = new UserDryEyes()
             {
                 UserId = user.Id,
                 User = user

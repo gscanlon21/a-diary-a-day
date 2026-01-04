@@ -9,7 +9,7 @@ using Web.Views.Shared.Components.BloodPressure;
 namespace Web.Components.User;
 
 /// <summary>
-/// Renders an alert box summary of when the user's next deload week will occur.
+/// Component for tracking a user's blood pressure over time.
 /// </summary>
 public class BloodPressureViewComponent : ViewComponent
 {

@@ -37,7 +37,7 @@ public partial class UserController
                 todaysDryEyes.EyeDrops = userMood.EyeDrops;
                 todaysDryEyes.FatigueFrequency = userMood.FatigueFrequency;
                 todaysDryEyes.FatigueSeverity = userMood.FatigueSeverity;
-                todaysDryEyes.LastExeriencedSymptoms = userMood.LastExeriencedSymptoms;
+                todaysDryEyes.LastExperiencedSymptoms = userMood.LastExperiencedSymptoms;
                 todaysDryEyes.MakeupToday = userMood.MakeupToday;
                 todaysDryEyes.MoisturizerToday = userMood.MoisturizerToday;
                 todaysDryEyes.SorenessFrequency = userMood.SorenessFrequency;

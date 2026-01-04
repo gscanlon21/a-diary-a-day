@@ -25,9 +25,7 @@
 
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                    <div>
-                        <input type="submit" value="Save" class="btn btn-primary allow-demo" />
-                    </div>
+                    <input type="submit" value="Save" class="btn btn-primary allow-demo" />
                 </form>
             </div>
         </div>
@@ -35,6 +33,21 @@
 
     <div class="col-lg-6">
         <h6 class="mb-1">Log</h6>
+        <h6 class="mb-1 font-weight--normal col">
+            <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ShowLog)" method="post" class="form-check-reverse row"
+                  asp-route-email="@Model.User.Email" asp-route-token="@Model.Token" asp-route-component="@Model.Setting.Component">
+                <div class="col">
+                    <div class="row gx-3">
+                        <label class="col-auto"><output name="chartDaysOutput">@Model.Setting.Days</output> days</label>
+                        <input asp-for="Setting.Days" type="range" class="col p-0 align-self-end" style="width:100%;" aria-describedby="chart-days-help"
+                               min="@UserConsts.ChartDaysMin" max="@UserConsts.ChartDaysMax" step="@UserConsts.ChartDaysStep"
+                               onchange="document.getElementById('task-log-submit').click();"
+                               oninput="chartDaysOutput.value = this.valueAsNumber;" />
+                    </div>
+                </div>
+                <button id="task-log-submit" type="submit" class="d-none"></button>
+            </form>
+        </h6>
         <div class="alert alert-light shadow">
             <partial name="_LineChart" model="chartViewModel" />
         </div>

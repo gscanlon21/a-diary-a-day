@@ -105,13 +105,16 @@
                         },
                     },
                     tooltip: {
-                        // Include all items that intersect with this point.
-                        mode: 'point',
+                        // Include all items that intersect with the 'x' value where the cursor is hovering.
+                        // https://www.chartjs.org/docs/latest/configuration/interactions.html#modes
+                        mode: 'x',
                         callbacks: {
                             // Pretty-print the x-axis date in the hover tooltip.
                             title: (context) => new Date(context[0].parsed.x).toDateString(),
                             footer: (context) => context.flatMap(c => window.wrap(c.raw.group.description, 40)).filter(s => s),
                         },
+                        // Don't label any points with y value of 0.
+                        filter: (context) => context.parsed.y !== 0,
                     },
                 },
             }

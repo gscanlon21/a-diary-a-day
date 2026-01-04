@@ -56,8 +56,8 @@ public class UserDryEyes : IScore
     public int? FatigueSeverity { get; set; }
 
     [Range(0, 2)]
-    [Display(Name = "Last Exerienced Symptoms")]
-    public int? LastExeriencedSymptoms { get; set; }
+    [Display(Name = "Last Experienced Symptoms")]
+    public int? LastExperiencedSymptoms { get; set; }
 
     [Display(Name = "Do you use eye drops and/or ointments?")]
     public bool EyeDrops { get; set; }

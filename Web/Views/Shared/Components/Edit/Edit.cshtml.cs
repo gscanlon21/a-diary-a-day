@@ -49,9 +49,6 @@ public class UserEditViewModel
     [Display(Name = "Email", Description = "")]
     public string Email { get; init; } = null!;
 
-    /// <summary>
-    /// Types of footnotes to show to the user.
-    /// </summary>
     [Display(Name = "Footnotes", Description = "What types of footnotes do you want to see?")]
     public FootnoteType FootnoteType { get; set; }
 
@@ -65,10 +62,8 @@ public class UserEditViewModel
     [Display(Name = "Email Verbosity", Description = "What level of detail do you want to receive in each email?")]
     public Verbosity Verbosity { get; set; }
 
-    /// <summary>
-    /// What features should the user have access to?
-    /// </summary>
     [Required]
+    [Display(Name = "Components", Description = "What features to show in each email?")]
     public Component Components { get; set; }
 
     [Required, Range(UserConsts.SendHourMin, UserConsts.SendHourMax)]
@@ -80,7 +75,7 @@ public class UserEditViewModel
     public int FontSizeAdjust { get; init; }
 
     [Display(Name = "Component Settings")]
-    public IList<UserEditComponentSkillViewModel> UserComponentSettings { get; set; } = [];
+    public IList<UserComponentSettingViewModel> UserComponentSettings { get; set; } = [];
 
     [Required]
     [Display(Name = "Send Days", Description = "What days do you want to receive new emails?")]
@@ -111,11 +106,11 @@ public class UserEditViewModel
     }
 
     [DebuggerDisplay("{Component}: {Days}")]
-    public class UserEditComponentSkillViewModel
+    public class UserComponentSettingViewModel
     {
-        public UserEditComponentSkillViewModel() { }
+        public UserComponentSettingViewModel() { }
 
-        public UserEditComponentSkillViewModel(UserComponentSetting userComponentSetting)
+        public UserComponentSettingViewModel(UserComponentSetting userComponentSetting)
         {
             Days = userComponentSetting.Days;
             UserId = userComponentSetting.UserId;
