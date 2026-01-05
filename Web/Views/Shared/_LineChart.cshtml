@@ -115,6 +115,8 @@
                         },
                         // Don't label any points with y value of 0.
                         filter: (context) => context.parsed.y !== 0,
+                        // Sort items by their y value in descending order.
+                        itemSort: (first, second) => second.parsed.y - first.parsed.y,
                     },
                 },
             }
