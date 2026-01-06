@@ -22,6 +22,7 @@ public class UserNewsletterDto
         Features = user.Features;
         Verbosity = user.Verbosity;
         LastActive = user.LastActive;
+        CreatedDate = user.CreatedDate;
         FootnoteType = user.FootnoteType;
         FontSizeAdjust = user.FontSizeAdjust;
         FootnoteCountTop = user.FootnoteCountTop;
@@ -42,6 +43,8 @@ public class UserNewsletterDto
     [Display(Name = "Footnotes")]
     public FootnoteType FootnoteType { get; init; }
 
+    public DateOnly CreatedDate { get; init; }
+
     public DateOnly? LastActive { get; init; }
 
     [Display(Name = "Send Days")]
@@ -57,4 +60,6 @@ public class UserNewsletterDto
     public int FontSizeAdjust { get; init; }
 
     public bool IsAlmostInactive => LastActive.HasValue && LastActive.Value < DateHelpers.Today.AddMonths(-1 * (UserConsts.DisableAfterXMonths - 1));
+
+    public bool IsNewlyCreated => CreatedDate > DateHelpers.Today.AddDays(-7);
 }
