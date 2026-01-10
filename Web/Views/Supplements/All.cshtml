@@ -9,16 +9,16 @@
     ViewData[ViewData_Blank.Title] = "Supplements";
 }
 
-<details class="alert alert-secondary mb-0" style="position:fixed;top:0;right:0;z-index:1;overflow:auto;max-height:100vh;" @(Model.FormOpen ? "open" : "")>
+<details class="alert alert-secondary mb-0 search-form" @(Model.FormOpen ? "open" : "")>
     <summary class="cursor--pointer">@(Model.FormHasData ? "*" : "")Filter Supplements</summary>
 
-    <form asp-controller="@SupplementsController.Name" asp-action="@nameof(SupplementsController.All)" method="get" style="margin-top:1rem"
+    <form asp-controller="@SupplementsController.Name" asp-action="@nameof(SupplementsController.All)" method="get" class="mt-3"
           onsubmit="submitButton.disabled=true;">
-        <div style="margin-bottom:1ex;">
+        <div class="mb-2">
             <label asp-for="Name" class="control-label">@Html.DisplayNameFor(_ => Model.Name)</label>
             <input asp-for="Name" type="text" class="form-control" />
         </div>
-        <div style="margin-bottom:1ex;">
+        <div class="mb-2">
             <label asp-for="Section" class="control-label">@Html.DisplayNameFor(_ => Model.Section)</label>
             <select asp-for="Section" class="form-control"
                     asp-items='@(Enum.GetValues<Section>().AsSelectListItems(EnumViewExtensions.EnumOrdering.Text).Prepend(new SelectListItem()))'>
