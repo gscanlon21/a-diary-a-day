@@ -10,7 +10,8 @@
              x:DataType ="local:NewslettersPageViewModel"
              x:Class="Hybrid.NewslettersPage"
              x:Name="Diaries"
-             Title="Diaries">
+             Title="Diaries"
+             SafeAreaEdges="Container">
 
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior
