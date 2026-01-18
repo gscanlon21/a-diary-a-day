@@ -65,4 +65,10 @@ public class SiteSettings
     /// </summary>
     public string FeastLink { get; set; } = "https://afeastaday.com/api";
     public Uri FeastUri => new(FeastLink);
+
+    /// <summary>
+    /// The link where the user can download the app.
+    /// </summary>
+    public string AppLink { get; set; } = null!;
+    public Uri AppUri => new(AppLink);
 }
