@@ -12,6 +12,6 @@ public class ComponentsRouteConstraint : IRouteConstraint
         // Retrieve the candidate value.
         var candidate = values[routeKey]?.ToString();
         // Attempt to parse the candidate to the required Enum type, and return the result.
-        return Enum.TryParse(candidate, out Component _);
+        return Enum.TryParse(candidate, ignoreCase: true, out Component _);
     }
 }

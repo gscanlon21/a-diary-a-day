@@ -3,6 +3,7 @@ using Data.Query.Builders;
 using Microsoft.AspNetCore.Mvc;
 using Web.Code.Attributes;
 using Web.Views.Supplements;
+using static System.Net.WebRequestMethods;
 
 namespace Web.Controllers.Supplements;
 
@@ -21,7 +22,7 @@ public class SupplementsController : ViewController
     /// </summary>
     public const string Name = "Supplements";
 
-    [Route("")]
+    [Route(""), AcceptVerbs(Http.Get, Http.Post)]
     [ResponseCompression(Enabled = !DebugConsts.IsDebug)]
     public async Task<IActionResult> All(SupplementsViewModel? viewModel = null)
     {

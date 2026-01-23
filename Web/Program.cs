@@ -57,6 +57,7 @@ builder.Services.AddResponseCompression(options =>
 
 builder.Services.Configure<RouteOptions>(options =>
 {
+    options.LowercaseUrls = true;
     options.ConstraintMap.Add(SectionRouteConstraint.Name, typeof(SectionRouteConstraint));
     options.ConstraintMap.Add(ComponentsRouteConstraint.Name, typeof(ComponentsRouteConstraint));
 });
