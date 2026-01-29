@@ -1,6 +1,6 @@
 ﻿using Core.Models.Options;
 using Data;
-using Data.Entities.User;
+using Data.Entities.Users;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

@@ -13,7 +13,7 @@ public class DeletionViewComponent : ViewComponent
     /// </summary>
     public const string Name = "Deletion";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user, string token)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.Users.User user, string token)
     {
         var deletionDate = DateHelpers.Today.AddMonths(-UserConsts.DeleteAfterXMonths);
         if (!user.LastActive.HasValue || user.LastActive >= deletionDate)

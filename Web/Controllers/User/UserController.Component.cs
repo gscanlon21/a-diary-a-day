@@ -1,7 +1,5 @@
-﻿using Core.Models.Newsletter;
-using Core.Models.User;
-using Data.Entities.Task;
-using Data.Entities.User;
+﻿using Core.Models.User;
+using Data.Entities.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web.Views.User;

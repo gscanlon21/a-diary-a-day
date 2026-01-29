@@ -23,7 +23,7 @@ public class ManageTaskViewComponent : ViewComponent
         _userRepo = userRepo;
     }
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user, Data.Entities.Task.UserTask task, Section section = Section.Anytime)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.Users.User user, Data.Entities.Task.UserTask task, Section section = Section.Anytime)
     {
         var token = await _userRepo.AddUserToken(user, durationDays: 1);
         if (task == null)

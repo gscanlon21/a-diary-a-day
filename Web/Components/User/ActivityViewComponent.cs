@@ -17,7 +17,7 @@ public class ActivityViewComponent(CoreContext context, UserRepo userRepo) : Vie
     /// </summary>
     public const string Name = "Activity";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.Users.User user)
     {
         var userMood = await context.UserActivities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = (await context.UserActivities
@@ -35,7 +35,7 @@ public class ActivityViewComponent(CoreContext context, UserRepo userRepo) : Vie
             User = user,
             Token = token,
             PreviousMood = userMood,
-            UserMood = new Data.Entities.User.UserActivity()
+            UserMood = new Data.Entities.Users.UserActivity()
             {
                 UserId = user.Id,
                 User = user

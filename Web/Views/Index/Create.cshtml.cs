@@ -35,7 +35,7 @@ public class CreateViewModel
 /// <summary>
 /// For CRUD actions
 /// </summary>
-public class UserCreateViewModel
+public class UserCreateViewModel : IValidatableObject
 {
     public const string EmailRegex = @"\s*\S+@\S+\.\S+\s*";
     public const string EmailRegexError = "Please enter a valid email address.";
@@ -58,6 +58,15 @@ public class UserCreateViewModel
     [Required, MustBeTrue(DisableClientSideValidation = true, ErrorMessage = "Bot, I am your father.")]
     [Display(Description = "")]
     public bool IExist { get; init; }
+
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        if (!DebugConsts.IsDebug)
+        {
+            // Personal health information (PHI) regulations?
+            yield return new ValidationResult($"Signups are disabled.");
+        }
+    }
 }
 
 

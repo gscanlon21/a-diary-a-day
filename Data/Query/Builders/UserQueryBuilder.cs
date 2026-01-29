@@ -1,6 +1,6 @@
 ﻿using Core.Models.Newsletter;
 using Data.Code.Exceptions;
-using Data.Entities.User;
+using Data.Entities.Users;
 using Data.Query.Options;
 
 namespace Data.Query.Builders;
@@ -14,7 +14,7 @@ public class UserQueryBuilder : QueryBuilderBase
 
     private UserOptions? UserOptions;
 
-    public UserQueryBuilder(User user, Section? section) : base(section) 
+    public UserQueryBuilder(User user, Section? section) : base(section)
     {
         User = user;
     }

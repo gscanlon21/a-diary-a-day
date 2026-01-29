@@ -17,7 +17,7 @@ public class SleepViewComponent(CoreContext context, UserRepo userRepo) : ViewCo
     /// </summary>
     public const string Name = "Sleep";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.Users.User user)
     {
         var userMood = await context.UserSleeps.FirstOrDefaultAsync(ud => ud.UserId == user.Id && ud.Date == DateHelpers.Today);
         var userMoods = (await context.UserSleeps
@@ -34,7 +34,7 @@ public class SleepViewComponent(CoreContext context, UserRepo userRepo) : ViewCo
         {
             User = user,
             Token = token,
-            UserMood = userMood ?? new Data.Entities.User.UserSleep()
+            UserMood = userMood ?? new Data.Entities.Users.UserSleep()
             {
                 UserId = user.Id,
                 User = user

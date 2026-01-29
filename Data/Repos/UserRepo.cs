@@ -1,6 +1,6 @@
 ﻿using Core.Code.Exceptions;
 using Data.Entities.Newsletter;
-using Data.Entities.User;
+using Data.Entities.Users;
 using Data.Models.Newsletter;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;

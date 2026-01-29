@@ -7,7 +7,7 @@ public class AdvancedViewModel
     [Obsolete("Public parameterless constructor for model binding.", error: true)]
     public AdvancedViewModel() { }
 
-    public AdvancedViewModel(Data.Entities.User.User user, string token)
+    public AdvancedViewModel(Data.Entities.Users.User user, string token)
     {
         Token = token;
         Email = user.Email;
@@ -16,8 +16,8 @@ public class AdvancedViewModel
         FootnoteCountBottom = user.FootnoteCountBottom;
     }
 
-    public bool IsNotDefault => FootnoteCountTop != Data.Entities.User.User.Consts.FootnoteCountTopDefault
-        || FootnoteCountBottom != Data.Entities.User.User.Consts.FootnoteCountBottomDefault;
+    public bool IsNotDefault => FootnoteCountTop != Data.Entities.Users.User.Consts.FootnoteCountTopDefault
+        || FootnoteCountBottom != Data.Entities.Users.User.Consts.FootnoteCountBottomDefault;
 
     public string Token { get; init; } = null!;
     public string Email { get; init; } = null!;

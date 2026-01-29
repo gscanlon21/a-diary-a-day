@@ -12,7 +12,7 @@ public class CustomViewComponent(CoreContext context) : ViewComponent
     /// </summary>
     public const string Name = "Custom";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user, string token)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.Users.User user, string token)
     {
         var userFootnotes = await context.UserCustoms
             .Where(f => f.UserId == user.Id)

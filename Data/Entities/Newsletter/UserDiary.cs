@@ -17,7 +17,7 @@ public class UserDiary
 
     internal UserDiary(DateOnly date, NewsletterContext context) : this(date, context.User) { }
 
-    public UserDiary(DateOnly date, User.User user)
+    public UserDiary(DateOnly date, Users.User user)
     {
         Date = date;
         UserId = user.Id;
@@ -38,8 +38,8 @@ public class UserDiary
 
     public string? Logs { get; private init; }
 
-    //[JsonIgnore, InverseProperty(nameof(Entities.User.User.UserFeasts))]
-    //public virtual User.User User { get; private init; } = null!;
+    //[JsonIgnore, InverseProperty(nameof(Entities.Users.User.UserFeasts))]
+    //public virtual Users.User User { get; private init; } = null!;
 
     [JsonIgnore, InverseProperty(nameof(UserDiaryTask.UserDiary))]
     public virtual ICollection<UserDiaryTask> UserDiaryTasks { get; private init; } = null!;

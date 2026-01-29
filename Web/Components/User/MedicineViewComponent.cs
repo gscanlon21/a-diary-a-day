@@ -17,7 +17,7 @@ public class MedicineViewComponent(CoreContext context, UserRepo userRepo) : Vie
     /// </summary>
     public const string Name = "Medicine";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.Users.User user)
     {
         var userMood = await context.UserMedicines.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = (await context.UserMedicines
@@ -35,7 +35,7 @@ public class MedicineViewComponent(CoreContext context, UserRepo userRepo) : Vie
             User = user,
             Token = token,
             PreviousMood = userMood,
-            UserMood = new Data.Entities.User.UserMedicine()
+            UserMood = new Data.Entities.Users.UserMedicine()
             {
                 UserId = user.Id,
                 User = user

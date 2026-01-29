@@ -16,7 +16,7 @@ public class SocialAnxietySeverityViewComponent(CoreContext context, UserRepo us
     /// </summary>
     public const string Name = "SocialAnxietySeverity";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.Users.User user)
     {
         var userMood = await context.UserSocialAnxietySeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserSocialAnxietySeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
@@ -27,7 +27,7 @@ public class SocialAnxietySeverityViewComponent(CoreContext context, UserRepo us
             User = user,
             Token = token,
             PreviousMood = userMood,
-            UserMood = new Data.Entities.User.UserSocialAnxietySeverity()
+            UserMood = new Data.Entities.Users.UserSocialAnxietySeverity()
             {
                 UserId = user.Id,
                 User = user

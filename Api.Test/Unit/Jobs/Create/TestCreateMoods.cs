@@ -45,7 +45,7 @@ public class TestCreateWorkouts : FakeDatabase
     [TestMethod]
     public async Task GetUsers_WhenNewsletterIsDisabled_ReturnsOne()
     {
-        Context.Users.Add(new Data.Entities.User.User(string.Empty, true)
+        Context.Users.Add(new Data.Entities.Users.User(string.Empty, true)
         {
             LastActive = DateHelpers.Today,
             NewsletterDisabledReason = "testing",
@@ -61,7 +61,7 @@ public class TestCreateWorkouts : FakeDatabase
     [TestMethod]
     public async Task GetUsers_WhenSendDaysIsNone_ReturnsNone()
     {
-        Context.Users.Add(new Data.Entities.User.User(string.Empty, true)
+        Context.Users.Add(new Data.Entities.Users.User(string.Empty, true)
         {
             SendDays = Core.Models.User.Days.None,
         });
@@ -74,7 +74,7 @@ public class TestCreateWorkouts : FakeDatabase
     [TestMethod]
     public async Task GetUsers_WhenLastActiveIsNull_ReturnsNone()
     {
-        Context.Users.Add(new Data.Entities.User.User(string.Empty, true)
+        Context.Users.Add(new Data.Entities.Users.User(string.Empty, true)
         {
             SendDays = Core.Models.User.Days.None,
         });
@@ -87,7 +87,7 @@ public class TestCreateWorkouts : FakeDatabase
     [TestMethod]
     public async Task GetUsers_WhenIncludeMobilityWorkouts_ReturnsNone()
     {
-        Context.Users.Add(new Data.Entities.User.User(string.Empty, true)
+        Context.Users.Add(new Data.Entities.Users.User(string.Empty, true)
         {
             LastActive = DateHelpers.Today,
             SendDays = Core.Models.User.Days.None,
@@ -102,7 +102,7 @@ public class TestCreateWorkouts : FakeDatabase
     [TestMethod]
     public async Task GetUsers_WhenActive_ReturnsNone()
     {
-        Context.Users.Add(new Data.Entities.User.User(string.Empty, true)
+        Context.Users.Add(new Data.Entities.Users.User(string.Empty, true)
         {
             LastActive = DateHelpers.Today,
             SendDays = Core.Models.User.Days.All,

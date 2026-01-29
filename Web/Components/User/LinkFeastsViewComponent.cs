@@ -13,7 +13,7 @@ public class LinkFeastsViewComponent : ViewComponent
     /// </summary>
     public const string Name = "LinkFeasts";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user, string token)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.Users.User user, string token)
     {
         return View("LinkFeasts", new LinkFeastsViewModel()
         {

@@ -23,7 +23,7 @@ public class TaskLogViewComponent : ViewComponent
     /// </summary>
     public const string Name = "TaskLog";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user, Data.Entities.Task.UserTask task, Section section)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.Users.User user, Data.Entities.Task.UserTask task, Section section)
     {
         if (task == null) { return Content(""); }
 

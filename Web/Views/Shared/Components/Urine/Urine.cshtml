@@ -1,5 +1,5 @@
 ﻿@model UrineViewModel
-@using Data.Entities.User
+@using Data.Entities.Users
 
 @{
     bool show = Model.PreviousMood == null || Model.PreviousMood.Date < DateHelpers.Today.AddMonths(-1);

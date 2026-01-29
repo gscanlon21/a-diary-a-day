@@ -17,7 +17,7 @@ public class JournalViewComponent(CoreContext context, UserRepo userRepo) : View
     /// </summary>
     public const string Name = "Journal";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.Users.User user)
     {
         var userFootnotes = await context.UserJournals
             .Where(f => f.UserId == user.Id)

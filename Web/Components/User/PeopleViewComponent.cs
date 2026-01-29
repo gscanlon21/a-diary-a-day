@@ -17,7 +17,7 @@ public class PeopleViewComponent(CoreContext context, UserRepo userRepo) : ViewC
     /// </summary>
     public const string Name = "People";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.Users.User user)
     {
         var userMood = await context.UserPeoples.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserPeoples.Include(ud => ud.UserCustoms).Where(ud => ud.UserId == user.Id).ToListAsync();
@@ -32,7 +32,7 @@ public class PeopleViewComponent(CoreContext context, UserRepo userRepo) : ViewC
             User = user,
             Token = token,
             PreviousMood = userMood,
-            UserMood = new Data.Entities.User.UserPeople()
+            UserMood = new Data.Entities.Users.UserPeople()
             {
                 UserId = user.Id,
                 User = user

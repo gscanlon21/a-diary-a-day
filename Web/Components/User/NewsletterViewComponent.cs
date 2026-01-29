@@ -18,7 +18,7 @@ public class NewsletterViewComponent : ViewComponent
     /// </summary>
     public const string Name = "Newsletter";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user, string token)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.Users.User user, string token)
     {
         // User has not confirmed their account, let the backfill finish first.
         if (!user.LastActive.HasValue)

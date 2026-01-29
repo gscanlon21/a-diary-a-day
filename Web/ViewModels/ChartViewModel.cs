@@ -10,5 +10,5 @@ public abstract class ChartViewModel
 
     public string Id { get; } = $"S{Guid.NewGuid():N}";
 
-    public required Data.Entities.User.User User { get; init; }
+    public required Data.Entities.Users.User User { get; init; }
 }

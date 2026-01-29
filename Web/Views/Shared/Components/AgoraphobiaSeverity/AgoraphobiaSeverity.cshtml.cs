@@ -1,4 +1,4 @@
-﻿using Data.Entities.User;
+﻿using Data.Entities.Users;
 using Web.ViewModels;
 
 namespace Web.Views.Shared.Components.AgoraphobiaSeverity;
@@ -19,7 +19,7 @@ public class AgoraphobiaSeverityViewModel
     }
 
     public string Token { get; init; } = null!;
-    public Data.Entities.User.User User { get; init; } = null!;
+    public Data.Entities.Users.User User { get; init; } = null!;
 
     public UserAgoraphobiaSeverity UserMood { get; init; } = null!;
     public UserAgoraphobiaSeverity? PreviousMood { get; init; }

@@ -140,8 +140,8 @@ public class UserTask
     }
 
 
-    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserTasks))]
-    public virtual User.User? User { get; set; }
+    [JsonIgnore, InverseProperty(nameof(Entities.Users.User.UserTasks))]
+    public virtual Users.User? User { get; set; }
 
     [JsonIgnore, InverseProperty(nameof(UserDiaryTask.UserTask))]
     public virtual ICollection<UserDiaryTask> UserDiaryTasks { get; private init; } = null!;

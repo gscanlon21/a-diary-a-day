@@ -58,37 +58,36 @@ public class IndexController : ViewController
         [Bind("Email,AcceptedTerms,IExist", Prefix = nameof(UserCreateViewModel))] UserCreateViewModel viewModel,
         [FromForm(Name = "frc-captcha-solution")] string frcCaptchaSolution)
     {
-        // Need to look up PHI regulations.
-        if (false && ModelState.IsValid && _captchaService.VerifyCaptcha(frcCaptchaSolution).Result?.Success != false)
+        if (!ModelState.IsValid || _captchaService.VerifyCaptcha(frcCaptchaSolution).Result?.Success == false)
         {
-            var newUser = new Data.Entities.User.User(viewModel.Email, viewModel.AcceptedTerms);
-
-            try
+            return View(nameof(Create), new CreateViewModel()
             {
-                // This will set the Id prop on newUser when changes are saved.
-                _context.Users.Add(newUser);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException e) when (e.InnerException != null && e.InnerException.Message.Contains("duplicate key"))
-            {
-                // User may have clicked the back button after personalizing their routine right after signing up.
-                return RedirectToAction(nameof(Index), Name);
-            }
-
-            // Send an account confirmation email.
-            await SendConfirmationEmail(newUser);
-
-            // Need a token for if the user chooses to manage their preferences after signup.
-            var token = await _userRepo.AddUserToken(newUser, durationDays: 1);
-            TempData[TempData_User.SuccessMessage] = "Thank you! Please accept the account confirmation email in your inbox.";
-            return RedirectToAction(nameof(UserController.Edit), UserController.Name, new { newUser.Email, token });
+                WasSubscribed = false,
+                UserCreateViewModel = viewModel
+            });
         }
 
-        return View(nameof(Create), new CreateViewModel()
+        var newUser = new Data.Entities.Users.User(viewModel.Email, viewModel.AcceptedTerms);
+
+        try
         {
-            WasSubscribed = false,
-            UserCreateViewModel = viewModel
-        });
+            // This will set the Id prop on newUser when changes are saved.
+            _context.Users.Add(newUser);
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateException e) when (e.InnerException != null && e.InnerException.Message.Contains("duplicate key"))
+        {
+            // User may have clicked the back button after personalizing their routine right after signing up.
+            return RedirectToAction(nameof(Index), Name);
+        }
+
+        // Send an account confirmation email.
+        await SendConfirmationEmail(newUser);
+
+        // Need a token for if the user chooses to manage their preferences after signup.
+        var token = await _userRepo.AddUserToken(newUser, durationDays: 1);
+        TempData[TempData_User.SuccessMessage] = "Thank you! Please accept the account confirmation email in your inbox.";
+        return RedirectToAction(nameof(UserController.Edit), UserController.Name, new { newUser.Email, token });
     }
 
     [Route("login"), HttpPost]
@@ -96,42 +95,42 @@ public class IndexController : ViewController
         [Bind("Email,IExist", Prefix = "UserLoginViewModel")] UserLoginViewModel viewModel,
         [FromForm(Name = "frc-captcha-solution")] string frcCaptchaSolution)
     {
-        if (ModelState.IsValid && _captchaService.VerifyCaptcha(frcCaptchaSolution).Result?.Success != false)
+        if (!ModelState.IsValid || _captchaService.VerifyCaptcha(frcCaptchaSolution).Result?.Success == false)
         {
-            // Not going through the normal GetUser route, we don't have a token.
-            var unauthenticatedUser = await _context.Users
-                // TODO email type for transactional or marketing workouts.
-                // User has not been sent an email today. Disabling this, we have a captcha now and it's possible someone's email bounces and they need a second email to send.
-                //.Where(u => u.LastActive.HasValue || !u.UserEmails.Where(un => un.Subject == NewsletterConsts.SubjectConfirm).Any(d => d.Date == Today))
-                //.Where(u => !u.LastActive.HasValue || !u.UserEmails.Where(un => un.Subject == NewsletterConsts.SubjectLogin).Any(d => d.Date == Today))
-                .FirstOrDefaultAsync(u => u.Email == viewModel.Email);
-
-            if (unauthenticatedUser != null)
+            return View(nameof(Create), new CreateViewModel()
             {
-                if (unauthenticatedUser.LastActive.HasValue)
-                {
-                    await SendLoginEmail(unauthenticatedUser);
-                }
-                else
-                {
-                    await SendConfirmationEmail(unauthenticatedUser);
-                }
-            }
-
-            TempData[TempData_User.SuccessMessage] = "If an account exists for this email, you will receive an email with a link to access your account.";
-            return RedirectToAction(nameof(Create), Name);
+                WasSubscribed = false,
+                UserLoginViewModel = viewModel
+            });
         }
 
-        return View(nameof(Create), new CreateViewModel()
+        // Not going through the normal GetUser route, we don't have a token.
+        var unauthenticatedUser = await _context.Users
+            // TODO email type for transactional or marketing workouts.
+            // User has not been sent an email today. Disabling this, we have a captcha now and it's possible someone's email bounces and they need a second email to send.
+            //.Where(u => u.LastActive.HasValue || !u.UserEmails.Where(un => un.Subject == NewsletterConsts.SubjectConfirm).Any(d => d.Date == Today))
+            //.Where(u => !u.LastActive.HasValue || !u.UserEmails.Where(un => un.Subject == NewsletterConsts.SubjectLogin).Any(d => d.Date == Today))
+            .FirstOrDefaultAsync(u => u.Email == viewModel.Email);
+
+        if (unauthenticatedUser != null)
         {
-            WasSubscribed = false,
-            UserLoginViewModel = viewModel
-        });
+            if (unauthenticatedUser.LastActive.HasValue)
+            {
+                await SendLoginEmail(unauthenticatedUser);
+            }
+            else
+            {
+                await SendConfirmationEmail(unauthenticatedUser);
+            }
+        }
+
+        TempData[TempData_User.SuccessMessage] = "If an account exists for this email, you will receive an email with a link to access your account.";
+        return RedirectToAction(nameof(Create), Name);
     }
 
     #region Account Emails
 
-    private async Task SendConfirmationEmail(Data.Entities.User.User unauthenticatedUser)
+    private async Task SendConfirmationEmail(Data.Entities.Users.User unauthenticatedUser)
     {
         var token = await _userRepo.AddUserToken(unauthenticatedUser, durationDays: 100); // Needs to last at least 3 months by law for unsubscribe link.
         var userNewsletter = new UserEmail(unauthenticatedUser)
@@ -155,7 +154,7 @@ This is an account confirmation email for your newly created <a href='{_siteSett
         await _context.SaveChangesAsync();
     }
 
-    private async Task SendLoginEmail(Data.Entities.User.User unauthenticatedUser)
+    private async Task SendLoginEmail(Data.Entities.Users.User unauthenticatedUser)
     {
         var token = await _userRepo.AddUserToken(unauthenticatedUser, durationDays: 100); // Needs to last at least 3 months by law for unsubscribe link.
         var userNewsletter = new UserEmail(unauthenticatedUser)

@@ -1,6 +1,6 @@
 ﻿@model AdvancedViewModel
 @using Core.Models.Components
-@using Data.Entities.User
+@using Data.Entities.Users
 
 <details class="mt-4 mb-25 pt-1">
     <summary class="mb-1 h5">@(Model.IsNotDefault ? "*" : "")Advanced Preferences</summary>
@@ -16,10 +16,10 @@
                     <output name="OutputFootnoteCountTop" for="@Html.IdFor(_ => Model.FootnoteCountTop)">@Model.FootnoteCountTop</output>
                     <div class="d-flex w-100">
                         <input asp-for="FootnoteCountTop" type="range" style="width:100%;" aria-describedby="user-footnote-help"
-                               step="1" min="@Data.Entities.User.User.Consts.FootnoteCountMin" max="@Data.Entities.User.User.Consts.FootnoteCountMax"
+                               step="1" min="@Data.Entities.Users.User.Consts.FootnoteCountMin" max="@Data.Entities.Users.User.Consts.FootnoteCountMax"
                                oninput="OutputFootnoteCountTop.value = this.valueAsNumber" list="ListFootnoteCountTop" />
                         <datalist id="ListFootnoteCountTop">
-                            <option value="@Data.Entities.User.User.Consts.FootnoteCountTopDefault"></option>
+                            <option value="@Data.Entities.Users.User.Consts.FootnoteCountTopDefault"></option>
                         </datalist>
                     </div>
                 </div>
@@ -35,10 +35,10 @@
                     <output name="OutputFootnoteCountBottom" for="@Html.IdFor(_ => Model.FootnoteCountBottom)">@Model.FootnoteCountBottom</output>
                     <div class="d-flex w-100">
                         <input asp-for="FootnoteCountBottom" type="range" style="width:100%;" aria-describedby="system-footnote-help"
-                               step="1" min="@Data.Entities.User.User.Consts.FootnoteCountMin" max="@Data.Entities.User.User.Consts.FootnoteCountMax"
+                               step="1" min="@Data.Entities.Users.User.Consts.FootnoteCountMin" max="@Data.Entities.Users.User.Consts.FootnoteCountMax"
                                oninput="OutputFootnoteCountBottom.value = this.valueAsNumber" list="ListFootnoteCountBottom" />
                         <datalist id="ListFootnoteCountBottom">
-                            <option value="@Data.Entities.User.User.Consts.FootnoteCountBottomDefault"></option>
+                            <option value="@Data.Entities.Users.User.Consts.FootnoteCountBottomDefault"></option>
                         </datalist>
                     </div>
                 </div>

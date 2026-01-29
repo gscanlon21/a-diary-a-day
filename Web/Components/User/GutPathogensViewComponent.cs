@@ -1,6 +1,6 @@
 ﻿using Core.Models.User;
 using Data;
-using Data.Entities.User;
+using Data.Entities.Users;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +18,7 @@ public class GutPathogensViewComponent(CoreContext context, UserRepo userRepo) :
     /// </summary>
     public const string Name = "GutPathogens";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.Users.User user)
     {
         var i = 0;
         var userMood = await context.UserGutPathogens.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);

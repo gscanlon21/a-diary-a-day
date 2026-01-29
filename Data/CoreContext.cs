@@ -3,7 +3,7 @@ using Data.Entities.Footnote;
 using Data.Entities.Genetics;
 using Data.Entities.Newsletter;
 using Data.Entities.Task;
-using Data.Entities.User;
+using Data.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.ComponentModel;

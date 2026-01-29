@@ -1,4 +1,4 @@
-﻿using Data.Entities.User;
+﻿using Data.Entities.Users;
 using Web.ViewModels;
 
 namespace Web.Views.Shared.Components.Medicine;
@@ -29,7 +29,7 @@ public class MedicineViewModel
     }
 
     public string Token { get; init; } = null!;
-    public Data.Entities.User.User User { get; init; } = null!;
+    public Data.Entities.Users.User User { get; init; } = null!;
 
     public UserMedicine UserMood { get; init; } = null!;
     public UserMedicine? PreviousMood { get; init; }

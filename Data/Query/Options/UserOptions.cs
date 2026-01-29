@@ -10,7 +10,7 @@ public class UserOptions : IOptions
 
     public UserOptions() { }
 
-    public UserOptions(Entities.User.User user)
+    public UserOptions(Entities.Users.User user)
     {
         Id = user.Id;
         NoUser = false;

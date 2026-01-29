@@ -17,7 +17,7 @@ public class EmotionViewComponent(CoreContext context, UserRepo userRepo) : View
     /// </summary>
     public const string Name = "Emotion";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.Users.User user)
     {
         var userMood = await context.UserEmotions.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = (await context.UserEmotions
@@ -35,7 +35,7 @@ public class EmotionViewComponent(CoreContext context, UserRepo userRepo) : View
             User = user,
             Token = token,
             PreviousMood = userMood,
-            UserMood = new Data.Entities.User.UserEmotion()
+            UserMood = new Data.Entities.Users.UserEmotion()
             {
                 UserId = user.Id,
                 User = user

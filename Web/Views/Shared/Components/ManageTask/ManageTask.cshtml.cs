@@ -13,7 +13,7 @@ public class ManageTaskViewModel
     [Obsolete("Public parameterless constructor required for model binding.", error: true)]
     public ManageTaskViewModel() { }
 
-    public ManageTaskViewModel(Data.Entities.User.User user, UserTask userTask, string token)
+    public ManageTaskViewModel(Data.Entities.Users.User user, UserTask userTask, string token)
     {
         User = user;
         Token = token;
@@ -36,7 +36,7 @@ public class ManageTaskViewModel
     }
 
     [ValidateNever]
-    public Data.Entities.User.User User { get; init; } = null!;
+    public Data.Entities.Users.User User { get; init; } = null!;
 
     [ValidateNever]
     public string Token { get; init; } = null!;

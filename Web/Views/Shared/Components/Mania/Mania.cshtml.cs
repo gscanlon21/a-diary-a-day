@@ -1,4 +1,4 @@
-using Data.Entities.User;
+using Data.Entities.Users;
 using Web.ViewModels;
 
 namespace Web.Views.Shared.Components.Mania;
@@ -20,7 +20,7 @@ public class ManiaViewModel
     }
 
     public string Token { get; init; } = null!;
-    public Data.Entities.User.User User { get; init; } = null!;
+    public Data.Entities.Users.User User { get; init; } = null!;
 
     public UserMania UserMood { get; init; } = null!;
     public UserMania? PreviousMood { get; init; }

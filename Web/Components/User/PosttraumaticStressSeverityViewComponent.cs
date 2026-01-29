@@ -16,7 +16,7 @@ public class PostTraumaticStressSeverityViewComponent(CoreContext context, UserR
     /// </summary>
     public const string Name = "PostTraumaticStressSeverity";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.Users.User user)
     {
         var userMood = await context.UserPostTraumaticStressSeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserPostTraumaticStressSeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
@@ -27,7 +27,7 @@ public class PostTraumaticStressSeverityViewComponent(CoreContext context, UserR
             User = user,
             Token = token,
             PreviousMood = userMood,
-            UserMood = new Data.Entities.User.UserPostTraumaticStressSeverity()
+            UserMood = new Data.Entities.Users.UserPostTraumaticStressSeverity()
             {
                 UserId = user.Id,
                 User = user

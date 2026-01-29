@@ -1,5 +1,5 @@
 ﻿using Data;
-using Data.Entities.User;
+using Data.Entities.Users;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +26,7 @@ public class MoodViewComponent : ViewComponent
     /// </summary>
     public const string Name = "Mood";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.Users.User user)
     {
         var userMood = await _context.UserMoods.FirstOrDefaultAsync(ud => ud.UserId == user.Id && ud.Date == DateHelpers.Today);
         var userMoods = await _context.UserMoods.Where(ud => ud.UserId == user.Id).ToListAsync();

@@ -1,4 +1,4 @@
-﻿using Data.Entities.User;
+﻿using Data.Entities.Users;
 using Web.ViewModels;
 
 namespace Web.Views.Shared;

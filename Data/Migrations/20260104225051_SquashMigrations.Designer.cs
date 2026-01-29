@@ -415,7 +415,7 @@ namespace Data.Migrations
                     b.ToTable("user_task_log");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.User", b =>
+            modelBuilder.Entity("Data.Entities.Users.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -483,7 +483,7 @@ namespace Data.Migrations
                     b.ToTable("user");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserActivity", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserActivity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -504,7 +504,7 @@ namespace Data.Migrations
                     b.ToTable("user_activity");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserAcuteStressSeverity", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserAcuteStressSeverity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -546,7 +546,7 @@ namespace Data.Migrations
                     b.ToTable("user_acute_stress_severity");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserAgoraphobiaSeverity", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserAgoraphobiaSeverity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -597,7 +597,7 @@ namespace Data.Migrations
                     b.ToTable("user_agoraphobia_severity");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserAllergens", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserAllergens", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -622,7 +622,7 @@ namespace Data.Migrations
                     b.ToTable("user_allergens");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserAnger", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserAnger", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -658,7 +658,7 @@ namespace Data.Migrations
                     b.ToTable("user_anger");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserAnxiety", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserAnxiety", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -700,7 +700,7 @@ namespace Data.Migrations
                     b.ToTable("user_anxiety");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserBloodPressure", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserBloodPressure", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -727,7 +727,7 @@ namespace Data.Migrations
                     b.ToTable("user_blood_pressure");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserBloodWork", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserBloodWork", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -754,7 +754,7 @@ namespace Data.Migrations
                     b.ToTable("user_blood_work");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserBodyTemp", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserBodyTemp", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -778,7 +778,7 @@ namespace Data.Migrations
                     b.ToTable("user_body_temp");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserCbcWAutoDiff", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserCbcWAutoDiff", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -856,7 +856,7 @@ namespace Data.Migrations
                     b.ToTable("user_cbc_w_auto_diff");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserCompleteMetabolicPanel", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserCompleteMetabolicPanel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -925,7 +925,7 @@ namespace Data.Migrations
                     b.ToTable("user_complete_metabolic_panel");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserComponent", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserComponent", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -952,7 +952,7 @@ namespace Data.Migrations
                     b.ToTable("user_component");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserComponentSetting", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserComponentSetting", b =>
                 {
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
@@ -971,7 +971,7 @@ namespace Data.Migrations
                     b.ToTable("user_component_setting");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserCustom", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserCustom", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1002,7 +1002,7 @@ namespace Data.Migrations
                     b.ToTable("user_custom");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserDepression", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserDepression", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1047,7 +1047,7 @@ namespace Data.Migrations
                     b.ToTable("user_depression");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserDepressionSeverity", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserDepressionSeverity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1095,7 +1095,7 @@ namespace Data.Migrations
                     b.ToTable("user_depression_severity");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserDissociativeSeverity", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserDissociativeSeverity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1140,7 +1140,7 @@ namespace Data.Migrations
                     b.ToTable("user_dissociative_severity");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserDryEyes", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserDryEyes", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1215,7 +1215,7 @@ namespace Data.Migrations
                     b.ToTable("user_dry_eyes");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserEmotion", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserEmotion", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1236,7 +1236,7 @@ namespace Data.Migrations
                     b.ToTable("user_emotion");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserGeneralizedAnxietySeverity", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserGeneralizedAnxietySeverity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1287,7 +1287,7 @@ namespace Data.Migrations
                     b.ToTable("user_generalized_anxiety_severity");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserGutBadBacteria", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserGutBadBacteria", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1371,7 +1371,7 @@ namespace Data.Migrations
                     b.ToTable("user_gut_bad_bacteria");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserGutConditionalBacteria", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserGutConditionalBacteria", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1410,7 +1410,7 @@ namespace Data.Migrations
                     b.ToTable("user_gut_conditional_bacteria");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserGutFungi", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserGutFungi", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1434,7 +1434,7 @@ namespace Data.Migrations
                     b.ToTable("user_gut_fungi");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserGutGoodBacteria", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserGutGoodBacteria", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1494,7 +1494,7 @@ namespace Data.Migrations
                     b.ToTable("user_gut_good_bacteria");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserGutMicronutrients", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserGutMicronutrients", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1527,7 +1527,7 @@ namespace Data.Migrations
                     b.ToTable("user_gut_micronutrients");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserGutPathogens", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserGutPathogens", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1581,7 +1581,7 @@ namespace Data.Migrations
                     b.ToTable("user_gut_pathogens");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserGutPillars", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserGutPillars", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1623,7 +1623,7 @@ namespace Data.Migrations
                     b.ToTable("user_gut_pillars");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserGutProbiotics", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserGutProbiotics", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1716,7 +1716,7 @@ namespace Data.Migrations
                     b.ToTable("user_gut_probiotics");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserGutShortChainFattyAcids", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserGutShortChainFattyAcids", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1749,7 +1749,7 @@ namespace Data.Migrations
                     b.ToTable("user_gut_short_chain_fatty_acids");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserJournal", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserJournal", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1774,7 +1774,7 @@ namespace Data.Migrations
                     b.ToTable("user_journal");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserMania", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserMania", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1810,7 +1810,7 @@ namespace Data.Migrations
                     b.ToTable("user_mania");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserMedicine", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserMedicine", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1831,7 +1831,7 @@ namespace Data.Migrations
                     b.ToTable("user_medicine");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserMood", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserMood", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1855,7 +1855,7 @@ namespace Data.Migrations
                     b.ToTable("user_mood");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserPanicSeverity", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserPanicSeverity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1906,7 +1906,7 @@ namespace Data.Migrations
                     b.ToTable("user_panic_severity");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserPeople", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserPeople", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1927,7 +1927,7 @@ namespace Data.Migrations
                     b.ToTable("user_people");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserPostTraumaticStressSeverity", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserPostTraumaticStressSeverity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1975,7 +1975,7 @@ namespace Data.Migrations
                     b.ToTable("user_posttraumatic_stress_severity");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSalivaStress", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSalivaStress", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2011,7 +2011,7 @@ namespace Data.Migrations
                     b.ToTable("user_saliva_stress");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumAutoimmunity", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumAutoimmunity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2038,7 +2038,7 @@ namespace Data.Migrations
                     b.ToTable("user_serum_autoimmunity");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumBlood", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumBlood", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2086,7 +2086,7 @@ namespace Data.Migrations
                     b.ToTable("user_serum_blood");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumElectrolytes", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumElectrolytes", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2125,7 +2125,7 @@ namespace Data.Migrations
                     b.ToTable("user_serum_electolytes");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumFemaleHealth", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumFemaleHealth", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2179,7 +2179,7 @@ namespace Data.Migrations
                     b.ToTable("user_serum_female_health");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumHeart", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumHeart", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2242,7 +2242,7 @@ namespace Data.Migrations
                     b.ToTable("user_serum_heart");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumHeavyMetals", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumHeavyMetals", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2269,7 +2269,7 @@ namespace Data.Migrations
                     b.ToTable("user_serum_heavy_metals");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumImmuneRegulation", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumImmuneRegulation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2326,7 +2326,7 @@ namespace Data.Migrations
                     b.ToTable("user_serum_immune_regulation");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumKidney", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumKidney", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2371,7 +2371,7 @@ namespace Data.Migrations
                     b.ToTable("user_serum_kidney");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumLiver", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumLiver", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2419,7 +2419,7 @@ namespace Data.Migrations
                     b.ToTable("user_serum_liver");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumMaleHealth", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumMaleHealth", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2473,7 +2473,7 @@ namespace Data.Migrations
                     b.ToTable("user_serum_male_health");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumMetabolic", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumMetabolic", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2509,7 +2509,7 @@ namespace Data.Migrations
                     b.ToTable("user_serum_metabolic");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumNutrients", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumNutrients", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2560,7 +2560,7 @@ namespace Data.Migrations
                     b.ToTable("user_serum_nutrients");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumPancreas", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumPancreas", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2587,7 +2587,7 @@ namespace Data.Migrations
                     b.ToTable("user_serum_pancreas");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumStress", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumStress", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2611,7 +2611,7 @@ namespace Data.Migrations
                     b.ToTable("user_serum_stress");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumThyroid", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumThyroid", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2647,7 +2647,7 @@ namespace Data.Migrations
                     b.ToTable("user_serum_thyroid");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSleep", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSleep", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2674,7 +2674,7 @@ namespace Data.Migrations
                     b.ToTable("user_sleep");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSocialAnxietySeverity", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSocialAnxietySeverity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2725,7 +2725,7 @@ namespace Data.Migrations
                     b.ToTable("user_social_anxiety_severity");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSymptom", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSymptom", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2746,7 +2746,7 @@ namespace Data.Migrations
                     b.ToTable("user_symptom");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserToken", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserToken", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2771,7 +2771,7 @@ namespace Data.Migrations
                     b.ToTable("user_token");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserUrine", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserUrine", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2914,7 +2914,7 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Entities.Footnote.UserFootnote", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserFootnotes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2997,7 +2997,7 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Entities.Newsletter.UserEmail", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserEmails")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3008,7 +3008,7 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Entities.Task.UserTask", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserTasks")
                         .HasForeignKey("UserId");
 
@@ -3026,9 +3026,9 @@ namespace Data.Migrations
                     b.Navigation("UserTask");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserActivity", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserActivity", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserActivities")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3037,9 +3037,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserAcuteStressSeverity", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserAcuteStressSeverity", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserAcuteStressSeverities")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3048,9 +3048,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserAgoraphobiaSeverity", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserAgoraphobiaSeverity", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserAgoraphobiaSeverities")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3059,9 +3059,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserAllergens", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserAllergens", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserAllergens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3070,9 +3070,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserAnger", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserAnger", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserAngers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3081,9 +3081,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserAnxiety", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserAnxiety", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserAnxieties")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3092,9 +3092,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserBloodPressure", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserBloodPressure", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserBloodPressures")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3103,9 +3103,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserBloodWork", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserBloodWork", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserBloodWorks")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3114,9 +3114,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserBodyTemp", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserBodyTemp", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserBodyTemps")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3125,9 +3125,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserCbcWAutoDiff", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserCbcWAutoDiff", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserCbcWAutoDiffs")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3136,9 +3136,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserCompleteMetabolicPanel", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserCompleteMetabolicPanel", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserCompleteMetabolicPanels")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3147,9 +3147,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserComponent", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserComponent", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserComponents")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3158,9 +3158,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserComponentSetting", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserComponentSetting", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserComponentSettings")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3169,18 +3169,18 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserCustom", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserCustom", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserCustoms")
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserDepression", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserDepression", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserDepressions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3189,9 +3189,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserDepressionSeverity", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserDepressionSeverity", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserDepressionSeverities")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3200,9 +3200,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserDissociativeSeverity", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserDissociativeSeverity", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserDissociativeSeverities")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3211,9 +3211,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserDryEyes", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserDryEyes", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserDryEyes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3222,9 +3222,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserEmotion", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserEmotion", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserEmotions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3233,9 +3233,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserGeneralizedAnxietySeverity", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserGeneralizedAnxietySeverity", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserGeneralizedAnxietySeverities")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3244,9 +3244,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserGutBadBacteria", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserGutBadBacteria", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserGutBadBacteria")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3255,9 +3255,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserGutConditionalBacteria", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserGutConditionalBacteria", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserGutConditionalBacteria")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3266,9 +3266,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserGutFungi", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserGutFungi", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserGutFungi")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3277,9 +3277,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserGutGoodBacteria", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserGutGoodBacteria", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserGutGoodBacteria")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3288,9 +3288,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserGutMicronutrients", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserGutMicronutrients", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserGutMicronutrients")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3299,9 +3299,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserGutPathogens", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserGutPathogens", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserGutPathogens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3310,9 +3310,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserGutPillars", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserGutPillars", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserGutPillars")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3321,9 +3321,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserGutProbiotics", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserGutProbiotics", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserGutProbiotics")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3332,9 +3332,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserGutShortChainFattyAcids", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserGutShortChainFattyAcids", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserGutShortChainFattyAcids")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3343,9 +3343,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserJournal", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserJournal", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserJournals")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3354,9 +3354,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserMania", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserMania", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserManias")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3365,9 +3365,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserMedicine", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserMedicine", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserMedicines")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3376,9 +3376,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserMood", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserMood", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserMoods")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3387,9 +3387,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserPanicSeverity", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserPanicSeverity", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserPanicSeverities")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3398,9 +3398,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserPeople", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserPeople", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserPeoples")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3409,9 +3409,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserPostTraumaticStressSeverity", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserPostTraumaticStressSeverity", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserPostTraumaticStressSeverities")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3420,9 +3420,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSalivaStress", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSalivaStress", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserSalivaStress")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3431,9 +3431,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumAutoimmunity", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumAutoimmunity", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserSerumAutoimmunitys")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3442,9 +3442,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumBlood", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumBlood", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserSerumBloods")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3453,9 +3453,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumElectrolytes", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumElectrolytes", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserSerumElectrolytes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3464,9 +3464,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumFemaleHealth", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumFemaleHealth", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserSerumFemaleHealths")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3475,9 +3475,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumHeart", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumHeart", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserSerumHearts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3486,9 +3486,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumHeavyMetals", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumHeavyMetals", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserSerumHeavyMetals")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3497,9 +3497,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumImmuneRegulation", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumImmuneRegulation", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserSerumImmuneRegulations")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3508,9 +3508,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumKidney", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumKidney", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserSerumKidneys")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3519,9 +3519,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumLiver", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumLiver", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserSerumLivers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3530,9 +3530,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumMaleHealth", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumMaleHealth", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserSerumMaleHealths")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3541,9 +3541,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumMetabolic", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumMetabolic", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserSerumMetabolics")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3552,9 +3552,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumNutrients", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumNutrients", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserSerumNutrients")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3563,9 +3563,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumPancreas", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumPancreas", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserSerumPancreas")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3574,9 +3574,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumStress", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumStress", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserSerumStress")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3585,9 +3585,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSerumThyroid", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSerumThyroid", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserSerumThyroids")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3596,9 +3596,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSleep", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSleep", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserSleeps")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3607,9 +3607,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSocialAnxietySeverity", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSocialAnxietySeverity", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserSocialAnxietySeverities")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3618,9 +3618,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserSymptom", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserSymptom", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserSymptoms")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3629,9 +3629,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserToken", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserToken", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3640,9 +3640,9 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.UserUrine", b =>
+            modelBuilder.Entity("Data.Entities.Users.UserUrine", b =>
                 {
-                    b.HasOne("Data.Entities.User.User", "User")
+                    b.HasOne("Data.Entities.Users.User", "User")
                         .WithMany("UserUrines")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3653,13 +3653,13 @@ namespace Data.Migrations
 
             modelBuilder.Entity("UserActivityUserCustom", b =>
                 {
-                    b.HasOne("Data.Entities.User.UserActivity", null)
+                    b.HasOne("Data.Entities.Users.UserActivity", null)
                         .WithMany()
                         .HasForeignKey("UserActivitiesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Data.Entities.User.UserCustom", null)
+                    b.HasOne("Data.Entities.Users.UserCustom", null)
                         .WithMany()
                         .HasForeignKey("UserCustomsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3668,13 +3668,13 @@ namespace Data.Migrations
 
             modelBuilder.Entity("UserCustomUserEmotion", b =>
                 {
-                    b.HasOne("Data.Entities.User.UserCustom", null)
+                    b.HasOne("Data.Entities.Users.UserCustom", null)
                         .WithMany()
                         .HasForeignKey("UserCustomsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Data.Entities.User.UserEmotion", null)
+                    b.HasOne("Data.Entities.Users.UserEmotion", null)
                         .WithMany()
                         .HasForeignKey("UserEmotionsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3683,13 +3683,13 @@ namespace Data.Migrations
 
             modelBuilder.Entity("UserCustomUserMedicine", b =>
                 {
-                    b.HasOne("Data.Entities.User.UserCustom", null)
+                    b.HasOne("Data.Entities.Users.UserCustom", null)
                         .WithMany()
                         .HasForeignKey("UserCustomsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Data.Entities.User.UserMedicine", null)
+                    b.HasOne("Data.Entities.Users.UserMedicine", null)
                         .WithMany()
                         .HasForeignKey("UserMedicinesId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3698,13 +3698,13 @@ namespace Data.Migrations
 
             modelBuilder.Entity("UserCustomUserPeople", b =>
                 {
-                    b.HasOne("Data.Entities.User.UserCustom", null)
+                    b.HasOne("Data.Entities.Users.UserCustom", null)
                         .WithMany()
                         .HasForeignKey("UserCustomsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Data.Entities.User.UserPeople", null)
+                    b.HasOne("Data.Entities.Users.UserPeople", null)
                         .WithMany()
                         .HasForeignKey("UserPeoplesId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3713,13 +3713,13 @@ namespace Data.Migrations
 
             modelBuilder.Entity("UserCustomUserSleep", b =>
                 {
-                    b.HasOne("Data.Entities.User.UserCustom", null)
+                    b.HasOne("Data.Entities.Users.UserCustom", null)
                         .WithMany()
                         .HasForeignKey("UserCustomsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Data.Entities.User.UserSleep", null)
+                    b.HasOne("Data.Entities.Users.UserSleep", null)
                         .WithMany()
                         .HasForeignKey("UserSleepsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3728,13 +3728,13 @@ namespace Data.Migrations
 
             modelBuilder.Entity("UserCustomUserSymptom", b =>
                 {
-                    b.HasOne("Data.Entities.User.UserCustom", null)
+                    b.HasOne("Data.Entities.Users.UserCustom", null)
                         .WithMany()
                         .HasForeignKey("UserCustomsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Data.Entities.User.UserSymptom", null)
+                    b.HasOne("Data.Entities.Users.UserSymptom", null)
                         .WithMany()
                         .HasForeignKey("UserSymptomsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3774,7 +3774,7 @@ namespace Data.Migrations
                     b.Navigation("UserTaskLogs");
                 });
 
-            modelBuilder.Entity("Data.Entities.User.User", b =>
+            modelBuilder.Entity("Data.Entities.Users.User", b =>
                 {
                     b.Navigation("UserActivities");
 

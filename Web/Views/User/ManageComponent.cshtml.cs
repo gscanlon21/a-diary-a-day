@@ -19,7 +19,7 @@ public class UserManageComponentViewModel
 
     public required TheParameters Parameters { get; init; }
 
-    public required Data.Entities.User.User User { get; init; }
+    public required Data.Entities.Users.User User { get; init; }
 
     public bool? WasUpdated { get; init; }
 }

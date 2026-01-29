@@ -1,11 +1,11 @@
-﻿using Data.Entities.User;
+﻿using Data.Entities.Users;
 using Web.ViewModels;
 
 namespace Web.Views.Shared.Components.Mood;
 
 public class MoodViewModel
 {
-    public MoodViewModel(Data.Entities.User.User user, IList<UserMood>? userMoods, int chartDays = UserConsts.ChartDaysDefault)
+    public MoodViewModel(Data.Entities.Users.User user, IList<UserMood>? userMoods, int chartDays = UserConsts.ChartDaysDefault)
     {
         if (userMoods != null)
         {
@@ -19,7 +19,7 @@ public class MoodViewModel
     }
 
     public string Token { get; init; } = null!;
-    public Data.Entities.User.User User { get; init; } = null!;
+    public Data.Entities.Users.User User { get; init; } = null!;
 
     public required UserComponentSetting Setting { get; init; } = null!;
     public UserMood UserMood { get; init; } = null!;

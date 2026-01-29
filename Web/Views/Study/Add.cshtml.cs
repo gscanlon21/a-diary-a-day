@@ -10,7 +10,7 @@ namespace Web.Views.Study;
 public class AddViewModel : IValidatableObject
 {
     [ValidateNever]
-    public Data.Entities.User.User User { get; init; } = null!;
+    public Data.Entities.Users.User User { get; init; } = null!;
     public string Token { get; init; } = null!;
 
     public Section Section { get; init; }

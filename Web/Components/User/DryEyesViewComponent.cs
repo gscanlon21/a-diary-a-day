@@ -1,5 +1,5 @@
 ﻿using Data;
-using Data.Entities.User;
+using Data.Entities.Users;
 using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +26,7 @@ public class DryEyesViewComponent : ViewComponent
     /// </summary>
     public const string Name = "DryEyes";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.Users.User user)
     {
         var userMood = await _context.UserDryEyes.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await _context.UserDryEyes.Where(ud => ud.UserId == user.Id).ToListAsync();

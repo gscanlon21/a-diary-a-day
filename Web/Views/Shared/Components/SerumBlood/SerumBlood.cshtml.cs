@@ -1,5 +1,5 @@
 using Core.Models.User;
-using Data.Entities.User;
+using Data.Entities.Users;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using Web.ViewModels;
@@ -33,7 +33,7 @@ public class SerumBloodViewModel
     }
 
     public string Token { get; init; } = null!;
-    public Data.Entities.User.User User { get; init; } = null!;
+    public Data.Entities.Users.User User { get; init; } = null!;
 
     public UserSerumBlood UserMood { get; init; } = null!;
     public UserSerumBlood? PreviousMood { get; init; }

@@ -1,4 +1,4 @@
-﻿using Data.Entities.User;
+﻿using Data.Entities.Users;
 using System.ComponentModel.DataAnnotations;
 
 namespace Web.Views.Shared.Components.Custom;
@@ -9,7 +9,7 @@ namespace Web.Views.Shared.Components.Custom;
 public class CustomViewModel
 {
     public string Token { get; init; } = null!;
-    public Data.Entities.User.User User { get; init; } = null!;
+    public Data.Entities.Users.User User { get; init; } = null!;
 
     [Display(Name = "Custom Tags")]
     public IList<UserCustom> Customs { get; init; } = null!;

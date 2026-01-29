@@ -14,7 +14,7 @@ public class UserEmail
     [Obsolete("Public parameterless constructor required for EF Core.", error: true)]
     public UserEmail() { }
 
-    public UserEmail(User.User user)
+    public UserEmail(Users.User user)
     {
         // Don't set User, so that EF Core doesn't add/update User.
         UserId = user.Id;
@@ -58,6 +58,6 @@ public class UserEmail
     /// </summary>
     public string? LastError { get; set; }
 
-    [JsonIgnore, InverseProperty(nameof(Entities.User.User.UserEmails))]
-    public virtual User.User User { get; private init; } = null!;
+    [JsonIgnore, InverseProperty(nameof(Entities.Users.User.UserEmails))]
+    public virtual Users.User User { get; private init; } = null!;
 }

@@ -7,7 +7,7 @@ namespace Web.Views.Shared.Components.SupplementStudies;
 
 public class SupplementStudiesViewModel
 {
-    public required Data.Entities.User.User User { get; init; }
+    public required Data.Entities.Users.User User { get; init; }
     public required Section Section { get; init; }
     public required string Token { get; init; }
 

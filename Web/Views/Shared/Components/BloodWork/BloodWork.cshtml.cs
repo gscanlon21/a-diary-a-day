@@ -1,5 +1,5 @@
 using Core.Models.User;
-using Data.Entities.User;
+using Data.Entities.Users;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using Web.ViewModels;
@@ -35,7 +35,7 @@ public class BloodWorkViewModel
     public Core.Models.Components.SubComponents.BloodWork SubComponents { get; init; }
 
     public string Token { get; init; } = null!;
-    public Data.Entities.User.User User { get; init; } = null!;
+    public Data.Entities.Users.User User { get; init; } = null!;
 
     public UserBloodWork UserMood { get; init; } = null!;
     public UserBloodWork? PreviousMood { get; init; }

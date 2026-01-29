@@ -16,7 +16,7 @@ public class AnxietyViewComponent(CoreContext context, UserRepo userRepo) : View
     /// </summary>
     public const string Name = "Anxiety";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.Users.User user)
     {
         var userMood = await context.UserAnxieties.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserAnxieties.Where(ud => ud.UserId == user.Id).ToListAsync();
@@ -27,7 +27,7 @@ public class AnxietyViewComponent(CoreContext context, UserRepo userRepo) : View
             User = user,
             Token = token,
             PreviousMood = userMood,
-            UserMood = new Data.Entities.User.UserAnxiety()
+            UserMood = new Data.Entities.Users.UserAnxiety()
             {
                 UserId = user.Id,
                 User = user

@@ -14,7 +14,7 @@ public class EditViewComponent(UserRepo userRepo) : ViewComponent
     /// </summary>
     public const string Name = "Edit";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User? user = null)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.Users.User? user = null)
     {
         user ??= await userRepo.GetUser(UserConsts.DemoUser, UserConsts.DemoToken, includeSettings: true, allowDemoUser: true);
         if (user == null)

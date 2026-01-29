@@ -6,7 +6,7 @@ public class BackupRestoreViewModel
     [Obsolete("Public parameterless constructor for model binding.", error: true)]
     public BackupRestoreViewModel() { }
 
-    public BackupRestoreViewModel(Data.Entities.User.User user, string token)
+    public BackupRestoreViewModel(Data.Entities.Users.User user, string token)
     {
         Token = token;
         Email = user.Email;

@@ -1,11 +1,11 @@
-﻿using Data.Entities.User;
+﻿using Data.Entities.Users;
 using Web.ViewModels;
 
 namespace Web.Views.Shared.Components.PanicSeverity;
 
 public class PanicSeverityViewModel
 {
-    public PanicSeverityViewModel(Data.Entities.User.User user, IList<UserPanicSeverity>? userMoods)
+    public PanicSeverityViewModel(Data.Entities.Users.User user, IList<UserPanicSeverity>? userMoods)
     {
         User = user;
         if (userMoods != null)
@@ -18,7 +18,7 @@ public class PanicSeverityViewModel
         }
     }
 
-    public Data.Entities.User.User User { get; private init; } = null!;
+    public Data.Entities.Users.User User { get; private init; } = null!;
     public required string Token { get; init; } = null!;
 
     public UserPanicSeverity UserMood { get; init; } = null!;

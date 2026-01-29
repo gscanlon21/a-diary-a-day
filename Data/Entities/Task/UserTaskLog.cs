@@ -14,7 +14,7 @@ public class UserTaskLog
     [Obsolete("Public parameterless constructor required for EF Core.", error: true)]
     public UserTaskLog() { }
 
-    public UserTaskLog(User.User user, UserTask userTask)
+    public UserTaskLog(Users.User user, UserTask userTask)
     {
         // Don't set UserTask, so that EF Core doesn't add/update UserTask.
         UserTaskId = userTask.Id;

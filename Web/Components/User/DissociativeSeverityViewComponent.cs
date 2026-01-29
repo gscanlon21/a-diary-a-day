@@ -16,7 +16,7 @@ public class DissociativeSeverityViewComponent(CoreContext context, UserRepo use
     /// </summary>
     public const string Name = "DissociativeSeverity";
 
-    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.User.User user)
+    public async Task<IViewComponentResult> InvokeAsync(Data.Entities.Users.User user)
     {
         var userMood = await context.UserDissociativeSeverities.OrderByDescending(d => d.Date).FirstOrDefaultAsync(ud => ud.UserId == user.Id);
         var userMoods = await context.UserDissociativeSeverities.Where(ud => ud.UserId == user.Id).ToListAsync();
@@ -27,7 +27,7 @@ public class DissociativeSeverityViewComponent(CoreContext context, UserRepo use
             User = user,
             Token = token,
             PreviousMood = userMood,
-            UserMood = new Data.Entities.User.UserDissociativeSeverity()
+            UserMood = new Data.Entities.Users.UserDissociativeSeverity()
             {
                 UserId = user.Id,
                 User = user

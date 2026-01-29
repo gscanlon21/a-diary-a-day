@@ -1,5 +1,5 @@
 ﻿using Core.Models.User;
-using Data.Entities.User;
+using Data.Entities.Users;
 using Web.ViewModels;
 
 namespace Web.Views.Shared.Components.Allergens;
@@ -31,7 +31,7 @@ public class AllergensViewModel
     }
 
     public string Token { get; init; } = null!;
-    public Data.Entities.User.User User { get; init; } = null!;
+    public Data.Entities.Users.User User { get; init; } = null!;
 
     public required UserComponentSetting Setting { get; init; } = null!;
     public UserAllergens UserMood { get; init; } = null!;

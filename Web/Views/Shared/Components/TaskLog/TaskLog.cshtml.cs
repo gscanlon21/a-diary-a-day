@@ -6,7 +6,7 @@ namespace Web.Views.Shared.Components.TaskLog;
 
 public class TaskLogViewModel
 {
-    public TaskLogViewModel(Data.Entities.User.User user, UserTask userTask, IList<UserTaskLog>? userLogs)
+    public TaskLogViewModel(Data.Entities.Users.User user, UserTask userTask, IList<UserTaskLog>? userLogs)
     {
         User = user;
         Task = userTask;
@@ -27,7 +27,7 @@ public class TaskLogViewModel
         }
     }
 
-    public Data.Entities.User.User User { get; }
+    public Data.Entities.Users.User User { get; }
     public required Section Section { get; init; }
     public required string Token { get; init; }
 
