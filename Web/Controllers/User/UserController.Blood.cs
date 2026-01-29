@@ -6,6 +6,36 @@ namespace Web.Controllers.User;
 
 public partial class UserController
 {
+    [HttpPost, Route(nameof(Component.BodyTemp))]
+    public async Task<IActionResult> ManageBodyTemp(string email, string token, UserBodyTemp userMood)
+    {
+        if (true || ModelState.IsValid)
+        {
+            var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Set the new weight on the UserVariation
+            var todaysBodyTemp = await _context.UserBodyTemps.FirstOrDefaultAsync(p => p.UserId == user.Id && p.Date == DateHelpers.Today);
+            if (todaysBodyTemp == null)
+            {
+                userMood.User = user;
+                _context.Add(userMood);
+            }
+            else
+            {
+                todaysBodyTemp.BodyTemp = userMood.BodyTemp;
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.BodyTemp, WasUpdated = true });
+        }
+
+        return RedirectToAction(nameof(ManageComponent), new { email, token, Component = Component.BodyTemp, WasUpdated = false });
+    }
+
     [HttpPost, Route(nameof(Component.BloodPressure))]
     public async Task<IActionResult> ManageBloodPressure(string email, string token, UserBloodPressure userMood)
     {
