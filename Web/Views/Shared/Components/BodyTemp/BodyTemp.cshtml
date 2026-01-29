@@ -10,9 +10,9 @@
         @if (!hide)
         {
             <div class="col-lg-6">
-                <h6 class="mb-1">Blood Pressure</h6>
+                <h6 class="mb-1">Body Temp</h6>
                 <div class="alert alert-light shadow">
-                    <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageBloodPressure)" method="post"
+                    <form asp-controller="@UserController.Name" asp-action="@nameof(UserController.ManageBodyTemp)" method="post"
                           asp-route-email="@Model.User.Email" asp-route-token="@Model.Token">
 
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>

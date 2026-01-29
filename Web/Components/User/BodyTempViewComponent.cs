@@ -32,7 +32,7 @@ public class BodyTempViewComponent(CoreContext context, UserRepo userRepo) : Vie
         }).ToList();
 
         var token = await userRepo.AddUserToken(user, durationDays: 1);
-        return View("BloodPressure", new BodyTempViewModel(userMoods, userCustoms)
+        return View("BodyTemp", new BodyTempViewModel(userMoods, userCustoms)
         {
             User = user,
             Token = token,
