@@ -38,9 +38,12 @@
                 </a>
             </div>
             
-            <div class="col-auto">
-                <a class="text-dark px-1 hover" asp-controller="@SupplementsController.Name" asp-action="@nameof(SupplementsController.All)">Supplements</a>
-            </div>
+            @if (DebugConsts.IsDebug)
+            {
+                <div class="col-auto">
+                    <a class="text-dark px-1 hover" asp-controller="@SupplementsController.Name" asp-action="@nameof(SupplementsController.All)">Supplements</a>
+                </div>
+            }
         </div>
     </div>
 </header>
