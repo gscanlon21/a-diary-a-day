@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web.Views.Shared.Components.ManageTask;
 using Web.Views.User;
+using static Data.Entities.Users.User;
 
 namespace Web.Controllers.User;
 
@@ -16,7 +17,7 @@ public partial class UserController
     [HttpGet, Route("{section:section}/{taskId}")]
     public async Task<IActionResult> ManageTask(string email, string token, Section section, int taskId, bool? wasUpdated = null)
     {
-        var user = await _userRepo.GetUser(email, token, includeSettings: true, allowDemoUser: true);
+        var user = await _userRepo.GetUser(email, token, Includes.Settings, allowDemoUser: true);
         if (user == null)
         {
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));

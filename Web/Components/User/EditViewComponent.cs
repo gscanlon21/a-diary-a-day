@@ -1,6 +1,7 @@
 ﻿using Data.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Web.Views.Shared.Components.Edit;
+using static Data.Entities.Users.User;
 
 namespace Web.Components.User;
 
@@ -16,7 +17,7 @@ public class EditViewComponent(UserRepo userRepo) : ViewComponent
 
     public async Task<IViewComponentResult> InvokeAsync(Data.Entities.Users.User? user = null)
     {
-        user ??= await userRepo.GetUser(UserConsts.DemoUser, UserConsts.DemoToken, includeSettings: true, allowDemoUser: true);
+        user ??= await userRepo.GetUser(UserConsts.DemoUser, UserConsts.DemoToken, Includes.Settings, allowDemoUser: true);
         if (user == null)
         {
             return Content("");

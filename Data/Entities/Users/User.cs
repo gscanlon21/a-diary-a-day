@@ -353,4 +353,13 @@ public class User : IUser
 
 
     #endregion
+
+    public enum Includes
+    {
+        None = 0,
+
+        Settings = 1 << 0, // 1
+
+        All = Settings,
+    }
 }

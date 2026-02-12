@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 using Web.Views.Index;
 using Web.Views.Shared.Components.Advanced;
 using Web.Views.Shared.Components.Edit;
+using static Data.Entities.Users.User;
 
 namespace Web.Controllers.User;
 
@@ -55,7 +56,7 @@ public partial class UserController : ViewController
     [Route("edit", Order = 3)]
     public async Task<IActionResult> Edit(string email = UserConsts.DemoUser, string token = UserConsts.DemoToken, bool? wasUpdated = null)
     {
-        var user = await _userRepo.GetUser(email, token, includeSettings: true, allowDemoUser: true);
+        var user = await _userRepo.GetUser(email, token, Includes.Settings, allowDemoUser: true);
         if (user == null)
         {
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
@@ -78,7 +79,7 @@ public partial class UserController : ViewController
             return NotFound();
         }
 
-        viewModel.User = await _userRepo.GetUser(viewModel.Email, viewModel.Token, includeSettings: true) ?? throw new ArgumentException(string.Empty, nameof(email));
+        viewModel.User = await _userRepo.GetUser(viewModel.Email, viewModel.Token, Includes.Settings) ?? throw new ArgumentException(string.Empty, nameof(email));
         if (ModelState.IsValid)
         {
             try

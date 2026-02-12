@@ -18,15 +18,15 @@ public class UserRepo(CoreContext context)
     /// Grab a user from the db with a specific token.
     /// Throws an exception if the user cannot be found.
     /// </summary>
-    public async Task<User> GetUserStrict(string? email, string? token, bool includeSettings = false, bool allowDemoUser = false)
+    public async Task<User> GetUserStrict(string? email, string? token, User.Includes includes = User.Includes.None, bool allowDemoUser = false)
     {
-        return await GetUser(email, token, includeSettings: includeSettings, allowDemoUser: allowDemoUser) ?? throw new UserException("User is null.");
+        return await GetUser(email, token, includes: includes, allowDemoUser: allowDemoUser) ?? throw new UserException("User is null.");
     }
 
     /// <summary>
     /// Grab a user from the db with a specific token.
     /// </summary>
-    public async Task<User?> GetUser(string? email, string? token, bool includeSettings = false, bool allowDemoUser = false)
+    public async Task<User?> GetUser(string? email, string? token, User.Includes includes = User.Includes.None, bool allowDemoUser = false)
     {
         if (email == null || token == null)
         {
@@ -35,7 +35,7 @@ public class UserRepo(CoreContext context)
 
         IQueryable<User> query = _context.Users.AsSplitQuery().TagWithCallSite();
 
-        if (includeSettings)
+        if (includes.HasFlag(User.Includes.Settings))
         {
             query = query.Include(u => u.UserComponentSettings);
         }

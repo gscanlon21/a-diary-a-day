@@ -3,6 +3,7 @@ using Data.Entities.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web.Views.User;
+using static Data.Entities.Users.User;
 
 namespace Web.Controllers.User;
 
@@ -11,7 +12,7 @@ public partial class UserController
     [HttpGet, Route("{component:component}")]
     public async Task<IActionResult> ManageComponent(string email, string token, Component component, bool? wasUpdated = null)
     {
-        var user = await _userRepo.GetUser(email, token, includeSettings: true, allowDemoUser: true);
+        var user = await _userRepo.GetUser(email, token, Includes.Settings, allowDemoUser: true);
         if (user == null)
         {
             return View("StatusMessage", new StatusMessageViewModel(LinkExpiredMessage));
