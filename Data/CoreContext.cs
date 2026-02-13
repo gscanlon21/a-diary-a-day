@@ -87,7 +87,6 @@ public class CoreContext : DbContext
     public DbSet<UserPanicSeverity> UserPanicSeverities { get; set; } = null!;
     public DbSet<UserPostTraumaticStressSeverity> UserPostTraumaticStressSeverities { get; set; } = null!;
     public DbSet<UserSocialAnxietySeverity> UserSocialAnxietySeverities { get; set; } = null!;
-    public DbSet<Footnote> Footnotes { get; set; } = null!;
     public DbSet<StudySupplement> StudySupplements { get; set; } = null!;
     public DbSet<Study> Studies { get; set; } = null!;
     public DbSet<Gene> Genes { get; set; } = null!;

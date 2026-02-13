@@ -1,6 +1,8 @@
-﻿using Core.Dtos.Newsletter;
+﻿using ADay.Core.Models.Footnote;
+using ADay.Data;
+using ADay.Data.Entities.Footnote;
+using Core.Dtos.Newsletter;
 using Core.Dtos.User;
-using Core.Models.Footnote;
 using Core.Models.Newsletter;
 using Core.Models.Options;
 using Core.Models.User;
@@ -19,25 +21,27 @@ namespace Data.Repos;
 
 public partial class NewsletterRepo
 {
-    private readonly CoreContext _context;
-    private readonly ILogger<NewsletterRepo> _logger;
     private readonly UserRepo _userRepo;
+    private readonly CoreContext _context;
+    private readonly SharedContext _sharedContext;
+    private readonly ILogger<NewsletterRepo> _logger;
     private readonly IOptions<SiteSettings> _siteSettings;
     private readonly IServiceScopeFactory _serviceScopeFactory;
 
-    public NewsletterRepo(ILogger<NewsletterRepo> logger, IServiceScopeFactory serviceScopeFactory, CoreContext context, UserRepo userRepo, IOptions<SiteSettings> siteSettings)
+    public NewsletterRepo(ILogger<NewsletterRepo> logger, IServiceScopeFactory serviceScopeFactory, CoreContext context, SharedContext sharedContext, UserRepo userRepo, IOptions<SiteSettings> siteSettings)
     {
-        _context = context;
         _logger = logger;
+        _context = context;
         _userRepo = userRepo;
         _siteSettings = siteSettings;
+        _sharedContext = sharedContext;
         _serviceScopeFactory = serviceScopeFactory;
     }
 
     public async Task<IList<Footnote>> GetFootnotes(string? email, string? token, int count = 1)
     {
         var user = await _userRepo.GetUser(email, token, allowDemoUser: true);
-        var footnotes = await _context.Footnotes
+        var footnotes = await _sharedContext.Footnotes
             // Apply the user's footnote type preferences. Has any flag.
             .Where(f => user == null || (f.Type & user.FootnoteType) != 0)
             .OrderBy(_ => EF.Functions.Random())
