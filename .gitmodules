@@ -1,6 +1,4 @@
-[submodule ".a-diary-a-day"]
-	path = .a-diary-a-day
-	url = git@github.com:gscanlon21/_a-diary-a-day.git
 [submodule "ADay"]
 	path = ADay
 	url = https://github.com/gscanlon21/a-day
+	branch = main

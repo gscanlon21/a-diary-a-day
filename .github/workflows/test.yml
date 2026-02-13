@@ -19,7 +19,24 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout w/o Submodules
+      uses: actions/checkout@v4
+      with:
+        submodules: false
+        ssh-key: '${{ secrets.AWORKOUTADAY_SSH_KEY }}'
+
+    - name: Use SSH Submodule Links
+      run: cp .gitmodules.ssh .gitmodules
+
+    - name: Setup SSH
+      uses: webfactory/ssh-agent@v0.9.0
+      with:
+        ssh-private-key: ${{ secrets.AWORKOUTADAY_SSH_KEY }}
+
+    - name: Sync Submodules
+      run: |
+        git submodule sync
+        git submodule update --init --recursive
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
