@@ -28,7 +28,12 @@ else
     <Lib.Pages.Shared.Newsletter._Preview Model='@($"{taskNames}")' />
 
     <div style="margin-bottom:1rem;">
-        <h6 style="margin-block:0;"><a target="_blank" href="@DH.NewsletterLink(Model.User, Model.UserDiary.Date)">@Model.UserDiary.Date.ToLongDateString()</a></h6>
+        @if (!Model.User.Features.HasFlag(Features.Demo))
+        {
+            <h6 style="margin-block:0;">
+                <a target="_blank" href="@DH.NewsletterLink(Model.User, Model.UserDiary.Date)">@Model.UserDiary.Date.ToLongDateString()</a>
+            </h6>
+        }
         <h1 style="margin-block:0;">Daily Diary</h1>
     </div>
 
@@ -37,9 +42,9 @@ else
     <Lib.Pages.Shared.Newsletter.Footnote User="Model.User" Verbosity="Model.Verbosity" Type="Shared.Newsletter.Footnote.FootnoteComponentType.User" Count="Model.User.FootnoteCountTop" />
     
     <div style="margin-block:1rem;">
-        @foreach (var section in Enum.GetValues<Section>().OrderBy(s => s.GetDisplayName(DisplayType.Order).Length).ThenBy(s => s.GetDisplayName(DisplayType.Order)))
+        @foreach (var sectionGroup in Model.Tasks.GroupBy(t => t.Section).OrderBy(s => s.Key.GetOrder()))
         {
-            <Lib.Pages.Shared.Task.TaskSection User="Model.User" Verbosity="Model.Verbosity" Tasks="Model.Tasks.Where(t => t.Section == section).ToList()" Theme="section.AsTheme()" Title="@(new TaskSection.Titles(section.GetSingleDisplayName()))" />
+            <Lib.Pages.Shared.Task.TaskSection User="Model.User" Verbosity="Model.Verbosity" Tasks="sectionGroup.ToList()" Theme="sectionGroup.Key.AsTheme()" Title="@(new TaskSection.Titles(sectionGroup.Key.GetSingleDisplayName()))" />
         }
 
         <Lib.Pages.Shared.Component.ComponentSection User="Model.User" Verbosity="Model.Verbosity" Images="Model.Images" Theme="Theme.None" Title="@(new ComponentSection.Titles("Components"))" />

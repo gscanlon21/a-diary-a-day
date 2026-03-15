@@ -98,7 +98,7 @@ public partial class UserController : ViewController
                 viewModel.User.Verbosity = viewModel.Verbosity;
                 viewModel.User.Components = viewModel.Components;
                 viewModel.User.FootnoteType = viewModel.FootnoteType;
-                viewModel.User.FontSizeAdjust = viewModel.FontSizeAdjust;
+                viewModel.User.MinFontSize = viewModel.MinFontSize;
 
                 if (viewModel.User.NewsletterEnabled != viewModel.NewsletterEnabled)
                 {

@@ -9,6 +9,22 @@ namespace Core.Code.Extensions;
 public static class EnumExtensions
 {
     /// <summary>
+    /// Returns the value of the [DisplayName] attribute.
+    /// </summary>
+    public static int? GetOrder(this Enum enumVal)
+    {
+        if (enumVal.GetType().GetMember(enumVal.ToString()) is MemberInfo[] memberInfo && memberInfo?.Length > 0)
+        {
+            if (memberInfo[0].GetCustomAttribute<DisplayAttribute>(true) is DisplayAttribute attribute && attribute != null)
+            {
+                return attribute.GetOrder();
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
     /// Returns the population count (number of bits set) of a mask.
     /// </summary>
     public static int PopCount<T>(this T flags) where T : struct, Enum
