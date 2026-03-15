@@ -27,7 +27,7 @@ public class UserEditViewModel
         Verbosity = user.Verbosity;
         Components = user.Components;
         FootnoteType = user.FootnoteType;
-        FontSizeAdjust = user.FontSizeAdjust;
+        MinFontSize = user.MinFontSize;
         NewsletterEnabled = user.NewsletterEnabled;
         NewsletterDisabledReason = user.NewsletterDisabledReason;
     }
@@ -70,9 +70,9 @@ public class UserEditViewModel
     [Display(Name = "Send Time (UTC)", Description = "What hour of the day (UTC) do you want to receive new emails?")]
     public int SendHour { get; init; }
 
-    [Required, Range(UserConsts.FontSizeAdjustMin, UserConsts.FontSizeAdjustMax)]
-    [Display(Name = "Font Size Adjust", Description = "How much to inflate the font size.")]
-    public int FontSizeAdjust { get; init; }
+    [Required, Range(UserConsts.MinFontSizeMin, UserConsts.MinFontSizeMax)]
+    [Display(Name = "Minimum Font Size", Description = "Sets the minimum font size used in the newsletter.")]
+    public double MinFontSize { get; init; }
 
     [Display(Name = "Component Settings")]
     public IList<UserComponentSettingViewModel> UserComponentSettings { get; set; } = [];

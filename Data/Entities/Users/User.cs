@@ -92,8 +92,8 @@ public class User : IUser
     [Required, Range(UserConsts.SendHourMin, UserConsts.SendHourMax)]
     public int SendHour { get; set; } = UserConsts.SendHourDefault;
 
-    [Required, Range(UserConsts.FontSizeAdjustMin, UserConsts.FontSizeAdjustMax)]
-    public int FontSizeAdjust { get; set; } = UserConsts.FontSizeAdjustDefault;
+    [Required, Range(UserConsts.MinFontSizeMin, UserConsts.MinFontSizeMax)]
+    public double MinFontSize { get; set; } = UserConsts.MinFontSizeDefault;
 
     /// <summary>
     /// Offset of today taking into account the user's SendHour.

@@ -24,7 +24,7 @@ public class UserNewsletterDto
         LastActive = user.LastActive;
         CreatedDate = user.CreatedDate;
         FootnoteType = user.FootnoteType;
-        FontSizeAdjust = user.FontSizeAdjust;
+        MinFontSize = user.MinFontSize;
         FootnoteCountTop = user.FootnoteCountTop;
         FootnoteCountBottom = user.FootnoteCountBottom;
         Token = token;
@@ -57,7 +57,7 @@ public class UserNewsletterDto
 
     public int FootnoteCountBottom { get; init; }
 
-    public int FontSizeAdjust { get; init; }
+    public double MinFontSize { get; init; }
 
     public bool IsNewlyCreated => CreatedDate >= DateHelpers.Today.AddDays(-7);
 

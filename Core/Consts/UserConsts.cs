@@ -26,9 +26,10 @@ public class UserConsts
     public const int SendHourDefault = 0;
     public const int SendHourMax = 23;
 
-    public const int FontSizeAdjustMin = 0;
-    public const int FontSizeAdjustDefault = 0;
-    public const int FontSizeAdjustMax = 4;
+    public const double MinFontSizeMin = .7;
+    public const double MinFontSizeDefault = .7;
+    public const double MinFontSizeStep = .1;
+    public const double MinFontSizeMax = 1.3;
 
     public const int UserMuscleMobilityMin = 0;
     public const int UserMuscleMobilityMax = 3;

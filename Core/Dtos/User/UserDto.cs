@@ -50,7 +50,7 @@ public class UserDto : IUser
     /// </summary>
     public Features Features { get; set; } = Features.None;
 
-    public int FontSizeAdjust { get; init; }
+    public double MinFontSize { get; init; }
 
 
     #region Advanced Preferences
