@@ -1,5 +1,5 @@
 # Contributing
 
-QOL, app, and exercise data changes are welcome.
+This project adheres to the [SciActive Human Contribution Policy](HUMAN-CONTRIBUTION-POLICY.md).
 
-I'm not currently accepting pull requests for changes to the workout routine generation.
+This project is not currently accepting contributions.
